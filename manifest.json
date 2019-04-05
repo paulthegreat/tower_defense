@@ -1,0 +1,28 @@
+{
+	"info" : {
+		"name" : "SH:TD",
+		"namespace" : "tower_defense",
+		"version" : 3,
+		"steam_file_id" : "1704290816"
+	},
+	"default_locale" : "en",
+	"aliases" : {},
+	"mixintos" : {},
+	"overrides" : {},
+   "components" : {},
+   "component_renderers" : {},
+   "controllers" : {},
+   "functions": {},
+   "object_commands": {},
+   "ui": {
+      "html": [
+
+      ],
+      "js": [
+
+      ],
+      "less": [
+
+      ]
+   }
+}
