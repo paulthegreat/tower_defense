@@ -34,22 +34,32 @@ end
 function GameCreationService:_generate_world(session, response, map_info)
    if validator.is_host_player(session) then
 		-- generate the world!
+		local map=radiant.resources.load_json("data:map_generation")
 
 		local height = 5
-		if self._height then 
-			height = self._height
-		end
-
-		local size = 32
+		local width=map.path.width or 3
+		local size = map.world_size or 32
 		assert(size % 2 == 0)
 		local half_size = size / 2
 
 		local block_types = radiant.terrain.get_block_types()
-
 		local region3 = Region3()
+		--basic slab of stone and grass
 		region3:add_cube(Cube3(Point3(0, -2, 0), Point3(size, 0, size), block_types.bedrock))
 		region3:add_cube(Cube3(Point3(0, 0, 0), Point3(size, height-1, size), block_types.soil_dark))
 		region3:add_cube(Cube3(Point3(0, height-1, 0), Point3(size, height, size), block_types.grass))
+		--remove the path from the grass layer
+		local lastpoint=nil
+		local lowHeight=Point3(0,height-1,0)
+		local highHeight=Point3(0,height,0)
+		for _,v in ipairs(map.path.points) do
+			local thispoint=Point3(unpack(v))
+			if lastpoint then
+				region3:subtract_cube(Cube3(lastpoint+lowHeight,thispoint+highHeight):extruded('x',width,width):extruded('z',width,width))
+			end
+			lastpoint=thispoint
+		end
+		--region3:subtract_cube(Cube3(Point3(0, height-1, 0), Point3(half_size, height, half_size)))
 		region3 = region3:translated(Point3(-half_size, 0, -half_size))
 
 		radiant.terrain.get_terrain_component():add_tile(region3)

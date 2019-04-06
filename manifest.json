@@ -8,7 +8,9 @@
    "client_init_script": "file(tower_defense_client)",
    "server_init_script": "file(tower_defense_server)",
 	"default_locale" : "en",
-	"aliases" : {},
+	"aliases" : {
+      "data:map_generation" : "file(data/default_map_generation.json)"
+   },
 	"mixintos" : {},
 	"overrides" : {},
    "components" : {},
