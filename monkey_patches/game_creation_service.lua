@@ -34,7 +34,7 @@ end
 function GameCreationService:_generate_world(session, response, map_info)
    if validator.is_host_player(session) then
 		-- generate the world!
-		local map=radiant.resources.load_json("data:map_generation")
+		local map=radiant.resources.load_json("tower_defense:data:map_generation")
 
 		local height = 5
 		local width=map.path.width or 3
