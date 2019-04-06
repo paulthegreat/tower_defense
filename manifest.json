@@ -5,6 +5,8 @@
 		"version" : 3,
 		"steam_file_id" : "1704290816"
 	},
+   "client_init_script": "file(tower_defense_client)",
+   "server_init_script": "file(tower_defense_server)",
 	"default_locale" : "en",
 	"aliases" : {},
 	"mixintos" : {},
