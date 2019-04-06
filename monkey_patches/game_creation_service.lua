@@ -28,7 +28,7 @@ function GameCreationService:_generate_world(session, response, map_info)
 
 		local height = 5
 		if self._height then 
-		  height = self._height
+			height = self._height
 		end
 
 		local size = 32
