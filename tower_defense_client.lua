@@ -5,7 +5,7 @@ local service_creation_order = {
 }
 
 local monkey_patches = {
-   game_creation_service = 'stonehearth.services.server.game_creation.game_creation_service'
+   
 }
 
 local function monkey_patching()

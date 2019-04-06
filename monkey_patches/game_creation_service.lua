@@ -5,7 +5,7 @@ function GameCreationService:start_game_command(session, response)
    local pop = stonehearth.population:get_population(player_id)
    local game_options = pop:get_game_options()
    
-   tower_defense.add_player(player_id, game_options)
+   tower_defense.game:add_player(player_id, game_options)
    
    -- as soon as the host clicks to start the game, start it up
    if validator.is_host_player(session) then

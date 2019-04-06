@@ -13,7 +13,9 @@
 	"overrides" : {},
    "components" : {},
    "component_renderers" : {},
-   "controllers" : {},
+   "controllers" : {
+      "game_player": "file(services/server/game/game_player.lua)"
+   },
    "functions": {},
    "object_commands": {},
    "ui": {
