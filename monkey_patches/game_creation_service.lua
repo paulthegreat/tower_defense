@@ -1,6 +1,7 @@
 local Point3 = _radiant.csg.Point3
 local Cube3 = _radiant.csg.Cube3
 local Region3 = _radiant.csg.Region3
+local csg_lib = require 'stonehearth.lib.csg.csg_lib'
 
 local validator = radiant.validator
 local log = radiant.log.create_logger('world_generation')
@@ -50,16 +51,15 @@ function GameCreationService:_generate_world(session, response, map_info)
 		region3:add_cube(Cube3(Point3(0, height-1, 0), Point3(size, height, size), block_types.grass))
 		--remove the path from the grass layer
 		local lastpoint=nil
-		local lowHeight=Point3(0,height-1,0)
-		local highHeight=Point3(0,height,0)
+		local top=Point3(0,height-1,0)
 		for _,v in ipairs(map.path.points) do
 			local thispoint=Point3(unpack(v))
 			if lastpoint then
-				region3:subtract_cube(Cube3(lastpoint+lowHeight,thispoint+highHeight):extruded('x',width,width):extruded('z',width,width))
+				region3:subtract_cube(csg_lib.create_cube(lastpoint+top,thispoint+top):extruded('x',width,width):extruded('z',width,width))
 			end
 			lastpoint=thispoint
 		end
-		--region3:subtract_cube(Cube3(Point3(0, height-1, 0), Point3(half_size, height, half_size)))
+		--move the region to be centered
 		region3 = region3:translated(Point3(-half_size, 0, -half_size))
 
 		radiant.terrain.get_terrain_component():add_tile(region3)

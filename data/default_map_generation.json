@@ -1,7 +1,7 @@
 {
 	"world_size" : 32,
 	"path" : {
-		"width" : 3,
+		"width" : 1,
 		"points" : [
 			[0,0,16],
 			[8,0,16],
