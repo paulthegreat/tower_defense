@@ -1,6 +1,32 @@
+local validator = radiant.validator
+
 GameCreationService = class()
 
-function GameCreationService:start_game_command(session, response)
+function GameCreationService:new_game_command(session, response, num_tiles_x, num_tiles_y, seed, options, starting_data)
+   --if no kingdom has been set for the player yet, set it to ascendancy
+   if not stonehearth.player:get_kingdom(session.player_id) then
+      stonehearth.player:add_kingdom(session.player_id, "stonehearth:kingdoms:ascendancy")
+   end
+
+   local pop = stonehearth.population:get_population(session.player_id)
+   pop:set_game_options(options)
+
+   return {}
+end
+
+function GameCreationService:generate_start_location_command(session, response, feature_cell_x, feature_cell_y, map_info)
+   self:_generate_world(session, response, map_info)
+   self:start_game(session)
+end
+
+function GameCreationService:_generate_world(session, response, map_info)
+   if validator.is_host_player(session) then
+      -- generate the world!
+
+   end
+end
+
+function GameCreationService:start_game(session)
    local player_id = session.player_id
    local pop = stonehearth.population:get_population(player_id)
    local game_options = pop:get_game_options()
@@ -27,6 +53,14 @@ function GameCreationService:start_game_command(session, response)
          stonehearth.game_speed:set_anarchy_enabled(game_options.game_speed_anarchy_enabled)
       end
    end
+end
+
+function GameCreationService:get_game_world_options_commands(session, response)
+   response:resolve({
+      game_mode = self._sv.game_mode,
+      biome = stonehearth.world_generation:get_biome_alias(),
+      -- any other options, like more generous starting gold, etc.
+   })
 end
 
 return GameCreationService

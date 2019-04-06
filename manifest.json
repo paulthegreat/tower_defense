@@ -16,14 +16,19 @@
    "controllers" : {
       "game_player": "file(services/server/game/game_player.lua)"
    },
-   "functions": {},
+   "functions": {
+      "start_game_command": {
+         "controller": "file(call_handlers/game_creation_call_handler.lua)",
+         "endpoint": "server"
+      }
+   },
    "object_commands": {},
    "ui": {
       "html": [
 
       ],
       "js": [
-
+         "file(ui/shell/select_game_story/select_game_story.js)"
       ],
       "less": [
 
