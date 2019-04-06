@@ -22,9 +22,10 @@ App.StonehearthSelectGameStoryView.reopen({
             .done(function(e) {
                // if you're the host, go ahead and do the other stuff
                if (this._isHostPlayer) {
+                  radiant.call_obj('stonehearth.terrain', 'set_fow_command', false);
                   radiant.call_obj('stonehearth.game_creation', 'new_game_command', 0, 0, 0, self._options)
                      .done(function(e) {
-                        radiant.call_obj('stonehearth.game_creation', 'generate_start_location_command', 0, 0, self._map_info)
+                        radiant.call_obj('stonehearth.game_creation', 'generate_start_location_command', 0, 0, e.map_info)
                            .done(function(e) {
                               self._doStartNow();
                            });
