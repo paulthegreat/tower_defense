@@ -1,0 +1,24 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "base_damage": 50,
+         "base_ranged_damage": 50,
+         "range": 35,
+         "projectile_speed": 30,
+         "projectile_uri": "stonehearth:weapons:turnip_bullet",
+         "projectile_start_offset": { "x": 0, "y": 1.4, "z": 0 },
+         "projectile_end_offset": { "x": 0, "y": 1.4, "z": 0 }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "fire",
+            "effect": "fire",
+            "active_frame": 9,
+            "cooldown": 100,
+            "priority": 0
+         }
+      ]
+   }
+}

@@ -93,6 +93,10 @@ function GameService:get_common_player()
    return self._sv.common_player
 end
 
+function GameService:get_common_gold()
+   return self._sv.common_player and self._sv.common_player:get_gold() or 0
+end
+
 -- gold can only be given to the common player
 function GameService:give_gold(player_id, amount)
    if player_id ~= COMMON_PLAYER then

@@ -1,0 +1,61 @@
+{
+   "build_menu": {
+      "name": "i18n(tower_defense:ui.game.menu.build_menu.display_name)",
+      "description": "i18n(tower_defense:ui.game.menu.build_menu.description)",
+      "class": "dock",
+      "icon": "/stonehearth/ui/game/start_menu/images/place_item.png",
+      "hotkey_action": "td:build_menu",
+      "game_mode": "place",
+      "menuHideSound": "stonehearth:sounds:ui:start_menu:wash_out",
+      "menuShowSound": "stonehearth:sounds:ui:start_menu:wash_in",
+      "items": {
+         "td_turnip_shooter": {
+            "name": "i18n(tower_defense:entities.towers.turnip_shooter.display_name)",
+            "description": "i18n(tower_defense:entities.towers.turnip_shooter.description)",
+            "class": "button",
+            "icon": "/tower_defense/entities/towers/turnip_shooter/turnip_shooter.png",
+            "sticky": true,
+            "hotkey_action": "td:build_tower:turnip_shooter",
+            "menu_action": "td_create_tower",
+            "uri": "tower_defense:towers:turnip_shooter"
+         },
+         "td_small_turret": {
+            "name": "i18n(tower_defense:entities.towers.small_turret.display_name)",
+            "description": "i18n(tower_defense:entities.towers.small_turret.description)",
+            "class": "button",
+            "icon": "/tower_defense/entities/towers/small_turret/small_turret.png",
+            "sticky": true,
+            "hotkey_action": "td:build_tower:small_turret",
+            "menu_action": "td_create_tower",
+            "uri": "tower_defense:towers:small_turret"
+         }
+      }
+   },
+   "give_gold_10": {
+      "name": "i18n(tower_defense:ui.game.menu.give_gold.display_name)",
+      "description": "i18n(tower_defense:ui.game.menu.give_gold.10_description)",
+      "class": "button",
+      "icon": "/tower_defense/ui/game/start_menu/images/gold_10.png",
+      "hotkey_action": "td:give_gold",
+      "menu_action": "td_give_gold",
+      "gold_amount": 10
+   },
+   "give_gold_100": {
+      "name": "i18n(tower_defense:ui.game.menu.give_gold.display_name)",
+      "description": "i18n(tower_defense:ui.game.menu.give_gold.100_description)",
+      "class": "button",
+      "icon": "/tower_defense/ui/game/start_menu/images/gold_100.png",
+      "hotkey_action": "td:give_gold",
+      "menu_action": "td_give_gold",
+      "gold_amount": 100
+   },
+   "give_gold_1000": {
+      "name": "i18n(tower_defense:ui.game.menu.give_gold.display_name)",
+      "description": "i18n(tower_defense:ui.game.menu.give_gold.1000_description)",
+      "class": "button",
+      "icon": "/tower_defense/ui/game/start_menu/images/gold_1000.png",
+      "hotkey_action": "td:give_gold",
+      "menu_action": "td_give_gold",
+      "gold_amount": 1000
+   }
+}

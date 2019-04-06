@@ -9,10 +9,20 @@
    "server_init_script": "file(tower_defense_server)",
 	"default_locale" : "en",
 	"aliases" : {
-      "data:map_generation" : "file(data/default_map_generation.json)"
+      "data:map_generation" : "file(data/default_map_generation.json)",
+      "mixins:towers:basic_tower": "file(mixins/towers/basic_tower.json)",
+      "mixins:towers:basic_tower_weapon": "file(mixins/towers/basic_tower_weapon.json)",
+      "towers:small_turret": "file(entities/towers/small_turret/small_turret.json)",
+      "towers:small_turret:weapon": "file(entities/towers/small_turret/small_turret_weapon.json)",
+      "towers:turnip_shooter": "file(entities/towers/turnip_shooter/turnip_shooter.json)",
+      "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)"
    },
 	"mixintos" : {},
-	"overrides" : {},
+	"overrides" : {
+      "/stonehearth/ai/actions/siege/turret_check_entity_targetable.lua": "file(ai/actions/siege/turret_check_entity_targetable.lua)",
+      "/stonehearth/ai/observers/siege_find_target_observer.lua": "file(ai/observers/siege_find_target_observer.lua)",
+      "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)"
+   },
    "components" : {},
    "component_renderers" : {},
    "controllers" : {
@@ -22,6 +32,18 @@
       "start_game_command": {
          "controller": "file(call_handlers/game_creation_call_handler.lua)",
          "endpoint": "server"
+      },
+      "create_and_place_entity": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
+         "endpoint": "client"
+      },
+      "create_entity": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
+         "endpoint": "server"
+      },
+      "give_gold_cheat_command": {
+         "controller": "file(call_handlers/player_call_handler.lua)",
+         "endpoint": "server"
       }
    },
    "object_commands": {},
@@ -30,10 +52,11 @@
 
       ],
       "js": [
+         "file(ui/game/start_menu/start_menu.js)",
          "file(ui/shell/select_game_story/select_game_story.js)"
       ],
       "less": [
-
+         "file(ui/game/start_menu/stonehearth_menu.less)"
       ]
    }
 }
