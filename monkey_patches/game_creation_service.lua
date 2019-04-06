@@ -1,4 +1,9 @@
+local Point3 = _radiant.csg.Point3
+local Cube3 = _radiant.csg.Cube3
+local Region3 = _radiant.csg.Region3
+
 local validator = radiant.validator
+local log = radiant.log.create_logger('world_generation')
 
 GameCreationService = class()
 
@@ -9,22 +14,26 @@ function GameCreationService:new_game_command(session, response, num_tiles_x, nu
 	end
 
 	local pop = stonehearth.population:get_population(session.player_id)
-	pop:set_game_options(options)
+   pop:set_game_options(options)
+   
+   stonehearth.world_generation:create_empty_world(options.biome_src)
 
-	return {}
+   local result = {
+      map_info = {}
+   }
+
+	return result
 end
 
 function GameCreationService:generate_start_location_command(session, response, feature_cell_x, feature_cell_y, map_info)
 	self:_generate_world(session, response, map_info)
-	self:start_game(session)
+   self:start_game(session)
+   response:resolve({})
 end
 
 function GameCreationService:_generate_world(session, response, map_info)
-	if validator.is_host_player(session) then
+   if validator.is_host_player(session) then
 		-- generate the world!
-
-		local biome = nil
-		stonehearth.world_generation:create_empty_world(biome)
 
 		local height = 5
 		if self._height then 

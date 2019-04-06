@@ -21,7 +21,7 @@ App.StonehearthSelectGameStoryView.reopen({
          radiant.call_obj('stonehearth.game_creation', 'select_player_kingdom', self._options.starting_kingdom)
             .done(function(e) {
                // if you're the host, go ahead and do the other stuff
-               if (this._isHostPlayer) {
+               if (self._isHostPlayer) {
                   radiant.call_obj('stonehearth.terrain', 'set_fow_command', false);
                   radiant.call_obj('stonehearth.game_creation', 'new_game_command', 0, 0, 0, self._options)
                      .done(function(e) {
