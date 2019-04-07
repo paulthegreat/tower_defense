@@ -1,3 +1,4 @@
+local Point2 = _radiant.csg.Point2
 local Point3 = _radiant.csg.Point3
 local Cube3 = _radiant.csg.Cube3
 local Region3 = _radiant.csg.Region3
@@ -34,7 +35,9 @@ end
 
 function GameCreationService:_generate_world(session, response, map_info)
    if validator.is_host_player(session) then
-		-- generate the world!
+      stonehearth.terrain._enable_full_vision = true
+      
+      -- generate the world!
 		local map=radiant.resources.load_json("tower_defense:data:map_generation")
 
 		local height = 5
@@ -63,6 +66,13 @@ function GameCreationService:_generate_world(session, response, map_info)
 		region3 = region3:translated(Point3(-half_size, 0, -half_size))
 
       radiant.terrain.get_terrain_component():add_tile(region3)
+
+      local end_gate = map.path.end_gate
+      if end_gate then
+         local exit_gate = radiant.entities.create_entity(end_gate.uri, { owner = session.player_id })
+         radiant.terrain.place_entity(exit_gate, Point3(unpack(end_gate.location)), { force_iconic = false })
+         radiant.entities.turn_to(exit_gate, end_gate.facing)
+      end
       
       self:on_world_generation_complete()
 	end
@@ -73,7 +83,9 @@ function GameCreationService:start_game(session)
 	local pop = stonehearth.population:get_population(player_id)
 	local game_options = pop:get_game_options()
 	
-	tower_defense.game:add_player(player_id, game_options)
+   tower_defense.game:add_player(player_id, game_options)
+   
+   --stonehearth.world_generation:set_starting_location(Point2(0, 0))
 	
 	-- as soon as the host clicks to start the game, start it up
 	if validator.is_host_player(session) then
@@ -93,8 +105,14 @@ function GameCreationService:start_game(session)
 		-- Set whether clients can control game speed
 		if game_options.game_speed_anarchy_enabled then
 			stonehearth.game_speed:set_anarchy_enabled(game_options.game_speed_anarchy_enabled)
-		end
-	end
+      end
+      
+      stonehearth.game_speed:set_game_speed(0, false)
+   end
+   
+   stonehearth.terrain:set_fow_enabled(player_id, false)
+
+   pop:place_camp()
 end
 
 function GameCreationService:get_game_world_options_commands(session, response)

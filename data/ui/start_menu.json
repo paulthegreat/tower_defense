@@ -57,5 +57,25 @@
       "hotkey_action": "td:give_gold_1000",
       "menu_action": "td_give_gold",
       "gold_amount": 1000
+   },
+   "multiplayer_menu": {
+      "name": "i18n(stonehearth:ui.game.multiplayer_menu.display_name)",
+      "description": "i18n(stonehearth:ui.game.multiplayer_menu.description)",
+      "class": "dock",
+      "icon": "/stonehearth/ui/game/start_menu/images/multiplayer_menu.png",
+      "hotkey_action": "multiplayer:menu",
+      "game_mode": "normal",
+      "menuHideSound": "stonehearth:sounds:ui:start_menu:jobs_close",
+      "menuShowSound": "stonehearth:sounds:ui:start_menu:jobs_open"
+   },
+   "bulletin_manager": {
+      "name": "i18n(stonehearth:ui.game.menu.bulletin_manager.display_name)",
+      "description": "i18n(stonehearth:ui.game.menu.bulletin_manager.description)",
+      "class": "dock",
+      "icon": "/stonehearth/ui/game/start_menu/images/manage_bulletins.png",
+      "hotkey_action": "bulletin:manager",
+      "game_mode": "normal",
+      "menuHideSound": "stonehearth:sounds:ui:start_menu:jobs_close",
+      "menuShowSound": "stonehearth:sounds:ui:start_menu:jobs_open"
    }
 }
