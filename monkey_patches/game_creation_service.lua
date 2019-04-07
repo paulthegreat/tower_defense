@@ -62,7 +62,9 @@ function GameCreationService:_generate_world(session, response, map_info)
 		--move the region to be centered
 		region3 = region3:translated(Point3(-half_size, 0, -half_size))
 
-		radiant.terrain.get_terrain_component():add_tile(region3)
+      radiant.terrain.get_terrain_component():add_tile(region3)
+      
+      self:on_world_generation_complete()
 	end
 end
 

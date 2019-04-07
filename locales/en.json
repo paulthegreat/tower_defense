@@ -1,3 +1,37 @@
 {
-   
+   "entities": {
+      "towers": {
+         "small_turret": {
+            "display_name": "Small Turret",
+            "description": "It's a small turret! What do you want?"
+         },
+         "turnip_shooter": {
+            "display_name": "Turnip Shooter",
+            "description": "It shoots turnips! Gross."
+         }
+      }
+   },
+   "ui": {
+      "game": {
+         "menu": {
+            "build_menu": {
+               "display_name": "Build Tower",
+               "description": "Choose the best tower to fit your current decor and feng shui needs."
+            },
+            "give_gold": {
+               "display_name": "Give Gold",
+               "10_description": "Give yourself 10 gold, you cheater.",
+               "100_description": "Give yourself 100 gold, you big cheater.",
+               "1000_description": "Give yourself 1000 gold, you big, fat cheater."
+            }
+         }
+      }
+   },
+   "alerts": {
+      "towers": {
+         "build": {
+            "not_enough_gold": "Not enough gold! Needed [str(needed)], only have [str(player_gold)] ([str(common_gold)] in common pool)."
+         }
+      }
+   }
 }
