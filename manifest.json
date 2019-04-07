@@ -5,6 +5,14 @@
 		"version" : 3,
 		"steam_file_id" : "1704290816"
 	},
+   "author": "Paul and the Greats",
+   "dependencies": [
+      "stonehearth",
+      "rayyas_children",
+      "northern_alliance",
+      "radiant",
+      "debug_tools"
+   ],
    "client_init_script": "file(tower_defense_client)",
    "server_init_script": "file(tower_defense_server)",
 	"default_locale" : "en",
@@ -17,7 +25,9 @@
       "towers:turnip_shooter": "file(entities/towers/turnip_shooter/turnip_shooter.json)",
       "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)"
    },
-	"mixintos" : {},
+	"mixintos" : {
+      "stonehearth:hotkeys": "file(data/hotkeys.json)"
+   },
 	"overrides" : {
       "/stonehearth/ai/actions/siege/turret_check_entity_targetable.lua": "file(ai/actions/siege/turret_check_entity_targetable.lua)",
       "/stonehearth/ai/observers/siege_find_target_observer.lua": "file(ai/observers/siege_find_target_observer.lua)",

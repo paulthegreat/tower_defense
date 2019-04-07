@@ -1,0 +1,31 @@
+{
+   "categories": {
+      "tower_defense": {
+         "display_name": "i18n(tower_defense:ui.shell.settings.controls_tab.key_category_names.tower_defense)",
+         "ordinal": 9
+      }
+   },
+   "keys": {
+      "td:give_gold_10": {
+         "display_name": "i18n(tower_defense:ui.game.menu.give_gold.give_gold_10)",
+         "category": "tower_defense",
+         "ordinal": 1,
+         "combo1": "",
+         "combo2": ""
+      },
+      "td:give_gold_100": {
+         "display_name": "i18n(tower_defense:ui.game.menu.give_gold.give_gold_100)",
+         "category": "tower_defense",
+         "ordinal": 1,
+         "combo1": "",
+         "combo2": ""
+      },
+      "td:give_gold_1000": {
+         "display_name": "i18n(tower_defense:ui.game.menu.give_gold.give_gold_1000)",
+         "category": "tower_defense",
+         "ordinal": 1,
+         "combo1": "",
+         "combo2": ""
+      }
+   }
+}

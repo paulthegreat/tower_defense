@@ -20,9 +20,21 @@
             },
             "give_gold": {
                "display_name": "Give Gold",
+               "give_gold_10": "Give Gold (10)",
+               "give_gold_100": "Give Gold (100)",
+               "give_gold_1000": "Give Gold (1000)",
                "10_description": "Give yourself 10 gold, you cheater.",
                "100_description": "Give yourself 100 gold, you big cheater.",
                "1000_description": "Give yourself 1000 gold, you big, fat cheater."
+            }
+         }
+      },
+      "shell": {
+         "settings": {
+            "controls_tab": {
+               "key_category_names": {
+                  "tower_defense": "SH:TD"
+               }
             }
          }
       }

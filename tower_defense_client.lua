@@ -36,6 +36,34 @@ end
 
 local player_service_trace = nil
 
+local function check_override_ui(players, player_id)
+   -- Load ui mod
+   if not player_id then
+      player_id = _radiant.client.get_player_id()
+   end
+   
+   local client_player = players[player_id]
+   if client_player then
+      if client_player.kingdom == "stonehearth:kingdoms:ascendancy" then
+         -- hot load manifest
+         radiant.log.write_('tower_defense', 0, 'SH:TD applying hot-loaded client manifest')
+         _radiant.res.apply_manifest("/tower_defense/ui/manifest.json")
+      end
+   end
+end
+
+local function trace_player_service()
+   _radiant.call('stonehearth:get_service', 'player')
+      :done(function(r)
+         local player_service = r.result
+         check_override_ui(player_service:get_data().players)
+         player_service_trace = player_service:trace('rayyas children ui change')
+               :on_changed(function(o)
+                     check_override_ui(player_service:get_data().players)
+                  end)
+         end)
+end
+
 function tower_defense:_on_init()
    tower_defense._sv = tower_defense.__saved_variables:get_data()
 
@@ -49,6 +77,8 @@ function tower_defense:_on_init()
             tower_defense[name]:on_server_ready()
          end
       end
+
+      trace_player_service()
    end)
 
    radiant.events.trigger_async(radiant, 'tower_defense:client:init')

@@ -36,7 +36,7 @@
       "description": "i18n(tower_defense:ui.game.menu.give_gold.10_description)",
       "class": "button",
       "icon": "/tower_defense/ui/game/start_menu/images/gold_10.png",
-      "hotkey_action": "td:give_gold",
+      "hotkey_action": "td:give_gold_10",
       "menu_action": "td_give_gold",
       "gold_amount": 10
    },
@@ -45,7 +45,7 @@
       "description": "i18n(tower_defense:ui.game.menu.give_gold.100_description)",
       "class": "button",
       "icon": "/tower_defense/ui/game/start_menu/images/gold_100.png",
-      "hotkey_action": "td:give_gold",
+      "hotkey_action": "td:give_gold_100",
       "menu_action": "td_give_gold",
       "gold_amount": 100
    },
@@ -54,7 +54,7 @@
       "description": "i18n(tower_defense:ui.game.menu.give_gold.1000_description)",
       "class": "button",
       "icon": "/tower_defense/ui/game/start_menu/images/gold_1000.png",
-      "hotkey_action": "td:give_gold",
+      "hotkey_action": "td:give_gold_1000",
       "menu_action": "td_give_gold",
       "gold_amount": 1000
    }
