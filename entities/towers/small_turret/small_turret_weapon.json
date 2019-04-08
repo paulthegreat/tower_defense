@@ -3,8 +3,8 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:combat:weapon_data": {
-         "base_damage": 80,
-         "base_ranged_damage": 80,
+         "base_damage": 8,
+         "base_ranged_damage": 8,
          "range": 40,
          "projectile_speed": 30,
          "projectile_uri": "stonehearth:weapons:bolt",
@@ -16,7 +16,7 @@
             "name": "fire",
             "effect": "fire",
             "active_frame": 31,
-            "cooldown": 100,
+            "cooldown": 10,
             "priority": 0
          }
       ]

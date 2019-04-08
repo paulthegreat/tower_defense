@@ -18,6 +18,8 @@ function GameService:initialize()
          self:_start_round()
       end)
    end
+
+   self._waves = radiant.resources.load_json('tower_defense:data:waves')
 end
 
 function GameService:start()
@@ -107,6 +109,14 @@ function GameService:give_gold(player_id, amount)
          common_player:add_gold(amount)
       end
    end
+end
+
+-- this is used to add an amount of gold to all players, like when a monster is killed
+function GameService:give_all_players_gold(amount)
+   for _, player in pairs(self._sv.players) do
+      player:add_gold(amount)
+   end
+   self._sv.common_player:add_gold(amount)
 end
 
 return GameService

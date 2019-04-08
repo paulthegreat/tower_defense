@@ -18,6 +18,8 @@
 	"default_locale" : "en",
 	"aliases" : {
       "data:map_generation" : "file(data/default_map_generation.json)",
+      "data:waves": "file(data/wave_index.json)",
+      "data:waves:sample_wave": "file(data/waves/sample_wave.json)",
       "mixins:towers:basic_tower": "file(mixins/towers/basic_tower.json)",
       "mixins:towers:basic_tower_weapon": "file(mixins/towers/basic_tower_weapon.json)",
       "towers:small_turret": "file(entities/towers/small_turret/small_turret.json)",
@@ -36,7 +38,8 @@
    "components" : {},
    "component_renderers" : {},
    "controllers" : {
-      "game_player": "file(services/server/game/game_player.lua)"
+      "game_player": "file(services/server/game/game_player.lua)",
+      "wave": "file(services/server/game/wave.lua)"
    },
    "functions": {
       "start_game_command": {

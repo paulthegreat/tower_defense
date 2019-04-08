@@ -44,7 +44,8 @@ local function check_override_ui(players, player_id)
    
    local client_player = players[player_id]
    if client_player then
-      if client_player.kingdom == "stonehearth:kingdoms:ascendancy" then
+      -- just always do this; we'll be adding a bunch of kingdoms and it just needs to apply anything to force the start menu override to work
+      if client_player.kingdom then -- == "stonehearth:kingdoms:ascendancy" then
          -- hot load manifest
          radiant.log.write_('tower_defense', 0, 'SH:TD applying hot-loaded client manifest')
          _radiant.res.apply_manifest("/tower_defense/ui/manifest.json")

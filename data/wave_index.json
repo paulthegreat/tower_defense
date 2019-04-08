@@ -1,0 +1,18 @@
+{
+   "waves": [
+      {
+         "uri": "tower_defense:data:waves:sample_wave",
+         "modifiers": {
+            "health": {
+               "multiply": 1
+            },
+            "armor": {
+               "multiply": 1
+            },
+            "gold": {
+               "multiply": 1
+            }
+         }
+      }
+   ]
+}
