@@ -28,8 +28,13 @@ function GameService:get_flying_offset()
    return Point3(0, 4, 0)
 end
 
+function GameService:set_map_data(map_data)
+   self._sv.map_data = map_data
+   self.__saved_variables:mark_changed()
+end
+
 function GameService:start()
-   self:_end_of_round()
+   self:_create_countdown_timer()
 end
 
 function GameService:destroy()
@@ -37,13 +42,12 @@ function GameService:destroy()
 end
 
 function GameService:_end_of_round()
-   local countdown = radiant.util.get_config('round_countdown', '10m')
    if radiant.util.get_config('pause_at_end_of_round', true) then
       stonehearth.game_speed:set_game_speed(0, false)
    end
 
    self:_destroy_countdown_timer()
-   self:_create_countdown_timer(countdown)
+   self:_create_countdown_timer()
 end
 
 function GameService:_destroy_countdown_timer()
@@ -53,10 +57,12 @@ function GameService:_destroy_countdown_timer()
    end
 end
 
-function GameService:_create_countdown_timer(countdown)
+function GameService:_create_countdown_timer()
+   local countdown = radiant.util.get_config('round_countdown', '10m')
    self._sv.countdown_timer = stonehearth.calendar:set_persistent_timer('next wave countdown', countdown, function()
       self:_start_round()
    end)
+   self.__saved_variables:mark_changed()
 end
 
 function GameService:_start_round()

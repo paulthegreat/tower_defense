@@ -40,45 +40,94 @@ function GameCreationService:_generate_world(session, response, map_info)
       -- generate the world!
 		local map=radiant.resources.load_json("tower_defense:data:map_generation")
 
-		local height = 5
-		local width=map.path.width or 3
-		local size = map.world_size or 32
-		assert(size % 2 == 0)
-		local half_size = size / 2
+      -- first generate the world terrain
+      local block_types = radiant.terrain.get_block_types()
+      local terrain = Region3()
+      local world = map.world
+      local size = world.size or 32
+      assert(size % 2 == 0)
+      local half_size = size / 2
+      local height = 0
+      
+      for _, layer in ipairs(world.layers) do
+         terrain:add_cube(Cube3(Point3(0, height, 0), Point3(size, layer.height + height, size), block_types[layer.terrain]))
+         height = height + layer.height
+      end
 
-		local block_types = radiant.terrain.get_block_types()
-		local region3 = Region3()
-		--basic slab of stone and grass
-		region3:add_cube(Cube3(Point3(0, -2, 0), Point3(size, 0, size), block_types.bedrock))
-		region3:add_cube(Cube3(Point3(0, 0, 0), Point3(size, height-1, size), block_types.soil_dark))
-		region3:add_cube(Cube3(Point3(0, height-1, 0), Point3(size, height, size), block_types.grass))
-		--remove the path from the grass layer
-		local lastpoint=nil
-		local top=Point3(0,height-1,0)
-		for _,v in ipairs(map.path.points) do
-			local thispoint=Point3(unpack(v))
-			if lastpoint then
-				region3:subtract_cube(csg_lib.create_cube(lastpoint+top,thispoint+top):extruded('x',width,width):extruded('z',width,width))
+      -- subtract the path from the world terrain
+      local path = map.path
+      local width = path.width or 3
+      local last_point
+      local top = Point3(0, height - 1, 0)
+      for _, point in ipairs(path.points) do
+			local this_point = Point3(unpack(point))
+			if last_point then
+				terrain:subtract_cube(csg_lib.create_cube(last_point + top, this_point + top):extruded('x', width, width):extruded('z', width, width))
 			end
-			lastpoint=thispoint
-		end
-		--move the region to be centered
-		region3 = region3:translated(Point3(-half_size, 0, -half_size))
-
-		radiant.terrain.get_terrain_component():add_tile(region3)
-		
-		local hacky_edge_shading_fix = Region3()
-		hacky_edge_shading_fix:add_cube(Cube3(Point3(-half_size-1, -999999, -half_size-1), Point3(-half_size, -999998, -half_size), block_types.null))
-		radiant.terrain.get_terrain_component():add_tile(hacky_edge_shading_fix)
-
-      local end_gate = map.path.end_gate
-      if end_gate then
-         local exit_gate = radiant.entities.create_entity(end_gate.uri, { owner = session.player_id })
-         radiant.terrain.place_entity(exit_gate, Point3(unpack(end_gate.location)), { force_iconic = false })
-         radiant.entities.turn_to(exit_gate, end_gate.facing)
+			last_point = this_point
       end
       
+      -- hacky edge shading fix (add a null terrain block super far below us)
+      terrain:add_cube(Cube3(Point3(-1, -999999, -1), Point3(0, -999998, 0), block_types.null))
+
+		--move the region to be centered
+		terrain = terrain:translated(Point3(-half_size, 0, -half_size))
+      radiant.terrain.get_terrain_component():add_tile(terrain)
+      
+      -- finally, add any entities that should start out in the world
+      local entities = map.entities
+      local offset = Point3(-half_size, height, -half_size)
+      for uri, entity_list in pairs(entities) do
+         for _, entity_data in ipairs(entity_list) do
+            local entity = radiant.entities.create_entity(uri, { owner = '' })
+            radiant.terrain.place_entity(entity, Point3(unpack(entity_data.location)) + offset, { force_iconic = false })
+            radiant.entities.turn_to(entity, entity_data.facing or 0)
+         end
+      end
+
       self:on_world_generation_complete()
+
+      tower_defense.game:set_map_data(map)
+
+		-- local height = 5
+		-- local width=map.path.width or 3
+		-- local size = map.world_size or 32
+		-- assert(size % 2 == 0)
+		-- local half_size = size / 2
+
+		-- local block_types = radiant.terrain.get_block_types()
+		-- local region3 = Region3()
+		-- --basic slab of stone and grass
+		-- region3:add_cube(Cube3(Point3(0, -2, 0), Point3(size, 0, size), block_types.bedrock))
+		-- region3:add_cube(Cube3(Point3(0, 0, 0), Point3(size, height-1, size), block_types.soil_dark))
+		-- region3:add_cube(Cube3(Point3(0, height-1, 0), Point3(size, height, size), block_types.grass))
+		-- --remove the path from the grass layer
+		-- local lastpoint=nil
+		-- local top=Point3(0,height-1,0)
+		-- for _,v in ipairs(map.path.points) do
+		-- 	local thispoint=Point3(unpack(v))
+		-- 	if lastpoint then
+		-- 		region3:subtract_cube(csg_lib.create_cube(lastpoint+top,thispoint+top):extruded('x',width,width):extruded('z',width,width))
+		-- 	end
+		-- 	lastpoint=thispoint
+		-- end
+		-- --move the region to be centered
+		-- region3 = region3:translated(Point3(-half_size, 0, -half_size))
+
+		-- radiant.terrain.get_terrain_component():add_tile(region3)
+		
+		-- local hacky_edge_shading_fix = Region3()
+		-- hacky_edge_shading_fix:add_cube(Cube3(Point3(-half_size-1, -999999, -half_size-1), Point3(-half_size, -999998, -half_size), block_types.null))
+		-- radiant.terrain.get_terrain_component():add_tile(hacky_edge_shading_fix)
+
+      -- local end_gate = map.path.end_gate
+      -- if end_gate then
+      --    local exit_gate = radiant.entities.create_entity(end_gate.uri, { owner = session.player_id })
+      --    radiant.terrain.place_entity(exit_gate, Point3(unpack(end_gate.location)), { force_iconic = false })
+      --    radiant.entities.turn_to(exit_gate, end_gate.facing)
+      -- end
+      
+      -- self:on_world_generation_complete()
 	end
 end
 
@@ -112,6 +161,7 @@ function GameCreationService:start_game(session)
       end
       
       stonehearth.game_speed:set_game_speed(0, false)
+      tower_defense.game:start()
    end
    
    stonehearth.terrain:set_fow_enabled(player_id, false)
