@@ -5,7 +5,7 @@
          "count": 20,
          "each_spawn": [
             {
-               "population": "stonehearth:kingdoms:undead",
+               "population": "undead",
                "info": {
                   "from_population": {
                      "role": "skeleton",

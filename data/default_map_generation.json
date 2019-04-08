@@ -35,5 +35,6 @@
             "facing": 0
          }
       ]
-   }
+   },
+   "spawn_location": [1, 0, 32]
 }

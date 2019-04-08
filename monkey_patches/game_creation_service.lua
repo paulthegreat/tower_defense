@@ -87,6 +87,11 @@ function GameCreationService:_generate_world(session, response, map_info)
 
       self:on_world_generation_complete()
 
+      if map.spawn_location then
+         map.spawn_location = Point3(unpack(map.spawn_location))
+      end
+      map.spawn_location = (map.spawn_location or top) + offset
+
       tower_defense.game:set_map_data(map)
 
 		-- local height = 5

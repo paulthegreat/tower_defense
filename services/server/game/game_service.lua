@@ -42,6 +42,11 @@ function GameService:destroy()
 end
 
 function GameService:_end_of_round()
+   if self._sv.wave_controller then
+      self._sv.wave_controller:destroy()
+      self._sv.wave_controller = nil
+   end
+   
    if radiant.util.get_config('pause_at_end_of_round', true) then
       stonehearth.game_speed:set_game_speed(0, false)
    end
@@ -71,6 +76,14 @@ function GameService:_start_round()
    self._sv.wave = self._sv.wave + 1
 
    -- load the wave data, create the controller, and start it up
+   local next_wave = self._waves.waves[self._sv.wave]
+   if next_wave then
+      local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data)
+      wave_controller:start()
+      self._sv.wave_controller = wave_controller
+   else
+      -- no more waves! you won!
+   end
 
    self.__saved_variables:mark_changed()
 end

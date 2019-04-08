@@ -5,6 +5,7 @@
 
 local Point3 = _radiant.csg.Point3
 local game_master_lib = require 'stonehearth.lib.game_master.game_master_lib'
+local log = radiant.log.create_logger('wave')
 
 local Wave = class()
 
@@ -17,11 +18,15 @@ function Wave:create(wave_data, map_data)
    self._sv._wave_data = wave_data
    self._sv._map_data = map_data
 
-   self:_load_unspawned_monsters()
+   self._is_create = true
 end
 
 function Wave:activate()
    self._wave_data = radiant.resources.load_json(self._sv._wave_data.uri)
+   
+   if self._is_create then
+      self:_load_unspawned_monsters()
+   end
 
    for _, spawned_monster in pairs(self._sv._spawned_monsters) do
       self:_activate_monster(spawned_monster)
@@ -47,7 +52,7 @@ function Wave:_load_unspawned_monsters()
       for i = 1, monster_data.count or 1 do
          local monsters = {}
          for _, monster in ipairs(monster_data.each_spawn) do
-            table.insert(monster_info.monsters, monster)
+            table.insert(monsters, monster)
          end
 
          if #monsters > 0 then
@@ -89,19 +94,20 @@ function Wave:_spawn_next_monster()
          if pop then
             local location_offset   -- used for flying monsters' vertical offset
             local this_location = location
-            if monster.population == 'tower_defense:kingdoms:air' then
+            if monster.population == 'air' then
                location_offset = tower_defense.game:get_flying_offset()
                this_location = this_location + location_offset
             end
 
-            local new_monsters = game_master_lib.create_citizens(pop, monster.info, this_location)
+            local new_monsters = game_master_lib.create_citizens(pop, monster.info, this_location, {player_id = ''})
             for _, monster in ipairs(new_monsters) do
-               self._sv._spawned_monsters[monster:get_id()] = {
+               local this_monster = {
                   monster = monster,
                   location_offset = location_offset,
                   path_point = 0
                }
-               self:_activate_monster(monster)
+               self._sv._spawned_monsters[monster:get_id()] = this_monster
+               self:_activate_monster(this_monster)
 
                did_spawn = true
             end
@@ -121,6 +127,10 @@ function Wave:_activate_monster(monster)
          -- if it was killed, hand out gold
          -- probably better to do this by event and have the game service listen to it, but oh well!
          tower_defense.game:give_all_players_gold(self:_get_gold_amount(monster.monster))
+         
+         self._sv._spawned_monsters[monster.monster:get_id()] = nil
+         self.__saved_variables:mark_changed()
+         self:_check_wave_end()
       end)
    
    -- 'monster' is a table containing monster entity and any other information we need
@@ -130,6 +140,13 @@ end
 
 function Wave:_get_gold_amount(entity)
    return 1
+end
+
+-- again, should probably do this with events, but directly calling game service instead
+function Wave:_check_wave_end()
+   if #self._sv._unspawned_monsters < 1 and not next(self._sv._spawned_monsters) then
+      tower_defense.game:_end_of_round()
+   end
 end
 
 return Wave

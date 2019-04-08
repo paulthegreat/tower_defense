@@ -6,11 +6,15 @@ App.StonehearthStartMenuView.reopen({
          // try to create and place the specified tower
          if (data && data.uri) {
             radiant.call('tower_defense:create_and_place_entity', data.uri)
-            .fail(function(response) {
-               if (response.message) {
-                  alert(i18n.t(response.message, response.i18n_data));
-               }
-            });
+               .done(function() {
+                  // if we successfully placed one, try doing it again
+                  self.menuActions.td_create_tower(data);
+               })
+               .fail(function(response) {
+                  if (response.message) {
+                     alert(i18n.t(response.message, response.i18n_data));
+                  }
+               });
          }
       };
       
