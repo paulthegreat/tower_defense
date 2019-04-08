@@ -1,3 +1,5 @@
+local Point3 = _radiant.csg.Point3
+
 GameService = class()
 
 local COMMON_PLAYER = 'common_player'
@@ -20,6 +22,10 @@ function GameService:initialize()
    end
 
    self._waves = radiant.resources.load_json('tower_defense:data:waves')
+end
+
+function GameService:get_flying_offset()
+   return Point3(0, 4, 0)
 end
 
 function GameService:start()
@@ -57,6 +63,9 @@ function GameService:_start_round()
    self:_destroy_countdown_timer()
 
    self._sv.wave = self._sv.wave + 1
+
+   -- load the wave data, create the controller, and start it up
+
    self.__saved_variables:mark_changed()
 end
 

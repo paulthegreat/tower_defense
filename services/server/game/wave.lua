@@ -13,16 +13,15 @@ function Wave:initialize()
    self._sv._spawned_monsters = {}
 end
 
-function Wave:create(json, map_data, overrides)
-   self._sv._json = json
+function Wave:create(wave_data, map_data)
+   self._sv._wave_data = wave_data
    self._sv._map_data = map_data
-   self._sv._overrides = overrides or {}
 
    self:_load_unspawned_monsters()
 end
 
 function Wave:activate()
-   self._wave_data = radiant.resources.load_json(json)
+   self._wave_data = radiant.resources.load_json(self._sv._wave_data.uri)
 
    for _, spawned_monster in pairs(self._sv._spawned_monsters) do
       self:_activate_monster(spawned_monster)
@@ -41,7 +40,24 @@ function Wave:_destroy_next_spawn_timer()
 end
 
 function Wave:_load_unspawned_monsters()
-   
+   self._sv._unspawned_monsters = {}
+
+   for _, monster_data in ipairs(self._wave_data.monsters) do
+      -- ignoring wave modifiers for now
+      for i = 1, monster_data.count or 1 do
+         local monsters = {}
+         for _, monster in ipairs(monster_data.each_spawn) do
+            table.insert(monster_info.monsters, monster)
+         end
+
+         if #monsters > 0 then
+            table.insert(self._sv._unspawned_monsters, {
+               monsters = monsters,
+               time_to_next_monster = monster_data.time_to_next_monster
+            })
+         end
+      end
+   end
 end
 
 function Wave:start()
@@ -65,28 +81,36 @@ end
 function Wave:_spawn_next_monster()
    local monster_info = table.remove(self._sv._unspawned_monsters, 1)
    if monster_info then
-      local location = Point3(unpack(self._sv._overrides.spawn_location or self._wave_data.spawn_location or stonehearth.constants.tower_defense.wave.SPAWN_LOCATION))
-      local location_offset
-      if monster_info.spawn_location then
-         location_offset = Point3(unpack(monster_info.spawn_location))
-         location = location + location_offset
-      end
-      local pop = stonehearth.population:get_population(monster_info.population)
-      if pop then
-         local new_monsters = game_master_lib.create_citizens(pop, monster_info.info, location)
-         for _, monster in ipairs(new_monsters) do
-            self._sv._spawned_monsters[monster:get_id()] = {
-               monster = monster,
-               location_offset = location_offset,
-               path_point = 0
-            }
-            self:_activate_monster(monster)
-         end
-         self.__saved_variables:mark_changed()
+      local location = self._sv._map_data.spawn_location
 
-         if next(new_monsters) then
-            self:_create_next_spawn_timer(monster_info.time_to_next)
+      local did_spawn = false
+      for _, monster in ipairs(monster_info.monsters) do
+         local pop = stonehearth.population:get_population(monster.population)
+         if pop then
+            local location_offset   -- used for flying monsters' vertical offset
+            local this_location = location
+            if monster.population == 'tower_defense:kingdoms:air' then
+               location_offset = tower_defense.game:get_flying_offset()
+               this_location = this_location + location_offset
+            end
+
+            local new_monsters = game_master_lib.create_citizens(pop, monster.info, this_location)
+            for _, monster in ipairs(new_monsters) do
+               self._sv._spawned_monsters[monster:get_id()] = {
+                  monster = monster,
+                  location_offset = location_offset,
+                  path_point = 0
+               }
+               self:_activate_monster(monster)
+
+               did_spawn = true
+            end
+            self.__saved_variables:mark_changed()
          end
+      end
+
+      if did_spawn then
+         self:_create_next_spawn_timer(monster_info.time_to_next_monster)
       end
    end
 end
@@ -99,7 +123,9 @@ function Wave:_activate_monster(monster)
          tower_defense.game:give_all_players_gold(self:_get_gold_amount(monster.monster))
       end)
    
-   
+   -- 'monster' is a table containing monster entity and any other information we need
+   -- (like last path checkpoint reached)
+
 end
 
 function Wave:_get_gold_amount(entity)
