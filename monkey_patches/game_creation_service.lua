@@ -62,7 +62,11 @@ function GameCreationService:_generate_world(session, response, map_info)
 		--move the region to be centered
 		region3 = region3:translated(Point3(-half_size, 0, -half_size))
 
-      radiant.terrain.get_terrain_component():add_tile(region3)
+		radiant.terrain.get_terrain_component():add_tile(region3)
+		
+		local hacky_edge_shading_fix = Region3()
+		hacky_edge_shading_fix:add_cube(Cube3(Point3(-half_size-1, -999999, -half_size-1), Point3(-half_size, -999998, -half_size), block_types.null))
+		radiant.terrain.get_terrain_component():add_tile(hacky_edge_shading_fix)
       
       self:on_world_generation_complete()
 	end
