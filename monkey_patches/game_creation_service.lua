@@ -165,7 +165,7 @@ function GameCreationService:start_game(session)
 			stonehearth.game_speed:set_anarchy_enabled(game_options.game_speed_anarchy_enabled)
       end
       
-      stonehearth.game_speed:set_game_speed(0, false)
+      stonehearth.game_speed:set_game_speed(0, true)
       tower_defense.game:start()
    end
    

@@ -17,7 +17,8 @@
                "max": { "x": 1, "y": 1, "z": 1 }
             }
          ]
-      }
+      },
+      "tower_defense:tower": {}
    },
    "entity_data": {
       "stonehearth:ai_packs": {

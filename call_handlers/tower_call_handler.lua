@@ -1,3 +1,5 @@
+local validator = radiant.validator
+
 local TowerCallHandler = class()
 
 function TowerCallHandler:create_and_place_entity(session, response, uri)
@@ -58,6 +60,33 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
    end
 
    return true
+end
+
+function TowerCallHandler:sell_full(session, response, tower)
+   validator.expect_argument_types({'Entity'}, tower)
+
+   self:_sell_tower(session.player_id, tower)
+end
+
+function TowerCallHandler:sell_less(session, response, tower)
+   validator.expect_argument_types({'Entity'}, tower)
+
+   self:_sell_tower(session.player_id, tower, 0.2)
+end
+
+function TowerCallHandler:_sell_tower(player_id, tower, multiplier)
+   -- can't sell other players' towers!
+   if player_id ~= tower:get_player_id() then
+      return
+   end
+
+   -- get the value of the tower, refund it to the player, and destroy the tower
+   local value = math.floor(radiant.entities.get_net_worth(tower:get_uri()) * (multiplier or 1))
+   local player = tower_defense.game:get_player(player_id)
+   if player then
+      player:add_gold(value)
+   end
+   radiant.entities.destroy_entity(tower)
 end
 
 return TowerCallHandler

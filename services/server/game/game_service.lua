@@ -24,6 +24,25 @@ function GameService:initialize()
    self._waves = radiant.resources.load_json('tower_defense:data:waves')
 end
 
+function GameService:destroy()
+   self:_destroy_countdown_timer()
+   self:_destroy_wave_controller()
+end
+
+function GameService:_destroy_countdown_timer()
+   if self._sv.countdown_timer then
+      self._sv.countdown_timer:destroy()
+      self._sv.countdown_timer = nil
+   end
+end
+
+function GameService:_destroy_wave_controller()
+   if self._sv.wave_controller then
+      self._sv.wave_controller:destroy()
+      self._sv.wave_controller = nil
+   end
+end
+
 function GameService:get_flying_offset()
    return Point3(0, 4, 0)
 end
@@ -37,29 +56,28 @@ function GameService:start()
    self:_create_countdown_timer()
 end
 
-function GameService:destroy()
-   self:_destroy_countdown_timer()
+function GameService:get_current_wave()
+   return self._sv.wave
+end
+
+function GameService:has_active_wave()
+   return self._sv.wave_controller ~= nil
 end
 
 function GameService:_end_of_round()
-   if self._sv.wave_controller then
-      self._sv.wave_controller:destroy()
-      self._sv.wave_controller = nil
-   end
-   
-   if radiant.util.get_config('pause_at_end_of_round', true) then
-      stonehearth.game_speed:set_game_speed(0, false)
-   end
-
+   self:_destroy_wave_controller()
    self:_destroy_countdown_timer()
-   self:_create_countdown_timer()
-end
-
-function GameService:_destroy_countdown_timer()
-   if self._sv.countdown_timer then
-      self._sv.countdown_timer:destroy()
-      self._sv.countdown_timer = nil
+   
+   if not self._waves.waves[self._sv.wave + 1] then
+      -- no more waves! you won!
+      return
    end
+
+   if radiant.util.get_config('pause_at_end_of_round', true) then
+      stonehearth.game_speed:set_game_speed(0, true)
+   end
+
+   self:_create_countdown_timer()
 end
 
 function GameService:_create_countdown_timer()
@@ -81,6 +99,8 @@ function GameService:_start_round()
       local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data)
       wave_controller:start()
       self._sv.wave_controller = wave_controller
+
+      radiant.events.trigger(radiant, 'tower_defense:wave_started', self._sv.wave)
    else
       -- no more waves! you won!
    end

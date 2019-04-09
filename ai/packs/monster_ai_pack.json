@@ -1,0 +1,14 @@
+{
+   "type" : "ai_pack",
+   "actions" : [
+      "stonehearth:actions:dispatcher:compelled_behavior",
+      "stonehearth:actions:death",
+      "stonehearth:actions:die_generic",
+      "stonehearth:actions:run_death_effect"
+   ],
+   "ai_packs" : [
+      "stonehearth:ai_pack:core",
+      "stonehearth:ai_pack:movement",
+      "stonehearth:ai_pack:death"
+   ]
+}

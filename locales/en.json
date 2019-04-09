@@ -1,4 +1,16 @@
 {
+   "data": {
+      "commands": {
+         "sell_full": {
+            "display_name": "Sell for 100%",
+            "description": "A nice, pristine, unused tower. You can get full value back... for now."
+         },
+         "sell_less": {
+            "display_name": "Sell for 20%",
+            "description": "You waited too long! Inflation! Depreciation! This tower is garbage now."
+         }
+      }
+   },
    "entities": {
       "towers": {
          "small_turret": {

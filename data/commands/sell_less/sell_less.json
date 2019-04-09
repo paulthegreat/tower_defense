@@ -1,0 +1,11 @@
+{
+   "type": "command",
+   "name": "sell_less",
+   "display_name": "i18n(tower_defense:data.commands.sell_less.display_name)",
+   "description": "i18n(tower_defense:data.commands.sell_less.description)",
+   "icon": "file(sell_less.png)",
+   "action": "call",
+   "function": "tower_defense:sell_less",
+   "args": [
+   ]
+}
