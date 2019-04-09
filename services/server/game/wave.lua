@@ -123,19 +123,24 @@ end
 
 -- set up listeners and get monster moving on the path
 function Wave:_activate_monster(monster)
-   radiant.events.listen_once(monster.monster, 'stonehearth:kill_event', function()
+   local id = monster.monster:get_id()
+   monster.kill_listener = radiant.events.listen_once(monster.monster, 'stonehearth:kill_event', function()
          -- if it was killed, hand out gold
          -- probably better to do this by event and have the game service listen to it, but oh well!
          tower_defense.game:give_all_players_gold(self:_get_gold_amount(monster.monster))
          
-         self._sv._spawned_monsters[monster.monster:get_id()] = nil
-         self.__saved_variables:mark_changed()
-         self:_check_wave_end()
+         self:_remove_monster(id)
       end)
    
    -- 'monster' is a table containing monster entity and any other information we need
    -- (like last path checkpoint reached)
 
+end
+
+function Wave:_remove_monster(id)
+   self._sv._spawned_monsters[id] = nil
+   self.__saved_variables:mark_changed()
+   self:_check_wave_end()
 end
 
 function Wave:_get_gold_amount(entity)
@@ -146,6 +151,23 @@ end
 function Wave:_check_wave_end()
    if #self._sv._unspawned_monsters < 1 and not next(self._sv._spawned_monsters) then
       tower_defense.game:_end_of_round()
+   end
+end
+
+-- TODO: implement as event?
+function Wave:monster_finished_path(monster)
+   local id = monster.monster:get_id()
+   local monster_info = self._sv._spawned_monsters[id]
+   if monster_info then
+      if monster_info.kill_listener then
+         monster_info.kill_listener:destroy()
+         monster_info.kill_listener = nil
+      end
+
+      -- subtract hit points?
+
+      
+      self:_remove_monster(id)
    end
 end
 

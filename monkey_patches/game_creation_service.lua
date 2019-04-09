@@ -55,14 +55,17 @@ function GameCreationService:_generate_world(session, response, map_info)
       end
 
       -- subtract the path from the world terrain
+      local movement_path = Region3()
       local path = map.path
       local width = path.width or 3
       local last_point
       local top = Point3(0, height - 1, 0)
       for _, point in ipairs(path.points) do
 			local this_point = Point3(unpack(point))
-			if last_point then
-				terrain:subtract_cube(csg_lib.create_cube(last_point + top, this_point + top):extruded('x', width, width):extruded('z', width, width))
+         if last_point then
+            local cube = csg_lib.create_cube(last_point + top, this_point + top)
+            movement_path:add_cube(cube)
+				terrain:subtract_cube(cube:extruded('x', width, width):extruded('z', width, width))
 			end
 			last_point = this_point
       end
@@ -70,17 +73,29 @@ function GameCreationService:_generate_world(session, response, map_info)
       -- hacky edge shading fix (add a null terrain block super far below us)
       terrain:add_cube(Cube3(Point3(-1, -999999, -1), Point3(0, -999998, 0), block_types.null))
 
-		--move the region to be centered
-		terrain = terrain:translated(Point3(-half_size, 0, -half_size))
+      --move the region to be centered
+      local center_point = Point3(-half_size, 0, -half_size)
+		terrain = terrain:translated(center_point)
       radiant.terrain.get_terrain_component():add_tile(terrain)
-      
+
+      -- create path entity with movement modifier
+      local path_entity = radiant.entities.create_entity('tower_defense:path', { owner = '' })
+      local path_region = path_entity:add_component('movement_modifier_shape')
+      path_region:set_region(_radiant.sim.alloc_region3())
+      path_region:get_region():modify(function(mod_region)
+            mod_region:copy_region(movement_path)
+            mod_region:set_tag(0)
+            mod_region:optimize_by_defragmentation('path movement modifier shape')
+         end)
+      radiant.terrain.place_entity_at_exact_location(path_entity, center_point + Point3(0, 1, 0))
+
       -- finally, add any entities that should start out in the world
       local entities = map.entities
-      local offset = Point3(-half_size, height, -half_size)
+      local offset = center_point + Point3(0, height, 0)
       for uri, entity_list in pairs(entities) do
          for _, entity_data in ipairs(entity_list) do
             local entity = radiant.entities.create_entity(uri, { owner = '' })
-            radiant.terrain.place_entity(entity, Point3(unpack(entity_data.location)) + offset, { force_iconic = false })
+            radiant.terrain.place_entity_at_exact_location(entity, Point3(unpack(entity_data.location)) + offset, { force_iconic = false })
             radiant.entities.turn_to(entity, entity_data.facing or 0)
          end
       end
@@ -91,6 +106,7 @@ function GameCreationService:_generate_world(session, response, map_info)
          map.spawn_location = Point3(unpack(map.spawn_location))
       end
       map.spawn_location = (map.spawn_location or top) + offset
+      map.end_point = last_point + offset - Point3(0, 1, 0)
 
       tower_defense.game:set_map_data(map)
 

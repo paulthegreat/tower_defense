@@ -2,13 +2,18 @@
    "type" : "ai_pack",
    "actions" : [
       "stonehearth:actions:dispatcher:compelled_behavior",
+      "stonehearth:actions:dispatcher:human_work",
       "stonehearth:actions:death",
       "stonehearth:actions:die_generic",
-      "stonehearth:actions:run_death_effect"
+      "stonehearth:actions:run_death_effect",
+      "tower_defense:actions:monster_follow_path"
    ],
    "ai_packs" : [
       "stonehearth:ai_pack:core",
       "stonehearth:ai_pack:movement",
       "stonehearth:ai_pack:death"
+   ],
+   "task_groups" : [
+      "tower_defense:task_groups:monster"
    ]
 }

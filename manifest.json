@@ -17,6 +17,7 @@
    "server_init_script": "file(tower_defense_server)",
 	"default_locale" : "en",
 	"aliases" : {
+      "actions:monster_follow_path": "file(ai/actions/monster_follow_path_action.lua)",
       "ai_pack:monster": "file(ai/packs/monster_ai_pack.json)",
       "commands:sell_full": "file(data/commands/sell_full/sell_full.json)",
       "commands:sell_less": "file(data/commands/sell_less/sell_less.json)",
@@ -26,6 +27,8 @@
       "mixins:flying_monster": "file(mixins/monster.json)",
       "mixins:towers:basic_tower": "file(mixins/towers/basic_tower.json)",
       "mixins:towers:basic_tower_weapon": "file(mixins/towers/basic_tower_weapon.json)",
+      "path": "file(entities/path/path.json)",
+      "task_groups:monster": "file(ai/task_groups/monster_task_group.lua)",
       "towers:small_turret": "file(entities/towers/small_turret/small_turret.json)",
       "towers:small_turret:weapon": "file(entities/towers/small_turret/small_turret_weapon.json)",
       "towers:turnip_shooter": "file(entities/towers/turnip_shooter/turnip_shooter.json)",
@@ -35,10 +38,11 @@
       "stonehearth:hotkeys": "file(data/hotkeys.json)"
    },
 	"overrides" : {
+      "/stonehearth/ai/actions/set_global_attack_cooldown_action.lua": "file(ai/actions/set_global_attack_cooldown_action.lua)",
       "/stonehearth/ai/actions/siege/turret_check_entity_targetable.lua": "file(ai/actions/siege/turret_check_entity_targetable.lua)",
       "/stonehearth/ai/observers/siege_find_target_observer.lua": "file(ai/observers/siege_find_target_observer.lua)",
       "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)",
-      "/stonehearth/mixins/monster/monster.json": "file(mixins/monster.json)"
+      "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)"
    },
    "components" : {
       "tower": "file(components/tower/tower_component.lua)"

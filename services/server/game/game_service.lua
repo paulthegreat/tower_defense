@@ -47,6 +47,22 @@ function GameService:get_flying_offset()
    return Point3(0, 4, 0)
 end
 
+function GameService:get_path_end_point_for_monster(monster)
+   -- if it's an air monster, return the point plus the flying offset
+   local point = self._sv.map_data.end_point
+   if monster:get_player_id() == 'air' then
+      point = point + self:get_flying_offset()
+   end
+   return point
+end
+
+function GameService:monster_finished_path(monster)
+   local wave = self._sv.wave_controller
+   if wave then
+      wave:monster_finished_path(monster)
+   end
+end
+
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
    self.__saved_variables:mark_changed()
