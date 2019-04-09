@@ -24,6 +24,12 @@ end
 function Wave:activate()
    self._wave_data = radiant.resources.load_json(self._sv._wave_data.uri)
    
+   if self._sv._next_spawn_timer then
+      self._sv._next_spawn_timer:bind(function()
+         self:_spawn_next_monster()
+      end)
+   end
+
    if self._is_create then
       self:_load_unspawned_monsters()
    end
@@ -38,9 +44,10 @@ function Wave:destroy()
 end
 
 function Wave:_destroy_next_spawn_timer()
-   if self._next_spawn_timer then
-      self._next_spawn_timer:destroy()
-      self._next_spawn_timer = nil
+   if self._sv._next_spawn_timer then
+      self._sv._next_spawn_timer:destroy()
+      self._sv._next_spawn_timer = nil
+      self.__saved_variables:mark_changed()
    end
 end
 
@@ -77,7 +84,7 @@ function Wave:_create_next_spawn_timer(time)
    end
 
    if time and #self._sv._unspawned_monsters > 0 then
-      self._next_spawn_timer = stonehearth.calendar:set_timer('spawn next monster', time, function()
+      self._sv._next_spawn_timer = stonehearth.calendar:set_persistent_timer('spawn next monster', time, function()
          self:_spawn_next_monster()
       end)
    end
@@ -156,7 +163,7 @@ end
 
 -- TODO: implement as event?
 function Wave:monster_finished_path(monster)
-   local id = monster.monster:get_id()
+   local id = monster:get_id()
    local monster_info = self._sv._spawned_monsters[id]
    if monster_info then
       if monster_info.kill_listener then
@@ -166,7 +173,7 @@ function Wave:monster_finished_path(monster)
 
       -- subtract hit points?
 
-      
+
       self:_remove_monster(id)
    end
 end

@@ -35,14 +35,14 @@
       "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)"
    },
 	"mixintos" : {
-      "stonehearth:hotkeys": "file(data/hotkeys.json)"
+      "stonehearth:hotkeys": "file(data/hotkeys.json)",
+      "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)"
    },
 	"overrides" : {
       "/stonehearth/ai/actions/set_global_attack_cooldown_action.lua": "file(ai/actions/set_global_attack_cooldown_action.lua)",
       "/stonehearth/ai/actions/siege/turret_check_entity_targetable.lua": "file(ai/actions/siege/turret_check_entity_targetable.lua)",
       "/stonehearth/ai/observers/siege_find_target_observer.lua": "file(ai/observers/siege_find_target_observer.lua)",
-      "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)",
-      "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)"
+      "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)"
    },
    "components" : {
       "tower": "file(components/tower/tower_component.lua)"

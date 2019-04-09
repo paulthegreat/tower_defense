@@ -58,10 +58,14 @@ function GameCreationService:_generate_world(session, response, map_info)
       local movement_path = Region3()
       local path = map.path
       local width = path.width or 3
+      local first_point
       local last_point
       local top = Point3(0, height - 1, 0)
       for _, point in ipairs(path.points) do
-			local this_point = Point3(unpack(point))
+         local this_point = Point3(unpack(point))
+         if not first_point then
+            first_point = this_point
+         end
          if last_point then
             local cube = csg_lib.create_cube(last_point + top, this_point + top)
             movement_path:add_cube(cube)
@@ -75,7 +79,8 @@ function GameCreationService:_generate_world(session, response, map_info)
 
       --move the region to be centered
       local center_point = Point3(-half_size, 0, -half_size)
-		terrain = terrain:translated(center_point)
+      terrain = terrain:translated(center_point)
+      movement_path:translate(-(first_point + top))
       radiant.terrain.get_terrain_component():add_tile(terrain)
 
       -- create path entity with movement modifier
@@ -87,7 +92,7 @@ function GameCreationService:_generate_world(session, response, map_info)
             mod_region:set_tag(0)
             mod_region:optimize_by_defragmentation('path movement modifier shape')
          end)
-      radiant.terrain.place_entity_at_exact_location(path_entity, center_point + Point3(0, 1, 0))
+      radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
 
       -- finally, add any entities that should start out in the world
       local entities = map.entities

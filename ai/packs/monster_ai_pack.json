@@ -2,7 +2,6 @@
    "type" : "ai_pack",
    "actions" : [
       "stonehearth:actions:dispatcher:compelled_behavior",
-      "stonehearth:actions:dispatcher:human_work",
       "stonehearth:actions:death",
       "stonehearth:actions:die_generic",
       "stonehearth:actions:run_death_effect",

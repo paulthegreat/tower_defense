@@ -4,9 +4,6 @@ local MonsterFollowPath = radiant.class()
 MonsterFollowPath.name = 'monster follow path'
 MonsterFollowPath.does = 'tower_defense:monster_follow_path'
 MonsterFollowPath.args = {}
-MonsterFollowPath.think_output = {
-   location = Point3,
-}
 MonsterFollowPath.priority = 0.25
 
 function MonsterFollowPath:start_thinking(ai, entity, args)

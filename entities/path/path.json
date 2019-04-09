@@ -2,7 +2,7 @@
    "type": "entity",
    "components": {
       "movement_modifier_shape": {
-         "nav_preference_modifier": 1000
+         "nav_preference_modifier": 100
       }
    },
    "entity_data": {
