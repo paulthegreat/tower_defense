@@ -42,6 +42,7 @@
    "entity_data": {
       "stonehearth:ai_packs": {
          "packs": [
+            "stonehearth:ai_pack:idle",
             "tower_defense:ai_pack:monster"
          ]
       }
