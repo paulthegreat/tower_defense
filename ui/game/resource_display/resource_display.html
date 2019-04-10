@@ -1,0 +1,30 @@
+<script type="text/x-handlebars" data-template-name="resourceDisplay">
+   <div class="gui">
+      <div class="window" id="resourceDisplay">
+         <div class="title">
+            {{i18n tower_defense:ui.game.resourceDisplay.title}}
+         </div>
+
+         <div id="header">
+            <div id="stats">
+               <div class="stat">
+                  <div class="label">wave</div>
+                  <div class="label">{{view.model.wave}}</div>
+					</div>
+					{{#each player in view.player_array}}
+               <div class="stat">
+                  <div class="label">{{player.player_id}}</div>
+                  <div class="label">{{player.gold}}</div>
+               </div>
+					{{/each}}
+               <div class="stat">
+                  <div class="label">Shared</div>
+                  <div class="label">{{view.model.common_player.gold}}</div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+
+   </div>
+</script>

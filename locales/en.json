@@ -39,6 +39,9 @@
                "100_description": "Give yourself 100 gold, you big cheater.",
                "1000_description": "Give yourself 1000 gold, you big, fat cheater."
             }
+         },
+         "resourceDisplay": {
+            "title": "Resources"
          }
       },
       "shell": {
