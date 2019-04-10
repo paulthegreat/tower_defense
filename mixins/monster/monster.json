@@ -37,7 +37,8 @@
             "type": "basic",
             "value": 0
          }
-      }
+      },
+      "tower_defense:monster": {}
    },
    "entity_data": {
       "stonehearth:ai_packs": {
