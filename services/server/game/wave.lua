@@ -12,6 +12,7 @@ local Wave = class()
 function Wave:initialize()
    self._sv._unspawned_monsters = {}
    self._sv._spawned_monsters = {}
+   self._sv.remaining_monsters = 0
 end
 
 function Wave:create(wave_data, map_data)
@@ -60,6 +61,7 @@ function Wave:_load_unspawned_monsters()
          local monsters = {}
          for _, monster in ipairs(monster_data.each_spawn) do
             table.insert(monsters, monster)
+            self._sv.remaining_monsters = self._sv.remaining_monsters + (monster.info.from_population.max or 1)
          end
 
          if #monsters > 0 then
@@ -70,6 +72,8 @@ function Wave:_load_unspawned_monsters()
          end
       end
    end
+
+   self.__saved_variables:mark_changed()
 end
 
 function Wave:start()
@@ -111,7 +115,8 @@ function Wave:_spawn_next_monster()
                local this_monster = {
                   monster = monster,
                   location_offset = location_offset,
-                  path_point = 0
+                  path_point = 0,
+                  damage = monster.damage
                }
                self._sv._spawned_monsters[monster:get_id()] = this_monster
                self:_activate_monster(this_monster)
@@ -145,9 +150,12 @@ function Wave:_activate_monster(monster)
 end
 
 function Wave:_remove_monster(id)
-   self._sv._spawned_monsters[id] = nil
-   self.__saved_variables:mark_changed()
-   self:_check_wave_end()
+   if self._sv._spawned_monsters[id] then
+      self._sv._spawned_monsters[id] = nil
+      self._sv.remaining_monsters = math.max(0, self._sv.remaining_monsters - 1)
+      self.__saved_variables:mark_changed()
+      self:_check_wave_end()
+   end
 end
 
 function Wave:_get_gold_amount(entity)
@@ -157,6 +165,9 @@ end
 -- again, should probably do this with events, but directly calling game service instead
 function Wave:_check_wave_end()
    if #self._sv._unspawned_monsters < 1 and not next(self._sv._spawned_monsters) then
+      -- just make sure we're properly reporting all monsters gone
+      self._sv.remaining_monsters = 0
+      self.__saved_variables:mark_changed()
       tower_defense.game:_end_of_round()
    end
 end
@@ -172,7 +183,7 @@ function Wave:monster_finished_path(monster)
       end
 
       -- subtract hit points?
-
+      tower_defense.game:remove_health(monster_info.damage)
 
       self:_remove_monster(id)
    end

@@ -1,0 +1,16 @@
+{
+   "type": "monster_tuning",
+   "scale": 0.03,
+   "attributes": {
+      "max_health": {
+         "base": 150
+      },
+      "speed": 30,
+      "additive_armor_modifier": 0
+   },
+   "equipment": {
+      "weapon": [
+         "stonehearth:weapons:iron_mace"
+      ]
+   }
+}

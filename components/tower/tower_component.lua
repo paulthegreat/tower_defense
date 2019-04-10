@@ -18,10 +18,21 @@ function TowerComponent:activate()
 
    -- make sure we have any other commands, like auto-targeting and upgrade options
 
+
+   -- set up a listener for added to / removed from world for registering/unregistering with tower service
+
 end
 
 function TowerComponent:destroy()
    self:_destroy_wave_listener()
+end
+
+function TowerComponent:can_see_invis()
+
+end
+
+function TowerComponent:get_targetable_region()
+
 end
 
 function TowerComponent:_destroy_wave_listener()
