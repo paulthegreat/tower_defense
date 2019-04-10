@@ -12,7 +12,7 @@
                      "min": 1,
                      "max": 1
                   },
-                  "tuning": "stonehearth:monster_tuning:undead:scaled_undead"
+                  "tuning": "tower_defense:data:monster_tuning:low_undead"
                }
             }
          ]

@@ -1,7 +1,8 @@
 tower_defense = {}
 
 local service_creation_order = {
-   'game'
+   'game',
+   'tower'
 }
 
 local monkey_patches = {

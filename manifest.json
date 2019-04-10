@@ -22,6 +22,7 @@
       "commands:sell_full": "file(data/commands/sell_full/sell_full.json)",
       "commands:sell_less": "file(data/commands/sell_less/sell_less.json)",
       "data:map_generation" : "file(data/default_map_generation.json)",
+      "data:monster_tuning:low_undead": "file(data/monster_tuning/low_undead.json)",
       "data:waves": "file(data/wave_index.json)",
       "data:waves:sample_wave": "file(data/waves/sample_wave.json)",
       "mixins:flying_monster": "file(mixins/monster.json)",

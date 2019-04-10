@@ -15,6 +15,10 @@ function GameService:initialize()
       self._sv.wave = 0
    end
 
+   if not self._sv.health then
+      self._sv.health = 100
+   end
+
    if self._sv.countdown_timer then
       self._sv.countdown_timer:bind(function()
          self:_start_round()
@@ -44,7 +48,7 @@ function GameService:_destroy_wave_controller()
 end
 
 function GameService:get_flying_offset()
-   return Point3(0, 4, 0)
+   return Point3(0, 3, 0)
 end
 
 function GameService:get_path_end_point_for_monster(monster)
@@ -65,11 +69,25 @@ end
 
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
+   if map_data.starting_health then
+      self._sv.health = map_data.starting_health
+   end
    self.__saved_variables:mark_changed()
 end
 
 function GameService:start()
    self:_create_countdown_timer()
+end
+
+function GameService:get_health()
+   return self._sv.health
+end
+
+function GameService:remove_health(amount)
+   self._sv.health = math.max(0, self._sv.health - (amount or 1))
+   self.__saved_variables:mark_changed()
+
+   -- if it's zero, you lost!
 end
 
 function GameService:get_current_wave()

@@ -115,6 +115,8 @@ function GameCreationService:_generate_world(session, response, map_info)
 
       tower_defense.game:set_map_data(map)
 
+      tower_defense.tower:set_ground_path(movement_path:translated(first_point + top + center_point))
+
 		-- local height = 5
 		-- local width=map.path.width or 3
 		-- local size = map.world_size or 32
