@@ -55,24 +55,11 @@ function GameCreationService:_generate_world(session, response, map_info)
       end
 
       -- subtract the path from the world terrain
-      local movement_path = Region3()
-      local path = map.path
-      local width = path.width or 3
-      local first_point
-      local last_point
       local top = Point3(0, height - 1, 0)
-      for _, point in ipairs(path.points) do
-         local this_point = Point3(unpack(point))
-         if not first_point then
-            first_point = this_point
-         end
-         if last_point then
-            local cube = csg_lib.create_cube(last_point + top, this_point + top)
-            movement_path:add_cube(cube)
-				terrain:subtract_cube(cube:extruded('x', width, width):extruded('z', width, width))
-			end
-			last_point = this_point
-      end
+      local air_top = Point3(0, map.air_path.height, 0)
+      
+      local first_point, last_point, path_region, path_entity = self:_create_path(map.path.points, top, map.path.width or 3, terrain)
+      local air_first_point, air_last_point, air_path_region, air_path_entity = self:_create_path(map.air_path.points, top)
       
       -- hacky edge shading fix (add a null terrain block super far below us)
       terrain:add_cube(Cube3(Point3(-1, -999999, -1), Point3(0, -999998, 0), block_types.null))
@@ -80,19 +67,11 @@ function GameCreationService:_generate_world(session, response, map_info)
       --move the region to be centered
       local center_point = Point3(-half_size, 0, -half_size)
       terrain = terrain:translated(center_point)
-      movement_path:translate(-(first_point + top))
       radiant.terrain.get_terrain_component():add_tile(terrain)
 
-      -- create path entity with movement modifier
-      local path_entity = radiant.entities.create_entity('tower_defense:path', { owner = '' })
-      local path_region = path_entity:add_component('movement_modifier_shape')
-      path_region:set_region(_radiant.sim.alloc_region3())
-      path_region:get_region():modify(function(mod_region)
-            mod_region:copy_region(movement_path)
-            mod_region:set_tag(0)
-            mod_region:optimize_by_defragmentation('path movement modifier shape')
-         end)
+      -- place path entities with movement modifiers
       radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
+      radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top + center_point)
 
       -- finally, add any entities that should start out in the world
       local entities = map.entities
@@ -115,48 +94,43 @@ function GameCreationService:_generate_world(session, response, map_info)
 
       tower_defense.game:set_map_data(map)
 
-      tower_defense.tower:set_ground_path(movement_path:translated(first_point + top + center_point))
-
-		-- local height = 5
-		-- local width=map.path.width or 3
-		-- local size = map.world_size or 32
-		-- assert(size % 2 == 0)
-		-- local half_size = size / 2
-
-		-- local block_types = radiant.terrain.get_block_types()
-		-- local region3 = Region3()
-		-- --basic slab of stone and grass
-		-- region3:add_cube(Cube3(Point3(0, -2, 0), Point3(size, 0, size), block_types.bedrock))
-		-- region3:add_cube(Cube3(Point3(0, 0, 0), Point3(size, height-1, size), block_types.soil_dark))
-		-- region3:add_cube(Cube3(Point3(0, height-1, 0), Point3(size, height, size), block_types.grass))
-		-- --remove the path from the grass layer
-		-- local lastpoint=nil
-		-- local top=Point3(0,height-1,0)
-		-- for _,v in ipairs(map.path.points) do
-		-- 	local thispoint=Point3(unpack(v))
-		-- 	if lastpoint then
-		-- 		region3:subtract_cube(csg_lib.create_cube(lastpoint+top,thispoint+top):extruded('x',width,width):extruded('z',width,width))
-		-- 	end
-		-- 	lastpoint=thispoint
-		-- end
-		-- --move the region to be centered
-		-- region3 = region3:translated(Point3(-half_size, 0, -half_size))
-
-		-- radiant.terrain.get_terrain_component():add_tile(region3)
-		
-		-- local hacky_edge_shading_fix = Region3()
-		-- hacky_edge_shading_fix:add_cube(Cube3(Point3(-half_size-1, -999999, -half_size-1), Point3(-half_size, -999998, -half_size), block_types.null))
-		-- radiant.terrain.get_terrain_component():add_tile(hacky_edge_shading_fix)
-
-      -- local end_gate = map.path.end_gate
-      -- if end_gate then
-      --    local exit_gate = radiant.entities.create_entity(end_gate.uri, { owner = session.player_id })
-      --    radiant.terrain.place_entity(exit_gate, Point3(unpack(end_gate.location)), { force_iconic = false })
-      --    radiant.entities.turn_to(exit_gate, end_gate.facing)
-      -- end
-      
-      -- self:on_world_generation_complete()
+      tower_defense.tower:set_ground_path(path_region:translated(Point3(first_point.x, 0, first_point.z) + center_point))
+      tower_defense.tower:set_air_path(air_path_region:translated(Point3(air_first_point.x, 0, air_first_point.z) + center_point), map.air_path.height)
 	end
+end
+
+function GameCreationService:_create_path(path_array, top, width, terrain)
+   local path_region = Region3()
+   local first_point
+   local last_point
+
+   for _, point in ipairs(path_array) do
+      local this_point = Point3(unpack(point))
+      if not first_point then
+         first_point = this_point
+      end
+      if last_point then
+         local cube = csg_lib.create_cube(last_point + top, this_point + top)
+         path_region:add_cube(cube)
+         if terrain and width then
+            terrain:subtract_cube(cube:extruded('x', width, width):extruded('z', width, width))
+         end
+      end
+      last_point = this_point
+   end
+   path_region:translate(-(first_point + top))
+
+   -- create path entity with movement modifier
+   local path_entity = radiant.entities.create_entity('tower_defense:path', { owner = '' })
+   local path_entity_region = path_entity:add_component('movement_modifier_shape')
+   path_entity_region:set_region(_radiant.sim.alloc_region3())
+   path_entity_region:get_region():modify(function(mod_region)
+         mod_region:copy_region(path_region)
+         mod_region:set_tag(0)
+         mod_region:optimize_by_defragmentation('path movement modifier shape')
+      end)
+
+   return first_point, last_point, path_region, path_entity
 end
 
 function GameCreationService:start_game(session)

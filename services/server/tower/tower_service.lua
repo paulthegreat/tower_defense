@@ -3,6 +3,7 @@
 ]]
 
 local Entity = _radiant.om.Entity
+local Point3 = _radiant.csg.Point3
 
 TowerService = class()
 
@@ -18,12 +19,18 @@ function TowerService:set_ground_path(path)
    self.__saved_variables:mark_changed()
 end
 
+function TowerService:set_air_path(path, height)
+   self._sv.air_path = path
+   self._sv.air_height = height
+   self.__saved_variables:mark_changed()
+end
+
 function TowerService:register_tower(tower, location)
    local tower_comp = tower:get_component('tower_defense:tower')
-   local region = self:_cache_tower_range(tower_comp, location)
+   local region, air_region = self:_cache_tower_range(tower_comp, location)
    local coords_in_range = {}
-   if tower_comp:reveals_invis() and not region:empty() then
-      coords_in_range = self:_get_range_coords(region)
+   if tower_comp:reveals_invis() and (not region:empty() or not air_region:empty()) then
+      coords_in_range = self:_get_range_coords(region + air_region)
    end
 
    local tower_data = {
@@ -33,7 +40,7 @@ function TowerService:register_tower(tower, location)
    self:_cache_range_coords(tower_data)
    self._towers[tower:get_id()] = tower_data
 
-   return region
+   return region, air_region
 end
 
 function TowerService:unregister_tower(tower)
@@ -57,10 +64,10 @@ function TowerService:unregister_tower(tower)
 end
 
 function TowerService:_cache_tower_range(tower_comp, location)
-   local targetable_region = tower_comp:get_targetable_region():translated(location)
+   local targetable_region = tower_comp:get_targetable_region():translated(Point3(location.x, 0, location.z))
    local ground_intersection = targetable_region:intersect_region(self._sv.ground_path)
-   -- TODO: also intersect with air, and then join them together
-   return ground_intersection -- + air_intersection
+   local air_intersection = targetable_region:intersect_region(self._sv.air_path)
+   return ground_intersection, air_intersection + Point3(0, self._sv.air_height, 0)
 end
 
 function TowerService:_get_range_coords(region)
