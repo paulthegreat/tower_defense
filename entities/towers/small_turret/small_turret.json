@@ -47,6 +47,17 @@
             "bowBottom1",
             "head"
          ]
+      },
+      "tower_defense:tower": {
+         "targeting": {
+            "type": "rectangle",
+            "region": {
+               "min": {"x": -1, "y": 0, "z": -12},
+               "max": {"x": 2, "y": 1, "z": 0}
+            },
+            "attacks_ground": true,
+            "attacks_air": true
+         }
       }
    },
    "entity_data": {

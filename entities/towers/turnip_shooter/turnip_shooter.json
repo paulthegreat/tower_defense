@@ -40,6 +40,14 @@
             "block",
             "turnip"
          ]
+      },
+      "tower_defense:tower": {
+         "targeting": {
+            "type": "circle",
+            "radius": 6,
+            "attacks_ground": true,
+            "attacks_air": true
+         }
       }
    },
    "entity_data": {
