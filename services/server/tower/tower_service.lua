@@ -4,6 +4,7 @@
 
 local Entity = _radiant.om.Entity
 local Point3 = _radiant.csg.Point3
+local Region3 = _radiant.csg.Region3
 
 TowerService = class()
 
@@ -27,10 +28,10 @@ end
 
 function TowerService:register_tower(tower, location)
    local tower_comp = tower:get_component('tower_defense:tower')
-   local region, air_region = self:_cache_tower_range(tower_comp, location)
+   local ground_region, air_region = self:_cache_tower_range(tower_comp, location)
    local coords_in_range = {}
-   if tower_comp:reveals_invis() and (not region:empty() or not air_region:empty()) then
-      coords_in_range = self:_get_range_coords(region + air_region)
+   if tower_comp:reveals_invis() and (not ground_region:empty() or not air_region:empty()) then
+      coords_in_range = self:_get_range_coords(ground_region + air_region)
    end
 
    local tower_data = {
@@ -40,7 +41,7 @@ function TowerService:register_tower(tower, location)
    self:_cache_range_coords(tower_data)
    self._towers[tower:get_id()] = tower_data
 
-   return region, air_region
+   return ground_region, air_region
 end
 
 function TowerService:unregister_tower(tower)
@@ -65,9 +66,24 @@ end
 
 function TowerService:_cache_tower_range(tower_comp, location)
    local targetable_region = tower_comp:get_targetable_region():translated(Point3(location.x, 0, location.z))
-   local ground_intersection = targetable_region:intersect_region(self._sv.ground_path)
-   local air_intersection = targetable_region:intersect_region(self._sv.air_path)
-   return ground_intersection, air_intersection + Point3(0, self._sv.air_height, 0)
+   
+   local ground_intersection
+   if tower_comp:attacks_ground() then
+      ground_intersection = targetable_region:intersect_region(self._sv.ground_path)
+      ground_intersection:optimize('targetable region')
+   else
+      ground_intersection = Region3()
+   end
+   local air_intersection
+
+   if tower_comp:attacks_air() then
+      air_intersection = targetable_region:intersect_region(self._sv.air_path):translated(Point3(0, self._sv.air_height, 0))
+      air_intersection:optimize('targetable region')
+   else
+      air_intersection = Region3()
+   end
+
+   return ground_intersection, air_intersection
 end
 
 function TowerService:_get_range_coords(region)

@@ -54,6 +54,14 @@ function TowerComponent:get_targetable_region()
    return self._sv.targetable_region
 end
 
+function TowerComponent:attacks_ground()
+   return self._sv.attacks_ground
+end
+
+function TowerComponent:attacks_air()
+   return self._sv.attacks_air
+end
+
 function TowerComponent:_destroy_wave_listener()
    if self._wave_listener then
       self._wave_listener:destroy()
@@ -74,11 +82,12 @@ function TowerComponent:_register()
       local targetable_region = self:_create_targetable_region()
       self._sv.targetable_region = targetable_region
       if targetable_region then
+         self._sv.attacks_ground = self._json.targeting and self._json.targeting.attacks_ground
+         self._sv.attacks_air = self._json.targeting and self._json.targeting.attacks_air
+
          local ground_region, air_region = tower_defense.tower:register_tower(self._entity, location)
          self._sv.ground_region = ground_region
          self._sv.air_region = air_region
-         self._sv.attacks_ground = self._json.targeting and self._json.targeting.attacks_ground
-         self._sv.attacks_air = self._json.targeting and self._json.targeting.attacks_air
       end
       self.__saved_variables:mark_changed()
    end
@@ -101,6 +110,10 @@ function TowerComponent:_create_targetable_region()
          local z_size = math.floor(math.sqrt(r2 - x * x))
          region:add_cube(Cube3(Point3(x, 0, -z_size), Point3(x + 1, 1, z_size + 1)))
       end
+   end
+
+   if region then
+      region:optimize('targetable region')
    end
 
    return region
