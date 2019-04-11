@@ -15,6 +15,11 @@ end
 function TowerComponent:activate()
    self._json = radiant.entities.get_json(self) or {}
 
+   if self._sv.reveals_invis == nil then
+      self._sv.reveals_invis = self._json.reveals_invis or false
+      self.__saved_variables:mark_changed()
+   end
+
    -- update commands
    -- add a listener for wave change if necessary
    local cur_wave = tower_defense.game:get_current_wave()
@@ -41,8 +46,8 @@ function TowerComponent:destroy()
    self:_destroy_wave_listener()
 end
 
-function TowerComponent:can_see_invis()
-
+function TowerComponent:reveals_invis()
+   return self._sv.reveals_invis
 end
 
 function TowerComponent:get_targetable_region()

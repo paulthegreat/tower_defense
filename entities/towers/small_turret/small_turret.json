@@ -57,7 +57,8 @@
             },
             "attacks_ground": true,
             "attacks_air": true
-         }
+         },
+         "reveals_invis": true
       }
    },
    "entity_data": {

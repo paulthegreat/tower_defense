@@ -22,7 +22,7 @@ function TowerService:register_tower(tower, location)
    local tower_comp = tower:get_component('tower_defense:tower')
    local region = self:_cache_tower_range(tower_comp, location)
    local coords_in_range = {}
-   if tower_comp:can_see_invis() then
+   if tower_comp:reveals_invis() and not region:empty() then
       coords_in_range = self:_get_range_coords(region)
    end
 
