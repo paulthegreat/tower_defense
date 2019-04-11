@@ -41,7 +41,13 @@
             }
          },
          "resourceDisplay": {
-            "title": "Resources"
+            "title": "Resources",
+            "common": "Common"
+         },
+         "gameStateWindow": {
+            "title": "Game State",
+            "remaining_monsters": "Remaining enemies",
+            "wave_number": "Wave number"
          }
       },
       "shell": {
