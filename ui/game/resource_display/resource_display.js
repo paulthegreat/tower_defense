@@ -22,7 +22,6 @@ App.TowerDefenseResourceDisplay = App.View.extend({
       var self = this;
       
       self.radiantTrace = new RadiantTrace();
-      self._playerTraces = {};
       self.set('players', {});
 
 		$('#resourceDisplay')
@@ -31,23 +30,16 @@ App.TowerDefenseResourceDisplay = App.View.extend({
 
 	willDestroyElement: function () {
 		var self = this;
-		this._super();
 
       self.radiantTrace.destroy();
-      radiant.each(self._playerTraces, function(id, trace) {
-         trace.destroy();
-      })
-      self._playerTraces = null;
+		self._super();
 	},
 
 	_onModelPlayersChanged: function () {
 		var self = this;
 
       radiant.each(self.get('model.players'), function(id, player) {
-         if (self._playerTraces[id]) {
-            self._playerTraces[id].destroy();
-         }
-         self._playerTraces[id] = self.radiantTrace.traceUri(player, {})
+         self.radiantTrace.traceUri(player, {})
             .progress(function (data) {
                if (self.isDestroying || self.isDestroyed) {
                   return;
