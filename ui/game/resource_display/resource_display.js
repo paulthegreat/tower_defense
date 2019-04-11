@@ -15,61 +15,38 @@ App.TowerDefenseResourceDisplay = App.View.extend({
 	closeOnEsc: false,
 
 	components: {
-		'players': { '*': {} },
-		'common_player': {},
-		'wave_controller': {}
+		'common_player': {}
 	},
 
 	didInsertElement: function () {
 		var self = this;
 
 		$('#resourceDisplay')
-			.draggable()
+			.draggable();
 
+		self.radiantTrace = new RadiantTrace();
+		self.radiantTrace.traceUri(self.get('uri'), { 'players': { "*": {} }})
+			.progress(function (data) {
+				if (self.isDestroying || self.isDestroyed) {
+					return;
+				}
+				self.set('players',data.players);
+				self.notifyPropertyChange('players');
+			});
 	},
 
 	willDestroyElement: function () {
+		var self = this;
+
+		self.radiantTrace.destroy();
 		this._super();
 	},
 
 	_onPlayersChanged: function () {
 		var self = this;
-		self.set('player_array', radiant.map_to_array(self.get('model.players')))
-	}.observes('model.players'),
 
+		self.set('player_array', radiant.map_to_array(self.get('players')))
 
+	}.observes('players'),
 
-/*/old pet stuff below here
-	_updateNameAndDescription: function () {
-		var alias = this.get('model.uri');
-
-		var description = this.get('model.stonehearth:unit_info.description');
-		var display_name = this.get('model.stonehearth:unit_info.display_name');
-		if (alias) {
-			var catalogData = App.catalog.getCatalogData(alias);
-			if (!catalogData) {
-				console.log("no catalog data found for " + alias);
-			} else {
-				if (!display_name) {
-					display_name = catalogData.display_name;
-				}
-
-				if (!description) {
-					description = catalogData.description;
-				}
-			}
-		}
-		if (display_name) {
-			var unit_name = i18n.t(display_name, { self: this.get('model') });
-			this.set('unit_name', unit_name);
-		}
-		this.set('description', description);
-	}.observes('model.uri'),
-
-	_updateAttributes: function () {
-		var health = this.get('model.stonehearth:expendable_resources.resources.health');
-		var maxHealth = this.get('model.stonehearth:attributes.attributes.max_health.user_visible_value');
-		var healthPercent = Math.floor(health * 100 / maxHealth);
-		this.set('model.health_bar_style', 'width: ' + healthPercent + '%');
-	}.observes('model.stonehearth:attributes')//*/
 });

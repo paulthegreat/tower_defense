@@ -1,0 +1,24 @@
+<script type="text/x-handlebars" data-template-name="gameStateWindow">
+   <div class="gui">
+      <div class="window" id="gameStateWindow">
+         <div class="title">
+            {{i18n tower_defense:ui.game.gameStateWindow.title}}
+         </div>
+
+         <div id="header">
+            <table>
+               <tr>
+                  <td>wave number</td>
+                  <td>{{view.model.wave}}</td>
+               </tr>
+               <tr>
+                  <td>remaining monsters</td>
+                  <td>{{view.model.wave_controller.remaining_monsters}}</td>
+               </tr>
+            </table>
+         </div>
+
+      </div>
+
+   </div>
+</script>

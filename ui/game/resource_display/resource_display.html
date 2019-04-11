@@ -6,22 +6,18 @@
          </div>
 
          <div id="header">
-            <div id="stats">
-               <div class="stat">
-                  <div class="label">wave</div>
-                  <div class="label">{{view.model.wave}}</div>
-					</div>
+            <table>
 					{{#each player in view.player_array}}
-               <div class="stat">
-                  <div class="label">{{player.player_id}}</div>
-                  <div class="label">{{player.gold}}</div>
-               </div>
+               <tr>
+                  <td>{{player.player_id}}</td>
+                  <td>{{player.gold}}</td>
+               </tr>
 					{{/each}}
-               <div class="stat">
-                  <div class="label">Shared</div>
-                  <div class="label">{{view.model.common_player.gold}}</div>
-               </div>
-            </div>
+               <tr>
+                  <td>Shared</td>
+                  <td>{{view.model.common_player.gold}}</td>
+               </tr>
+            </table>
          </div>
 
       </div>
