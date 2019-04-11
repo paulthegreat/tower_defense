@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	radiant.call('tower_defense:get_service','game')
+	radiant.call('tower_defense:get_service', 'game')
 		.done(function (e) {
 			App.gameView.addView(App.TowerDefenseResourceDisplay, { uri: e.result })
 		})
@@ -16,31 +16,47 @@ App.TowerDefenseResourceDisplay = App.View.extend({
 
 	components: {
 		'common_player': {}
-	},
+   },
 
 	didInsertElement: function () {
-		var self = this;
+      var self = this;
+      
+      self.radiantTrace = new RadiantTrace();
+      self._playerTraces = {};
+      self.set('players', {});
 
 		$('#resourceDisplay')
 			.draggable();
-
-		self.radiantTrace = new RadiantTrace();
-		self.radiantTrace.traceUri(self.get('uri'), { 'players': { "*": {} }})
-			.progress(function (data) {
-				if (self.isDestroying || self.isDestroyed) {
-					return;
-				}
-				self.set('players',data.players);
-				self.notifyPropertyChange('players');
-			});
 	},
 
 	willDestroyElement: function () {
 		var self = this;
-
-		self.radiantTrace.destroy();
 		this._super();
+
+      self.radiantTrace.destroy();
+      radiant.each(self._playerTraces, function(id, trace) {
+         trace.destroy();
+      })
+      self._playerTraces = null;
 	},
+
+	_onModelPlayersChanged: function () {
+		var self = this;
+
+      radiant.each(self.get('model.players'), function(id, player) {
+         if (self._playerTraces[id]) {
+            self._playerTraces[id].destroy();
+         }
+         self._playerTraces[id] = self.radiantTrace.traceUri(player, {})
+            .progress(function (data) {
+               if (self.isDestroying || self.isDestroyed) {
+                  return;
+               }
+               Ember.set(self.get('players'), id, data);
+               self.notifyPropertyChange('players');
+            });
+      });
+	}.observes('model.players'),
 
 	_onPlayersChanged: function () {
 		var self = this;
