@@ -1,0 +1,21 @@
+{
+   "type": "kingdom",
+   "kingdom_name": "The Flying (Spaghetti) Monsters",
+   "kingdom_id": "air",
+   "amenity_to_strangers": "hostile",
+   "roles": {
+      "poyo": {
+         "male": {
+            "uri": [
+               "tower_defense:monsters:air:poyo"
+            ],
+            "given_names": [
+               "Bawky"
+            ]
+         },
+         "surnames": [
+            "McBawkerson"
+         ]
+      }
+   }
+}

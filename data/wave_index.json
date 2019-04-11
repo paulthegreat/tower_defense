@@ -13,6 +13,20 @@
                "multiply": 1
             }
          }
+      },
+      {
+         "uri": "tower_defense:data:waves:sample_wave_2",
+         "modifiers": {
+            "health": {
+               "multiply": 1
+            },
+            "armor": {
+               "multiply": 1
+            },
+            "gold": {
+               "multiply": 1
+            }
+         }
       }
    ]
 }

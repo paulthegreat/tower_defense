@@ -1,6 +1,11 @@
 {
    "type": "mixin",
    "mixins": "stonehearth:mixins:monster",
+   "components": {
+      "mob": {
+         "ignore_gravity": true
+      }
+   },
    "entity_data": {
       "navgrid": {
          "ignore_gravity": true,

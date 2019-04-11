@@ -58,8 +58,8 @@ function GameCreationService:_generate_world(session, response, map_info)
       local top = Point3(0, height - 1, 0)
       local air_top = Point3(0, map.air_path.height, 0)
       
-      local first_point, last_point, path_region, path_entity = self:_create_path(map.path.points, top, map.path.width or 3, terrain)
-      local air_first_point, air_last_point, air_path_region, air_path_entity = self:_create_path(map.air_path.points, top)
+      local first_point, last_point, path_region, path_entity = self:_create_path(map.path.points, top, false, map.path.width or 3, terrain)
+      local air_first_point, air_last_point, air_path_region, air_path_entity = self:_create_path(map.air_path.points, top, true)
       
       -- hacky edge shading fix (add a null terrain block super far below us)
       terrain:add_cube(Cube3(Point3(-1, -999999, -1), Point3(0, -999998, 0), block_types.null))
@@ -89,7 +89,7 @@ function GameCreationService:_generate_world(session, response, map_info)
       if map.spawn_location then
          map.spawn_location = Point3(unpack(map.spawn_location))
       end
-      map.spawn_location = (map.spawn_location or top) + offset
+      map.spawn_location = (map.spawn_location or Point3.zero) + top + center_point
       map.end_point = last_point + offset - Point3(0, 1, 0)
 
       tower_defense.game:set_map_data(map)
@@ -99,7 +99,7 @@ function GameCreationService:_generate_world(session, response, map_info)
 	end
 end
 
-function GameCreationService:_create_path(path_array, top, width, terrain)
+function GameCreationService:_create_path(path_array, top, is_air, width, terrain)
    local path_region = Region3()
    local first_point
    local last_point
@@ -129,6 +129,17 @@ function GameCreationService:_create_path(path_array, top, width, terrain)
          mod_region:set_tag(0)
          mod_region:optimize_by_defragmentation('path movement modifier shape')
       end)
+
+   if is_air then
+      -- if it's air, we need to specify a collision region directly under the path
+      path_entity_region = path_entity:add_component('region_collision_shape')
+      path_entity_region:set_region_collision_type(_radiant.om.RegionCollisionShape.PLATFORM)
+      path_entity_region:set_region(_radiant.sim.alloc_region3())
+      path_entity_region:get_region():modify(function(mod_region)
+            mod_region:copy_region(path_region:translated(Point3(0, -1, 0)))
+            mod_region:optimize_by_defragmentation('path region collision shape')
+         end)
+   end
 
    return first_point, last_point, path_region, path_entity
 end

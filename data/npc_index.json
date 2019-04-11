@@ -1,0 +1,109 @@
+{
+   "type": "index",
+   "populations": {
+      "air": {
+         "kingdom": "tower_defense:kingdoms:air",
+         "color": {
+            "r": 192,
+            "g": 32,
+            "b": 192
+         }
+      },
+      "amberstone": {
+         "kingdom": "stonehearth:kingdoms:amberstone",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "forest": {
+         "kingdom": "stonehearth:kingdoms:forest",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "goblins": {
+         "kingdom": "stonehearth:kingdoms:goblin",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "undead": {
+         "kingdom": "stonehearth:kingdoms:undead",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "animals": {
+         "kingdom": "stonehearth:kingdoms:animals",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "human_npcs": {
+         "kingdom": "stonehearth:kingdoms:human_npcs",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "orcs": {
+         "kingdom": "stonehearth:kingdoms:orcs",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "orc_npcs": {
+         "kingdom": "stonehearth:kingdoms:orc_npcs",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "rabbit_biped_npcs": {
+         "kingdom": "stonehearth:kingdoms:rabbit_biped_npcs",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "titans": {
+         "kingdom": "stonehearth:kingdoms:titans",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "dragonborn": {
+         "kingdom": "stonehearth:kingdoms:dragonborn",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      },
+      "hestia": {
+         "kingdom": "stonehearth:kingdoms:hestia",
+         "color": {
+            "r": 178,
+            "g": 128,
+            "b": 51
+         }
+      }
+   }
+}

@@ -47,7 +47,8 @@
          "gameStateWindow": {
             "title": "Game State",
             "remaining_monsters": "Remaining enemies",
-            "wave_number": "Wave number"
+            "wave_number": "Wave number",
+            "player_health": "Health"
          }
       },
       "shell": {

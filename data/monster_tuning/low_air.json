@@ -1,0 +1,10 @@
+{
+   "type": "monster_tuning",
+   "scale": 0.08,
+   "attributes": {
+      "max_health": {
+         "base": 40
+      },
+      "speed": 40
+   }
+}
