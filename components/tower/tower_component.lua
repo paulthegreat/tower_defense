@@ -98,7 +98,7 @@ function TowerComponent:_create_targetable_region()
       region = Region3()
       local r2 = (targeting.radius + 0.5) * (targeting.radius + 0.5)
       for x = -targeting.radius, targeting.radius do
-         local z_size = math.ceil(math.sqrt(r2 - x * x) - 0.5)
+         local z_size = math.floor(math.sqrt(r2 - x * x))
          region:add_cube(Cube3(Point3(x, 0, -z_size), Point3(x + 1, 1, z_size + 1)))
       end
    end
