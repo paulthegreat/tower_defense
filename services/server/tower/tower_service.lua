@@ -74,7 +74,7 @@ function TowerService:_cache_tower_range(tower_comp, location)
    else
       ground_intersection = Region3()
    end
-   
+
    local air_intersection
    if tower_comp:attacks_air() then
       air_intersection = targetable_region:intersect_region(self._sv.air_path):translated(Point3(0, self._sv.air_height, 0))
@@ -88,7 +88,7 @@ end
 
 function TowerService:_get_range_coords(region)
    local coords = {}
-   region:each_cube(function(cube)
+   for cube in region:each_cube() do
       local bounds = cube:get_bounds()
       local min = bounds.min
       local max = bounds.max
@@ -97,7 +97,7 @@ function TowerService:_get_range_coords(region)
             coords[string.format('%s,%s', x, z)] = true
          end
       end
-   end)
+   end
 
    return coords
 end
