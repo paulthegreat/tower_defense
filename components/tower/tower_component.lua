@@ -192,7 +192,7 @@ function TowerComponent:_create_targetable_region()
    local targeting = self._json.targeting or {}
    local region
    if targeting.type == 'rectangle' then
-      region = Region3(radiant.util.to_cube3(targeting.region))
+      region = Region3(radiant.util.to_cube3(targeting.region)):translated(Point3(-.5, 0, -.5)):rotated(radiant.entities.get_facing(self._entity)):translated(Point3(.5, 0, .5))
    elseif targeting.type == 'circle' then
       -- create a blocky circle region
       region = Region3()

@@ -82,7 +82,7 @@ function TowerRenderer:_update()
       EDGE_COLOR_ALPHA = 48
    end
 
-   self._outline_node = _radiant.client.create_region_outline_node(self._entity_node, region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.45, 0)),
+   self._outline_node = _radiant.client.create_region_outline_node(RenderRootNode, region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.45, 0)+radiant.entities.get_world_grid_location(self._entity)),
          radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA * 5), radiant.util.to_color4(color, FACE_COLOR_ALPHA * 2),
          '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)
       :set_casts_shadows(false)
