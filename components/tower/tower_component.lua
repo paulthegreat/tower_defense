@@ -4,6 +4,15 @@ local Region3 = _radiant.csg.Region3
 
 local TowerComponent = class()
 
+local FILTER_HP_LOW = 'lowest_health'
+local FILTER_HP_HIGH = 'highest_health'
+local FILTER_CLOSEST_TO_TOWER = 'closest_to_tower'
+local FILTER_CLOSEST_TO_END = 'closest_to_end'
+local FILTER_SHORTEST_DEBUFF_TIME = 'shortest_debuff_time'
+local FILTER_HIGHEST_DEBUFF_STACK = 'highest_debuff_stack'
+local FILTER_MOST_TARGETS = 'most_targets'
+local FILTER_TARGET_TYPE = 'target_type'
+
 function TowerComponent:create()
    local wave = tower_defense.game:get_current_wave()
    if tower_defense.game:has_active_wave() then
@@ -14,10 +23,21 @@ end
 
 function TowerComponent:activate()
    self._json = radiant.entities.get_json(self) or {}
+   if not self._json.targeting then
+      self._json.targeting = {}
+   end
 
    if self._sv.reveals_invis == nil then
       self._sv.reveals_invis = self._json.reveals_invis or false
       self.__saved_variables:mark_changed()
+   end
+
+   if not self._sv.target_filters then
+      self:set_target_filters(self._json.targeting.target_filters)
+   end
+
+   if not self._sv.preferred_target_types then
+      self:set_preferred_target_types(self._json.targeting.preferred_target_types)
    end
 
    -- update commands
@@ -66,6 +86,75 @@ function TowerComponent:attacks_air()
    return self._sv.attacks_air
 end
 
+function TowerComponent:set_target_filters(target_filters)
+   self._sv.target_filters = target_filters or {}
+   self.__saved_variables:mark_changed()
+end
+
+function TowerComponent:set_preferred_target_types(preferred_target_types)
+   self._sv.preferred_target_types = preferred_target_types or {}
+   self.__saved_variables:mark_changed()
+end
+
+function TowerComponent:get_best_target()
+   -- first check what total targets are available
+   -- then apply filters in order until we have a single tower remaining or we run out of filters
+   -- return the first (if any) remaining tower
+   if not self._sv.targetable_path_region or self._sv.targetable_path_region:empty() then
+      return
+   end
+
+   local targets = radiant.values(radiant.terrain.get_entities_in_region(self._sv.targetable_path_region),
+      function(entity)
+         return entity:get_component('tower_defense:monster') ~= nil
+      end)
+   
+   for _, filter in ipairs(self._sv.target_filters) do
+      if #targets < 2 then
+         break
+      end
+
+      local best_targets = {}
+      local best_value
+
+      for _, target in ipairs(targets) do
+         local value = self:_get_filter_value(filter, target)
+         if not best_value or value == best_value then
+            best_value = value
+            table.insert(best_targets, target)
+         elseif value > best_value then
+            best_targets = {target}
+         end
+      end
+
+      targets = best_targets
+   end
+
+   return targets[1]
+end
+
+function TowerComponent:_get_filter_value(filter, target)
+   if filter == FILTER_HP_LOW then
+      return -(radiant.entities.get_health(entity) or 0)
+   elseif filter == FILTER_HP_HIGH then
+      return radiant.entities.get_health(entity) or 0
+   elseif filter == FILTER_CLOSEST_TO_TOWER then
+      return -radiant.entities.distance_between_entities(self._entity, target)
+   elseif filter == FILTER_CLOSEST_TO_END then
+      return -target:get_component('tower_defense:monster'):get_path_length()
+   elseif filter == FILTER_SHORTEST_DEBUFF_TIME then
+      
+   elseif filter == FILTER_HIGHEST_DEBUFF_STACK then
+      
+   elseif filter == FILTER_MOST_TARGETS then
+
+   elseif filter == FILTER_TARGET_TYPE then
+
+   end
+
+   return 0
+end
+
 function TowerComponent:_destroy_wave_listener()
    if self._wave_listener then
       self._wave_listener:destroy()
@@ -81,15 +170,15 @@ function TowerComponent:_register()
    -- calculate targetable range and translate it to our location
    -- pass that in to the tower service registration function
    -- store the resulting targetable path intersection ranges
-   local location = radiant.entities.get_world_grid_location(self._entity)
-   if location then
+   self._location = radiant.entities.get_world_grid_location(self._entity)
+   if self._location then
       local targetable_region = self:_create_targetable_region()
       self._sv.targetable_region = targetable_region
       if targetable_region then
-         self._sv.attacks_ground = self._json.targeting and self._json.targeting.attacks_ground
-         self._sv.attacks_air = self._json.targeting and self._json.targeting.attacks_air
+         self._sv.attacks_ground = self._json.targeting.attacks_ground
+         self._sv.attacks_air = self._json.targeting.attacks_air
 
-         self._sv.targetable_path_region = tower_defense.tower:register_tower(self._entity, location)
+         self._sv.targetable_path_region = tower_defense.tower:register_tower(self._entity, self._location)
       end
       self.__saved_variables:mark_changed()
    end
