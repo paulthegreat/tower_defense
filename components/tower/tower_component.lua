@@ -104,10 +104,10 @@ function TowerComponent:get_best_target()
       return
    end
 
-   local targets = radiant.values(radiant.terrain.get_entities_in_region(self._sv.targetable_path_region),
+   local targets = radiant.values(radiant.terrain.get_entities_in_region(self._sv.targetable_path_region,
       function(entity)
          return entity:get_component('tower_defense:monster') ~= nil
-      end)
+      end))
    
    for _, filter in ipairs(self._sv.target_filters) do
       if #targets < 2 then

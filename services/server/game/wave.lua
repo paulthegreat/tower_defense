@@ -103,19 +103,15 @@ function Wave:_spawn_next_monster()
       for _, monster in ipairs(monster_info.monsters) do
          local pop = stonehearth.population:get_population(monster.population)
          if pop then
-            local location_offset   -- used for flying monsters' vertical offset
             local this_location = location
             if monster.population == 'air' then
-               location_offset = tower_defense.game:get_flying_offset()
-               this_location = this_location + location_offset
+               this_location.y = this_location.y + self._sv._map_data.air_path.height
             end
 
             local new_monsters = game_master_lib.create_citizens(pop, monster.info, this_location, {player_id = ''})
             for _, monster in ipairs(new_monsters) do
                local this_monster = {
                   monster = monster,
-                  location_offset = location_offset,
-                  path_point = 0,
                   damage = monster.damage
                }
                self._sv._spawned_monsters[monster:get_id()] = this_monster
