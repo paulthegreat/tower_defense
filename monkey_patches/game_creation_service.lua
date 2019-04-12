@@ -136,8 +136,8 @@ function GameCreationService:_create_path(path_array, top, is_air, width, terrai
       path_entity_region:set_region_collision_type(_radiant.om.RegionCollisionShape.PLATFORM)
       path_entity_region:set_region(_radiant.sim.alloc_region3())
       path_entity_region:get_region():modify(function(mod_region)
-            mod_region:copy_region(path_region:translated(Point3(0, -1, 0)))
-            mod_region:optimize_by_defragmentation('path region collision shape')
+            mod_region:copy_region(path_region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.55, 0)))
+            --mod_region:optimize_by_defragmentation('path region collision shape')
          end)
    end
 

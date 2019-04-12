@@ -7,7 +7,7 @@ local MonsterComponent = class()
 function MonsterComponent:initialize()
    self._json = radiant.entities.get_json(self)
    self._sv.default_material = self._json.render_material or MAT_NORMAL
-
+   self._sv.path_length = 0
    self._sv._seen_by = {}
 end
 
@@ -15,6 +15,24 @@ function MonsterComponent:activate()
    if not self._sv.render_material then
       self._sv.render_material = self._sv.default_material
       self.__saved_variables:mark_changed()
+   end
+
+   self._location_trace = radiant.entities.trace_grid_location(self._entity, 'monster moved')
+      :on_changed(function()
+         local location = radiant.entities.get_world_grid_location(self._entity)
+         if not self._location then
+            self._location = location
+         elseif location ~= self._location then
+            self:set_path_length(self._sv.path_length - 1)
+         end
+      end)
+      :push_object_state()
+end
+
+function MonsterComponent:destroy()
+   if self._location_trace then
+      self._location_trace:destroy()
+      self._location_trace = nil
    end
 end
 
@@ -52,6 +70,15 @@ function MonsterComponent:_update_render_material()
       self._sv.render_material = material
       self.__saved_variables:mark_changed()
    end
+end
+
+function MonsterComponent:get_path_length()
+   return self._sv.path_length
+end
+
+function MonsterComponent:set_path_length(length)
+   self._sv.path_length = length
+   self.__saved_variables:mark_changed()
 end
 
 return MonsterComponent

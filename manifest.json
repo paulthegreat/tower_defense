@@ -44,8 +44,9 @@
       "stonehearth:hotkeys": "file(data/hotkeys.json)"
    },
 	"overrides" : {
-      "/stonehearth/ai/actions/wait_for_global_attack_cooldown_action.lua": "file(ai/actions/wait_for_global_attack_cooldown_action.lua)",
       "/stonehearth/ai/actions/siege/turret_check_entity_targetable.lua": "file(ai/actions/siege/turret_check_entity_targetable.lua)",
+      "/stonehearth/ai/actions/run_to_location_action.lua": "file(ai/actions/run_to_location_action.lua)",
+      "/stonehearth/ai/actions/wait_for_global_attack_cooldown_action.lua": "file(ai/actions/wait_for_global_attack_cooldown_action.lua)",
       "/stonehearth/ai/observers/siege_find_target_observer.lua": "file(ai/observers/siege_find_target_observer.lua)",
       "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)",
       "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)",

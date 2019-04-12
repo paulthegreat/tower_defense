@@ -54,6 +54,10 @@ function TowerComponent:get_targetable_region()
    return self._sv.targetable_region
 end
 
+function TowerComponent:get_targetable_path_region()
+   return self._sv.targetable_path_region
+end
+
 function TowerComponent:attacks_ground()
    return self._sv.attacks_ground
 end
@@ -85,9 +89,7 @@ function TowerComponent:_register()
          self._sv.attacks_ground = self._json.targeting and self._json.targeting.attacks_ground
          self._sv.attacks_air = self._json.targeting and self._json.targeting.attacks_air
 
-         local ground_region, air_region = tower_defense.tower:register_tower(self._entity, location)
-         self._sv.ground_region = ground_region
-         self._sv.air_region = air_region
+         self._sv.targetable_path_region = tower_defense.tower:register_tower(self._entity, location)
       end
       self.__saved_variables:mark_changed()
    end
