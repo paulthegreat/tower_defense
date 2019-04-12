@@ -105,7 +105,7 @@ function Wave:_spawn_next_monster()
          if pop then
             local this_location = location
             if monster.population == 'air' then
-               this_location.y = this_location.y + self._sv._map_data.air_path.height
+               this_location = this_location + Point3(0, self._sv._map_data.air_path.height, 0)
             end
 
             local new_monsters = game_master_lib.create_citizens(pop, monster.info, this_location, {player_id = ''})

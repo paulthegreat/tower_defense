@@ -2,10 +2,9 @@
 	"type": "ai_pack",
 	"actions": [
 		"stonehearth:actions:idle_top_action",
-		"tower_defense:actions:tower_attack_ranged"
-	],
-	"observers": [
-		"tower_defense:observers:find_target"
+		"tower_defense:actions:tower_attack",
+		"tower_defense:actions:tower_attack_ranged",
+		"tower_defense:actions:tower_find_target"
 	],
 	"ai_packs": [
 		"stonehearth:ai_pack:core"

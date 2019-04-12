@@ -3,6 +3,7 @@ local MAT_SOME_INVIS = '/tower_defense/data/horde/materials/somewhat_invisible.j
 local MAT_MOST_INVIS = '/tower_defense/data/horde/materials/mostly_invisible.json'
 
 local MonsterComponent = class()
+local log = radiant.log.create_logger('monster')
 
 function MonsterComponent:initialize()
    self._json = radiant.entities.get_json(self)

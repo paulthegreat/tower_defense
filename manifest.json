@@ -18,7 +18,9 @@
 	"default_locale" : "en",
 	"aliases" : {
       "actions:monster_follow_path": "file(ai/actions/monster_follow_path_action.lua)",
+      "actions:tower_attack": "file(ai/actions/tower_attack_action.lua)",
       "actions:tower_attack_ranged": "file(ai/actions/tower_attack_ranged_action.lua)",
+      "actions:tower_find_target": "file(ai/actions/tower_find_target_action.lua)",
       "ai_pack:monster": "file(ai/packs/monster_ai_pack.json)",
       "ai_pack:tower": "file(ai/packs/tower_ai_pack.json)",
       "commands:sell_full": "file(data/commands/sell_full/sell_full.json)",
@@ -47,9 +49,7 @@
       "stonehearth:hotkeys": "file(data/hotkeys.json)"
    },
 	"overrides" : {
-      "/stonehearth/ai/actions/siege/turret_check_entity_targetable.lua": "file(ai/actions/siege/turret_check_entity_targetable.lua)",
       "/stonehearth/ai/actions/run_to_location_action.lua": "file(ai/actions/run_to_location_action.lua)",
-      "/stonehearth/ai/actions/wait_for_global_attack_cooldown_action.lua": "file(ai/actions/wait_for_global_attack_cooldown_action.lua)",
       "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)",
       "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)",
       "/stonehearth/data/npc_index.json": "file(data/npc_index.json)"
@@ -64,8 +64,7 @@
    },
    "controllers" : {
       "game_player": "file(services/server/game/game_player.lua)",
-      "wave": "file(services/server/game/wave.lua)",
-      "observers:find_target": "file(ai/observers/find_target_observer.lua)"
+      "wave": "file(services/server/game/wave.lua)"
    },
    "functions": {
       "start_game_command": {
