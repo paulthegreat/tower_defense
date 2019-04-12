@@ -7,7 +7,7 @@ local MonsterComponent = class()
 function MonsterComponent:initialize()
    self._json = radiant.entities.get_json(self)
    self._sv.default_material = self._json.render_material or MAT_NORMAL
-   self._sv.path_length = 0
+   self._sv.path_length = 999999
    self._sv._seen_by = {}
 end
 

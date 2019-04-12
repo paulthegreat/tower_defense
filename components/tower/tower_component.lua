@@ -135,9 +135,9 @@ end
 
 function TowerComponent:_get_filter_value(filter, target)
    if filter == FILTER_HP_LOW then
-      return -(radiant.entities.get_health(entity) or 0)
+      return -(radiant.entities.get_health(target) or 0)
    elseif filter == FILTER_HP_HIGH then
-      return radiant.entities.get_health(entity) or 0
+      return radiant.entities.get_health(target) or 0
    elseif filter == FILTER_CLOSEST_TO_TOWER then
       return -radiant.entities.distance_between_entities(self._entity, target)
    elseif filter == FILTER_CLOSEST_TO_END then

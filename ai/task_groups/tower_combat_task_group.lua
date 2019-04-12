@@ -1,6 +1,6 @@
 local TowerCombatTaskGroup = class()
 TowerCombatTaskGroup.name = 'tower combat control'
-TowerCombatTaskGroup.does = 'tower_defense:combat'
+TowerCombatTaskGroup.does = 'stonehearth:top'
 TowerCombatTaskGroup.priority = {0.10, 0.65}
 TowerCombatTaskGroup.sunk_cost_boost = 0
 
