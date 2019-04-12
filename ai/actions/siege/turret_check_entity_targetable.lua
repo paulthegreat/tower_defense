@@ -24,6 +24,7 @@ function SiegeCheckEntityTargetable:start_thinking(ai, entity, args)
    end
 end
 
+-- this MUST NOT call both clear_think_output and set_think_output to be Safe to do sync
 function SiegeCheckEntityTargetable:_update_think_output(ai, entity, args)
    local clear_think_output = function()
          if self._ready then
@@ -40,18 +41,6 @@ function SiegeCheckEntityTargetable:_update_think_output(ai, entity, args)
 
    -- Don't target/attack if we (not the target) are outside the leash
    if stonehearth.combat:is_entity_outside_leash(entity) then
-      clear_think_output()
-      return
-   end
-
-   if not stonehearth.combat:in_range_and_has_line_of_sight(entity, args.target, weapon) then
-      clear_think_output()
-      return
-   end
-
-   if radiant.entities.is_standing_on_ladder(entity) then
-      -- We generally want to prohibit combat on ladders. This case is particularly unfair,
-      -- because the ranged unit can attack, but melee units can't find an adjacent to retaliate.
       clear_think_output()
       return
    end
