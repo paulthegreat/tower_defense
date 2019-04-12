@@ -45,6 +45,11 @@ function SiegeCheckEntityTargetable:_update_think_output(ai, entity, args)
       return
    end
 
+   if not stonehearth.combat:in_range(entity, args.target, weapon) then
+      clear_think_output()
+      return
+   end
+
    if not self._ready then
       self._ready = true
       ai:set_think_output()
