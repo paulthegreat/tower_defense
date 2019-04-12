@@ -46,7 +46,11 @@
             "type": "circle",
             "radius": 6,
             "attacks_ground": true,
-            "attacks_air": true
+            "attacks_air": true,
+            "target_filters": [
+               "closest_to_end",
+               "highest_health"
+            ]
          }
       }
    },
