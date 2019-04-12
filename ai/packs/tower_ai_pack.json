@@ -2,17 +2,7 @@
 	"type": "ai_pack",
 	"actions": [
 		"stonehearth:actions:idle_top_action",
-		"stonehearth:actions:drop_carrying_now",
-		"stonehearth:actions:bump_entity",
-      "stonehearth:actions:bump_against_entity",
-      "stonehearth:actions:bump_allies",
-		"stonehearth:actions:combat",
-		"stonehearth:actions:combat:wait_for_global_attack_cooldown",
-		"stonehearth:actions:combat:set_global_attack_cooldown",
-		"stonehearth:actions:combat:attack_after_cooldown",
-      "stonehearth:actions:siege:turret_check_entity_targetable",
-      "stonehearth:actions:siege:attack:ranged",
-      "stonehearth:actions:siege:attack:turret"
+		"tower_defense:actions:tower_attack_ranged"
 	],
 	"observers": [
 		"tower_defense:observers:find_target"

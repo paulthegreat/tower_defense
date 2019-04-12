@@ -153,7 +153,7 @@ function FindTargetObserver:_attack_target(target)
       assert(not self._task)
       self._task = self._entity:add_component('stonehearth:ai')
                          :get_task_group('tower_defense:task_groups:tower_combat')
-                            :create_task('stonehearth:combat:attack_after_cooldown', { target = target })
+                            :create_task('tower_defense:tower_attack_ranged', { target = target })
                                :once()
                                :notify_completed(
                                  function ()

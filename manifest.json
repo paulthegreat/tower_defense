@@ -18,6 +18,7 @@
 	"default_locale" : "en",
 	"aliases" : {
       "actions:monster_follow_path": "file(ai/actions/monster_follow_path_action.lua)",
+      "actions:tower_attack_ranged": "file(ai/actions/tower_attack_ranged_action.lua)",
       "ai_pack:monster": "file(ai/packs/monster_ai_pack.json)",
       "ai_pack:tower": "file(ai/packs/tower_ai_pack.json)",
       "commands:sell_full": "file(data/commands/sell_full/sell_full.json)",
