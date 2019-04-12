@@ -83,15 +83,19 @@ function TowerService:_cache_tower_range(tower_comp, location)
       air_intersection = Region3()
    end
 
-   return ground_intersection + air_intersection
+   targetable_region = ground_intersection + air_intersection
+   if not targetable_region:empty() then
+      targetable_region:translate(Point3(0, tower_defense.game:get_spawn_location().y, 0))
+   end
+
+   return targetable_region
 end
 
 function TowerService:_get_range_coords(region)
    local coords = {}
    for cube in region:each_cube() do
-      local bounds = cube:get_bounds()
-      local min = bounds.min
-      local max = bounds.max
+      local min = cube.min
+      local max = cube.max
       for x = min.x, max.x do
          for z = min.z, max.z do
             coords[string.format('%s,%s', x, z)] = true

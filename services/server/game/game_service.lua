@@ -47,17 +47,16 @@ function GameService:_destroy_wave_controller()
    end
 end
 
-function GameService:get_flying_offset()
-   return Point3(0, 3, 0)
+function GameService:get_spawn_location()
+   return self._sv.map_data.spawn_location
 end
 
 function GameService:get_path_end_point_for_monster(monster)
    -- if it's an air monster, return the point plus the flying offset
-   local point = self._sv.map_data.end_point
    if monster:get_player_id() == 'air' then
-      point = point + self:get_flying_offset()
+      return self._sv.map_data.end_air_point
    end
-   return point
+   return self._sv.map_data.end_point
 end
 
 function GameService:monster_finished_path(monster)

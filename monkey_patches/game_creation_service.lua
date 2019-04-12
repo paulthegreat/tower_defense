@@ -91,6 +91,7 @@ function GameCreationService:_generate_world(session, response, map_info)
       end
       map.spawn_location = (map.spawn_location or Point3.zero) + top + center_point
       map.end_point = last_point + offset - Point3(0, 1, 0)
+      map.end_air_point = air_last_point + air_top + offset - Point3(0, 1, 0)
 
       tower_defense.game:set_map_data(map)
 
