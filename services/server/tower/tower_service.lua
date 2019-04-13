@@ -70,6 +70,9 @@ function TowerService:_cache_tower_range(tower_comp, location)
    local ground_intersection
    if tower_comp:attacks_ground() then
       ground_intersection = targetable_region:intersect_region(self._sv.ground_path)
+      if not ground_intersection:empty() then
+         ground_intersection:translate(Point3(0, tower_defense.game:get_ground_spawn_location().y, 0))
+      end
       ground_intersection:optimize('targetable region')
    else
       ground_intersection = Region3()
@@ -77,16 +80,16 @@ function TowerService:_cache_tower_range(tower_comp, location)
 
    local air_intersection
    if tower_comp:attacks_air() then
-      air_intersection = targetable_region:intersect_region(self._sv.air_path):translated(Point3(0, self._sv.air_height, 0))
+      air_intersection = targetable_region:intersect_region(self._sv.air_path)
+      if not air_intersection:empty() then
+         air_intersection:translate(Point3(0, tower_defense.game:get_air_spawn_location().y, 0))
+      end
       air_intersection:optimize('targetable region')
    else
       air_intersection = Region3()
    end
 
    targetable_region = ground_intersection + air_intersection
-   if not targetable_region:empty() then
-      targetable_region:translate(Point3(0, tower_defense.game:get_spawn_location().y, 0))
-   end
 
    return targetable_region
 end

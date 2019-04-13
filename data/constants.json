@@ -1,0 +1,10 @@
+{
+   "constants": {
+      "tower_defense": {
+         "player_resources": {
+            "GOLD": "gold",
+            "WOOD": "wood"
+         }
+      }
+   }
+}

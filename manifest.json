@@ -51,7 +51,8 @@
       "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)"
    },
 	"mixintos" : {
-      "stonehearth:hotkeys": "file(data/hotkeys.json)"
+      "stonehearth:hotkeys": "file(data/hotkeys.json)",
+      "stonehearth:data:constants": "file(data/constants.json)"
    },
 	"overrides" : {
       "/stonehearth/ai/actions/run_to_location_action.lua": "file(ai/actions/run_to_location_action.lua)",

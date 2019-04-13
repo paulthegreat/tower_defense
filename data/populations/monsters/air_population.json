@@ -1,7 +1,7 @@
 {
    "type": "kingdom",
    "kingdom_name": "The Flying (Spaghetti) Monsters",
-   "kingdom_id": "air",
+   "kingdom_id": "monster_air",
    "amenity_to_strangers": "hostile",
    "roles": {
       "poyo": {

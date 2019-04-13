@@ -74,16 +74,15 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
    -- if not, we'll cancel out
    
    local player_id = session.player_id
-   local player = tower_defense.game:get_player(player_id)
    
    local cost = self:_get_tower_cost(uri)
-   local can_build = cost and player and player:spend_gold(cost)
+   local can_build = cost and tower_defense.game:spend_player_gold(player_id, cost)
    if not can_build then
       response:reject({
          message = 'i18n(tower_defense:alerts.towers.build.not_enough_gold)',
          i18n_data = {
             needed = cost,
-            player_gold = player:get_gold(),
+            player_gold = tower_defense.game:get_player_gold(player_id),
             common_gold = tower_defense.game:get_common_gold()
          }
       })
@@ -123,10 +122,7 @@ function TowerCallHandler:_sell_tower(player_id, tower, multiplier)
 
    -- get the value of the tower, refund it to the player, and destroy the tower
    local value = math.floor(self:_get_tower_cost(tower:get_uri()) * (multiplier or 1))
-   local player = tower_defense.game:get_player(player_id)
-   if player then
-      player:add_gold(value)
-   end
+   tower_defense.game:add_player_gold(player_id, value)
    radiant.entities.destroy_entity(tower)
 end
 

@@ -3,6 +3,7 @@ local Point3 = _radiant.csg.Point3
 GameService = class()
 
 local COMMON_PLAYER = 'common_player'
+local constants = stonehearth.constants
 
 function GameService:initialize()
    self._sv = self.__saved_variables:get_data()
@@ -25,6 +26,9 @@ function GameService:initialize()
       end)
    end
 
+   self._wave_listeners = {}
+   self:_create_wave_listeners()
+
    self._waves = radiant.resources.load_json('tower_defense:data:waves')
 end
 
@@ -41,20 +45,53 @@ function GameService:_destroy_countdown_timer()
 end
 
 function GameService:_destroy_wave_controller()
+   for _, listener in ipairs(self._wave_listeners) do
+      listener:destroy()
+   end
+   self._wave_listeners = {}
    if self._sv.wave_controller then
       self._sv.wave_controller:destroy()
       self._sv.wave_controller = nil
    end
 end
 
-function GameService:get_spawn_location()
+function GameService:_create_wave_listeners()
+   if self._sv.wave_controller then
+      table.insert(self._wave_listeners, radiant.events.listen(self._sv.wave_controller, 'tower_defense:wave:monster_escaped', self, self._on_wave_monster_escaped))
+      table.insert(self._wave_listeners, radiant.events.listen(self._sv.wave_controller, 'tower_defense:wave:monster_killed', self, self._on_wave_monster_killed))
+      table.insert(self._wave_listeners, radiant.events.listen(self._sv.wave_controller, 'tower_defense:wave:succeeded', self, self._on_wave_succeeded))
+   end
+end
+
+function GameService:_on_wave_monster_escaped(damage)
+   self:remove_health(damage)
+end
+
+function GameService:_on_wave_monster_killed(bounty)
+   for resource, amount in pairs(bounty) do
+      self:_give_all_players_resource(resource, amount)
+   end
+end
+
+function GameService:_on_wave_succeeded(bonus)
+   for resource, amount in pairs(bonus) do
+      self:_give_all_players_resource(resource, amount)
+   end
+   self:_end_of_round()
+end
+
+function GameService:get_ground_spawn_location()
    return self._sv.map_data.spawn_location
 end
 
+function GameService:get_air_spawn_location()
+   return self._sv.map_data.air_spawn_location
+end
+
 function GameService:get_path_end_point_for_monster(monster)
-   -- if it's an air monster, return the point plus the flying offset
-   if monster:get_player_id() == 'air' then
-      return self._sv.map_data.end_air_point
+   -- if it's an air monster, return the air point
+   if monster:get_player_id() == 'monster_air' then
+      return self._sv.map_data.air_end_point
    end
    return self._sv.map_data.end_point
 end
@@ -83,10 +120,11 @@ function GameService:get_health()
 end
 
 function GameService:remove_health(amount)
-   self._sv.health = math.max(0, self._sv.health - (amount or 1))
+   self._sv.health = math.max(0, self._sv.health - amount)
    self.__saved_variables:mark_changed()
 
    -- if it's zero, you lost!
+   self:_end_of_round()
 end
 
 function GameService:get_current_wave()
@@ -101,6 +139,11 @@ function GameService:_end_of_round()
    self:_destroy_wave_controller()
    self:_destroy_countdown_timer()
    
+   if self._sv.health < 1 then
+      -- no more health! you lost!
+      return
+   end
+
    if not self._waves.waves[self._sv.wave + 1] then
       -- no more waves! you won!
       return
@@ -130,8 +173,9 @@ function GameService:_start_round()
    local next_wave = self._waves.waves[self._sv.wave]
    if next_wave then
       local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data)
-      wave_controller:start()
       self._sv.wave_controller = wave_controller
+      self:_create_wave_listeners()
+      wave_controller:start()
 
       radiant.events.trigger(radiant, 'tower_defense:wave_started', self._sv.wave)
    else
@@ -176,17 +220,60 @@ function GameService:get_common_player()
    return self._sv.common_player
 end
 
+function GameService:get_player_gold(player_id)
+   return self:_get_player_resource(player_id, constants.tower_defense.player_resources.GOLD)
+end
+
+function GameService:get_player_wood(player_id)
+   return self:_get_player_resource(player_id, constants.tower_defense.player_resources.WOOD)
+end
+
+function GameService:_get_player_resource(player_id, resource)
+   local player = self._sv.players[player_id]
+   return player and player:get_resource(resource) or 0
+end
+
 function GameService:get_common_gold()
-   return self._sv.common_player and self._sv.common_player:get_gold() or 0
+   return self._sv.common_player and self._sv.common_player:get_resource(constants.tower_defense.player_resources.GOLD) or 0
+end
+
+function GameService:add_player_gold(player_id, amount)
+   self:_add_player_resource(player_id, constants.tower_defense.player_resources.GOLD, amount)
+end
+
+function GameService:add_player_wood(player_id, amount)
+   self:_add_player_resource(player_id, constants.tower_defense.player_resources.WOOD, amount)
+end
+
+function GameService:_add_player_resource(player_id, resource, amount)
+   local player = self._sv.players[player_id]
+   if player then
+      player:add_resource(resource, amount)
+   end
+end
+
+function GameService:spend_player_gold(player_id, amount)
+   return self:_spend_player_resource(player_id, constants.tower_defense.player_resources.GOLD, amount)
+end
+
+function GameService:spend_player_wood(player_id, amount)
+   return self:_spend_player_resource(player_id, constants.tower_defense.player_resources.WOOD, amount)
+end
+
+function GameService:_spend_player_resource(player_id, resource, amount)
+   local player = self._sv.players[player_id]
+   if player then
+      return player:spend_resource(resource, amount)
+   end
 end
 
 -- gold can only be given to the common player
-function GameService:give_gold(player_id, amount)
-   if player_id ~= COMMON_PLAYER then
-      local player = self._sv.players[player_id]
+function GameService:donate_gold(from_player_id, amount)
+   if from_player_id ~= COMMON_PLAYER then
+      local from_player = self._sv.players[from_player_id]
       local common_player = self._sv.common_player
-      if player and common_player then
-         amount = player:take_gold(amount)
+      if from_player and common_player then
+         amount = from_player:take_resource(constants.tower_defense.player_resources.GOLD, amount)
          common_player:add_gold(amount)
       end
    end
@@ -194,10 +281,18 @@ end
 
 -- this is used to add an amount of gold to all players, like when a monster is killed
 function GameService:give_all_players_gold(amount)
+   self:_give_all_players_resource(constants.tower_defense.player_resources.GOLD, amount)
+end
+
+function GameService:give_all_players_wood(amount)
+   self:_give_all_players_resource(constants.tower_defense.player_resources.WOOD, amount)
+end
+
+function GameService:_give_all_players_resource(resource, amount)
    for _, player in pairs(self._sv.players) do
-      player:add_gold(amount)
+      player:add_resource(resource, amount)
    end
-   self._sv.common_player:add_gold(amount)
+   self._sv.common_player:add_resource(resource, amount)
 end
 
 return GameService

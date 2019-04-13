@@ -5,7 +5,7 @@
          "count": 10,
          "each_spawn": [
             {
-               "population": "air",
+               "population": "monster_air",
                "info": {
                   "from_population": {
                      "role": "poyo",
@@ -13,9 +13,16 @@
                      "max": 1
                   },
                   "tuning": "tower_defense:data:monster_tuning:low_air"
+               },
+               "damage": 1,
+               "bounty": {
+                  "gold": 3
                }
             }
          ]
       }
-   ]
+   ],
+   "completion_bonus": {
+      "gold": 10
+   }
 }

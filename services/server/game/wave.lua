@@ -42,6 +42,7 @@ end
 
 function Wave:destroy()
    self:_destroy_next_spawn_timer()
+   self:_destroy_monsters()
 end
 
 function Wave:_destroy_next_spawn_timer()
@@ -50,6 +51,17 @@ function Wave:_destroy_next_spawn_timer()
       self._sv._next_spawn_timer = nil
       self.__saved_variables:mark_changed()
    end
+end
+
+function Wave:_destroy_monsters()
+   for _, monster_info in pairs(self._sv._spawned_monsters) do
+      if monster_info.kill_listener then
+         monster_info.kill_listener:destroy()
+      end
+      radiant.entities.destroy_entity(monster_info.monster)
+   end
+   self._sv._spawned_monsters = {}
+   self.__saved_variables:mark_changed()
 end
 
 function Wave:_load_unspawned_monsters()
@@ -97,24 +109,23 @@ end
 function Wave:_spawn_next_monster()
    local monster_info = table.remove(self._sv._unspawned_monsters, 1)
    if monster_info then
-      local location = self._sv._map_data.spawn_location
-
       local did_spawn = false
       for _, monster in ipairs(monster_info.monsters) do
          local pop = stonehearth.population:get_population(monster.population)
          if pop then
-            local this_location = location
-            if monster.population == 'air' then
-               this_location = this_location + Point3(0, self._sv._map_data.air_path.height, 0)
+            local location = self._sv._map_data.spawn_location
+            if monster.population == 'monster_air' then
+               location = self._sv._map_data.air_spawn_location
             end
 
-            local new_monsters = game_master_lib.create_citizens(pop, monster.info, this_location, {player_id = ''})
-            for _, monster in ipairs(new_monsters) do
+            local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
+            for _, new_monster in ipairs(new_monsters) do
                local this_monster = {
-                  monster = monster,
-                  damage = monster.damage
+                  monster = new_monster,
+                  damage = monster.damage,
+                  bounty = monster.bounty
                }
-               self._sv._spawned_monsters[monster:get_id()] = this_monster
+               self._sv._spawned_monsters[new_monster:get_id()] = this_monster
                self:_activate_monster(this_monster)
 
                did_spawn = true
@@ -129,20 +140,15 @@ function Wave:_spawn_next_monster()
    end
 end
 
--- set up listeners and get monster moving on the path
+-- set up listeners
 function Wave:_activate_monster(monster)
    local id = monster.monster:get_id()
    monster.kill_listener = radiant.events.listen_once(monster.monster, 'stonehearth:kill_event', function()
          -- if it was killed, hand out gold
-         -- probably better to do this by event and have the game service listen to it, but oh well!
-         tower_defense.game:give_all_players_gold(self:_get_gold_amount(monster.monster))
+         radiant.events.trigger(self, 'tower_defense:wave:monster_killed', monster.bounty or {})
          
          self:_remove_monster(id)
       end)
-   
-   -- 'monster' is a table containing monster entity and any other information we need
-   -- (like last path checkpoint reached)
-
 end
 
 function Wave:_remove_monster(id)
@@ -154,21 +160,16 @@ function Wave:_remove_monster(id)
    end
 end
 
-function Wave:_get_gold_amount(entity)
-   return 1
-end
-
--- again, should probably do this with events, but directly calling game service instead
 function Wave:_check_wave_end()
    if #self._sv._unspawned_monsters < 1 and not next(self._sv._spawned_monsters) then
       -- just make sure we're properly reporting all monsters gone
       self._sv.remaining_monsters = 0
       self.__saved_variables:mark_changed()
-      tower_defense.game:_end_of_round()
+
+      radiant.events.trigger(self, 'tower_defense:wave:succeeded', self._wave_data.completion_bonus or {})
    end
 end
 
--- TODO: implement as event?
 function Wave:monster_finished_path(monster)
    local id = monster:get_id()
    local monster_info = self._sv._spawned_monsters[id]
@@ -178,8 +179,8 @@ function Wave:monster_finished_path(monster)
          monster_info.kill_listener = nil
       end
 
-      -- subtract hit points?
-      tower_defense.game:remove_health(monster_info.damage)
+      -- deal damage to players
+      radiant.events.trigger(self, 'tower_defense:wave:monster_escaped', monster_info.damage or 1)
 
       self:_remove_monster(id)
    end
