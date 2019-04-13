@@ -58,6 +58,36 @@
                   "tower_defense": "SH:TD"
                }
             }
+         },
+         "select_game_story":{
+            "title": "Choose your adventure",
+            "story_start": "This is the story of...",
+            "kingdom_section_start": "...a settlement from ",
+            "select_button": "?",
+            "kingdom_picker_title": "Select a Kingdom",
+            "biome_section_start": "Defending themselves from enemies in ",
+            "biome_picker_title": "Select a Biome",
+            "game_mode_select_start": ", a location that is sure to be",
+            "game_mode_picker_title": "Select a Difficulty",
+            "biome_favored_label": "(favored)",
+            "game_modes": {
+               "normal": {
+                  "display_name": "Normal",
+                  "description": "Adventure forth in a world fraught with danger. Your town will be subject to raiding enemies.",
+                  "post_selection_text": "an inspiring challenge."
+               },
+               "peaceful": {
+                  "display_name": "Easy",
+                  "description": "description of easy modifiers",
+                  "post_selection_text": "tranquil."
+               },
+               "hard": {
+                  "display_name": "Hard",
+                  "description": "Face more difficult monsters than normal mode",
+                  "post_selection_text": "a daunting challenge."
+               }
+            },
+            "begin_button": "Begin"
          }
       }
    },

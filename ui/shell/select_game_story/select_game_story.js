@@ -7,6 +7,20 @@ App.StonehearthSelectGameStoryView.reopen({
    },
    
    actions: {
+      beginStory: function () {
+         var self = this;
+         radiant.call('radiant:play_sound', { 'track': 'stonehearth:sounds:ui:start_menu:embark' });
+         self._options.starting_kingdom = self._selectedKingdomData.__self;
+         self._options.starting_items = {
+            [self._selectedKingdomData.starting_talisman]: 1
+         };
+         self._options.game_mode = self._selectedGameModeData.__self;
+         self._options.biome_src = self._selectedBiomeData.__self;
+         self._options.loadouts = self._selectedKingdomData.loadouts;
+
+         self.send('continueSelection');
+      },
+
       continueSelection: function() {
          var self = this;
          radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:action_click' });
