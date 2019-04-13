@@ -60,6 +60,9 @@
       "monster": "file(components/monster/monster_component.lua)",
       "tower": "file(components/tower/tower_component.lua)"
    },
+   "client_components" : {
+      "tower": "file(components/tower/tower_component.lua)"
+   },
    "component_renderers" : {
       "monster": "file(renderers/monster/monster_renderer.lua)",
       "tower": "file(renderers/tower/tower_renderer.lua)"

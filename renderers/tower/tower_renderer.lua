@@ -16,11 +16,15 @@ function TowerRenderer:initialize(render_entity, datastore)
    self._ui_mode_listener = radiant.events.listen(radiant, 'stonehearth:ui_mode_changed', self, self._on_ui_mode_changed)
 
    self._datastore = datastore
-   self._datastore_trace = self._datastore:trace('drawing tower')
-      :on_changed(function ()
-            self:_update()
-         end)
-      :push_object_state()
+   if datastore.trace then
+      self._datastore_trace = self._datastore:trace('drawing tower')
+         :on_changed(function ()
+               self:_update()
+            end)
+         :push_object_state()
+   else
+      self:_update()
+   end
 end
 
 function TowerRenderer:destroy()
@@ -63,7 +67,12 @@ function TowerRenderer:_update()
       return
    end
 
-   local data = self._datastore:get_data()
+   local data
+   if self._datastore.get_data then
+      data = self._datastore:get_data()
+   else
+      data = self._datastore._sv
+   end
    local region = data.targetable_region
 
    if not region then
@@ -82,8 +91,18 @@ function TowerRenderer:_update()
       EDGE_COLOR_ALPHA = 48
    end
 
-   self._outline_node = _radiant.client.create_region_outline_node(RenderRootNode, region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.45, 0)+radiant.entities.get_world_grid_location(self._entity)),
-         radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA * 5), radiant.util.to_color4(color, FACE_COLOR_ALPHA * 2),
+   region = region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.45, 0))
+
+   local render_node = self._entity_node
+
+   local location = radiant.entities.get_world_grid_location(self._entity)
+   if location then
+      render_node = RenderRootNode
+      region = region:translated(location)
+   end
+
+   self._outline_node = _radiant.client.create_region_outline_node(render_node, region,
+         radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA * 5), radiant.util.to_color4(color, 0),
          '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)
       :set_casts_shadows(false)
       :set_can_query(false)

@@ -1,9 +1,9 @@
 {
    "type": "monster_tuning",
-   "scale": 0.03,
+   "scale": 0.04,
    "attributes": {
       "max_health": {
-         "base": 150
+         "base": 15
       },
       "speed": 30,
       "additive_armor_modifier": 0

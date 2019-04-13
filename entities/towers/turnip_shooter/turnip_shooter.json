@@ -23,7 +23,7 @@
       },
       "stonehearth:equipment": {
          "items": [
-            "stonehearth:gizmos:turnip_shooter:weapon"
+            "tower_defense:towers:turnip_shooter:weapon"
          ]
       },
       "effect_list": {

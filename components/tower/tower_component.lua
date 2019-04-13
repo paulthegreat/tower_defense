@@ -14,11 +14,14 @@ local FILTER_MOST_TARGETS = 'most_targets'
 local FILTER_TARGET_TYPE = 'target_type'
 
 function TowerComponent:create()
-   local wave = tower_defense.game:get_current_wave()
-   if tower_defense.game:has_active_wave() then
-      wave = wave - 1
+   if radiant.is_server then
+      local wave = tower_defense.game:get_current_wave()
+      if tower_defense.game:has_active_wave() then
+         wave = wave - 1
+      end
+      self._sv._wave_created = wave
    end
-   self._sv._wave_created = wave
+   self._sv.original_facing = 0
 end
 
 function TowerComponent:activate()
@@ -27,43 +30,67 @@ function TowerComponent:activate()
       self._json.targeting = {}
    end
 
+   if not self._sv.original_facing then
+      self._sv.original_facing = 0
+   end
+
    if self._sv.reveals_invis == nil then
       self._sv.reveals_invis = self._json.reveals_invis or false
       self.__saved_variables:mark_changed()
    end
 
-   if not self._sv.target_filters then
-      self:set_target_filters(self._json.targeting.target_filters)
+   if not radiant.is_server then
+      self:_client_activate()
+   else
+      if not self._sv.target_filters then
+         self:set_target_filters(self._json.targeting.target_filters)
+      end
+
+      if not self._sv.preferred_target_types then
+         self:set_preferred_target_types(self._json.targeting.preferred_target_types)
+      end
+
+      -- update commands
+      -- add a listener for wave change if necessary
+      local cur_wave = tower_defense.game:get_current_wave()
+      self:_update_sell_command(cur_wave)
+
+      -- make sure we have any other commands, like auto-targeting and upgrade options
+
+
+      -- set up a listener for added to / removed from world for registering/unregistering with tower service
+      self._parent_trace = self._entity:add_component('mob'):trace_parent('tower added or removed')
+         :on_changed(function(parent_entity)
+               if not parent_entity then
+                  --we were just removed from the world
+                  self:_unregister()
+               else
+                  --we were just added to the world
+                  self:_register()
+               end
+            end)
+         :push_object_state()
    end
+end
 
-   if not self._sv.preferred_target_types then
-      self:set_preferred_target_types(self._json.targeting.preferred_target_types)
-   end
-
-   -- update commands
-   -- add a listener for wave change if necessary
-   local cur_wave = tower_defense.game:get_current_wave()
-   self:_update_sell_command(cur_wave)
-
-   -- make sure we have any other commands, like auto-targeting and upgrade options
-
-
-   -- set up a listener for added to / removed from world for registering/unregistering with tower service
-   self._parent_trace = self._entity:add_component('mob'):trace_parent('tower added or removed')
-      :on_changed(function(parent_entity)
-            if not parent_entity then
-               --we were just removed from the world
-               self:_unregister()
-            else
-               --we were just added to the world
-               self:_register()
-            end
-         end)
-      :push_object_state()
+-- as a client component, we just care about rendering regions
+function TowerComponent:_client_activate()
+   self:_load_targetable_region()
 end
 
 function TowerComponent:destroy()
-   self:_destroy_wave_listener()
+   self:_destroy_listeners()
+end
+
+function TowerComponent:_destroy_listeners()
+   if self._wave_listener then
+      self._wave_listener:destroy()
+      self._wave_listener = nil
+   end
+   if self._parent_trace then
+      self._parent_trace:destroy()
+      self._parent_trace = nil
+   end
 end
 
 function TowerComponent:reveals_invis()
@@ -72,6 +99,11 @@ end
 
 function TowerComponent:get_targetable_region()
    return self._sv.targetable_region
+end
+
+function TowerComponent:_load_targetable_region()
+   self._sv.targetable_region = self:_create_targetable_region()
+   self.__saved_variables:mark_changed()
 end
 
 function TowerComponent:get_targetable_path_region()
@@ -84,6 +116,11 @@ end
 
 function TowerComponent:attacks_air()
    return self._sv.attacks_air
+end
+
+function TowerComponent:placed(rotation)
+   self._sv.original_facing = rotation
+   self.__saved_variables:mark_changed()
 end
 
 function TowerComponent:set_target_filters(target_filters)
@@ -155,26 +192,14 @@ function TowerComponent:_get_filter_value(filter, target)
    return 0
 end
 
-function TowerComponent:_destroy_wave_listener()
-   if self._wave_listener then
-      self._wave_listener:destroy()
-      self._wave_listener = nil
-   end
-   if self._parent_trace then
-      self._parent_trace:destroy()
-      self._parent_trace = nil
-   end
-end
-
 function TowerComponent:_register()
    -- calculate targetable range and translate it to our location
    -- pass that in to the tower service registration function
    -- store the resulting targetable path intersection ranges
    self._location = radiant.entities.get_world_grid_location(self._entity)
    if self._location then
-      local targetable_region = self:_create_targetable_region()
-      self._sv.targetable_region = targetable_region
-      if targetable_region then
+      self:_load_targetable_region()
+      if self._sv.targetable_region then
          self._sv.attacks_ground = self._json.targeting.attacks_ground
          self._sv.attacks_air = self._json.targeting.attacks_air
 

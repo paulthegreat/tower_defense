@@ -1,6 +1,7 @@
 local validator = radiant.validator
 
 local TowerCallHandler = class()
+local log = radiant.log.create_logger('tower_call_handler')
 
 function TowerCallHandler:create_and_place_entity(session, response, uri)
    local entity = radiant.entities.create_entity(uri)
@@ -10,6 +11,44 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
    -- TODO: limit selector to valid building locations
    stonehearth.selection:select_location()
       :set_cursor_entity(entity)
+      :set_filter_fn(function (result, selector)
+            local this_entity = result.entity   
+            local normal = result.normal:to_int()
+            local brick = result.brick
+
+            local rcs = this_entity:get_component('region_collision_shape')
+            local region_collision_type = rcs and rcs:get_region_collision_type()
+            if region_collision_type == _radiant.om.RegionCollisionShape.NONE then
+               return stonehearth.selection.FILTER_IGNORE
+            end
+
+            if normal.y ~= 1 then
+               return stonehearth.selection.FILTER_IGNORE
+            end
+
+            if this_entity:get_id() == radiant._root_entity_id then
+               local kind = radiant.terrain.get_block_kind_at(brick - normal)
+               if kind == nil then
+                  return stonehearth.selection.FILTER_IGNORE
+               elseif kind == 'grass' then
+                  return next(radiant.terrain.get_entities_at_point(brick)) == nil
+               else
+                  return false
+               end
+            end
+
+            -- if the entity we're looking at is a child entity of our primary entity, ignore it
+            local parent = radiant.entities.get_parent(this_entity)
+            if not parent or parent == entity then
+               return stonehearth.selection.FILTER_IGNORE
+            end
+
+            if this_entity:get_component('mob'):get_allow_vertical_adjacent() then
+               return true
+            end
+
+            return stonehearth.selection.FILTER_IGNORE
+         end)
       :done(function(selector, location, rotation)
                _radiant.call('tower_defense:create_entity', uri, location, rotation)
                   :done(function()
@@ -54,6 +93,7 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
 
    radiant.terrain.place_entity(entity, location, { force_iconic = false })
    radiant.entities.turn_to(entity, rotation)
+   entity:get_component('tower_defense:tower'):placed(rotation)
    local inventory = stonehearth.inventory:get_inventory(player_id)
    if inventory and not inventory:contains_item(entity) then
       inventory:add_item(entity)
