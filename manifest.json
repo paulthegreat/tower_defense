@@ -53,6 +53,7 @@
       "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)",
       "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)",
       "/stonehearth/data/npc_index.json": "file(data/npc_index.json)",
+      "/stonehearth/data/kingdoms/playable_kingdom_index.json": "file(data/kingdoms/playable_kingdom_index.json)",
       "/stonehearth/ui/shell/select_game_story/select_game_story.html": "file(/ui/shell/select_game_story/select_game_story.html)"
    },
    "components" : {
