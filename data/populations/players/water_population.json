@@ -1,0 +1,107 @@
+{
+   "type": "kingdom",
+   "display_name": "i18n(tower_defense:data.population.water.display_name)",
+   "kingdom_id": "water",
+   "favored_biome": "stonehearth:biome:temperate",
+   "quote": "i18n(tower_defense:data.population.water.quote)",
+   "description": "i18n(tower_defense:data.population.water.description)",
+   "post_selection_description": "i18n(tower_defense:data.population.water.post_selection_description)",
+   "image": "/tower_defense/data/kingdoms/images/water_400x300.png",
+   "story_board_image": "/stonehearth/data/kingdoms/images/story_board_image.png",
+   "starting_talisman": "stonehearth:carpenter:talisman",
+   "starting_resource": "stonehearth:resources:wood:oak_log",
+   "job_index": "stonehearth:jobs:index",
+   "inventory_capacity_equation": "math.max(num_citizens * 150, 1200)",
+   "initial_town_name": "i18n(tower_defense:data.population.water.initial_town_name)",
+   "camp_standard": "stonehearth:camp_standard",
+   "trappable_animals": "stonehearth:data:trapping:all_trappable_animals",
+   "default_material": "wood_resource",
+   "ordinal": 1,
+   "roles": {
+      "default": {
+         "male": {
+            "uri": [
+               "stonehearth:male_1",
+               "stonehearth:male_1",
+               "stonehearth:male_2",
+               "stonehearth:male_3"
+            ],
+            "given_names": [
+               "Jeffery"
+            ]
+         },
+         "female": {
+            "uri": [
+               "stonehearth:female_1",
+               "stonehearth:female_1",
+               "stonehearth:female_2",
+               "stonehearth:female_3"
+            ],
+            "given_names": [
+               "Kandora"
+            ]
+         },
+         "surnames": [
+            "Cross"
+         ],
+         "attribute_distribution": {
+            "allocated_points": {
+               "min": 5,
+               "max": 9
+            },
+            "point_limits": {
+               "mind": {
+                  "min": 1,
+                  "max": 6
+               },
+               "body": {
+                  "min": 1,
+                  "max": 6
+               },
+               "spirit": {
+                  "min": 2,
+                  "max": 6
+               }
+            }
+         }
+      }
+   },
+   "pet_names": {
+      "default": [
+         "Turnip"
+      ],
+      "racoon": [
+         "Galumph"
+      ],
+      "red_fox_wolf": [
+         "Ember"
+      ],
+      "rabbit": [
+         "Bunbun"
+      ],
+      "squirrel": [
+         "Quick"
+      ],
+      "beetle": [
+         "Ringo"
+      ],
+      "bitsy_ant": [
+         "Itsy"
+      ],
+      "doodles": [
+         "Hopper"
+      ]
+   },
+   "town_pieces": {
+      "optional_prefix": [
+         "Old"
+      ],
+      "town_name": [
+         "Blissmond"
+      ],
+      "suffix": [
+         " Acker"
+      ]
+   },
+   "task_groups": "stonehearth:data:player_task_groups"
+}

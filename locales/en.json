@@ -7,7 +7,35 @@
             "description": "Cheap towers that focus largely on doing direct, single target damage.",
             "post_selection_description": ", a firey kingdom.",
             "initial_town_name": "Expedition [str(town_number)]"
-         }
+         },
+         "air": {
+            "display_name": "Air",
+            "quote": "Woosh!",
+            "description": "Towers that do excellent damage to flying enemies and strong single-target damage.",
+            "post_selection_description": ", an airy kingdom.",
+            "initial_town_name": "Expedition [str(town_number)]"
+         },
+         "earth": {
+            "display_name": "Earth",
+            "quote": "Thud!",
+            "description": "Towers that excel in damaging and disrupting large groups of enemies. Some towers have the ability to target tunneling enemies.",
+            "post_selection_description": ", an earthy kingdom.",
+            "initial_town_name": "Expedition [str(town_number)]"
+         },
+         "water": {
+            "display_name": "Water",
+            "quote": "Sploosh!",
+            "description": "Towers that do damage in a small area with a focus on slowing and disrupting enemies.",
+            "post_selection_description": ", a watery kingdom.",
+            "initial_town_name": "Expedition [str(town_number)]"
+         },
+         "plant": {
+            "display_name": "Plants",
+            "quote": "We've got to have farming in the game. Obviously.",
+            "description": "Towers grow over time, becoming more powerful. Mining buildings contribute bonus gold to the shared pool at the end of waves.",
+            "post_selection_description": ", a farmy kingdom.",
+            "initial_town_name": "Expedition [str(town_number)]"
+         },         
       },     
       "commands": {
          "sell_full": {
