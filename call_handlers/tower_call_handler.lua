@@ -43,9 +43,10 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
                return stonehearth.selection.FILTER_IGNORE
             end
 
-            if this_entity:get_component('mob'):get_allow_vertical_adjacent() then
-               return true
-            end
+            -- TODO: check for platform entities
+            -- if this_entity:get_component('mob'):get_allow_vertical_adjacent() then
+            --    return true
+            -- end
 
             return stonehearth.selection.FILTER_IGNORE
          end)
