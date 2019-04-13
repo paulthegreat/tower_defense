@@ -1,0 +1,10 @@
+{
+   "type": "index",
+   "kingdoms": {
+      "fire": "rayyas_children:kingdoms:rayyas_children",
+      "earth": "rayyas_children:kingdoms:rayyas_children",
+      "water": "stonehearth:kingdoms:ascendancy",
+      "air": "northern_alliance:kingdoms:northern_alliance",
+      "plants": "stonehearth:kingdoms:ascendancy"
+   }
+}

@@ -10,11 +10,17 @@
                "tower_defense:monsters:air:poyo"
             ],
             "given_names": [
-               "Bawky"
+               "Bawky",
+               "Clucky",
+               "Chicken",
+               "Foghorn"
             ]
          },
          "surnames": [
-            "McBawkerson"
+            "McBawkerson",
+            "Cluckington",
+            "Little",
+            "Leghorn"
          ]
       }
    }
