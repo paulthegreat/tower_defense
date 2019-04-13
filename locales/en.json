@@ -5,7 +5,7 @@
             "display_name": "Fire",
             "quote": "Taste the flames of Sulfuron!",
             "description": "Cheap towers that focus largely on doing direct, single target damage.",
-            "post_selection_description": ", a firey kingdom.",
+            "post_selection_description": ", a fiery kingdom.",
             "initial_town_name": "Expedition [str(town_number)]"
          },
          "air": {
@@ -36,7 +36,7 @@
             "post_selection_description": ", a farmy kingdom.",
             "initial_town_name": "Expedition [str(town_number)]"
          }
-      },     
+      },
       "commands": {
          "sell_full": {
             "display_name": "Sell for 100%",
