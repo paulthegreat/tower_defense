@@ -31,8 +31,8 @@
       "data:waves": "file(data/wave_index.json)",
       "data:waves:sample_wave": "file(data/waves/sample_wave.json)",
       "data:waves:sample_wave_2": "file(data/waves/sample_wave_2.json)",
-      "kingdoms:air_monster": "file(data/populations/air_population.json)",
-      "kingdoms:fire": "file(services/server/population/data/fire_population.json)",      
+      "kingdoms:monsters:air": "file(data/populations/monsters/air_population.json)",
+      "kingdoms:fire": "file(data/populations/players/fire_population.json)",
       "mixins:flying_monster": "file(mixins/monster/flying_monster.json)",
       "mixins:towers:basic_tower": "file(mixins/towers/basic_tower.json)",
       "mixins:towers:basic_tower_weapon": "file(mixins/towers/basic_tower_weapon.json)",
@@ -55,7 +55,8 @@
       "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)",
       "/stonehearth/data/npc_index.json": "file(data/npc_index.json)",
       "/stonehearth/data/kingdoms/playable_kingdom_index.json": "file(data/kingdoms/playable_kingdom_index.json)",
-      "/stonehearth/ui/shell/select_game_story/select_game_story.html": "file(/ui/shell/select_game_story/select_game_story.html)"
+      "/stonehearth/ui/shell/select_game_story/select_game_story.html": "file(/ui/shell/select_game_story/select_game_story.html)",
+      "/stonehearth/ui/game/start_menu/start_menu.js": "file(ui/game/start_menu/start_menu.js)"
    },
    "components" : {
       "monster": "file(components/monster/monster_component.lua)",
@@ -111,7 +112,6 @@
       "js": [
          "file(ui/game/resource_display/resource_display.js)",
          "file(ui/game/game_state_window/game_state_window.js)",
-         "file(ui/game/start_menu/start_menu.js)",
          "file(ui/shell/select_game_story/select_game_story.js)"
       ],
       "less": [

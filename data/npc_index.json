@@ -2,7 +2,7 @@
    "type": "index",
    "populations": {
       "air": {
-         "kingdom": "tower_defense:kingdoms:air_monster",
+         "kingdom": "tower_defense:kingdoms:monsters:air",
          "color": {
             "r": 192,
             "g": 32,
