@@ -2,9 +2,9 @@
    "type": "index",
    "kingdoms": {
       "fire": "tower_defense:kingdoms:fire",
-      "earth": "rayyas_children:kingdoms:rayyas_children",
-      "water": "stonehearth:kingdoms:ascendancy",
-      "air": "northern_alliance:kingdoms:northern_alliance",
-      "plants": "stonehearth:kingdoms:ascendancy"
+      "earth": "tower_defense:kingdoms:earth",
+      "water": "tower_defense:kingdoms:water",
+      "air": "tower_defense:kingdoms:air",
+      "plant": "tower_defense:kingdoms:plant"
    }
 }
