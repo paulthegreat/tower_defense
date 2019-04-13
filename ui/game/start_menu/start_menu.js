@@ -124,7 +124,7 @@ App.StonehearthStartMenuView = App.View.extend({
       var self = this;
 
       // load in all the towers from catalog data and create build menu data for that
-
+      data = self._prependBuildMenus(data);
 
       this.$('#startMenu').stonehearthMenu({
          data : data,
@@ -136,6 +136,69 @@ App.StonehearthStartMenuView = App.View.extend({
          },
       });
 
+   },
+
+   _prependBuildMenus: function(data) {
+      var catalogData = App.catalog.getAllCatalogData();
+
+      var newDataTbl = {};
+      radiant.each(catalogData, function(uri, entityData) {
+         if (entityData.tower) {
+            entityData.tower.kingdoms.forEach(kingdom => {
+               var kingdomTowers = newDataTbl[kingdom];
+               if (!kingdomTowers) {
+                  kingdomTowers = {
+                     key: kingdom,
+                     towers: [],
+                     entry: {
+                        class: 'dock',
+                        game_mode: 'place',
+                        menuHideSound: 'stonehearth:sounds:ui:start_menu:wash_out',
+                        menuShowSound: 'stonehearth:sounds:ui:start_menu:wash_in',
+                        name: `i18n(tower_defense:data.population.${kingdom}.display_name)`,
+                        description: `i18n(tower_defense:data.population.${kingdom}.description)`,
+                        icon: `/tower_defense/ui/game/start_menu/images/build_${kingdom}.png`,
+                        items: {}
+                     }
+                  };
+                  newDataTbl[kingdom] = kingdomTowers;
+               }
+               kingdomTowers.towers.push(radiant.shallow_copy(entityData));
+            });
+         }
+      });
+
+      var newDataArr = [];
+      radiant.each(newDataTbl, function(k, v) {
+         v.towers.sort((a, b) => a.ordinal - b.ordinal);
+         radiant.each(v.towers, function(i, t) {
+            var entry = {
+               name: t.display_name,
+               description: t.tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)',
+               icon: t.icon,
+               ordinal: (t.tower.ordinal || t.tower.level || 0) + t.name,
+               class: 'button',
+               sticky: 'true',
+               menu_action: 'td_create_tower',
+               uri: t.uri,
+               towerData: t.tower
+            };
+            entry.towerData.description = t.description;
+            v.entry.items[`${k}_tower_${i}`] = entry;
+         })
+
+         newDataArr.push(v);
+      });
+      newDataArr.sort((a, b) => a.key.localeCompare(b) );
+      var newData = {};
+      radiant.each(newDataArr, function(k, v) {
+         newData[v.key] = v.entry;
+      });
+      radiant.each(data, function(k, v) {
+         newData[k] = v;
+      });
+
+      return newData;
    },
 
    _trackJobs: function() {
@@ -177,7 +240,7 @@ App.StonehearthStartMenuView = App.View.extend({
       }
    },
 
-   // create a trace to enable and disable menu items based on the availability
+   // TODO: create a trace to enable and disable menu items based on the availability
    _tracePopulation: function() {
       var self = this;
 

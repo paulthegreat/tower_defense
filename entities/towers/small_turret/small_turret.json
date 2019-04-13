@@ -66,15 +66,17 @@
       }
    },
    "entity_data": {
-      "stonehearth:net_worth": {
-         "value_in_gold": 10,
-         "rarity": "common"
-      },
       "stonehearth:catalog": {
          "display_name": "i18n(tower_defense:entities.towers.small_turret.display_name)",
          "description": "i18n(tower_defense:entities.towers.small_turret.description)",
          "icon": "file(small_turret.png)",
          "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["air"],
+         "level": 1,
+         "ordinal": 2,
+         "cost": 10
       }
    }
 }

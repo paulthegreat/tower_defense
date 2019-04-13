@@ -55,15 +55,17 @@
       }
    },
    "entity_data": {
-      "stonehearth:net_worth": {
-         "value_in_gold": 5,
-         "rarity": "common"
-      },
       "stonehearth:catalog": {
          "display_name": "i18n(tower_defense:entities.towers.turnip_shooter.display_name)",
          "description": "i18n(tower_defense:entities.towers.turnip_shooter.description)",
          "icon": "file(turnip_shooter.png)",
          "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["air"],
+         "level": 1,
+         "ordinal": 1,
+         "cost": 5
       }
    }
 }

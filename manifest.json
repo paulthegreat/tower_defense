@@ -116,6 +116,8 @@
       "js": [
          "file(ui/game/resource_display/resource_display.js)",
          "file(ui/game/game_state_window/game_state_window.js)",
+         "file(ui/game/start_menu/stonehearth_menu.js)",
+         "file(ui/game/traces/catalog.js)",
          "file(ui/shell/select_game_story/select_game_story.js)"
       ],
       "less": [

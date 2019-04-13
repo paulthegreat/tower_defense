@@ -35,7 +35,7 @@
             "description": "Towers grow over time, becoming more powerful. Mining buildings contribute bonus gold to the shared pool at the end of waves.",
             "post_selection_description": ", a farmy kingdom.",
             "initial_town_name": "Expedition [str(town_number)]"
-         },         
+         }
       },     
       "commands": {
          "sell_full": {
@@ -50,6 +50,9 @@
    },
    "entities": {
       "towers": {
+         "generic": {
+            "detailed_description": "[str(i18n_data.description)]<div>Cost: [str(i18n_data.cost)]</div>"
+         },
          "small_turret": {
             "display_name": "Small Turret",
             "description": "It's a small turret! What do you want?"

@@ -22,6 +22,7 @@ end
 
 function td_catalog_lib._update_catalog_data(catalog_data, uri, json)
    json = json or radiant.resources.load_json(uri)
+   catalog_data.uri = uri
    if json and json.components and json.components['stonehearth:equipment_piece'] then
       catalog_data.equipment_types = td_catalog_lib.get_equipment_types(json.components['stonehearth:equipment_piece'])
       catalog_data.injected_buffs = td_catalog_lib.get_buffs(json.components['stonehearth:equipment_piece'].injected_buffs)
@@ -31,8 +32,8 @@ function td_catalog_lib._update_catalog_data(catalog_data, uri, json)
       catalog_data.inflictable_debuffs = td_catalog_lib.get_buffs(json.entity_data['stonehearth:buffs'].inflictable_debuffs)
    end
 
-   if json and json.entity_data and json.entity_data['tower_defense:tower'] then
-      catalog_data.tower = json.entity_data['tower_defense:tower']
+   if json and json.entity_data and json.entity_data['tower_defense:tower_data'] then
+      catalog_data.tower = json.entity_data['tower_defense:tower_data']
    end
 end
 

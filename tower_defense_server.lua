@@ -53,7 +53,7 @@ end
 function tower_defense:_on_required_loaded()
    monkey_patching()
 
-   local catalog = stonehearth and (stonehearth.catalog and stonehearth.catalog:get_catalog())
+   local catalog = stonehearth and stonehearth.catalog and stonehearth.catalog:get_catalog()
    if catalog then
       require('stonehearth.lib.catalog.catalog_lib').update_catalog(catalog)
    end
