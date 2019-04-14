@@ -24,7 +24,6 @@ function td_catalog_lib._update_catalog_data(catalog_data, uri, json)
    json = json or radiant.resources.load_json(uri)
    catalog_data.uri = uri
    if json and json.components and json.components['stonehearth:equipment_piece'] then
-      catalog_data.equipment_types = td_catalog_lib.get_equipment_types(json.components['stonehearth:equipment_piece'])
       catalog_data.injected_buffs = td_catalog_lib.get_buffs(json.components['stonehearth:equipment_piece'].injected_buffs)
    end
 
@@ -34,34 +33,10 @@ function td_catalog_lib._update_catalog_data(catalog_data, uri, json)
 
    if json and json.entity_data and json.entity_data['tower_defense:tower_data'] then
       catalog_data.tower = json.entity_data['tower_defense:tower_data']
-   end
-end
-
-function td_catalog_lib.get_equipment_types(json)
-   local equipment_types = {}
-   local types = json.equipment_types or td_catalog_lib._get_default_equipment_types(json)
-   for _, type in ipairs(types) do
-      equipment_types[type] = true
-   end
-   return equipment_types
-end
-
--- other mods that want to add in additional default types can easily patch this to first call this version of the function
--- and then additionally insert their other types into the resulting table before returning it
-function td_catalog_lib._get_default_equipment_types(json)
-   -- if equipment types aren't specified, evaluate other properties to see what they should probably be
-   local types = {}
-   if json.slot == 'mainhand' then
-      if json.additional_equipment and json.additional_equipment['stonehearth:armor:offhand_placeholder'] then
-         table.insert(types, 'twohanded')
-      else
-         table.insert(types, 'mainhand')
+      if json.components and json.components['stonehearth:equipment_piece'] and json.components['stonehearth:equipment_piece'].items then
+         catalog_data.tower.equipment = td_catalog_lib.get_tower_equipment(json.components['stonehearth:equipment_piece'].items)
       end
-   else
-      table.insert(types, json.slot)
    end
-
-   return types
 end
 
 function td_catalog_lib.get_buffs(buff_data)
@@ -84,6 +59,33 @@ function td_catalog_lib.get_buffs(buff_data)
       end
    end
    return buffs
+end
+
+function td_catalog_lib.get_tower_equipment(items)
+   local equipment = {}
+   for _, item in ipairs(items) do
+      local json = radiant.resources.load_json(item)
+      json = json and json.entity_data
+      if json then
+         table.insert(equipment, json)
+      end
+   end
+
+   if #equipment > 1 then
+      table.sort(equipment, function(a, b)
+         local a_twd = a['tower_defense:tower_weapon_data']
+         local b_twd = b['tower_defense:tower_weapon_data']
+         if not a_twd then
+            return b_twd == nil
+         elseif not b_twd then
+            return true
+         else
+            return (a_twd.ordinal or 1) < (b_twd.ordinal or 1)
+         end
+      end)
+   end
+
+   return equipment
 end
 
 return td_catalog_lib

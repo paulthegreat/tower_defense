@@ -59,7 +59,7 @@
          "display_name": "i18n(tower_defense:entities.towers.turnip_shooter.display_name)",
          "description": "i18n(tower_defense:entities.towers.turnip_shooter.description)",
          "icon": "file(turnip_shooter.png)",
-         "material_tags": ["ground"]
+         "material_tags": ["ground", "air"]
       },
       "tower_defense:tower_data": {
          "kingdoms": ["air"],

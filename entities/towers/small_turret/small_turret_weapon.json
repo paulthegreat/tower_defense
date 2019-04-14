@@ -3,13 +3,13 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:combat:weapon_data": {
-         "base_damage": 8,
-         "base_ranged_damage": 8,
+         "base_damage": 12,
+         "base_ranged_damage": 12,
          "range": 40,
          "projectile_speed": 30,
          "projectile_uri": "stonehearth:weapons:bolt",
-         "projectile_start_offset": { "x": 0, "y": 2.1, "z": 0 },
-         "projectile_end_offset": { "x": 0, "y": 2.1, "z": 0 }
+         "projectile_start_offset": { "x": 0, "y": 0.7, "z": 0 },
+         "projectile_end_offset": { "x": 0, "y": 0.7, "z": 0 }
       },
       "stonehearth:combat:ranged_attacks": [
          {

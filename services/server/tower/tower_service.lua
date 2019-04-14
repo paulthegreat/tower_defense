@@ -12,7 +12,7 @@ function TowerService:initialize()
    self._sv = self.__saved_variables:get_data()
 
    self._towers = {}
-   self._towers_by_coord = {}
+   self._detection_towers_by_coord = {}
 end
 
 function TowerService:set_ground_path(path)
@@ -29,35 +29,37 @@ end
 function TowerService:register_tower(tower, location)
    local tower_comp = tower:get_component('tower_defense:tower')
    local targetable_region = self:_cache_tower_range(tower_comp, location)
-   local coords_in_range = {}
+   local detection_coords_in_range = {}
    if tower_comp:reveals_invis() and not targetable_region:empty() then
-      coords_in_range = self:_get_range_coords(targetable_region)
+      detection_coords_in_range = self:_get_range_coords(targetable_region)
    end
 
+   local id = tower:get_id()
    local tower_data = {
+      id = id,
       tower = tower_comp,
-      coords_in_range = coords_in_range
+      detection_coords_in_range = detection_coords_in_range
    }
-   self:_cache_range_coords(tower_data)
-   self._towers[tower:get_id()] = tower_data
+   self:_cache_detection_coords(tower_data)
+   self._towers[id] = tower_data
 
    return targetable_region
 end
 
-function TowerService:unregister_tower(tower)
-   if radiant.util.is_a(tower, Entity) then
-      tower = tower:get_id()
+function TowerService:unregister_tower(tower_id)
+   if radiant.util.is_a(tower_id, Entity) then
+      tower_id = tower_id:get_id()
    end
 
-   local tower_data = self._towers[tower]
+   local tower_data = self._towers[tower_id]
    if tower_data then
       self._towers = nil
-      for coord, _ in pairs(tower_data.coords_in_range) do
-         local towers = self._towers_by_coord[coord]
+      for coord, _ in pairs(tower_data.detection_coords_in_range) do
+         local towers = self._detection_towers_by_coord[coord]
          if towers then
-            towers[tower] = nil
+            towers[tower_id] = nil
             if not next(towers) then
-               self._towers_by_coord[coord] = nil
+               self._detection_towers_by_coord[coord] = nil
             end
          end
       end
@@ -99,8 +101,8 @@ function TowerService:_get_range_coords(region)
    for cube in region:each_cube() do
       local min = cube.min
       local max = cube.max
-      for x = min.x, max.x do
-         for z = min.z, max.z do
+      for x = min.x, max.x - 1 do
+         for z = min.z, max.z - 1 do
             coords[string.format('%s,%s', x, z)] = true
          end
       end
@@ -109,20 +111,23 @@ function TowerService:_get_range_coords(region)
    return coords
 end
 
-function TowerService:_cache_range_coords(tower_data)
-   for coord, _ in pairs(tower_data.coords_in_range) do
-      local towers = self._towers_by_coord[coord]
+function TowerService:_cache_detection_coords(tower_data)
+   for coord, _ in pairs(tower_data.detection_coords_in_range) do
+      local towers = self._detection_towers_by_coord[coord]
       if not towers then
          towers = {}
-         self._towers_by_coord[coord] = towers
+         self._detection_towers_by_coord[coord] = towers
       end
-      towers[coord] = true
+      towers[tower_data.id] = true
    end
 end
 
 function TowerService:can_see_invis(location)
    -- check to see if any towers can see invis at that grid location
-   local towers = self._towers_by_coord[location]
+   if type(location) ~= 'string' then
+      location = string.format('%s,%s', location.x, location.z)
+   end
+   local towers = self._detection_towers_by_coord[location]
 
    return towers and next(towers) ~= nil
 end

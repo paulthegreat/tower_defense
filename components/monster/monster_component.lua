@@ -8,8 +8,9 @@ local log = radiant.log.create_logger('monster')
 function MonsterComponent:initialize()
    self._json = radiant.entities.get_json(self)
    self._sv.default_material = self._json.render_material or MAT_NORMAL
+   self._sv.invis_material = self._json.invis_render_material or MAT_MOST_INVIS
+   self._sv.seen_invis_material = self._json.seen_invis_render_material or MAT_SOME_INVIS
    self._sv.path_length = 999999
-   self._sv._seen_by = {}
 end
 
 function MonsterComponent:activate()
@@ -21,11 +22,11 @@ function MonsterComponent:activate()
    self._location_trace = radiant.entities.trace_grid_location(self._entity, 'monster moved')
       :on_changed(function()
          local location = radiant.entities.get_world_grid_location(self._entity)
-         if not self._location then
-            self._location = location
-         elseif location ~= self._location then
+         if self._location and location ~= self._location then
             self:set_path_length(self._sv.path_length - 1)
          end
+         self._location = location
+         self:_update_seen()
       end)
       :push_object_state()
 end
@@ -46,10 +47,17 @@ function MonsterComponent:set_invisible(invisibility)
    end
 end
 
-function MonsterComponent:set_seen(by_entity_id, seen)
-   seen = seen ~= false or nil
-   if self._sv._seen_by[by_entity_id] ~= seen then
-      self._sv._seen_by[by_entity_id] = seen
+function MonsterComponent:_update_seen()
+   self:set_seen(self._location and tower_defense.tower:can_see_invis(self._location) or false)
+end
+
+function MonsterComponent:is_visible()
+   return not self._sv._invisible or self._sv._seen
+end
+
+function MonsterComponent:set_seen(seen)
+   if self._sv._seen ~= seen then
+      self._sv._seen = seen
       self.__saved_variables:mark_changed()
 
       self:_update_render_material()
@@ -59,7 +67,7 @@ end
 function MonsterComponent:_update_render_material()
    local material
    
-   if self._sv._invisible and next(self._sv._seen_by) then
+   if self._sv._invisible and self._sv._seen then
       material = MAT_SOME_INVIS
    elseif self._sv._invisible then
       material = MAT_MOST_INVIS

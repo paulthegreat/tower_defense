@@ -56,7 +56,7 @@
                "max": {"x": 2, "y": 1, "z": 0}
             },
             "attacks_ground": true,
-            "attacks_air": true,
+            "attacks_air": false,
             "target_filters": [
                "highest_health",
                "closest_to_end"
