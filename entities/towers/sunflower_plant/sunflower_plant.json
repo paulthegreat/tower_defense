@@ -3,12 +3,12 @@
    "type": "entity",
    "components": {
       "render_info": {
-         "scale": 0.1
+         "scale": 0.05
       },
       "model_variants": {
          "default": {
             "models": [
-               "/stonehearth/entities/plants/foxlily_plant/foxlily_plant.qb"
+               "/stonehearth/entities/plants/sunflower_plant/sunflower_plant.qb"
             ]
          }
       },
@@ -18,13 +18,16 @@
       },
       "stonehearth:equipment": {
          "items": [
-            "tower_defense:towers:foxlily_plant:weapon"
+            "tower_defense:towers:sunflower_plant:weapon"
          ]
       },
       "tower_defense:tower": {
          "targeting": {
-            "type": "circle",
-            "radius": 6,
+            "type": "rectangle",
+            "region": {
+               "min": {"x": -1, "y": 0, "z": -12},
+               "max": {"x": 2, "y": 1, "z": 0}
+            },
             "attacks_ground": true,
             "attacks_air": true,
             "target_filters": [
@@ -37,14 +40,14 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.foxlily_plant.display_name)",
-         "description": "i18n(tower_defense:entities.towers.foxlily_plant.description)",
-         "icon": "/stonehearth/entities/plants/foxlily_plant/foxlily_plant.png",
+         "display_name": "i18n(tower_defense:entities.towers.sunflower_plant.display_name)",
+         "description": "i18n(tower_defense:entities.towers.sunflower_plant.description)",
+         "icon": "/stonehearth/entities/plants/sunflower_plant/sunflower_plant.png",
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {
          "kingdoms": ["plant"],
-         "level": 1,
+         "level": 2,
          "ordinal": 1,
          "cost": 10
       }

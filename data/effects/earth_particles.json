@@ -1,0 +1,15 @@
+{
+   "type": "effect",
+   "tracks": {
+      "cubemitter": {
+         "type": "cubemitter",
+         "cubemitter": "particles/summon_stone_radiate/summon_stone_radiate.cubemitter.json",
+         "end_time" : 20, 
+         "transforms": { "x": 0, "y": 0, "z": 0,
+            "rx": 90,
+            "ry": 0,
+            "rz": 0
+         }
+      }
+   }
+}

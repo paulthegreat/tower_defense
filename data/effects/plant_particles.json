@@ -1,0 +1,33 @@
+{
+   "type": "effect",
+   "tracks": {
+      "upward_particles": {
+         "type": "cubemitter",
+         "cubemitter": "particles/buff/tonic/buff_tonic_energy.cubemitter.json",
+         "start_time": 0,
+         "end_time": 30,
+         "transforms": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "rx": 90,
+            "ry": 0,
+            "rz": 0
+         }
+      },
+      "upward_particles_large": {
+         "type": "cubemitter",
+         "cubemitter": "particles/buff/tonic/buff_tonic_energy_large.cubemitter.json",
+         "start_time": 0,
+         "end_time": 20,
+         "transforms": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "rx": 90,
+            "ry": 0,
+            "rz": 0
+         }
+      }
+   }
+}
