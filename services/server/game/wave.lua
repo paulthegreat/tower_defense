@@ -120,6 +120,10 @@ function Wave:_spawn_next_monster()
 
             local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
             for _, new_monster in ipairs(new_monsters) do
+               if monster.buffs then
+                  self:_apply_buffs(new_monster, monster.buffs)
+               end
+
                local this_monster = {
                   monster = new_monster,
                   damage = monster.damage,
@@ -137,6 +141,13 @@ function Wave:_spawn_next_monster()
       if did_spawn then
          self:_create_next_spawn_timer(monster_info.time_to_next_monster)
       end
+   end
+end
+
+function Wave:_apply_buffs(monster, buffs)
+   for buff, stacks in pairs(buffs) do
+      local options = type(stacks) == 'number' and {stacks = stacks} or nil
+      radiant.entities.add_buff(monster, buff, options)
    end
 end
 

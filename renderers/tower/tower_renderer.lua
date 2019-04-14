@@ -91,7 +91,8 @@ function TowerRenderer:_update()
       EDGE_COLOR_ALPHA = 48
    end
 
-   region = region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.45, 0))
+   -- have it float slightly above the ground to avoid z-fighting
+   region = region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.4, 0))
 
    local render_node = self._entity_node
 

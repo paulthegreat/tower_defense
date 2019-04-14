@@ -80,6 +80,9 @@ end
 
 function TowerComponent:destroy()
    self:_destroy_listeners()
+   if radiant.is_server then
+      self:_unregister()
+   end
 end
 
 function TowerComponent:_destroy_listeners()
@@ -143,7 +146,8 @@ function TowerComponent:get_best_target()
 
    local targets = radiant.values(radiant.terrain.get_entities_in_region(self._sv.targetable_path_region,
       function(entity)
-         return entity:get_component('tower_defense:monster') ~= nil
+         local monster_comp = entity:get_component('tower_defense:monster')
+         return monster_comp and monster_comp:is_visible()
       end))
    
    for _, filter in ipairs(self._sv.target_filters) do
