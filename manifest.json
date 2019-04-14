@@ -45,8 +45,12 @@
       "path": "file(entities/path/path.json)",
       "task_groups:monster": "file(ai/task_groups/monster_task_group.lua)",
       "task_groups:tower_combat": "file(ai/task_groups/tower_combat_task_group.lua)",
+      "towers:template_turret": "file(entities/towers/template_turret/template_turret.json)",
+      "towers:template_turret:weapon": "file(entities/towers/template_turret/template_turret_weapon.json)",
       "towers:small_turret": "file(entities/towers/small_turret/small_turret.json)",
       "towers:small_turret:weapon": "file(entities/towers/small_turret/small_turret_weapon.json)",
+      "towers:foxlily_plant": "file(entities/towers/foxlily_plant/foxlily_plant.json)",
+      "towers:foxlily_plant:weapon": "file(entities/towers/foxlily_plant/foxlily_plant_weapon.json)",
       "towers:turnip_shooter": "file(entities/towers/turnip_shooter/turnip_shooter.json)",
       "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)"
    },
