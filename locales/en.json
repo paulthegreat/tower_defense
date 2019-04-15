@@ -54,6 +54,26 @@
             "detailed_description": "[str(i18n_data.description)]<div class='towerCost'><span class='costValue'>[str(i18n_data.cost)]</span><img class='costImg'></div>",
             "requires_kingdoms": "Requires level <span class='requiredLevel'>[str(i18n_data.level)]</span> [str(i18n_data.required_kingdoms)]"
          },
+         "cactus_plant": {
+            "display_name": "Cactus",
+            "description": "spiky description"
+         },
+         "earthbud_plant": {
+            "display_name": "Earthbud",
+            "description": "dirty description"
+         },
+         "foxlily_plant": {
+            "display_name": "Foxlily",
+            "description": "foxy description"
+         },
+         "sugarbell_plant": {
+            "display_name": "Sugarbell",
+            "description": "sweet description"
+         },
+         "sunflower_plant": {
+            "display_name": "Sunflower",
+            "description": "sunny description"
+         },
          "small_turret": {
             "display_name": "Small Turret",
             "description": "It's a small turret! What do you want?"
