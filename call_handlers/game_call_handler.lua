@@ -2,10 +2,9 @@ local validator = radiant.validator
 
 local GameCallHandler = class()
 
-
 function GameCallHandler:get_service(session, request, name)
    validator.expect_argument_types({'string'}, name)
-   if tower_defense[name] then
+   if tower_defense and tower_defense[name] then
       -- we'd like to just send the store address rather than the actual
       -- store, but there's no way for the client to receive a store
       -- address and *not* automatically convert it back!

@@ -7,6 +7,6 @@
    "post_selection_text": "i18n(stonehearth:ui.shell.select_game_story.game_modes.hard.post_selection_text)",
    "image": "/stonehearth/data/game_mode/hard/hard.png",
    "starting_resources": {
-      "gold": 10
+      "gold": 5
    }
 }
