@@ -18,7 +18,7 @@ end
 -- for the common player, when a new player is added (for added initial gold)
 function GamePlayer:add_player(game_options)
    for _, resource in pairs(stonehearth.constants.tower_defense.player_resources) do
-      self._sv[resource] = self._sv[resource] + game_options['common_starting_' .. resource] or 0
+      self._sv[resource] = self._sv[resource] + (game_options['common_starting_' .. resource] or 0)
    end
 
    self.__saved_variables:mark_changed()

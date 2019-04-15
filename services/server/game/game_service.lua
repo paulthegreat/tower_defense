@@ -200,9 +200,8 @@ function GameService:add_player(player_id, game_options)
 
    if not self._sv.common_player then
       self._sv.common_player = radiant.create_controller('tower_defense:game_player', COMMON_PLAYER, game_options)
-   else
-      self._sv.common_player:add_player(game_options)
    end
+   self._sv.common_player:add_player(game_options)
 
    self.__saved_variables:mark_changed()
 end

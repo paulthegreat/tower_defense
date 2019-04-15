@@ -198,7 +198,7 @@ function Wave:_check_wave_end()
       self._sv.remaining_monsters = 0
       self.__saved_variables:mark_changed()
 
-      log:debug('wave succeeded!', monster.monster)
+      log:debug('wave succeeded!')
       radiant.events.trigger(self, 'tower_defense:wave:succeeded', self._wave_data.completion_bonus or {})
    end
 end
