@@ -11,6 +11,7 @@ function TowerRenderer:initialize(render_entity, datastore)
    self._render_entity = render_entity
    self._entity = render_entity:get_entity()
    self._entity_node = render_entity:get_node()
+   self._player_id = radiant.entities.get_player_id(self._entity)
 
    self._ui_view_mode = stonehearth.renderer:get_ui_mode()
    self._ui_mode_listener = radiant.events.listen(radiant, 'stonehearth:ui_mode_changed', self, self._on_ui_mode_changed)
@@ -83,7 +84,7 @@ function TowerRenderer:_update()
    local FACE_COLOR_ALPHA = 8
    local color = { x = 255, y = 192, z = 32 }
    if stonehearth.presence_client:is_multiplayer() then
-      color = stonehearth.presence_client:get_player_color(player_id)
+      color = stonehearth.presence_client:get_player_color(self._player_id)
    end
    local edge_color = color
    if data.reveals_invis then

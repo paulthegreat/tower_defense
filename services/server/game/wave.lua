@@ -112,6 +112,7 @@ end
 function Wave:_spawn_next_monster()
    local monster_info = table.remove(self._sv._unspawned_monsters, 1)
    if monster_info then
+      local health_multiplier = tower_defense.game:get_num_players()
       local did_spawn = false
       for _, monster in ipairs(monster_info.monsters) do
          local pop = stonehearth.population:get_population(monster.population)
@@ -123,6 +124,12 @@ function Wave:_spawn_next_monster()
 
             local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
             for _, new_monster in ipairs(new_monsters) do
+               -- multiply monster health by number of players
+               if health_multiplier ~= 1 then
+                  local attrib_component = new_monster:add_component('stonehearth:attributes')
+                  attrib_component:set_attribute('max_health', attrib_component:get_attribute('max_health') * health_multiplier)
+               end
+               
                if monster.buffs then
                   self:_apply_buffs(new_monster, monster.buffs)
                end

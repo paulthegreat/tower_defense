@@ -76,7 +76,10 @@
       "/stonehearth/data/npc_index.json": "file(data/npc_index.json)",
       "/stonehearth/data/kingdoms/playable_kingdom_index.json": "file(data/kingdoms/playable_kingdom_index.json)",
       "/stonehearth/ui/shell/select_game_story/select_game_story.html": "file(/ui/shell/select_game_story/select_game_story.html)",
-      "/stonehearth/ui/game/start_menu/start_menu.js": "file(ui/game/start_menu/start_menu.js)"
+      "/stonehearth/ui/game/start_menu/start_menu.js": "file(ui/game/start_menu/start_menu.js)",
+      "/stonehearth/data/game_mode/peaceful/peaceful.json": "file(data/game_mode/peaceful.json)",
+      "/stonehearth/data/game_mode/normal/normal.json": "file(data/game_mode/normal.json)",
+      "/stonehearth/data/game_mode/hard/hard.json": "file(data/game_mode/hard.json)"
    },
    "components" : {
       "monster": "file(components/monster/monster_component.lua)",
