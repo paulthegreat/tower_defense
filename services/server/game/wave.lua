@@ -58,6 +58,9 @@ function Wave:_destroy_monsters()
       if monster_info.kill_listener then
          monster_info.kill_listener:destroy()
       end
+      if monster_info.escape_listener then
+         monster_info.escape_listener:destroy()
+      end
       radiant.entities.destroy_entity(monster_info.monster)
    end
    self._sv._spawned_monsters = {}
@@ -155,15 +158,33 @@ end
 function Wave:_activate_monster(monster)
    local id = monster.monster:get_id()
    monster.kill_listener = radiant.events.listen_once(monster.monster, 'stonehearth:kill_event', function()
-         -- if it was killed, hand out gold
+         log:debug('monster %s killed!', monster.monster)
          radiant.events.trigger(self, 'tower_defense:wave:monster_killed', monster.bounty or {})
          
+         self:_remove_monster(id)
+      end)
+   
+   monster.escape_listener = radiant.events.listen_once(monster.monster, 'tower_defense:escape_event', function()
+         log:debug('monster %s escaped!', monster.monster)
+         radiant.events.trigger(self, 'tower_defense:wave:monster_escaped', monster.damage or 1)
+
+         radiant.entities.destroy_entity(monster.monster)
          self:_remove_monster(id)
       end)
 end
 
 function Wave:_remove_monster(id)
-   if self._sv._spawned_monsters[id] then
+   local monster_info = self._sv._spawned_monsters[id]
+   if monster_info then
+      if monster_info.kill_listener then
+         monster_info.kill_listener:destroy()
+         monster_info.kill_listener = nil
+      end
+      if monster_info.escape_listener then
+         monster_info.escape_listener:destroy()
+         monster_info.escape_listener = nil
+      end
+
       self._sv._spawned_monsters[id] = nil
       self._sv.remaining_monsters = math.max(0, self._sv.remaining_monsters - 1)
       self.__saved_variables:mark_changed()
@@ -177,23 +198,8 @@ function Wave:_check_wave_end()
       self._sv.remaining_monsters = 0
       self.__saved_variables:mark_changed()
 
+      log:debug('wave succeeded!', monster.monster)
       radiant.events.trigger(self, 'tower_defense:wave:succeeded', self._wave_data.completion_bonus or {})
-   end
-end
-
-function Wave:monster_finished_path(monster)
-   local id = monster:get_id()
-   local monster_info = self._sv._spawned_monsters[id]
-   if monster_info then
-      if monster_info.kill_listener then
-         monster_info.kill_listener:destroy()
-         monster_info.kill_listener = nil
-      end
-
-      -- deal damage to players
-      radiant.events.trigger(self, 'tower_defense:wave:monster_escaped', monster_info.damage or 1)
-
-      self:_remove_monster(id)
    end
 end
 

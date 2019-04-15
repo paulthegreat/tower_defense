@@ -96,13 +96,6 @@ function GameService:get_path_end_point_for_monster(monster)
    return self._sv.map_data.end_point
 end
 
-function GameService:monster_finished_path(monster)
-   local wave = self._sv.wave_controller
-   if wave then
-      wave:monster_finished_path(monster)
-   end
-end
-
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
    if map_data.starting_health then
@@ -124,7 +117,9 @@ function GameService:remove_health(amount)
    self.__saved_variables:mark_changed()
 
    -- if it's zero, you lost!
-   self:_end_of_round()
+   if self._sv.health < 1 then
+      self:_end_of_round()
+   end
 end
 
 function GameService:get_current_wave()

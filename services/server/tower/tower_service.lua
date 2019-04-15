@@ -53,7 +53,7 @@ function TowerService:unregister_tower(tower_id)
 
    local tower_data = self._towers[tower_id]
    if tower_data then
-      self._towers = nil
+      self._towers[tower_id] = nil
       for coord, _ in pairs(tower_data.detection_coords_in_range) do
          local towers = self._detection_towers_by_coord[coord]
          if towers then

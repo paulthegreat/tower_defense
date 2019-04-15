@@ -18,6 +18,13 @@ function FindTarget:start_thinking(ai, entity, args)
    self:_rethink(ai, entity, args)
 end
 
+function FindTarget:stop_thinking(ai, entity, args)
+   if self._timer then
+      self._timer:destroy()
+      self._timer = nil
+   end
+end
+
 function FindTarget:_rethink(ai, entity, args)
    local target = entity:get_component('tower_defense:tower'):get_best_target()
    if target then

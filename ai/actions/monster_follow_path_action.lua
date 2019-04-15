@@ -16,10 +16,6 @@ function MonsterFollowPath:start_thinking(ai, entity, args)
    end
 end
 
-local finished_path = function(entity)
-   tower_defense.game:monster_finished_path(entity)
-end
-
 local ai = stonehearth.ai
 return ai:create_compound_action(MonsterFollowPath)
          :execute('stonehearth:goto_location', {
@@ -30,8 +26,7 @@ return ai:create_compound_action(MonsterFollowPath)
             method = 'set_path_length',
             args = {ai.PREV.path_length}
          })
-         :execute('stonehearth:call_function', {
-            fn = finished_path,
-            args = {ai.ENTITY}
+         :execute('stonehearth:trigger_event', {
+            source = ai.ENTITY,
+            event_name = 'tower_defense:escape_event'
          })
-         :execute('stonehearth:destroy_entity')
