@@ -82,6 +82,15 @@ function GameService:_on_wave_succeeded(bonus)
    self:_end_of_round()
 end
 
+function GameService:get_game_options()
+   return self._sv.game_options
+end
+
+function GameService:set_game_options(options)
+   self._sv.game_options = options
+   self.__saved_variables:mark_changed()
+end
+
 function GameService:get_ground_spawn_location()
    return self._sv.map_data.spawn_location
 end
@@ -155,7 +164,7 @@ function GameService:_create_countdown_timer(second)
       if second then
          self:_start_round()
       else
-         if radiant.util.get_config('pause_at_end_of_round', true) then
+         if self._sv.wave > 0 and radiant.util.get_config('pause_at_end_of_round', true) then
             stonehearth.game_speed:set_game_speed(0, true)
          end
          self:_create_countdown_timer(true)
@@ -188,16 +197,12 @@ function GameService:get_num_players()
    return self._sv.num_players
 end
 
-function GameService:add_player(player_id, game_options)
+function GameService:add_player(player_id)
    -- if the first wave has already started, can't add a new player
    if self._sv.wave > 0 then
       return
    end
    
-   if not self._sv.game_options then
-      self._sv.game_options = game_options
-   end
-
    local player = self._sv.players[player_id]
    if player then
       -- player already exists, don't re-add them
@@ -206,15 +211,16 @@ function GameService:add_player(player_id, game_options)
 
    self._sv.num_players = self._sv.num_players + 1
 
-   local starting_resources = radiant.resources.load_json(game_options.game_mode).starting_resources or {}
-   local common_starting_resources = radiant.resources.load_json(game_options.game_mode).common_starting_resources or {}
+   local game_options = radiant.resources.load_json(self._sv.game_options.game_mode)
+   local starting_resources = game_options.starting_resources or {}
+   local common_starting_resources = game_options.common_starting_resources or {}
 
    self._sv.players[player_id] = radiant.create_controller('tower_defense:game_player', player_id, starting_resources)
 
    if not self._sv.common_player then
-      self._sv.common_player = radiant.create_controller('tower_defense:game_player', COMMON_PLAYER, common_starting_resources)
+      self._sv.common_player = radiant.create_controller('tower_defense:game_player', COMMON_PLAYER, starting_resources)
    end
-   self._sv.common_player:add_player(game_options)
+   self._sv.common_player:add_player(common_starting_resources)
 
    self.__saved_variables:mark_changed()
 end

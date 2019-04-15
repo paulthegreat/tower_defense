@@ -17,6 +17,8 @@ function GameCreationService:new_game_command(session, response, num_tiles_x, nu
 
 	local pop = stonehearth.population:get_population(session.player_id)
    pop:set_game_options(options)
+
+   tower_defense.game:set_game_options(options)
    
    stonehearth.world_generation:create_empty_world(options.biome_src)
 
@@ -148,7 +150,7 @@ function GameCreationService:start_game(session)
 	local pop = stonehearth.population:get_population(player_id)
 	local game_options = pop:get_game_options()
 	
-   tower_defense.game:add_player(player_id, game_options)
+   tower_defense.game:add_player(player_id)
    
    --stonehearth.world_generation:set_starting_location(Point2(0, 0))
 	
