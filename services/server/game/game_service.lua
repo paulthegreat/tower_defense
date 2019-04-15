@@ -291,7 +291,7 @@ function GameService:donate_gold(from_player_id, amount)
       local common_player = self._sv.common_player
       if from_player and common_player then
          amount = from_player:take_resource(constants.tower_defense.player_resources.GOLD, amount)
-         common_player:add_gold(amount)
+         common_player:add_resource(constants.tower_defense.player_resources.GOLD, amount)
       end
    end
 end
