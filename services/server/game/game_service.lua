@@ -8,6 +8,10 @@ local constants = stonehearth.constants
 function GameService:initialize()
    self._sv = self.__saved_variables:get_data()
 
+   if not self._sv.num_players then
+      self._sv.num_players = 0
+   end
+
    if not self._sv.players then
       self._sv.players = {}
    end
@@ -20,10 +24,8 @@ function GameService:initialize()
       self._sv.health = 100
    end
 
-   if self._sv.countdown_timer then
-      self._sv.countdown_timer:bind(function()
-         self:_start_round()
-      end)
+   if not self._sv.wave_controller then
+      self:_create_countdown_timer()
    end
 
    self._wave_listeners = {}
@@ -38,9 +40,9 @@ function GameService:destroy()
 end
 
 function GameService:_destroy_countdown_timer()
-   if self._sv.countdown_timer then
-      self._sv.countdown_timer:destroy()
-      self._sv.countdown_timer = nil
+   if self._countdown_timer then
+      self._countdown_timer:destroy()
+      self._countdown_timer = nil
    end
 end
 
@@ -144,19 +146,21 @@ function GameService:_end_of_round()
       return
    end
 
-   if radiant.util.get_config('pause_at_end_of_round', true) then
-      stonehearth.game_speed:set_game_speed(0, true)
-   end
-
    self:_create_countdown_timer()
 end
 
-function GameService:_create_countdown_timer()
-   local countdown = radiant.util.get_config('round_countdown', '10m')
-   self._sv.countdown_timer = stonehearth.calendar:set_persistent_timer('next wave countdown', countdown, function()
-      self:_start_round()
+function GameService:_create_countdown_timer(second)
+   local countdown = radiant.util.get_config('round_countdown', '5m')
+   self._countdown_timer = stonehearth.calendar:set_timer('next wave countdown', countdown, function()
+      if second then
+         self:_start_round()
+      else
+         if radiant.util.get_config('pause_at_end_of_round', true) then
+            stonehearth.game_speed:set_game_speed(0, true)
+         end
+         self:_create_countdown_timer(true)
+      end
    end)
-   self.__saved_variables:mark_changed()
 end
 
 function GameService:_start_round()
@@ -180,6 +184,10 @@ function GameService:_start_round()
    self.__saved_variables:mark_changed()
 end
 
+function GameService:get_num_players()
+   return self._sv.num_players
+end
+
 function GameService:add_player(player_id, game_options)
    -- if the first wave has already started, can't add a new player
    if self._sv.wave > 0 then
@@ -196,10 +204,15 @@ function GameService:add_player(player_id, game_options)
       return
    end
 
-   self._sv.players[player_id] = radiant.create_controller('tower_defense:game_player', player_id, game_options)
+   self._sv.num_players = self._sv.num_players + 1
+
+   local starting_resources = radiant.resources.load_json(game_options.game_mode).starting_resources or {}
+   local common_starting_resources = radiant.resources.load_json(game_options.game_mode).common_starting_resources or {}
+
+   self._sv.players[player_id] = radiant.create_controller('tower_defense:game_player', player_id, starting_resources)
 
    if not self._sv.common_player then
-      self._sv.common_player = radiant.create_controller('tower_defense:game_player', COMMON_PLAYER, game_options)
+      self._sv.common_player = radiant.create_controller('tower_defense:game_player', COMMON_PLAYER, common_starting_resources)
    end
    self._sv.common_player:add_player(game_options)
 

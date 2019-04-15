@@ -1,0 +1,15 @@
+{
+   "type": "game_mode",
+   "alias": "stonehearth:game_mode:peaceful",
+   "ordinal": 1,
+   "display_name": "i18n(stonehearth:ui.shell.select_game_story.game_modes.peaceful.display_name)",
+   "description": "i18n(stonehearth:ui.shell.select_game_story.game_modes.peaceful.description)",
+   "post_selection_text": "i18n(stonehearth:ui.shell.select_game_story.game_modes.peaceful.post_selection_text)",
+   "image": "/stonehearth/data/game_mode/peaceful/peaceful.png",
+   "starting_resources": {
+      "gold": 15
+   },
+   "common_starting_resources": {
+      "gold": 5
+   }
+}

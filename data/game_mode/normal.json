@@ -1,0 +1,12 @@
+{
+   "type": "game_mode",
+   "alias": "stonehearth:game_mode:normal",
+   "ordinal": 2,
+   "display_name": "i18n(stonehearth:ui.shell.select_game_story.game_modes.normal.display_name)",
+   "description": "i18n(stonehearth:ui.shell.select_game_story.game_modes.normal.description)",
+   "post_selection_text": "i18n(stonehearth:ui.shell.select_game_story.game_modes.normal.post_selection_text)",
+   "image": "/stonehearth/data/game_mode/normal/normal.png",
+   "starting_resources": {
+      "gold": 10
+   }
+}
