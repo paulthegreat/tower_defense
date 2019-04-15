@@ -8,7 +8,7 @@
       "model_variants": {
          "default": {
             "models": [
-               "/stonehearth/entities/plants/foxlily_plant/foxlily_plant.qb"
+               "/stonehearth/entities/plants/earthbud/earthbud_3.qb"
             ]
          }
       },
@@ -18,7 +18,7 @@
       },
       "stonehearth:equipment": {
          "items": [
-            "tower_defense:towers:foxlily_plant:weapon"
+            "tower_defense:towers:earthbud_plant:weapon"
          ]
       },
       "tower_defense:tower": {
@@ -37,15 +37,15 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.foxlily_plant.display_name)",
-         "description": "i18n(tower_defense:entities.towers.foxlily_plant.description)",
-         "icon": "/stonehearth/entities/plants/foxlily_plant/foxlily_plant.png",
+         "display_name": "i18n(tower_defense:entities.towers.earthbud_plant.display_name)",
+         "description": "i18n(tower_defense:entities.towers.earthbud_plant.description)",
+         "icon": "/stonehearth/entities/plants/earthbud/earthbud.png",
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {
          "kingdoms": ["plant"],
-         "level": 1,
-         "ordinal": 1,
+         "level": 2,
+         "ordinal": 2,
          "cost": 10
       }
    }

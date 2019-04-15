@@ -14,7 +14,7 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "fire",
-            "effect": "stonehearth:effects:poof_effect:small",
+            "effect": "/tower_defense/data/effects/fire_particles.json",
             "active_frame": 1,
             "cooldown": 10,
             "priority": 0
