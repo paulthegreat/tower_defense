@@ -115,7 +115,11 @@
          "endpoint": "server"
       }
    },
-   "object_commands": {},
+   "object_commands": {
+      "game": [
+         "get_current_player_command"
+      ]
+   },
    "ui": {
       "html": [
          "file(ui/game/resource_display/resource_display.html)",

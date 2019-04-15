@@ -212,6 +212,10 @@ function GameService:add_player(player_id, game_options)
    self.__saved_variables:mark_changed()
 end
 
+function GameService:get_current_player_command(session, response)
+   response:resolve({player = self:get_player(session.player_id)})
+end
+
 function GameService:get_player(player_id)
    return self._sv.players[player_id]
 end

@@ -4,4 +4,43 @@
          height: 74px;
       }
    }
+
+   .unused {
+      -webkit-filter: ~"saturate(0%)";
+
+      &:hover {
+         -webkit-filter: ~"saturate(50%)";
+      }
+   }
+}
+
+.towerCost {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   text-align: right;
+}
+
+.costValue {
+   font-size: 16px;
+   color: @goldColor;
+}
+
+.costImg {
+   height: 20px;
+   //padding: 2px;
+   vertical-align: middle;
+   margin-top: -8px;
+   content: url(/tower_defense/ui/game/start_menu/images/gold_10.png);
+}
+
+.requiredLevel {
+   font-family: 'groboldregular';
+   color: whitesmoke;
+}
+
+.requiredKingdom {
+   font-size: 16px;
+   font-family: 'groboldregular';
+   color: rosybrown;
 }

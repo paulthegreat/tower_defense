@@ -51,7 +51,8 @@
    "entities": {
       "towers": {
          "generic": {
-            "detailed_description": "[str(i18n_data.description)]<div>Cost: [str(i18n_data.cost)]</div>"
+            "detailed_description": "[str(i18n_data.description)]<div class='towerCost'><span class='costValue'>[str(i18n_data.cost)]</span><img class='costImg'></div>",
+            "requires_kingdoms": "Requires level <span class='requiredLevel'>[str(i18n_data.level)]</span> [str(i18n_data.required_kingdoms)]"
          },
          "small_turret": {
             "display_name": "Small Turret",

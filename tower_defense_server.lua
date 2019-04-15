@@ -10,7 +10,8 @@ local monkey_patches = {
    combat_state_component = 'stonehearth.components.combat_state.combat_state_component',
    catalog_lib = 'stonehearth.lib.catalog.catalog_lib',
    ace_buffs_component = 'stonehearth.components.buffs.buffs_component',
-   ace_buff = 'stonehearth.components.buffs.buff'
+   ace_buff = 'stonehearth.components.buffs.buff',
+   population_faction = 'stonehearth.services.server.population.population_faction'
 }
 
 local function monkey_patching()

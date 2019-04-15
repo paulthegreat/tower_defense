@@ -6,6 +6,13 @@ function GamePlayer:create(player_id, game_options)
    for _, resource in pairs(stonehearth.constants.tower_defense.player_resources) do
       self._sv[resource] = game_options['starting_' .. resource] or 0
    end
+
+   self._sv.kingdoms = {}
+   local pop = stonehearth.population:get_population(player_id)
+   local kingdom_id = pop and pop:get_kingdom_id()
+   if kingdom_id then
+      self._sv.kingdoms[kingdom_id] = 1
+   end
 end
 
 -- for the common player, when a new player is added (for added initial gold)
@@ -14,6 +21,12 @@ function GamePlayer:add_player(game_options)
       self._sv[resource] = self._sv[resource] + game_options['common_starting_' .. resource] or 0
    end
 
+   self.__saved_variables:mark_changed()
+end
+
+-- TODO: should cost be part of this function, or calculated separately?
+function GamePlayer:add_kingdom_level(kingdom)
+   self._sv.kingdoms[kingdom] = (self._sv.kingdoms[kingdom] or 0) + 1
    self.__saved_variables:mark_changed()
 end
 

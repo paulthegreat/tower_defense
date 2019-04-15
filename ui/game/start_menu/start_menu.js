@@ -65,7 +65,7 @@ App.StonehearthStartMenuView = App.View.extend({
          .done(function(json) {
             self._buildMenu(json);
             self._addHotkeys();
-            self._tracePopulation();
+            self._tracePlayers();
 
             // Add badges for notifications
             App.bulletinBoard.getTrace()
@@ -105,16 +105,9 @@ App.StonehearthStartMenuView = App.View.extend({
    },
 
    destroy: function() {
-      if (this._popTrace) {
-         this._popTrace.destroy();
-         this._popTrace = null;
-      }
-      if (this._jobTrace) {
-         this._jobTrace.destroy();
-         this._jobTrace = null;
-      }
-      if (this._presenceCallbackName) {
-         App.presenceClient.removeChangeCallback(this._presenceCallbackName);
+      if (this._playerTrace) {
+         this._playerTrace.destroy();
+         this._playerTrace = null;
       }
 
       this._super();
@@ -139,6 +132,7 @@ App.StonehearthStartMenuView = App.View.extend({
    },
 
    _prependBuildMenus: function(data) {
+      var self = this;
       var catalogData = App.catalog.getAllCatalogData();
 
       var newDataTbl = {};
@@ -158,6 +152,7 @@ App.StonehearthStartMenuView = App.View.extend({
                         name: `i18n(tower_defense:data.population.${kingdom}.display_name)`,
                         description: `i18n(tower_defense:data.population.${kingdom}.description)`,
                         icon: `/tower_defense/ui/game/start_menu/images/build_${kingdom}.png`,
+                        kingdom: kingdom,
                         items: {}
                      }
                   };
@@ -170,8 +165,9 @@ App.StonehearthStartMenuView = App.View.extend({
 
       var newDataArr = [];
       radiant.each(newDataTbl, function(k, v) {
-         v.towers.sort((a, b) => a.ordinal - b.ordinal);
+         v.towers.sort((a, b) => a.tower.ordinal - b.tower.ordinal);
          radiant.each(v.towers, function(i, t) {
+            t.tower.required_kingdoms = self._getRequiredKingdoms(t.tower);
             var entry = {
                name: t.display_name,
                description: t.tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)',
@@ -181,6 +177,8 @@ App.StonehearthStartMenuView = App.View.extend({
                sticky: 'true',
                menu_action: 'td_create_tower',
                uri: t.uri,
+               tower: true,
+               requirement_text: t.tower.requirement_text || self._getRequirementText(t.tower),
                towerData: t.tower
             };
             entry.towerData.description = t.description;
@@ -189,7 +187,7 @@ App.StonehearthStartMenuView = App.View.extend({
 
          newDataArr.push(v);
       });
-      newDataArr.sort((a, b) => a.key.localeCompare(b) );
+      newDataArr.sort((a, b) => a.key.localeCompare(b.key));
       var newData = {};
       radiant.each(newDataArr, function(k, v) {
          newData[v.key] = v.entry;
@@ -201,22 +199,21 @@ App.StonehearthStartMenuView = App.View.extend({
       return newData;
    },
 
-   _trackJobs: function() {
+   _getRequiredKingdoms: function(towerData) {
+      return towerData.kingdoms.map(kingdom => "<span class='requiredKingdom'>" +
+            i18n.t(`i18n(tower_defense:data.population.${kingdom}.display_name)`) +
+            "</span>").join(', ');
+   },
+
+   _getRequirementText: function(towerData) {
+      // tower entity data has a kingdoms array and a level
+      return `i18n(tower_defense:entities.towers.generic.requires_kingdoms)`;
+   },
+
+   _updateKingdomCapabilities: function() {
       // find all the jobs in the population
       var self = this;
-      self.$('#startMenu').stonehearthMenu('lockAllItems');
-
-      radiant.each(App.jobController.getJobMemberCounts(), function(jobAlias, num_members) {
-         if (num_members > 0) {
-            var alias = jobAlias.split(":").join('\\:');
-            self.$('#startMenu').stonehearthMenu('unlockItem', 'job', alias);
-         }
-      });
-
-      var jobRoles = App.jobController.getUnlockedJobRoles();
-      radiant.each(jobRoles, function(role, someVar) {
-         self.$('#startMenu').stonehearthMenu('unlockItem', 'job_role', role);
-      });
+      self.$('#startMenu').stonehearthMenu('unlockItems', self._playerKingdomsCache);
    },
 
    _updateConnectedPlayerCount: function(num) {
@@ -241,10 +238,40 @@ App.StonehearthStartMenuView = App.View.extend({
    },
 
    // TODO: create a trace to enable and disable menu items based on the availability
-   _tracePopulation: function() {
+   _tracePlayers: function() {
       var self = this;
 
-      
+      self._playerTrace = new RadiantTrace();
+      radiant.call_obj('tower_defense.game', 'get_current_player_command')
+         .done(function(result) {
+            self._playerTrace.traceUri(result.player)
+               .progress(function(data) {
+                  // this is going to get updated a lot just from resource changes, so compare kingdom levels to cached version
+                  if (self._didKingdomsChange(data.kingdoms)) {
+                     self._playerKingdomsCache = data.kingdoms;
+                     self._updateKingdomCapabilities();
+                  }
+               });
+         });
+   },
+
+   _didKingdomsChange: function(kingdoms) {
+      if (!self._playerKingdomsCache) {
+         return true;
+      }
+
+      // don't need to compare size because we can only add capabilities, never remove them
+      // if (radiant.size(self._playerKingdomsCache) != radiant.size(kingdoms)) {
+      //    return true;
+      // }
+
+      radiant.each(kingdoms, function(k, v) {
+         if (self._playerKingdomsCache[k] != v) {
+            return true;
+         }
+      });
+
+      return false;
    },
 
    _onMenuClick: function(self, menuId, nodeData) {
