@@ -2,43 +2,20 @@
    position: absolute;
    top: 420px;
    left: 10px;
-   width: 150px;
+   width: 200px;
    height: 200px;
    z-index: 99;
 
-   #header {
+   #body {
       .outlined;
       position: absolute;
       top: 68px;
-      left: 30px;
-      font-family: @headerFontFamily;
+      left: 10px;
+      font-family: @baseFontFamily;
       color: #fff;
-
-      #name {
-         .outlined;
-         font-family: @headerFontFamily;
-         background: rgba(0,0,0,0.0);
-         color: #ffc000;
-         font-size: 36px;
-         width: 50px;
-         border: 0px;
-         position: relative;
-         left: -10px;
-      }
-
-      #stats {
-         .baseFont;
-         .outlined;
-         color: #fff;
-
-         .stat {
-            padding-top: 20px;
-
-            .label {
-               width: 120px;
-               display: inline-block;
-            }
-         }
+      
+      .number {
+         text-align: right;
       }
    }
 }

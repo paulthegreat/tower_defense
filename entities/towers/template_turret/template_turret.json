@@ -52,7 +52,7 @@
       "tower_defense:tower_data": {
          "kingdoms": ["fire"],
          "level": 1,
-         "ordinal": 2,
+         "ordinal": 1,
          "cost": 1
       }
    }

@@ -45,7 +45,7 @@
       "tower_defense:tower_data": {
          "kingdoms": ["plant"],
          "level": 1,
-         "ordinal": 2,
+         "ordinal": 102,
          "cost": 10
       }
    }

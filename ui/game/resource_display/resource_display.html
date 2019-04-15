@@ -5,17 +5,24 @@
             {{i18n tower_defense:ui.game.resourceDisplay.title}}
          </div>
 
-         <div id="header">
+         <div id="body">
             <table>
+               <tr>
+                  <td>Player</td>
+                  <td>Gold</td>
+                  <td>Wood</td>
+               </tr>
 					{{#each player in view.player_array}}
                <tr>
                   <td>{{player.player_id}}</td>
-                  <td>{{player.gold}}</td>
+                  <td class="number">{{player.gold}}</td>
+                  <td class="number">{{player.wood}}</td>
                </tr>
 					{{/each}}
                <tr>
                   <td>{{i18n tower_defense:ui.game.resourceDisplay.common}}</td>
-                  <td>{{view.model.common_player.gold}}</td>
+                  <td class="number">{{view.model.common_player.gold}}</td>
+                  <td class="number">{{view.model.common_player.wood}}</td>
                </tr>
             </table>
          </div>

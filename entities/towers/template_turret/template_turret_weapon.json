@@ -16,7 +16,7 @@
             "name": "fire",
             "effect": "/tower_defense/data/effects/fire_particles.json",
             "active_frame": 1,
-            "cooldown": 10,
+            "cooldown": 30,
             "priority": 0
          }
       ]

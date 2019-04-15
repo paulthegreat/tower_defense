@@ -5,19 +5,19 @@
             {{i18n tower_defense:ui.game.gameStateWindow.title}}
          </div>
 
-         <div id="header">
+         <div id="body">
             <table>
                <tr>
                   <td>{{i18n tower_defense:ui.game.gameStateWindow.wave_number}}</td>
-                  <td>{{view.model.wave}}</td>
+                  <td class="number">{{view.model.wave}}</td>
                </tr>
                <tr>
                   <td>{{i18n tower_defense:ui.game.gameStateWindow.remaining_monsters}}</td>
-                  <td>{{view.model.wave_controller.remaining_monsters}}</td>
+                  <td class="number">{{view.model.wave_controller.remaining_monsters}}</td>
                </tr>
                <tr>
                   <td>{{i18n tower_defense:ui.game.gameStateWindow.player_health}}</td>
-                  <td>{{view.model.health}}</td>
+                  <td class="number">{{view.model.health}}</td>
                </tr>
             </table>
          </div>
