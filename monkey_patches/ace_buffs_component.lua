@@ -58,6 +58,20 @@ function AceBuffsComponent:has_category_buffs(category)
    return self._sv.buffs_by_category[category] ~= nil
 end
 
+function AceBuffsComponent:get_buff(uri)
+   return self._sv.buffs[uri]
+end
+
+function AceBuffsComponent:get_buff_stacks(uri)
+   local buff = self._sv.buffs[uri]
+   return buff and buff:get_stacks()
+end
+
+function AceBuffsComponent:get_buff_duration(uri)
+   local buff = self._sv.buffs[uri]
+   return buff and buff:get_duration()
+end
+
 function AceBuffsComponent:add_buff(uri, options)
    assert(not string.find(uri, '%.'), 'tried to add a buff with a uri containing "." Use an alias instead')
 

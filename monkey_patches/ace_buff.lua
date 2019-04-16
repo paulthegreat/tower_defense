@@ -75,6 +75,15 @@ function AceBuff:remove_stack()
    end
 end
 
+function AceBuff:get_stacks()
+   return self._sv.stacks
+end
+
+function AceBuff:get_duration()
+   local expire_time = self._sv.expire_time
+   return expire_time and (expire_time - stonehearth.calendar:get_elapsed_time()) or -1
+end
+
 -- override to allow removing stacks instead of entire buff on expire
 function Buff:_create_timer()
    local duration = self._default_duration
