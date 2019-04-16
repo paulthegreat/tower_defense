@@ -4,6 +4,10 @@ function PlayerCallHandler:give_gold_cheat_command(session, response, amount)
    tower_defense.game:add_player_gold(session.player_id, amount)
 end
 
+function PlayerCallHandler:give_wood_cheat_command(session, response, amount)
+   tower_defense.game:add_player_wood(session.player_id, amount)
+end
+
 function PlayerCallHandler:donate_gold_command(session, response, amount)
    if tower_defense.game:donate_gold(session.player_id, amount) then
       response:resolve({})

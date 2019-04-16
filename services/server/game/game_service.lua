@@ -24,8 +24,8 @@ function GameService:initialize()
       self._sv.health = 100
    end
 
-   if not self._sv.wave_controller then
-      self:_create_countdown_timer()
+   if not self._sv.wave_controller and self._sv.wave > 0 then
+      self:_create_countdown_timer(self._sv.wave > 0)
    end
 
    self._wave_listeners = {}

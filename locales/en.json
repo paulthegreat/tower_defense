@@ -98,6 +98,12 @@
                "10_description": "Give yourself 10 gold, you cheater.",
                "100_description": "Give yourself 100 gold, you big cheater.",
                "1000_description": "Give yourself 1000 gold, you big, fat cheater."
+            },
+            "give_wood": {
+               "display_name": "Give Wood",
+               "give_gold_10": "Give Wood (10)",
+               "10_description": "Give yourself 10 wood, you cheater."
+
             }
          },
          "resourceDisplay": {

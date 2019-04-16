@@ -27,6 +27,12 @@ App.StonehearthStartMenuView = App.View.extend({
             radiant.call('tower_defense:give_gold_cheat_command', data.gold_amount);
          }
       },
+      td_give_wood: function(self, data) {
+         // cheat give yourself wood
+         if (data && data.wood_amount) {
+            radiant.call('tower_defense:give_wood_cheat_command', data.wood_amount);
+         }
+      },
       bulletin_manager: function() {
          App.bulletinBoard.toggleListView();
       },

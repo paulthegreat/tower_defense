@@ -119,6 +119,10 @@
          "controller": "file(call_handlers/player_call_handler.lua)",
          "endpoint": "server"
       },
+      "give_wood_cheat_command": {
+         "controller": "file(call_handlers/player_call_handler.lua)",
+         "endpoint": "server"
+      },
       "donate_gold_command": {
          "controller": "file(call_handlers/player_call_handler.lua)",
          "endpoint": "server"
