@@ -76,7 +76,7 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
       }
    },
 
-   unlockItems: function(kingdoms) {
+   unlockItems: function(kingdoms, levelCosts) {
       var self = this;
 
       radiant.each(self._dataToMenuItemMap, function(id, node) {
@@ -94,8 +94,16 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
             self._buildTooltip(item);
          }
 
-         if (node.kingdom && kingdoms[node.kingdom]) {
-            item.removeClass('unused');
+         if (node.kingdom) {
+            var curLevel = kingdoms[node.kingdom];
+            if (curLevel) {
+               item.removeClass('unused');
+               item.find('.badgeNum')
+                  .text(curLevel)
+                  .show();
+            }
+            var costs = levelCosts && levelCosts[node.kingdom];
+            node.kingdom_level_cost = costs && costs[curLevel || 0];
             self._buildTooltip(item);
          }
       });
@@ -113,6 +121,31 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
       if (node.requirement_text && item.hasClass('locked')) {
          description = description + '<span class=warn>' + i18n.t(node.requirement_text, {i18n_data: node.towerData}) + '</span>';
       };
+      if (node.kingdom) {
+         item.off('click.upgrade');
+         
+         if (node.kingdom_level_cost) {
+            var cost = '';
+            radiant.each(node.kingdom_level_cost, function(resource, amount) {
+               cost += `<span class='costValue'>${amount}</span><img class='costImg ${resource}'> `;
+            })
+            description = description + '<span class=warn>' + i18n.t('i18n(tower_defense:ui.game.menu.build_menu.kingdom_level_cost)', {i18n_data: {cost: cost} }) + '</span>';
+            item.on('click.upgrade', function(e) {
+               if (e.altKey) {
+                  radiant.call('tower_defense:unlock_kingdom_command', node.kingdom)
+                     .done(function() {
+                        // we successfully upgraded
+                     })
+                     .fail(function(response) {
+                        if (response.message) {
+                           alert(i18n.t(response.message, response));
+                        }
+                     });
+                  return false;
+               }
+            });
+         }
+      }
       if (item.warning_text) {
          description = description + '<span class=warn>' + i18n.t(item.warning_text) + '</span>';
       };

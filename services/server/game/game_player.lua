@@ -25,10 +25,12 @@ function GamePlayer:post_activate()
          end
       end
 
-      self._kingdom_level_costs = pop:get_kingdom_level_costs() or {}
+      self._sv.kingdom_level_costs = pop:get_kingdom_level_costs() or {}
    else
-      self._kingdom_level_costs = {}
+      self._sv.kingdom_level_costs = {}
    end
+   self.__saved_variables:mark_changed()
+   -- ^^ this is in saved variables so it's simpler to remote to client
 end
 
 -- for the common player, when a new player is added (for added initial gold)
@@ -78,7 +80,7 @@ function GamePlayer:try_add_kingdom_level(kingdom)
 end
 
 function GamePlayer:_get_kingdom_level_cost(kingdom)
-   local kingdom_costs = self._kingdom_level_costs[kingdom]
+   local kingdom_costs = self._sv.kingdom_level_costs[kingdom]
    local next_level = (self._sv.kingdoms[kingdom] or 0) + 1
    return kingdom_costs and kingdom_costs[next_level]
 end

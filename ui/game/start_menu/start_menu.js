@@ -213,7 +213,7 @@ App.StonehearthStartMenuView = App.View.extend({
    _updateKingdomCapabilities: function() {
       // find all the jobs in the population
       var self = this;
-      self.$('#startMenu').stonehearthMenu('unlockItems', self._playerKingdomsCache);
+      self.$('#startMenu').stonehearthMenu('unlockItems', self._playerKingdomsCache, self._playerKingdomLevelCosts);
    },
 
    _updateConnectedPlayerCount: function(num) {
@@ -249,6 +249,7 @@ App.StonehearthStartMenuView = App.View.extend({
                   // this is going to get updated a lot just from resource changes, so compare kingdom levels to cached version
                   if (self._didKingdomsChange(data.kingdoms)) {
                      self._playerKingdomsCache = data.kingdoms;
+                     self._playerKingdomLevelCosts = data.kingdom_level_costs;
                      self._updateKingdomCapabilities();
                   }
                });
