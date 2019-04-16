@@ -1,0 +1,18 @@
+{
+   "display_name": "i18n(tower_defense:data.weather.snow.display_name)",
+   "description": "i18n(tower_defense:data.weather.snow.description)",
+   "icon": "file(snow.png)",
+   "sky_settings": "stonehearth:sky_settings:snow",
+   "ambient_sound_key": "snow",
+   "camera_attached_effect": "stonehearth:effects:snow_effect",
+   "vision_multiplier": 0.9,
+   "hide_cloud_shadows": true,
+   "snow_accumulation_per_minute": 0.0005,
+   "is_dark_during_daytime": true,
+   "tower_buffs": [
+
+   ],
+   "monster_buffs": [
+      
+   ]
+}

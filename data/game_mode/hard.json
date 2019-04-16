@@ -8,5 +8,51 @@
    "image": "/stonehearth/data/game_mode/hard/hard.png",
    "starting_resources": {
       "gold": 5
+   },
+   "weather": {
+      "starting_weather": [
+         {
+            "uri": "tower_defense:weather:sunny",
+            "weight": 1
+         }
+      ],
+      "difficulty_weather": [
+         {
+            "uri": "tower_defense:weather:foggy",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:sandstorm",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:snow",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:blizzard",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:thunderstorm",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:cloudy",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:cloudy:desert",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:rain",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:snow:sunny",
+            "weight": 1
+         }
+      ]
    }
 }

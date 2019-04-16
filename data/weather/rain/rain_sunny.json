@@ -1,0 +1,18 @@
+{
+   "display_name": "i18n(tower_defense:data.weather.rain.rain_sunny.display_name)",
+   "description": "i18n(tower_defense:data.weather.rain.rain_sunny.description)",
+   "icon": "file(rain_sunny.png)",
+   "sky_settings": "stonehearth:sky_settings:sunny",
+   "ambient_sound_key": "rain",
+   "camera_attached_effect": "stonehearth:effects:rain_effect",
+   "vision_multiplier": 0.8,
+   "hide_cloud_shadows": false,
+   "snow_accumulation_per_minute": -0.0015,
+   "is_dark_during_daytime": false,
+   "tower_buffs": [
+
+   ],
+   "monster_buffs": [
+      
+   ]
+}

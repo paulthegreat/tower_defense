@@ -11,5 +11,35 @@
    },
    "common_starting_resources": {
       "gold": 5
+   },
+   "weather": {
+      "starting_weather": [
+         {
+            "uri": "tower_defense:weather:sunny",
+            "weight": 1
+         }
+      ],
+      "difficulty_weather": [
+         {
+            "uri": "tower_defense:weather:sunny",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:sunny:desert",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:rain:sunny",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:windy",
+            "weight": 1
+         },
+         {
+            "uri": "tower_defense:weather:sandy",
+            "weight": 1
+         }
+      ]
    }
 }

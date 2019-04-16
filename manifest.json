@@ -66,7 +66,22 @@
       "towers:sugarbell_plant": "file(entities/towers/sugarbell_plant/sugarbell_plant.json)",
       "towers:sugarbell_plant:weapon": "file(entities/towers/sugarbell_plant/sugarbell_plant_weapon.json)",
       "towers:turnip_shooter": "file(entities/towers/turnip_shooter/turnip_shooter.json)",
-      "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)"
+      "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)",
+      "weather:blizzard": "file(data/weather/blizzard)",
+      "weather:cloudy": "file(data/weather/cloudy)",
+      "weather:cloudy:desert": "file(data/weather/cloudy/cloudy_desert.json)",
+      "weather:foggy": "file(data/weather/foggy)",
+      "weather:rain": "file(data/weather/rain)",
+      "weather:rain:sunny": "file(data/weather/rain/rain_sunny.json)",
+      "weather:sandstorm": "file(data/weather/sandstorm)",
+      "weather:sandy": "file(data/weather/sandstorm/sandy.json)",
+      "weather:snow": "file(data/weather/snow)",
+      "weather:snow:sunny": "file(data/weather/snow/snow_sunny.json)",
+      "weather:sunny": "file(data/weather/sunny)",
+      "weather:sunny:desert": "file(data/weather/sunny/sunny_desert.json)",
+      "weather:test": "file(data/weather/test_weather)",
+      "weather:thunderstorm": "file(data/weather/thunderstorm)",
+      "weather:windy": "file(data/weather/windy)"
    },
 	"mixintos" : {
       "stonehearth:hotkeys": "file(data/hotkeys.json)",
@@ -82,7 +97,8 @@
       "/stonehearth/ui/game/start_menu/start_menu.js": "file(ui/game/start_menu/start_menu.js)",
       "/stonehearth/data/game_mode/peaceful/peaceful.json": "file(data/game_mode/peaceful.json)",
       "/stonehearth/data/game_mode/normal/normal.json": "file(data/game_mode/normal.json)",
-      "/stonehearth/data/game_mode/hard/hard.json": "file(data/game_mode/hard.json)"
+      "/stonehearth/data/game_mode/hard/hard.json": "file(data/game_mode/hard.json)",
+      "/stonehearth/services/server/weather/weather_service.lua": "file(services/server/weather/weather_service.lua)"
    },
    "components" : {
       "monster": "file(components/monster/monster_component.lua)",

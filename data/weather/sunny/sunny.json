@@ -1,0 +1,14 @@
+{
+   "display_name": "i18n(tower_defense:data.weather.sunny.display_name)",
+   "description": "i18n(tower_defense:data.weather.sunny.description)",
+   "icon": "file(sunny.png)",
+   "sky_settings": "stonehearth:sky_settings:sunny",
+   "ambient_sound_key": "sunny",
+   "snow_accumulation_per_minute": -0.0015,
+   "tower_buffs": [
+
+   ],
+   "monster_buffs": [
+      
+   ]
+}

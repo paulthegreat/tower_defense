@@ -1,0 +1,15 @@
+{
+   "display_name": "i18n(tower_defense:data.weather.cloudy.display_name)",
+   "description": "i18n(tower_defense:data.weather.cloudy.description)",
+   "icon": "file(cloudy.png)",
+   "sky_settings": "stonehearth:sky_settings:cloudy",
+   "ambient_sound_key": "cloudy",
+   "vision_multiplier": 0.9,
+   "hide_cloud_shadows": true,
+   "tower_buffs": [
+
+   ],
+   "monster_buffs": [
+      
+   ]
+}

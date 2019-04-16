@@ -25,7 +25,7 @@ function GameService:initialize()
    end
 
    if not self._sv.wave_controller and self._sv.wave > 0 then
-      self:_create_countdown_timer(self._sv.wave > 0)
+      self:_create_countdown_timer(true)
    end
 
    self._wave_listeners = {}
@@ -89,6 +89,7 @@ end
 function GameService:set_game_options(options)
    self._sv.game_options = options
    self.__saved_variables:mark_changed()
+   stonehearth.weather:start(options.game_mode)
 end
 
 function GameService:get_ground_spawn_location()
