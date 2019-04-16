@@ -17,6 +17,7 @@
    "server_init_script": "file(tower_defense_server)",
 	"default_locale" : "en",
 	"aliases" : {
+      "actions:idle_action": "file(ai/actions/idle_action.lua)",
       "actions:monster_follow_path": "file(ai/actions/monster_follow_path_action.lua)",
       "actions:tower_attack": "file(ai/actions/tower_attack_action.lua)",
       "actions:tower_attack_ranged": "file(ai/actions/tower_attack_ranged_action.lua)",

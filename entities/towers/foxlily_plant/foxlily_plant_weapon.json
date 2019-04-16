@@ -3,8 +3,8 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:combat:weapon_data": {
-         "base_damage": 8,
-         "base_ranged_damage": 8,
+         "base_damage": 1,
+         "base_ranged_damage": 1,
          "range": 40,
          "projectile_speed": 30,
          "projectile_uri": "stonehearth:weapons:bullet",
@@ -16,7 +16,7 @@
             "name": "plant",
             "effect": "/tower_defense/data/effects/plant_particles.json",
             "active_frame": 1,
-            "cooldown": 10,
+            "cooldown": 200,
             "priority": 0
          }
       ]

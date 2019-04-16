@@ -53,13 +53,13 @@ function AttackRanged:_choose_attack_action(ai, entity, args)
       ai:set_think_output()
       return
    end
-
+ai:reject()
    -- choose_attack_action might have complex logic, so just wait 1 second and try again
    -- instead of trying to guess which coolodowns to track
-   self._think_timer = stonehearth.combat:set_timer("AttackRanged waiting for cooldown", 1000, function()
-         self._think_timer = nil
-         self:_choose_attack_action(ai, entity, args)
-      end)
+--   self._think_timer = stonehearth.combat:set_timer("AttackRanged waiting for cooldown", 1000, function()
+--         self._think_timer = nil
+--         self:_choose_attack_action(ai, entity, args)
+--      end)
 end
 
 function AttackRanged:stop_thinking(ai, entity, args)

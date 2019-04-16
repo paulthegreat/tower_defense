@@ -126,6 +126,10 @@ function TowerComponent:placed(rotation)
    self.__saved_variables:mark_changed()
 end
 
+function TowerComponent:get_original_facing()
+   return self._sv.original_facing
+end
+
 function TowerComponent:set_target_filters(target_filters)
    self._sv.target_filters = target_filters or {}
    self.__saved_variables:mark_changed()
