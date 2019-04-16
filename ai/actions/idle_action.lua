@@ -15,7 +15,7 @@ Idle.args = {
 Idle.priority = 0
 
 function Idle:start_thinking(ai, entity, args)
-   self._timer = stonehearth.calendar:set_timer("wait to reset facing", "2m",
+   self._timer = stonehearth.calendar:set_timer("wait to set status and reset facing", "2m",
       function(self, entity)
          ai:set_think_output()
       end
