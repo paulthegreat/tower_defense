@@ -16,7 +16,7 @@
             "name": "plant",
             "effect": "/tower_defense/data/effects/plant_particles.json",
             "active_frame": 1,
-            "cooldown": 10,
+            "cooldown": 1000,
             "priority": 0
          }
       ]

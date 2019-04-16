@@ -5,7 +5,7 @@
          "type": "cubemitter",
          "cubemitter": "particles/buff/tonic/buff_tonic_energy.cubemitter.json",
          "start_time": 0,
-         "end_time": 30,
+         "end_time": 60,
          "transforms": {
             "x": 0,
             "y": 0,
@@ -19,7 +19,7 @@
          "type": "cubemitter",
          "cubemitter": "particles/buff/tonic/buff_tonic_energy_large.cubemitter.json",
          "start_time": 0,
-         "end_time": 20,
+         "end_time": 40,
          "transforms": {
             "x": 0,
             "y": 0,
