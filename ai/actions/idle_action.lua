@@ -15,7 +15,11 @@ Idle.args = {
 Idle.priority = 0
 
 function Idle:start_thinking(ai, entity, args)
-   self._timer=stonehearth.calendar:set_timer("wait to reset facing", "2m",
+   if not entity:get_component('tower_defense:tower') then
+      return
+   end
+   
+   self._timer = stonehearth.calendar:set_timer("wait to reset facing", "2m",
       function(self, entity)
          ai:set_think_output()
       end
