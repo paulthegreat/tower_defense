@@ -15,10 +15,6 @@ Idle.args = {
 Idle.priority = 0
 
 function Idle:start_thinking(ai, entity, args)
-   if not entity:get_component('tower_defense:tower') then
-      return
-   end
-   
    self._timer = stonehearth.calendar:set_timer("wait to reset facing", "2m",
       function(self, entity)
          ai:set_think_output()
@@ -37,7 +33,10 @@ function Idle:run(ai, entity, args)
    if args.set_status_text then
       ai:set_status_text_key('stonehearth:ai.actions.status_text.idle')
    end
-   radiant.entities.turn_to(entity, entity:get_component('tower_defense:tower'):get_original_facing() or 0)
+
+   if entity:get_component('tower_defense:tower') then
+      radiant.entities.turn_to(entity, entity:get_component('tower_defense:tower'):get_original_facing() or 0)
+   end
 
    if self._timer then
       self._timer:destroy()
