@@ -51,7 +51,7 @@
    "entities": {
       "towers": {
          "generic": {
-            "detailed_description": "[str(i18n_data.description)]<div class='towerCost'><span class='costValue'>[str(i18n_data.cost)]</span><img class='costImg'></div>",
+            "detailed_description": "[str(i18n_data.description)]<div class='towerCost'><span class='costValue'>[str(i18n_data.cost)]</span><img class='costImg gold'></div>",
             "requires_kingdoms": "Requires level <span class='requiredLevel'>[str(i18n_data.level)]</span> [str(i18n_data.required_kingdoms)]"
          },
          "cactus_plant": {
@@ -88,8 +88,7 @@
       "game": {
          "menu": {
             "build_menu": {
-               "display_name": "Build Tower",
-               "description": "Choose the best tower to fit your current decor and feng shui needs."
+               "kingdom_level_cost": "Alt+Click to level up for [str(i18n_data.cost)]"
             },
             "give_gold": {
                "display_name": "Give Gold",
