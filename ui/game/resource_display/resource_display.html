@@ -13,16 +13,16 @@
                   <td>Wood</td>
                </tr>
 					{{#each player in view.player_array}}
-               <tr>
-                  <td>{{player.player_id}}</td>
-                  <td class="number">{{player.gold}}</td>
-                  <td class="number">{{player.wood}}</td>
+               <tr class="player" {{bind-attr player_id=player.player_id}}>
+                  <td {{bind-attr style=player.colorStyle}}>{{player.playerName}}</td>
+                  <td class="number gold">{{player.gold}}</td>
+                  <td class="number wood">{{player.wood}}</td>
                </tr>
 					{{/each}}
-               <tr>
+               <tr class="player">
                   <td>{{i18n tower_defense:ui.game.resourceDisplay.common}}</td>
-                  <td class="number">{{view.model.common_player.gold}}</td>
-                  <td class="number">{{view.model.common_player.wood}}</td>
+                  <td class="number gold">{{view.model.common_player.gold}}</td>
+                  <td class="number wood">{{view.model.common_player.wood}}</td>
                </tr>
             </table>
          </div>

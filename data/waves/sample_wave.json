@@ -23,6 +23,7 @@
       }
    ],
    "completion_bonus": {
-      "gold": 5
+      "gold": 5,
+      "wood": 1
    }
 }

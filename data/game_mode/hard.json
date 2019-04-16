@@ -2,9 +2,9 @@
    "type": "game_mode",
    "alias": "stonehearth:game_mode:hard",
    "ordinal": 3,
-   "display_name": "i18n(stonehearth:ui.shell.select_game_story.game_modes.hard.display_name)",
-   "description": "i18n(stonehearth:ui.shell.select_game_story.game_modes.hard.description)",
-   "post_selection_text": "i18n(stonehearth:ui.shell.select_game_story.game_modes.hard.post_selection_text)",
+   "display_name": "i18n(tower_defense:ui.shell.select_game_story.game_modes.hard.display_name)",
+   "description": "i18n(tower_defense:ui.shell.select_game_story.game_modes.hard.description)",
+   "post_selection_text": "i18n(tower_defense:ui.shell.select_game_story.game_modes.hard.post_selection_text)",
    "image": "/stonehearth/data/game_mode/hard/hard.png",
    "starting_resources": {
       "gold": 5

@@ -27,6 +27,7 @@
       "buff_scripts:invisible": "file(data/buffs/invisible/invisible_buff.lua)",
       "commands:sell_full": "file(data/commands/sell_full/sell_full.json)",
       "commands:sell_less": "file(data/commands/sell_less/sell_less.json)",
+      "data:kingdom_level_costs:default": "file(data/kingdoms/level_costs/default.json)",
       "data:map_generation" : "file(data/default_map_generation.json)",
       "data:monster_tuning:low_air": "file(data/monster_tuning/low_air.json)",
       "data:monster_tuning:low_undead": "file(data/monster_tuning/low_undead.json)",
@@ -46,6 +47,7 @@
       "mixins:towers:platform_tower": "file(mixins/towers/platform_tower.json)",
       "monsters:air:poyo": "file(entities/monsters/air/poyo/poyo.json)",
       "path": "file(entities/path/path.json)",
+      "sounds:coins": "file(data/sounds/coins.ogg)",
       "task_groups:monster": "file(ai/task_groups/monster_task_group.lua)",
       "task_groups:tower_combat": "file(ai/task_groups/tower_combat_task_group.lua)",
       "towers:template_turret": "file(entities/towers/template_turret/template_turret.json)",
@@ -117,6 +119,14 @@
          "controller": "file(call_handlers/player_call_handler.lua)",
          "endpoint": "server"
       },
+      "donate_gold_command": {
+         "controller": "file(call_handlers/player_call_handler.lua)",
+         "endpoint": "server"
+      },
+      "unlock_kingdom_command": {
+         "controller": "file(call_handlers/player_call_handler.lua)",
+         "endpoint": "server"
+      },
       "sell_full": {
          "controller": "file(call_handlers/tower_call_handler.lua)",
          "endpoint": "server"
@@ -141,7 +151,8 @@
          "file(ui/game/game_state_window/game_state_window.js)",
          "file(ui/game/start_menu/stonehearth_menu.js)",
          "file(ui/game/traces/catalog.js)",
-         "file(ui/shell/select_game_story/select_game_story.js)"
+         "file(ui/shell/select_game_story/select_game_story.js)",
+         "file(ui/root/js/stonehearth/stonehearth_client.js)"
       ],
       "less": [
          "file(ui/game/resource_display/resource_display.less)",

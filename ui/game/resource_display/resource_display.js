@@ -24,14 +24,31 @@ App.TowerDefenseResourceDisplay = App.View.extend({
       self.radiantTrace = new RadiantTrace();
       self.set('players', {});
 
-		$('#resourceDisplay')
-			.draggable();
+		self.$('#resourceDisplay')
+         .draggable();
+      
+      radiant.call_obj('stonehearth.session', 'get_player_id_command')
+         .done(function(e) {
+            self.$().on('contextmenu', `.player[player_id="${e.id}"] .gold`, function(e) {
+               radiant.call('tower_defense:donate_gold_command', 10)
+                  .done(function(result) {
+                     // only play the sound if we successfully donated
+                     radiant.call('radiant:play_sound', {
+                        track: 'tower_defense:sounds:coins',
+                        volume: 40
+                     });
+                  });
+               return false;
+            });
+         });
 	},
 
 	willDestroyElement: function () {
 		var self = this;
 
       self.radiantTrace.destroy();
+      self.$('.gold').off('contextmenu');
+
 		self._super();
 	},
 
@@ -53,8 +70,15 @@ App.TowerDefenseResourceDisplay = App.View.extend({
 	_onPlayersChanged: function () {
 		var self = this;
 
-		self.set('player_array', radiant.map_to_array(self.get('players')))
+      var playerArr = radiant.map_to_array(self.get('players') || {});
+      playerArr.forEach(player => {
+         var steamName = App.presenceClient.getSteamName(player.player_id);
+         player.playerName = steamName && steamName != '' ? steamName : player.player_id;
+         var color = App.presenceClient.getPlayerColor(player.player_id)
+         player.colorStyle = `color: rgba(${color.x}, ${color.y}, ${color.z}, 1)`;
+      });
 
+		self.set('player_array', playerArr);
 	}.observes('players'),
 
 });

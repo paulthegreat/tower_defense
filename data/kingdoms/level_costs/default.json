@@ -1,0 +1,27 @@
+{
+   "air": [
+      {"wood": 5},
+      {"wood": 5},
+      {"wood": 5}
+   ],
+   "earth": [
+      {"wood": 5},
+      {"wood": 5},
+      {"wood": 5}
+   ],
+   "fire": [
+      {"wood": 5},
+      {"wood": 5},
+      {"wood": 5}
+   ],
+   "plant": [
+      {"wood": 5},
+      {"wood": 5},
+      {"wood": 5}
+   ],
+   "water": [
+      {"wood": 5},
+      {"wood": 5},
+      {"wood": 5}
+   ]
+}

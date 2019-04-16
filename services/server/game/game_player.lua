@@ -8,10 +8,26 @@ function GamePlayer:create(player_id, starting_resources)
    end
 
    self._sv.kingdoms = {}
-   local pop = stonehearth.population:get_population(player_id)
-   local kingdom_id = pop and pop:get_kingdom_id()
-   if kingdom_id then
-      self._sv.kingdoms[kingdom_id] = 1
+   self.__saved_variables:mark_changed()
+
+   self._is_create = true
+end
+
+function GamePlayer:post_activate()
+   local pop = stonehearth.population:get_population(self._sv.player_id)
+   
+   -- common player doesn't have a population
+   if pop then
+      if self._is_create then
+         local kingdom_id = pop:get_kingdom_id()
+         if kingdom_id then
+            self._sv.kingdoms[kingdom_id] = 1
+         end
+      end
+
+      self._kingdom_level_costs = pop:get_kingdom_level_costs() or {}
+   else
+      self._kingdom_level_costs = {}
    end
 end
 
@@ -24,8 +40,50 @@ function GamePlayer:add_player(common_starting_resources)
    self.__saved_variables:mark_changed()
 end
 
--- TODO: should cost be part of this function, or calculated separately?
-function GamePlayer:add_kingdom_level(kingdom)
+function GamePlayer:try_add_kingdom_level(kingdom)
+   -- check if the player can afford it
+   -- if so, proceed and return 'resolve' as a table key
+   -- otherwise, return 'reject' as a table key along with missing resources
+   local cost = self:_get_kingdom_level_cost(kingdom)
+   local result = {}
+   if not cost then
+      -- everything has a cost... if we can get it
+      result.reject = true
+      result.message = 'i18n(tower_defense:alerts.add_kingdom_level.unavailable)'
+   else
+      for resource, amount in pairs(cost) do
+         local missing = self:can_spend_resource(resource, amount)
+         if missing > 0 then
+            result[resource] = missing
+         end
+      end
+   end
+
+   if not result.reject and next(result) then
+      result.reject = true
+      result.message = 'i18n(tower_defense:alerts.add_kingdom_level.missing_resources)'
+   end
+   
+   if not result.reject then
+      for resource, amount in pairs(cost) do
+         self:spend_resource(resource, amount)
+      end
+      self:_add_kingdom_level(kingdom)
+      
+      result.resolve = true
+      result.message = 'i18n(tower_defense:alerts.add_kingdom_level.success)'
+   end
+
+   return result
+end
+
+function GamePlayer:_get_kingdom_level_cost(kingdom)
+   local kingdom_costs = self._kingdom_level_costs[kingdom]
+   local next_level = (self._sv.kingdoms[kingdom] or 0) + 1
+   return kingdom_costs and kingdom_costs[next_level]
+end
+
+function GamePlayer:_add_kingdom_level(kingdom)
    self._sv.kingdoms[kingdom] = (self._sv.kingdoms[kingdom] or 0) + 1
    self.__saved_variables:mark_changed()
 end
@@ -74,6 +132,18 @@ function GamePlayer:spend_resource(resource, amount, only_self)
    end
 
    return success
+end
+
+function GamePlayer:can_spend_resource(resource, amount)
+   -- don't actually spend it, just see if you can
+   local has_amount = self._sv[resource]
+   
+   local common_player = tower_defense.game:get_common_player()
+   if self ~= common_player then
+      has_amount = has_amount + common_player:get_resource(resource)
+   end
+
+   return amount - has_amount
 end
 
 return GamePlayer

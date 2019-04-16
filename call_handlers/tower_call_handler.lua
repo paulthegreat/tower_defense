@@ -122,7 +122,9 @@ function TowerCallHandler:_sell_tower(player_id, tower, multiplier)
 
    -- get the value of the tower, refund it to the player, and destroy the tower
    local value = math.floor(self:_get_tower_cost(tower:get_uri()) * (multiplier or 1))
-   tower_defense.game:add_player_gold(player_id, value)
+   if value > 0 then
+      tower_defense.game:add_player_gold(player_id, value)
+   end
    radiant.entities.destroy_entity(tower)
 end
 

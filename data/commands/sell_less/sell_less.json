@@ -6,6 +6,10 @@
    "icon": "file(sell_less.png)",
    "action": "call",
    "function": "tower_defense:sell_less",
+   "sound_on_complete": {
+      "track": "tower_defense:sounds:coins",
+      "volume": 20
+   },
    "args": [
    ]
 }

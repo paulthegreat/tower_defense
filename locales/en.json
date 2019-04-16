@@ -134,18 +134,18 @@
             "game_modes": {
                "normal": {
                   "display_name": "Normal",
-                  "description": "Adventure forth in a world fraught with danger. Your town will be subject to raiding enemies.",
-                  "post_selection_text": "an inspiring challenge."
+                  "description": "Start with normal gold and have a mix of weather effects.",
+                  "post_selection_text": "normal difficulty."
                },
                "peaceful": {
                   "display_name": "Easy",
-                  "description": "description of easy modifiers",
-                  "post_selection_text": "tranquil."
+                  "description": "Start with extra gold and have only neutral or positive weather effects.",
+                  "post_selection_text": "fairly easy."
                },
                "hard": {
                   "display_name": "Hard",
-                  "description": "Face more difficult monsters than normal mode",
-                  "post_selection_text": "a daunting challenge."
+                  "description": "Start with little gold and have only neutral or negative weather effecs.",
+                  "post_selection_text": "rather difficult."
                }
             },
             "begin_button": "Begin"
@@ -153,6 +153,11 @@
       }
    },
    "alerts": {
+      "add_kingdom_level": {
+         "unavailable": "Unavailable kingdom upgrade",
+         "missing_resources": "Missing resources for kingdom upgrade",
+         "success": "Successful kingdom upgrade!"
+      },
       "towers": {
          "build": {
             "not_enough_gold": "Not enough gold! Needed [str(needed)], only have [str(player_gold)] ([str(common_gold)] in common pool)."

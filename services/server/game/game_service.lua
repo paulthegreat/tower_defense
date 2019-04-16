@@ -291,9 +291,14 @@ function GameService:donate_gold(from_player_id, amount)
       local common_player = self._sv.common_player
       if from_player and common_player then
          amount = from_player:take_resource(constants.tower_defense.player_resources.GOLD, amount)
-         common_player:add_resource(constants.tower_defense.player_resources.GOLD, amount)
+         if amount > 0 then
+            common_player:add_resource(constants.tower_defense.player_resources.GOLD, amount)
+            return true
+         end
       end
    end
+
+   return false
 end
 
 -- this is used to add an amount of gold to all players, like when a monster is killed

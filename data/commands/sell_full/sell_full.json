@@ -6,6 +6,10 @@
    "icon": "file(sell_full.png)",
    "action": "call",
    "function": "tower_defense:sell_full",
+   "sound_on_complete": {
+      "track": "tower_defense:sounds:coins",
+      "volume": 40
+   },
    "args": [
    ]
 }
