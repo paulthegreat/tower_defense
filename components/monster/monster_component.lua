@@ -27,6 +27,7 @@ function MonsterComponent:activate()
          end
          self._location = location
          self:_update_seen()
+         tower_defense.game:monster_moved_to(location)
       end)
       :push_object_state()
 end

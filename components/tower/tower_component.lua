@@ -4,6 +4,15 @@ local Region3 = _radiant.csg.Region3
 
 local TowerComponent = class()
 
+local STATES = {
+   INITIALIZING = 'initializing',   -- setting up attack info and such, starts here and goes here whenever equipment changes
+   IDLE = 'idle', -- not doing anything, i.e. between waves
+   WAITING_FOR_TARGETABLE = 'waiting_for_targetable', -- waiting until there are any targets within range
+   WAITING_FOR_COOLDOWN = 'waiting_for_cooldown',  -- waiting until shortest ability cooldown is done
+   FINDING_TARGET = 'finding',   -- finding a target to use ability on
+   ENGAGING_TARGET = 'engaging'  -- using the ability on the target
+}
+
 local FILTER_HP_LOW = 'lowest_health'
 local FILTER_HP_HIGH = 'highest_health'
 local FILTER_CLOSEST_TO_TOWER = 'closest_to_tower'
@@ -25,18 +34,21 @@ function TowerComponent:create()
          wave = wave - 1
       end
       self._sv._wave_created = wave
+
+      self._sv.sm = radiant.create_controller('radiant:state_machine')
+      self._sv.sm:set_log_entity(self._entity)
    end
    self._sv.original_facing = 0
+end
+
+function TowerComponent:restore()
+   self._is_restore = true
 end
 
 function TowerComponent:activate()
    self._json = radiant.entities.get_json(self) or {}
    if not self._json.targeting then
       self._json.targeting = {}
-   end
-
-   if not self._sv.original_facing then
-      self._sv.original_facing = 0
    end
 
    if self._sv.reveals_invis == nil then
@@ -83,8 +95,23 @@ function TowerComponent:_client_activate()
    self:_load_targetable_region()
 end
 
+function TowerComponent:post_activate()
+   if radiant.is_server then
+      local sm = self._sv.sm
+      self:_declare_states(sm)
+      self:_declare_triggers(sm)
+      self:_declare_state_event_handlers(sm)
+      self:_declare_state_transitions(sm)
+      sm:start(self._is_restore)
+   end
+end
+
 function TowerComponent:destroy()
    self:_destroy_listeners()
+   if self._sv.sm then
+      self._sv.sm:destroy()
+      self._sv.sm = nil
+   end
    if radiant.is_server then
       self:_unregister()
    end
@@ -344,6 +371,189 @@ function TowerComponent:_update_sell_command(wave)
          self._wave_listener = radiant.events.listen(radiant, 'tower_defense:wave_started', self, self._on_wave_started)
       end
    end
+end
+
+--[[
+   state machine stuff for targeting/acting
+]]
+
+function TowerComponent:_destroy_cooldown_listener()
+   if self._cooldown_listener then
+      self._cooldown_listener:destroy()
+      self._cooldown_listener = nil
+   end
+end
+
+function TowerComponent:_set_idle()
+   radiant.entities.turn_to(self._entity, self._sv.original_facing)
+end
+
+function TowerComponent:_get_shortest_cooldown(attack_types)
+   local shortest_cd
+   local now = radiant.gamestate.now()
+   for _, action_info in ipairs(attack_types) do
+      local cd = self._combat_state:get_cooldown_end_time(action_info.name)
+      cd = cd and (cd - now) or 0
+      if not shortest_cd or cd < shortest_cd then
+         shortest_cd = cd
+         if cd <= 0 then
+            break
+         end
+      end
+   end
+
+   return shortest_cd
+end
+
+function TowerComponent:_declare_states(sm)
+   sm:add_states(STATES)
+   sm:set_start_state(STATES.INITIALIZING)
+end
+
+function TowerComponent:_declare_triggers(sm)
+   sm:trigger_on_event('tower_defense:wave_started', radiant, {
+      states = {
+         STATES.IDLE,
+      },
+   })
+
+   sm:trigger_on_event('tower_defense:tower:monster_entered_range', self._entity, {
+      states = {
+         STATES.WAITING_FOR_TARGETABLE,
+      },
+   })
+
+   sm:trigger_on_event('tower_defense:wave:ended', radiant, {
+      states = {
+         STATES.WAITING_FOR_TARGETABLE,
+         STATES.WAITING_FOR_COOLDOWN,
+         STATES.FINDING_TARGET,
+         STATES.ENGAGING_TARGET
+      },
+   })
+
+   sm:trigger_on_event('stonehearth:equipment_changed', self._entity, {
+      states = {
+         STATES.WAITING_FOR_TARGETABLE,
+         STATES.WAITING_FOR_COOLDOWN,
+         STATES.FINDING_TARGET,
+         STATES.ENGAGING_TARGET
+      },
+   })
+end
+
+function TowerComponent:_declare_state_event_handlers(sm)
+   sm:on_state_event_triggered(STATES.IDLE, {
+      ['tower_defense:wave_started'] = function(event_args, event_source)
+         if self._attack_types and next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() then
+            sm:go_into(STATES.WAITING_FOR_TARGETABLE)
+         end
+      end,
+   })
+
+   sm:on_state_event_triggered(STATES.WAITING_FOR_TARGETABLE, {
+      ['tower_defense:tower:monster_entered_range'] = function(event_args, event_source)
+         sm:go_into(STATES.WAITING_FOR_COOLDOWN)
+      end,
+      ['tower_defense:wave:ended'] = function(event_args, event_source)
+         sm:go_into(STATES.IDLE)
+      end,
+      ['stonehearth:equipment_changed'] = function(event_args, event_source)
+         sm:go_into(STATES.INITIALIZING)
+      end,
+   })
+   
+   sm:on_state_event_triggered(STATES.WAITING_FOR_COOLDOWN, {
+      ['tower_defense:wave:ended'] = function(event_args, event_source)
+         sm:go_into(STATES.IDLE)
+      end,
+      ['stonehearth:equipment_changed'] = function(event_args, event_source)
+         sm:go_into(STATES.INITIALIZING)
+      end,
+   })
+
+   sm:on_state_event_triggered(STATES.FINDING_TARGET, {
+      ['tower_defense:wave:ended'] = function(event_args, event_source)
+         sm:go_into(STATES.IDLE)
+      end,
+      ['stonehearth:equipment_changed'] = function(event_args, event_source)
+         sm:go_into(STATES.INITIALIZING)
+      end,
+   })
+
+   sm:on_state_event_triggered(STATES.ENGAGING_TARGET, {
+      ['tower_defense:wave:ended'] = function(event_args, event_source)
+         -- cancel any active attack stuff?
+         sm:go_into(STATES.IDLE)
+      end,
+      ['stonehearth:equipment_changed'] = function(event_args, event_source)
+         sm:go_into(STATES.INITIALIZING)
+      end,
+   })
+end
+
+function TowerComponent:_declare_state_transitions(sm)
+   sm:on_state_enter(STATES.INITIALIZING, function(restoring)
+         local weapon = stonehearth.combat:get_main_weapon(self._entity)
+         self._combat_state = self._entity:add_component('stonehearth:combat_state')
+         self._weapon_data = weapon and weapon:is_valid() and radiant.entities.get_entity_data(weapon, 'stonehearth:combat:weapon_data')
+         self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
+
+         sm:go_into(STATES.IDLE)
+      end, true)
+
+   sm:on_state_enter(STATES.IDLE, function(restoring)
+         self:_set_idle()
+
+         if next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() and tower_defense.game:has_active_wave() then
+            sm:go_into(STATES.FINDING_TARGET)
+         end
+      end, true)
+
+   sm:on_state_enter(STATES.WAITING_FOR_TARGETABLE, function(restoring)
+         self:_set_idle()   
+         tower_defense.game:register_waiting_for_target(self._sv.targetable_path_region, function()
+            sm:go_into(STATES.WAITING_FOR_COOLDOWN)
+         end)
+      end, true)
+
+   sm:on_state_enter(STATES.WAITING_FOR_COOLDOWN, function(restoring)
+         local cd = self:_get_shortest_cooldown(self._attack_types)
+         if cd <= 0 then
+            sm:go_into(STATES.FINDING_TARGET)
+         else
+            self._cooldown_listener = stonehearth.calendar:set_timer('wait for attack cooldown', cd, function()
+               sm:go_into(STATES.FINDING_TARGET)
+            end)
+         end
+      end, true)
+
+   sm:on_state_enter(STATES.FINDING_TARGET, function(restoring)
+         local target = self:get_best_target()
+         if not target then
+            sm:go_into(STATES.WAITING_FOR_TARGETABLE)
+         else
+            self._current_target = target
+            sm:go_into(STATES.ENGAGING_TARGET)
+         end
+      end, true)
+
+   sm:on_state_enter(STATES.ENGAGING_TARGET, function(restoring)
+         local target = self._current_target
+         -- initiate attack on the target!
+
+         -- and then return to waiting on cooldown before finding a new target
+         sm:go_into(STATES.WAITING_FOR_COOLDOWN)
+      end, true)
+
+   sm:on_state_exit(STATES.WAITING_FOR_TARGETABLE, function(restoring)
+         tower_defense.game:register_waiting_for_target(self._sv.targetable_path_region, nil)
+      end, true)
+
+   sm:on_state_exit(STATES.WAITING_FOR_COOLDOWN, function(restoring)
+         self:_destroy_cooldown_listener()
+      end, true)
+
 end
 
 return TowerComponent

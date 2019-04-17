@@ -32,6 +32,7 @@ function GameService:initialize()
    self:_create_wave_listeners()
 
    self._waves = radiant.resources.load_json('tower_defense:data:waves')
+   self._waiting_for_target_cbs = {}
 end
 
 function GameService:destroy()
@@ -145,6 +146,9 @@ end
 function GameService:_end_of_round()
    self:_destroy_wave_controller()
    self:_destroy_countdown_timer()
+
+   self._waiting_for_target_cbs = {}
+   radiant.events.trigger(radiant, 'tower_defense:wave:ended', self._sv.wave)
    
    if self._sv.health < 1 then
       -- no more health! you lost!
@@ -184,6 +188,7 @@ function GameService:_start_round()
       local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data)
       self._sv.wave_controller = wave_controller
       self:_create_wave_listeners()
+      self._waiting_for_target_cbs = {}
 
       radiant.events.trigger(radiant, 'tower_defense:wave_started', self._sv.wave)
       wave_controller:start()
@@ -192,6 +197,20 @@ function GameService:_start_round()
    end
 
    self.__saved_variables:mark_changed()
+end
+
+function GameService:register_waiting_for_target(region, cb)
+   self._waiting_for_target_cbs[region] = cb
+end
+
+function GameService:monster_moved_to(location)
+   -- when a monster moves to a new grid location, check if it intersects with any towers waiting for targets and inform them
+   for region, cb in pairs(self._waiting_for_target_cbs) do
+      if region:contains(location) then
+         cb()
+         self._waiting_for_target_cbs[region] = nil
+      end
+   end
 end
 
 function GameService:get_num_players()
