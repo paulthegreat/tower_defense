@@ -10,7 +10,7 @@
    "snow_accumulation_per_minute": -0.0015,
    "is_dark_during_daytime": true,
    "tower_buffs": [
-
+      {"uri": "tower_defense:buffs:tower:weather:minor_damage_decrease"}
    ],
    "monster_buffs": [
       

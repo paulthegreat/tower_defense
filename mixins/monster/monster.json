@@ -9,14 +9,6 @@
       "stonehearth:posture": {},
       "stonehearth:trivial_death" : {},
       "stonehearth:attributes": {
-         "additive_dmg_modifier": {
-            "type": "basic",
-            "value": 0
-         },
-         "multiplicative_dmg_modifier": {
-            "type": "basic",
-            "value": 0
-         },
          "additive_armor_modifier": {
             "type": "basic",
             "value": 0
@@ -25,15 +17,7 @@
             "type": "basic",
             "value": 1
          },
-         "multiplicative_target_armor_modifier": {
-            "type": "basic",
-            "value": 1
-         },
-         "additive_target_armor_modifier": {
-            "type": "basic",
-            "value": 0
-         },
-         "additive_weapon_range_modifier": {
+         "avoidance": {
             "type": "basic",
             "value": 0
          }

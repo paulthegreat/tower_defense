@@ -33,11 +33,11 @@
             "weight": 1
          },
          {
-            "uri": "tower_defense:weather:windy",
+            "uri": "tower_defense:weather:cloudy",
             "weight": 1
          },
          {
-            "uri": "tower_defense:weather:sandy",
+            "uri": "tower_defense:weather:cloudy:desert",
             "weight": 1
          }
       ]

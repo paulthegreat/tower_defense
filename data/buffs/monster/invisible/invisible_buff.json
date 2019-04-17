@@ -4,6 +4,6 @@
    "display_name": "i18n(tower_defense:data.buffs.invisible.invisible_buff.display_name)",
    "description": "i18n(tower_defense:data.buffs.invisible.invisible_buff.description)",
    "icon": "file(invisible_buff.png)",
-   "script": "tower_defense:buff_scripts:invisible",
+   "script": "tower_defense:buff_scripts:monster:invisible",
    "persistent": true
 }

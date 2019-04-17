@@ -14,9 +14,11 @@
                   },
                   "tuning": "tower_defense:data:monster_tuning:low_undead"
                },
-               "buffs": {
-                  "tower_defense:buffs:invisible": true
-               },
+               "buffs": [
+                  {
+                     "uri": "tower_defense:buffs:monster:invisible"
+                  }
+               ],
                "damage": 1,
                "bounty": {
                   "gold": 5
@@ -32,9 +34,11 @@
                   },
                   "tuning": "tower_defense:data:monster_tuning:low_air"
                },
-               "buffs": {
-                  "tower_defense:buffs:invisible": true
-               },
+               "buffs": [
+                  {
+                     "uri": "tower_defense:buffs:monster:invisible"
+                  }
+               ],
                "damage": 1,
                "bounty": {
                   "gold": 5

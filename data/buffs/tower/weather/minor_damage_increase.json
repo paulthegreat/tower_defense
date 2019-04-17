@@ -1,0 +1,13 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.tower.minor_damage_increase.display_name)",
+   "description": "i18n(tower_defense:data.buffs.tower.minor_damage_increase.description)",
+   "icon": "file(minor_damage_increase.png)",
+   "persistent": true,
+   "modifiers": {
+      "multiplicative_dmg_modifier": {
+         "add": 0.05
+      }
+   }
+}

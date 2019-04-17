@@ -13,7 +13,33 @@
             }
          ]
       },
-      "tower_defense:tower": {}
+      "tower_defense:tower": {},
+      "stonehearth:attributes": {
+         "additive_dmg_modifier": {
+            "type": "basic",
+            "value": 0
+         },
+         "multiplicative_dmg_modifier": {
+            "type": "basic",
+            "value": 0
+         },
+         "multiplicative_cooldown_modifier": {
+            "type": "basic",
+            "value": 1
+         },
+         "multiplicative_target_armor_modifier": {
+            "type": "basic",
+            "value": 1
+         },
+         "additive_target_armor_modifier": {
+            "type": "basic",
+            "value": 0
+         },
+         "accuracy": {
+            "type": "basic",
+            "value": 1
+         }
+      }
    },
    "entity_data": {
       "stonehearth:ai_packs": {

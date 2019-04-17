@@ -184,9 +184,9 @@ function GameService:_start_round()
       local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data)
       self._sv.wave_controller = wave_controller
       self:_create_wave_listeners()
-      wave_controller:start()
 
       radiant.events.trigger(radiant, 'tower_defense:wave_started', self._sv.wave)
+      wave_controller:start()
    else
       -- no more waves! you won!
    end

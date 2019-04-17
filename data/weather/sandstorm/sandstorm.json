@@ -11,6 +11,6 @@
 
    ],
    "monster_buffs": [
-      
+      {"uri": "tower_defense:buffs:monster:weather:minor_armor_increase"}
    ]
 }

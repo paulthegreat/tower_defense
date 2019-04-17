@@ -6,7 +6,7 @@
    "ambient_sound_key": "sunny_desert",
    "snow_accumulation_per_minute": -0.0015,
    "tower_buffs": [
-
+      {"uri": "tower_defense:buffs:tower:weather:minor_damage_increase"}
    ],
    "monster_buffs": [
       

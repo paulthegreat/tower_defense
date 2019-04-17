@@ -134,6 +134,8 @@ function Wave:_spawn_next_monster()
                   self:_apply_buffs(new_monster, monster.buffs)
                end
 
+               radiant.events.trigger(radiant, 'tower_defense:monster_created', new_monster)
+
                local this_monster = {
                   monster = new_monster,
                   damage = monster.damage,
@@ -155,9 +157,8 @@ function Wave:_spawn_next_monster()
 end
 
 function Wave:_apply_buffs(monster, buffs)
-   for buff, stacks in pairs(buffs) do
-      local options = type(stacks) == 'number' and {stacks = stacks} or nil
-      radiant.entities.add_buff(monster, buff, options)
+   for _, buff in ipairs(buffs) do
+      radiant.entities.add_buff(monster, buff.uri, buff.options)
    end
 end
 

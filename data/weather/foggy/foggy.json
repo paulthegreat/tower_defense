@@ -12,6 +12,6 @@
 
    ],
    "monster_buffs": [
-      
+      {"uri": "tower_defense:buffs:monster:weather:minor_avoidance_increase"}
    ]
 }

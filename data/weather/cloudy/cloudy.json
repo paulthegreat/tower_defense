@@ -7,7 +7,7 @@
    "vision_multiplier": 0.9,
    "hide_cloud_shadows": true,
    "tower_buffs": [
-
+      {"uri": "tower_defense:buffs:tower:weather:minor_accuracy_increase"}
    ],
    "monster_buffs": [
       

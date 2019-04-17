@@ -1,0 +1,13 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "display_name": "i18n(tower_defense:data.buffs.tower.minor_avoidance_decrease.display_name)",
+   "description": "i18n(tower_defense:data.buffs.tower.minor_avoidance_decrease.description)",
+   "icon": "file(minor_avoidance_decrease.png)",
+   "persistent": true,
+   "modifiers": {
+      "avoidance": {
+         "add": -0.05
+      }
+   }
+}

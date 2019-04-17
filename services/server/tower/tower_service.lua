@@ -26,6 +26,10 @@ function TowerService:set_air_path(path, height)
    self.__saved_variables:mark_changed()
 end
 
+function TowerService:get_registered_towers()
+   return self._towers
+end
+
 function TowerService:register_tower(tower, location)
    local tower_comp = tower:get_component('tower_defense:tower')
    local targetable_region = self:_cache_tower_range(tower_comp, location)
@@ -37,11 +41,13 @@ function TowerService:register_tower(tower, location)
    local id = tower:get_id()
    local tower_data = {
       id = id,
-      tower = tower_comp,
+      tower = tower,
       detection_coords_in_range = detection_coords_in_range
    }
    self:_cache_detection_coords(tower_data)
    self._towers[id] = tower_data
+
+   radiant.events.trigger(radiant, 'tower_defense:tower_registered', tower)
 
    return targetable_region
 end
@@ -63,6 +69,8 @@ function TowerService:unregister_tower(tower_id)
             end
          end
       end
+
+      radiant.events.trigger(radiant, 'tower_defense:tower_unregistered', tower_id)
    end
 end
 

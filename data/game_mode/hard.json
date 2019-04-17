@@ -38,11 +38,7 @@
             "weight": 1
          },
          {
-            "uri": "tower_defense:weather:cloudy",
-            "weight": 1
-         },
-         {
-            "uri": "tower_defense:weather:cloudy:desert",
+            "uri": "tower_defense:weather:windy",
             "weight": 1
          },
          {

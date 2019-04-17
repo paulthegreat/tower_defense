@@ -8,9 +8,9 @@
    "hide_cloud_shadows": true,
    "is_dark_during_daytime": true,
    "tower_buffs": [
-
+      {"uri": "tower_defense:buffs:tower:weather:minor_accuracy_decrease"}
    ],
    "monster_buffs": [
-      
+      {"uri": "tower_defense:buffs:monster:weather:minor_armor_decrease"}
    ]
 }
