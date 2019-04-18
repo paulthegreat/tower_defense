@@ -722,7 +722,7 @@ function TowerComponent:_declare_state_transitions(sm)
 
    sm:on_state_enter(STATES.WAITING_FOR_COOLDOWN, function(restoring)
          local cd = math.max(0, self:_get_shortest_cooldown(self._attack_types))
-         self._cooldown_listener = stonehearth.calendar:set_timer('wait for attack cooldown', cd, function()
+         self._cooldown_listener = stonehearth.combat:set_timer('wait for attack cooldown', cd, function()
             self:_find_target_and_engage(sm)
          end)
       end, true)
