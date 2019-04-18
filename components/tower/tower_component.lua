@@ -481,7 +481,7 @@ function TowerComponent:_engage_current_target(sm)
       shoot_timer = stonehearth.combat:set_timer('tower attack shoot', time, function()
          self._shoot_timers[shoot_timer] = nil
          self:_shoot(target, attack_info)
-         if i == #attack_info.attack_times then
+         if i == #attack_info.attack_times and tower_defense.game:has_active_wave() then
             sm:go_into(STATES.WAITING_FOR_COOLDOWN)
          end
       end)
