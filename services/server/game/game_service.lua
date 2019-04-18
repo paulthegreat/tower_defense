@@ -24,7 +24,7 @@ function GameService:initialize()
       self._sv.health = 100
    end
 
-   if not self._sv.wave_controller and self._sv.wave > 0 then
+   if not self._sv.wave_controller and self._sv.started then
       self:_create_countdown_timer(true)
    end
 
@@ -118,6 +118,8 @@ function GameService:set_map_data(map_data)
 end
 
 function GameService:start()
+   self._sv.started = true
+   self.__saved_variables:mark_changed()
    self:_create_countdown_timer()
 end
 

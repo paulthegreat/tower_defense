@@ -4,18 +4,19 @@
    "entity_data": {
       "stonehearth:combat:weapon_data": {
          "base_damage": 1,
-         "base_ranged_damage": 1,
-         "range": 40,
-         "projectile_speed": 30,
-         "projectile_uri": "stonehearth:weapons:bullet",
-         "projectile_start_offset": { "x": 0, "y": 1, "z": 0 },
-         "projectile_end_offset": { "x": 0, "y": 2.1, "z": 0 }
+         "base_ranged_damage": 1
       },
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "plant",
             "effect": "/tower_defense/data/effects/plant_particles.json",
-            "active_frame": 1,
+            "projectile": {
+               "speed": 30,
+               "uri": "stonehearth:weapons:bullet",
+               "start_offset": { "x": 0, "y": 1, "z": 0 },
+               "end_offset": { "x": 0, "y": 2.1, "z": 0 }
+            },
+            "attack_times": [100],
             "cooldown": 200,
             "priority": 0
          }

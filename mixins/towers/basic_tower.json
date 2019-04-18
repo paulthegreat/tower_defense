@@ -42,11 +42,6 @@
       }
    },
    "entity_data": {
-      "stonehearth:ai_packs": {
-         "packs": [
-            "tower_defense:ai_pack:tower"
-         ]
-      },
       "stonehearth:catalog": {
          "category": "tower"
       }

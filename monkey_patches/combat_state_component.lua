@@ -12,4 +12,8 @@ function CombatStateComponent:start_cooldown(name, duration)
    end
 end
 
+function CombatStateComponent:_get_time_to_impact(action)
+   return nil
+end
+
 return CombatStateComponent

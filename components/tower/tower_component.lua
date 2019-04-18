@@ -2,10 +2,15 @@ local Point3 = _radiant.csg.Point3
 local Cube3 = _radiant.csg.Cube3
 local Region3 = _radiant.csg.Region3
 
+local AssaultContext = require 'stonehearth.services.server.combat.assault_context'
+local BatteryContext = require 'stonehearth.services.server.combat.battery_context'
+
+local log = radiant.log.create_logger('tower_component')
+
 local TowerComponent = class()
 
 local STATES = {
-   INITIALIZING = 'initializing',   -- setting up attack info and such, starts here and goes here whenever equipment changes
+   INITIALIZING = 'initializing',   -- setting up attack info and such, goes here whenever equipment changes
    IDLE = 'idle', -- not doing anything, i.e. between waves
    WAITING_FOR_TARGETABLE = 'waiting_for_targetable', -- waiting until there are any targets within range
    WAITING_FOR_COOLDOWN = 'waiting_for_cooldown',  -- waiting until shortest ability cooldown is done
@@ -59,6 +64,8 @@ function TowerComponent:activate()
    if not radiant.is_server then
       self:_client_activate()
    else
+      self._shoot_timers = {}
+
       if not self._sv.target_filters then
          self:set_target_filters(self._json.targeting.target_filters)
       end
@@ -86,7 +93,6 @@ function TowerComponent:activate()
                   self:_register()
                end
             end)
-         :push_object_state()
    end
 end
 
@@ -97,6 +103,8 @@ end
 
 function TowerComponent:post_activate()
    if radiant.is_server then
+      self:_initialize()
+      
       local sm = self._sv.sm
       self:_declare_states(sm)
       self:_declare_triggers(sm)
@@ -180,12 +188,12 @@ function TowerComponent:get_best_target()
       return
    end
 
-   local weapon = stonehearth.combat:get_main_weapon(self._entity)
+   local weapon = self._weapon
    if not weapon or not weapon:is_valid() then
       return
    end
 
-   local attack_types = stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks')
+   local attack_types = self._attack_types
    if not next(attack_types) then
       return
    end
@@ -220,7 +228,7 @@ function TowerComponent:get_best_target()
       targets = best_targets
    end
 
-   return targets[1], weapon, attack_info
+   return targets[1], attack_info
 end
 
 function TowerComponent:_get_filter_value(filter, target, weapon, attack_info, debuff_cache)
@@ -329,6 +337,10 @@ end
 
 function TowerComponent:_unregister()
    tower_defense.tower:unregister_tower(self._entity)
+   for timer, _ in pairs(self._shoot_timers) do
+      timer:destroy()
+   end
+   self._shoot_timers = {}
 end
 
 function TowerComponent:_create_targetable_region()
@@ -377,6 +389,15 @@ end
    state machine stuff for targeting/acting
 ]]
 
+function TowerComponent:_initialize()
+   self:_unregister()
+   self._weapon = stonehearth.combat:get_main_weapon(self._entity)
+   self._combat_state = self._entity:add_component('stonehearth:combat_state')
+   self._weapon_data = self._weapon and self._weapon:is_valid() and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
+   self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
+   self:_register()
+end
+
 function TowerComponent:_destroy_cooldown_listener()
    if self._cooldown_listener then
       self._cooldown_listener:destroy()
@@ -385,6 +406,7 @@ function TowerComponent:_destroy_cooldown_listener()
 end
 
 function TowerComponent:_set_idle()
+   self:_set_status_text_key('stonehearth:ai.actions.status_text.idle')
    radiant.entities.turn_to(self._entity, self._sv.original_facing)
 end
 
@@ -405,9 +427,187 @@ function TowerComponent:_get_shortest_cooldown(attack_types)
    return shortest_cd
 end
 
+function TowerComponent:_stop_current_effect()
+   if self._current_effect then
+      self._current_effect:stop()
+      self._current_effect = nil
+   end
+end
+
+function TowerComponent:_engage_current_target()
+   local target = self._current_target
+   local weapon_data = self._weapon_data
+   local attack_info = self._current_attack_info
+
+   if not target or not target:is_valid() or not weapon_data or not attack_info then
+      log:error('target/weapon/attack_info was null when trying to _engage_current_target')
+      return
+   end
+
+   self:_set_status_text_key('stonehearth:ai.actions.status_text.attack_melee_adjacent', { target = target })
+
+   self:_stop_current_effect()
+   radiant.entities.turn_to_face(self._entity, target)
+   stonehearth.combat:start_cooldown(self._entity, attack_info)
+
+   -- if we have a tower effect, start it up
+   if attack_info.effect then
+      self._current_effect = radiant.effects.run_effect(self._entity, attack_info.effect)
+   end
+
+   for _, time in ipairs(attack_info.attack_times) do
+      local shoot_timer
+      shoot_timer = stonehearth.combat:set_timer('tower attack shoot', time, function()
+         self._shoot_timers[shoot_timer] = nil
+         self:_shoot(target, attack_info)
+      end)
+      self._shoot_timers[shoot_timer] = true
+   end
+
+   return true
+end
+
+function TowerComponent:_shoot(target, attack_info)
+   if not target:is_valid() then
+      return
+   end
+
+   local attacker = self._entity
+   local assault_context
+   local impact_time = radiant.gamestate.now()
+
+   -- if we have projectile data, create and launch the projectile, running combat effects upon completion
+   -- otherwise, run them immediately
+   local finish_fn = function(projectile, impact_trace)
+      if target:is_valid() and not projectile or projectile:is_valid() then
+         if not assault_context.target_defending then
+            if attack_info.hit_effect then
+               radiant.effects.run_effect(target, attack_info.hit_effect)
+            end
+            local total_damage = stonehearth.combat:calculate_ranged_damage(attacker, target, attack_info)
+            local battery_context = BatteryContext(attacker, target, total_damage)
+            stonehearth.combat:inflict_debuffs(attacker, target, attack_info)
+            stonehearth.combat:battery(battery_context)
+         end
+      end
+
+      if assault_context then
+         stonehearth.combat:end_assault(assault_context)
+         assault_context = nil
+      end
+
+      if impact_trace then
+         impact_trace:destroy()
+         impact_trace = nil
+      end
+   end
+
+   if attack_info.projectile then
+      local attacker_offset, target_offset = self:_get_projectile_offsets(attack_info.projectile)
+      local projectile = self:_create_projectile(attacker, target, attack_info.projectile.speed, attack_info.projectile.uri, attacker_offset, target_offset)
+      local projectile_component = projectile:add_component('stonehearth:projectile')
+      local flight_time = projectile_component:get_estimated_flight_time()
+      impact_time = impact_time + flight_time
+
+      local impact_trace
+      impact_trace = radiant.events.listen(projectile, 'stonehearth:combat:projectile_impact', function()
+            finish_fn(projectile, impact_trace)
+         end)
+
+      local destroy_trace
+      destroy_trace = radiant.events.listen(projectile, 'radiant:entity:pre_destroy', function()
+            if assault_context then
+               stonehearth.combat:end_assault(assault_context)
+               assault_context = nil
+            end
+
+            if destroy_trace then
+               destroy_trace:destroy()
+               destroy_trace = nil
+            end
+         end)
+   end
+
+   assault_context = AssaultContext('melee', attacker, target, impact_time)
+   stonehearth.combat:begin_assault(assault_context)
+
+   if not attack_info.projectile then
+      finish_fn()
+   end
+end
+
+function TowerComponent:_create_projectile(attacker, target, projectile_speed, projectile_uri, attacker_offset, target_offset)
+   projectile_uri = projectile_uri or 'stonehearth:weapons:arrow' -- default projectile is an arrow
+   local projectile = radiant.entities.create_entity(projectile_uri, { owner = attacker })
+   local projectile_component = projectile:add_component('stonehearth:projectile')
+   projectile_component:set_speed(projectile_speed or 1)
+   projectile_component:set_target_offset(target_offset)
+   projectile_component:set_target(target)
+
+   local projectile_origin = self:_get_world_location(attacker_offset, attacker)
+   radiant.terrain.place_entity_at_exact_location(projectile, projectile_origin)
+
+   projectile_component:start()
+   return projectile
+end
+
+-- local_to_world not doing the right thing
+function TowerComponent:_get_world_location(point, entity)
+   local mob = entity:add_component('mob')
+   local facing = mob:get_facing()
+   local entity_location = mob:get_world_location()
+
+   local offset = radiant.math.rotate_about_y_axis(point, facing)
+   local world_location = entity_location + offset
+   return world_location
+end
+
+function TowerComponent:_get_projectile_offsets(projectile_data)
+   local attacker_offset = Point3(-0.5, 0.8, -0.5)
+   local target_offset = Point3(0, 1, 0)
+
+   if projectile_data then
+      local projectile_start_offset = projectile_data.start_offset
+      local projectile_end_offset = projectile_data.end_offset
+      -- Get start and end offsets from weapon data if provided
+      if projectile_start_offset then
+         attacker_offset = Point3(projectile_start_offset.x,
+                                       projectile_start_offset.y,
+                                       projectile_start_offset.z)
+      end
+      if projectile_end_offset then
+         target_offset = Point3(projectile_end_offset.x,
+                                       projectile_end_offset.y,
+                                       projectile_end_offset.z)
+      end
+   end
+
+   return attacker_offset, target_offset
+end
+
+function TowerComponent:_set_status_text_key(key, data)
+   self._sv.status_text_key = key
+   if data and data['target'] then
+      local entity = data['target']
+      if type(entity) == 'string' then
+         local catalog_data = stonehearth.catalog:get_catalog_data(entity)
+         if catalog_data then
+            data['target_display_name'] = catalog_data.display_name
+            data['target_custom_name'] = ''
+         end
+      elseif entity and entity:is_valid() then
+         data['target_display_name'] = radiant.entities.get_display_name(entity)
+         data['target_custom_name']  = radiant.entities.get_custom_name(entity)
+      end
+      data['target'] = nil
+   end
+   self._sv.status_text_data = data
+   self.__saved_variables:mark_changed()
+end
+
 function TowerComponent:_declare_states(sm)
    sm:add_states(STATES)
-   sm:set_start_state(STATES.INITIALIZING)
+   sm:set_start_state(STATES.IDLE)
 end
 
 function TowerComponent:_declare_triggers(sm)
@@ -494,10 +694,7 @@ end
 
 function TowerComponent:_declare_state_transitions(sm)
    sm:on_state_enter(STATES.INITIALIZING, function(restoring)
-         local weapon = stonehearth.combat:get_main_weapon(self._entity)
-         self._combat_state = self._entity:add_component('stonehearth:combat_state')
-         self._weapon_data = weapon and weapon:is_valid() and radiant.entities.get_entity_data(weapon, 'stonehearth:combat:weapon_data')
-         self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
+         self:_initialize()
 
          sm:go_into(STATES.IDLE)
       end, true)
@@ -529,19 +726,23 @@ function TowerComponent:_declare_state_transitions(sm)
       end, true)
 
    sm:on_state_enter(STATES.FINDING_TARGET, function(restoring)
-         local target = self:get_best_target()
+         local target, attack_info = self:get_best_target()
          if not target then
+            log:debug('%s couldn\'t find target, going to waiting_for_targetable', self._entity)
             sm:go_into(STATES.WAITING_FOR_TARGETABLE)
          else
+            log:debug('%s found target, going to engage %s', self._entity, target)
             self._current_target = target
+            self._current_attack_info = attack_info
             sm:go_into(STATES.ENGAGING_TARGET)
          end
       end, true)
 
    sm:on_state_enter(STATES.ENGAGING_TARGET, function(restoring)
-         local target = self._current_target
          -- initiate attack on the target!
-
+         log:debug('%s engaging target %s', self._entity, self._current_target)
+         self:_engage_current_target()
+         log:debug('%s finished engaging target %s, going to waiting_for_cooldown', self._entity, self._current_target)
          -- and then return to waiting on cooldown before finding a new target
          sm:go_into(STATES.WAITING_FOR_COOLDOWN)
       end, true)
