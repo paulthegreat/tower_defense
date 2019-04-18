@@ -192,7 +192,7 @@ function GameService:_start_round()
       self:_create_wave_listeners()
       self._waiting_for_target_cbs = {}
 
-      radiant.events.trigger(radiant, 'tower_defense:wave_started', self._sv.wave)
+      radiant.events.trigger(radiant, 'tower_defense:wave:started', self._sv.wave)
       wave_controller:start()
    else
       -- no more waves! you won!

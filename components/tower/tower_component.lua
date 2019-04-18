@@ -378,7 +378,7 @@ function TowerComponent:_update_sell_command(wave)
       commands:remove_command('tower_defense:commands:sell_less')
       commands:add_command('tower_defense:commands:sell_full')
       if not self._wave_listener then
-         self._wave_listener = radiant.events.listen(radiant, 'tower_defense:wave_started', self, self._on_wave_started)
+         self._wave_listener = radiant.events.listen(radiant, 'tower_defense:wave:started', self, self._on_wave_started)
       end
    end
 end
@@ -635,7 +635,7 @@ function TowerComponent:_declare_states(sm)
 end
 
 function TowerComponent:_declare_triggers(sm)
-   sm:trigger_on_event('tower_defense:wave_started', radiant, {
+   sm:trigger_on_event('tower_defense:wave:started', radiant, {
       states = {
          STATES.IDLE,
       },
@@ -667,7 +667,7 @@ end
 
 function TowerComponent:_declare_state_event_handlers(sm)
    sm:on_state_event_triggered(STATES.IDLE, {
-      ['tower_defense:wave_started'] = function(event_args, event_source)
+      ['tower_defense:wave:started'] = function(event_args, event_source)
          if self._attack_types and next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() then
             sm:go_into(STATES.WAITING_FOR_TARGETABLE)
          end

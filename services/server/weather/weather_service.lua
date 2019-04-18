@@ -28,7 +28,7 @@ function WeatherService:initialize()
          self:_update_snow_amount()
       end)
    
-   self._wave_listener = radiant.events.listen(radiant, 'tower_defense:wave_started', function(wave)
+   self._wave_listener = radiant.events.listen(radiant, 'tower_defense:wave:started', function(wave)
          self:_switch_weather()
       end)
 

@@ -1,0 +1,16 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.plant_growth.display_name)",
+   "description": "i18n(tower_defense:data.buffs.plant_growth.description)",
+   "icon": "file(plant_growth.png)",
+   "script": "tower_defense:buff_scripts:tower:plant_growth",
+   "repeat_add_action": "stack_and_refresh",
+   "max_stacks": 5,
+   "modifiers": {
+      "multiplicative_dmg_modifier": {
+         "add": 0.1
+      }
+   },
+   "persistent": true
+}

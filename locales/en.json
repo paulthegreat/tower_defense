@@ -1,5 +1,11 @@
 {
    "data": {
+      "buffs": {
+         "plant_growth": {
+            "display_name": "Growth",
+            "description": "The tower grows by 10% in size and damage."
+         }
+      },
       "population": {
          "fire": {
             "display_name": "Fire",
