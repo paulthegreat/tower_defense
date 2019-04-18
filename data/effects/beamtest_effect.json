@@ -1,0 +1,20 @@
+{
+	"type": "effect",
+	"tracks": {
+		"beam_particles": {
+			"type": "cubemitter",
+			"cubemitter": "/tower_defense/data/effects/beamtest.cubemitter.json",
+			"start_time": 0,
+			"end_time": 600,
+			"transforms": {
+				"x": 0,
+				"y": 0.5,
+				"z": -3,
+				"rx": 0,
+				"ry": 0,
+				"rz": 0
+			},
+			"bone": "root"
+		}
+	}
+}
