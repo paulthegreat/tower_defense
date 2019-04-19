@@ -11,6 +11,15 @@ function AceBuff:create(entity, uri, json, options)
    self._options = options
 end
 
+AceBuff._ace_old_activate = Buff.activate
+function AceBuff:activate()
+   self:_ace_old_activate()
+   if not self._json.max_stacks then
+      self._sv.max_stacks = 1
+      self.__saved_variables:mark_changed()
+   end
+end
+
 AceBuff._ace_old_destroy = Buff.destroy
 function AceBuff:destroy()
    if self._duration_timer then
@@ -131,35 +140,36 @@ function AceBuff:_set_expiration_timer(duration, destroy_fn)
 end
 
 function AceBuff:on_repeat_add(options)
+   local success = false
    local repeat_add_action = self._json.repeat_add_action
    if repeat_add_action == 'renew_duration' then
       self:_destroy_timer()
       self:_create_timer()
-      return true
+      success = true
    end
 
-   if repeat_add_action == 'extend_duration' then
+   if not success and repeat_add_action == 'extend_duration' then
       -- assert(self._timer, string.format("Attempting to extend duration when buff %s doesn't have a duration", self._sv.uri))
       if self._sv.expire_time then
          self._sv.expire_time = self._sv.expire_time + self._default_duration
       end
       self:_create_timer()
-      return true
-   elseif repeat_add_action == 'stack_and_refresh' then
+      success = true
+   elseif not success and repeat_add_action == 'stack_and_refresh' then
       -- if we've hit max stacks, refresh the timer duration but don't add a new stack
       for i = 1, options.stacks do
          self:_add_stack()
       end
       self:_destroy_timer()
       self:_create_timer()
-      return true
+      success = true
    end
 
    if self._script_controller and self._script_controller.on_repeat_add then
       return self._script_controller:on_repeat_add(self._sv._entity, self, options)
    end
 
-   return false
+   return success
 end
 
 return AceBuff

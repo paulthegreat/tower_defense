@@ -144,7 +144,11 @@ App.StonehearthUnitFrameView = App.View.extend({
          radiant.each(attributeMap, function(name, buff) {
             //only push public buffs (buffs who have an is_private unset or false)
             if (buff.invisible_to_player == undefined || !buff.invisible_to_player) {
-               self._buffs.push(buff);
+               var this_buff = radiant.shallow_copy(buff);
+               if (this_buff.max_stacks > 1) {
+                  this_buff.hasStacks = true;
+               }
+               self._buffs.push(this_buff);
             }
          });
       }

@@ -21,14 +21,24 @@
       z-index: 5;
 
       .item {
+         position: relative;
          float: left;
          width: 30px;
-         height: 50%px;
+         height: 50%;
          margin-right: 4px;
 
          img {
             width: 30px;
             height: 30px;
+         }
+
+         .stacks {
+            position: absolute;
+            left: 1px;
+            bottom: 1px;
+            font-family: "groboldregular";
+            color: #ebebeb;
+            .outlinedThin;
          }
       }
    }

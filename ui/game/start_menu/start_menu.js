@@ -263,6 +263,8 @@ App.StonehearthStartMenuView = App.View.extend({
    },
 
    _didKingdomsChange: function(kingdoms) {
+      var self = this;
+      
       if (!self._playerKingdomsCache) {
          return true;
       }

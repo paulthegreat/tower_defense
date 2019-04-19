@@ -21,6 +21,7 @@ function PeriodicHealthModificationBuff:on_repeat_add(entity, buff)
    if self._tuning.pulse_immediately then
       self:_create_pulse_listener(buff)
    end
+   return true
 end
 
 function PeriodicHealthModificationBuff:_create_pulse_listener(buff)
