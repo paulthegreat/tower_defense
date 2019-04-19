@@ -179,6 +179,32 @@ App.StonehearthUnitFrameView = App.View.extend({
                                                       'stonehearth:ui.game.unit_frame.cancel_order.description');
 
       this._updateUnitFrameShown();
+
+      self._targetFilters = App.constants.tower_defense.tower.target_filters;
+
+      self.$('#stickyTargetingCheckbox').change(function() {
+         radiant.call('tower_defense:set_tower_sticky_targeting', self.get('uri'), this.checked);
+      });
+
+      self.$().on('change', '.filterTypeCheckbox', function() {
+         var filterType = $(this).attr('filterType');
+         var checked = this.checked;
+
+         var filters = self.get('model.tower_defense:tower.target_filters');
+         if (checked) {
+            filters.push(filterType);
+         }
+         else {
+            for (var i = 0; i < filters.length; i++) {
+               if (filters[i] == filterType) {
+                  filters.splice(i, 1);
+                  break;
+               }
+            }
+         }
+
+         radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), filters);
+      });
    },
 
    willDestroyElement: function() {
@@ -416,27 +442,66 @@ App.StonehearthUnitFrameView = App.View.extend({
 
    _updateTargetFilters: function() {
       var self = this;
-      var types = self.get('model.tower_defense:tower.target_filters');
-      // TODO: actually implement this
-      //self.set('targetFilters', radiant.map_to_array(types));
+      var filters = self.get('model.tower_defense:tower.target_filters');
+      if (!filters) {
+         self.set('targetFilters', null);
+         return;
+      }
+
+      var filterTbl = {};
+      var filterArr = [];
+      radiant.each(filters, function(i, key) {
+         filterTbl[key] = i;
+      });
+      radiant.each(self._targetFilters, function(_, filter) {
+         var f = radiant.shallow_copy(filter);
+         f.ordinal = filterTbl[f.key];
+         f.id = 'checkbox_' + f.key;
+         filterArr.push(f);
+      });
+      filterArr.sort((a, b) => {
+         if (a.ordinal == null && b.ordinal == null) {
+            return 0;
+        }
+        else if (a.ordinal == null) {
+            return 1;
+        }
+        else if (b.ordinal == null) {
+            return -1;
+        }
+        else {
+            return a.ordinal - b.ordinal;
+        }
+      });
+      
+      self.set('targetFilters', filterArr);
+
+      Ember.run.scheduleOnce('afterRender', self, '_setTargetFilterStyling');
    }.observes('model.tower_defense:tower.target_filters'),
+
+   _setTargetFilterStyling: function() {
+      var self = this;
+      radiant.each(self.get('targetFilters'), function(_, filter) {
+         self.$('#' + filter.id).prop('checked', filter.ordinal != null);
+         
+         App.tooltipHelper.attachTooltipster(self.$('.filterType').find('[filterType="' + filter.key + '"]'),
+            $(App.tooltipHelper.createTooltip(null,
+               i18n.t(filter.description)
+            ))
+         );
+      });
+   },
 
    _updateStickyTargeting: function() {
       var self = this;
       var sticky = self.get('model.tower_defense:tower.sticky_targeting');
-      self.set('stickyTargeting', sticky);
+      self.$('#stickyTargetingCheckbox').prop('checked', sticky);
+      App.tooltipHelper.attachTooltipster(self.$('#stickyTargeting'),
+            $(App.tooltipHelper.createTooltip(null,
+               i18n.t('i18n(tower_defense:ui.game.towerTargetingWindow.stickyTargeting.description)')
+            ))
+         );
    }.observes('model.tower_defense:tower.sticky_targeting'),
-
-   _stickyTargetingChanged: function() {
-      var self = this;
-      var sticky = self.get('stickyTargeting');
-      if (self._prevStickyTargeting !== sticky) {
-         self._prevStickyTargeting = sticky;
-         if (sticky != self.get('model.tower_defense:tower.sticky_targeting')) {
-            radiant.call('tower_defense:set_tower_sticky_targeting', self.get('uri'), sticky);
-         }
-      }
-   }.observes('stickyTargeting'),
 
    actions: {
       selectParty: function() {

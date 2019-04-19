@@ -163,30 +163,31 @@
       </div>
    </div>
 
-   {{#if view.targetFilters}}
-   <div class="window" id="towerTargetingWindow">
-      <div class="title">
-         {{i18n tower_defense:ui.game.towerTargetingWindow.title}}
-      </div>
-
-      <div id="body">
-         <div id="stickyTargeting">
-            <input id="stickyTargetingCheckbox" type="checkbox" {{bind-attr checked=view.stickyTargeting}}>
-            <label for="stickyTargetingCheckbox">{{i18n tower_defense:ui.game.towerTargetingWindow.stickyTargeting.display_name}}</label>
+   <div id="towerTargetingWindow" {{bind-attr class="view.targetFilters::hidden"}}>
+      <div class="window">
+         <div class="title">
+            {{i18n tower_defense:ui.game.towerTargetingWindow.title}}
          </div>
-         <table>
-            <tr>
-               <td class="tableHeader">{{i18n tower_defense:ui.game.towerTargetingWindow.enableFilter.display_name}}</td>
-               <td class="tableHeader">{{i18n tower_defense:ui.game.towerTargetingWindow.filterName.display_name}}</td>
-            </tr>
-            {{#each view.targetFilters}}
-            <tr>
-               <td class="filterTypeCheck"><input type="checkbox" {{bind-attr name=this.type}} {{bind-attr checked=this.enabled}}></td>
-               <td class="filterType" {{bind-attr filterType=this.type}}>{{i18n_key this.display_name}}</td>
-            </tr>
-            {{/each}}
-         </table>
+
+         <div id="body">
+            <div id="stickyTargeting">
+               <input id="stickyTargetingCheckbox" type="checkbox">
+               <label for="stickyTargetingCheckbox">{{i18n tower_defense:ui.game.towerTargetingWindow.stickyTargeting.display_name}}</label>
+            </div>
+            <div class="tableHeader">{{i18n tower_defense:ui.game.towerTargetingWindow.enableFilter.display_name}}</div>
+            <div class="tableHeader">{{i18n tower_defense:ui.game.towerTargetingWindow.filterName.display_name}}</div>
+            <table>
+               {{#each view.targetFilters}}
+               <tr>
+                  <td class="filterTypeCheck">
+                     <input class="filterTypeCheckbox" type="checkbox" {{bind-attr id=this.id filterType=this.key}}>
+                     <label {{bind-attr for=this.id}}></label>
+                  </td>
+                  <td class="filterType" {{bind-attr filterType=this.key}}>{{i18n_key this.display_name}}</td>
+               </tr>
+               {{/each}}
+            </table>
+         </div>
       </div>
    </div>
-   {{/if}}
 </script>

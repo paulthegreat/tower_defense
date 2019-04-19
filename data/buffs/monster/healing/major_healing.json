@@ -1,0 +1,15 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.major_healing.display_name)",
+   "description": "i18n(tower_defense:data.buffs.major_healing.description)",
+   "icon": "file(major_healing.png)",
+   "script": "tower_defense:buff_scripts:periodic_health_modification",
+   "script_info": {
+      "health_change": 10,
+      "pulse": "1m",
+      "is_percentage": true,
+      "pulse_immediately": false,
+      "pulse_on_destroy": false
+   }
+}

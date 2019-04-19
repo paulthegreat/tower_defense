@@ -633,12 +633,18 @@
 }
 
 #towerTargetingWindow {
+   .gui;
    position: absolute;
-   top: 420px;
-   left: 210px;
-   width: 400px;
-   height: 500px;
+   margin: auto;
    z-index: 5;
+
+   .window {
+      position: relative;
+      top: 420px;
+      left: 255px;
+      width: 300px;
+      height: 455px;
+   }
 
    #body {
       .outlined;
@@ -648,8 +654,24 @@
       font-family: @baseFontFamily;
       color: #fff;
       
-      .number {
-         text-align: right;
+      .tableHeader{
+         display: inline-block;
+         padding-right: 10px;
+         padding-top: 10px;
+      }
+
+      table {
+         .downSection;
+         width: 300px;
+
+         .filterTypeCheck {
+            width: 60px;
+            text-align: center;
+         }
       }
    }
+}
+
+#towerTargetingWindow.hidden {
+   display: none;
 }

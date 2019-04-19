@@ -16,15 +16,7 @@ local STATES = {
    FINDING_TARGET = 'finding_target',   -- finding a target to use ability on
 }
 
--- TODO: define these in constants so we can reference all of them in the UI
-local FILTER_HP_LOW = 'lowest_health'
-local FILTER_HP_HIGH = 'highest_health'
-local FILTER_CLOSEST_TO_TOWER = 'closest_to_tower'
-local FILTER_CLOSEST_TO_END = 'closest_to_end'
-local FILTER_SHORTEST_DEBUFF_TIME = 'shortest_debuff_time'
-local FILTER_HIGHEST_DEBUFF_STACK = 'highest_debuff_stack'
-local FILTER_MOST_TARGETS = 'most_targets'
-local FILTER_TARGET_TYPE = 'target_type'
+local FILTER_TYPES
 
 local _target_filter_fn = function(entity)
    local monster_comp = entity:get_component('tower_defense:monster')
@@ -63,6 +55,7 @@ function TowerComponent:activate()
    if not radiant.is_server then
       self:_client_activate()
    else
+      FILTER_TYPES = stonehearth.constants.tower_defense.tower.target_filters
       self._shoot_timers = {}
 
       if self._sv.sticky_targeting == nil then
@@ -253,19 +246,19 @@ function TowerComponent:get_best_target()
 end
 
 function TowerComponent:_get_filter_value(filter, target, weapon, attack_info, debuff_cache)
-   if filter == FILTER_HP_LOW then
+   if filter == FILTER_TYPES.FILTER_HP_LOW.key then
       return -(radiant.entities.get_health(target) or 0)
 
-   elseif filter == FILTER_HP_HIGH then
+   elseif filter == FILTER_TYPES.FILTER_HP_HIGH.key then
       return radiant.entities.get_health(target) or 0
 
-   elseif filter == FILTER_CLOSEST_TO_TOWER then
+   elseif filter == FILTER_TYPES.FILTER_CLOSEST_TO_TOWER.key then
       return -radiant.entities.distance_between_entities(self._entity, target)
 
-   elseif filter == FILTER_CLOSEST_TO_END then
+   elseif filter == FILTER_TYPES.FILTER_CLOSEST_TO_END.key then
       return -target:get_component('tower_defense:monster'):get_path_length()
       
-   elseif filter == FILTER_SHORTEST_DEBUFF_TIME then
+   elseif filter == FILTER_TYPES.FILTER_SHORTEST_DEBUFF_TIME.key then
       self:_verify_debuff_cache(debuff_cache, attack_info)
       if debuff_cache.total_duration > 0 then
          local buffs_comp = target:get_component('stonehearth:buffs')
@@ -286,7 +279,7 @@ function TowerComponent:_get_filter_value(filter, target, weapon, attack_info, d
          return diff
       end
 
-   elseif filter == FILTER_HIGHEST_DEBUFF_STACK then
+   elseif filter == FILTER_TYPES.FILTER_HIGHEST_DEBUFF_STACK.key then
       self:_verify_debuff_cache(debuff_cache, attack_info)
       local buffs_comp = target:get_component('stonehearth:buffs')
       if not buffs_comp then
@@ -299,14 +292,14 @@ function TowerComponent:_get_filter_value(filter, target, weapon, attack_info, d
       end
       return stacks
       
-   elseif filter == FILTER_MOST_TARGETS then
+   elseif filter == FILTER_TYPES.FILTER_MOST_TARGETS.key then
       local reach = attack_info.aoe_effect and weapon.reach
       if reach then
-         local cube = Cube3(radiant.entities.get_world_grid_location(target)):extruded('x', reach, reach):extruded('z', reach, reach)
+         local cube = Cube3(Point3(-reach, 0, -reach), Point3(reach, 1, reach)):translated(radiant.entities.get_world_location(target))
          return radiant.size(radiant.terrain.get_entities_in_cube(cube, _target_filter_fn))
       end
       
-   elseif filter == FILTER_TARGET_TYPE then
+   elseif filter == FILTER_TYPES.FILTER_TARGET_TYPE.key then
       local match_count = 0
       for _, target_type in ipairs(self._sv.preferred_target_types) do
          if radiant.entities.is_material(target, target_type) then

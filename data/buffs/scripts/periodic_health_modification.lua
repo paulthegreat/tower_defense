@@ -56,6 +56,11 @@ function PeriodicHealthModificationBuff:_on_pulse(buff)
       if self._tuning.is_percentage then
          health_change = resources:get_max_value('health') * health_change
       end
+      if health_change > 0 then
+         local attributes = self._entity:get_component('stonehearth:attributes')
+         local healing_multiplier = attributes and attributes:get_attribute('multiplicative_healing_modifier', 1) or 1
+         health_change = health_change * healing_multiplier
+      end
    elseif self._tuning.damage then
       local damage = stonehearth.combat:get_adjusted_damage_value(nil, self._entity, self._tuning.damage, self._tuning.damage_type)
       health_change = health_change * -damage

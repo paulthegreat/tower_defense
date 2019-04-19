@@ -28,6 +28,10 @@
          "multiplicative_magical_dmg_taken": {
             "type": "basic",
             "value": 1
+         },
+         "multiplicative_healing_modifier": {
+            "type": "basic",
+            "value": 1
          }
       },
       "tower_defense:monster": {}

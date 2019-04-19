@@ -52,6 +52,42 @@
             "display_name": "Sell for 20%",
             "description": "You waited too long! Inflation! Depreciation! This tower is garbage now."
          }
+      },
+      "tower": {
+         "target_filter": {
+            "lowest_health": {
+               "display_name": "Lowest Health",
+               "description": "Prioritize attacking the target with the lowest remaining health."
+            },
+            "highest_health": {
+               "display_name": "Highest Health",
+               "description": "Prioritize attacking the target with the highest remaining health."
+            },
+            "closest_to_tower": {
+               "display_name": "Closest to Tower",
+               "description": "Prioritize attacking the target closest to this tower."
+            },
+            "closest_to_end": {
+               "display_name": "Closest to End",
+               "description": "Prioritize attacking the target closest to the end of the path."
+            },
+            "shortest_debuff_time": {
+               "display_name": "Shortest Debuff Time",
+               "description": "Prioritize attacking the target with the shortest total weighted time remaining on debuffs this tower can inflict."
+            },
+            "highest_debuff_stack": {
+               "display_name": "Highest Debuff Stack",
+               "description": "Prioritize attacking the target with the highest number of stacks of debuffs this tower can inflict."
+            },
+            "most_targets": {
+               "display_name": "Most Targets",
+               "description": "Prioritize attacking the target with the most nearby targets in range for AOE damage."
+            },
+            "target_type": {
+               "display_name": "Monster Types",
+               "description": "Prioritize attacking the target with the most matching monster types."
+            }
+         }
       }
    },
    "entities": {
@@ -121,6 +157,20 @@
             "remaining_monsters": "Remaining enemies",
             "wave_number": "Wave number",
             "player_health": "Health"
+         },
+         "towerTargetingWindow": {
+            "title": "Tower Targeting",
+            "stickyTargeting": {
+               "display_name": "Sticky Targeting",
+               "description": "After selecting a target, continue attacking that target until it dies or moves out of range before finding a new target."
+            },
+            "enableFilter": {
+               "display_name": "Enable",
+               "description": "Enable this targeting filter."
+            },
+            "filterName": {
+               "display_name": "Filter"
+            }
          }
       },
       "shell": {

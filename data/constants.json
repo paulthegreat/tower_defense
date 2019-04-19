@@ -4,6 +4,50 @@
          "player_resources": {
             "GOLD": "gold",
             "WOOD": "wood"
+         },
+         "tower": {
+            "target_filters": {
+               "FILTER_HP_LOW": {
+                  "key": "lowest_health",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.lowest_health.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.lowest_health.description)"
+               },
+               "FILTER_HP_HIGH": {
+                  "key": "highest_health",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.highest_health.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.highest_health.description)"
+               },
+               "FILTER_CLOSEST_TO_TOWER": {
+                  "key": "closest_to_tower",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_tower.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_tower.description)"
+               },
+               "FILTER_CLOSEST_TO_END": {
+                  "key": "closest_to_end",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_end.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_end.description)"
+               },
+               "FILTER_SHORTEST_DEBUFF_TIME": {
+                  "key": "shortest_debuff_time",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.shortest_debuff_time.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.shortest_debuff_time.description)"
+               },
+               "FILTER_HIGHEST_DEBUFF_STACK": {
+                  "key": "highest_debuff_stack",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.highest_debuff_stack.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.highest_debuff_stack.description)"
+               },
+               "FILTER_MOST_TARGETS": {
+                  "key": "most_targets",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.most_targets.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.most_targets.description)"
+               },
+               "FILTER_TARGET_TYPE": {
+                  "key": "target_type",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.target_type.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.target_type.description)"
+               }
+            }
          }
       }
    }

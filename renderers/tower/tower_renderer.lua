@@ -15,6 +15,8 @@ function TowerRenderer:initialize(render_entity, datastore)
 
    self._ui_view_mode = stonehearth.renderer:get_ui_mode()
    self._ui_mode_listener = radiant.events.listen(radiant, 'stonehearth:ui_mode_changed', self, self._on_ui_mode_changed)
+   self._is_selected = (stonehearth.selection:get_selected() == self._entity)
+   self._selection_listener = radiant.events.listen(self._entity, 'stonehearth:selection_changed', self, self._on_selection_changed)
 
    self._datastore = datastore
    if datastore.trace then
@@ -57,6 +59,11 @@ function TowerRenderer:_on_ui_mode_changed()
    end
 end
 
+function TowerRenderer:_on_selection_changed()
+   self._is_selected = (stonehearth.selection:get_selected() == self._entity)
+   self:_update()
+end
+
 function TowerRenderer:_in_correct_mode()
    return self._ui_view_mode == 'hud'
 end
@@ -64,7 +71,7 @@ end
 function TowerRenderer:_update()
    self:_destroy_outline_node()
 
-   if not self:_in_correct_mode() then
+   if not (self._is_selected or self:_in_correct_mode()) then
       return
    end
 
