@@ -1,0 +1,13 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "display_name": "i18n(tower_defense:data.buffs.minor_slow.display_name)",
+   "description": "i18n(tower_defense:data.buffs.minor_slow.description)",
+   "icon": "file(minor_slow.png)",
+   "duration": "10m",
+   "modifiers": {
+      "speed": {
+         "multiply": 0.75
+      }
+   }
+}

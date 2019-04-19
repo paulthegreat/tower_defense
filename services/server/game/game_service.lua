@@ -207,11 +207,15 @@ end
 
 function GameService:monster_moved_to(location)
    -- when a monster moves to a new grid location, check if it intersects with any towers waiting for targets and inform them
+   local cbs = {}
    for region, cb in pairs(self._waiting_for_target_cbs) do
       if region:contains(location) then
          self._waiting_for_target_cbs[region] = nil
-         cb()
+         table.insert(cbs, cb)
       end
+   end
+   for _, cb in ipairs(cbs) do
+      cb()
    end
 end
 

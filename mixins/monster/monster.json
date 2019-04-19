@@ -20,6 +20,14 @@
          "avoidance": {
             "type": "basic",
             "value": 0
+         },
+         "multiplicative_physical_dmg_taken": {
+            "type": "basic",
+            "value": 1
+         },
+         "multiplicative_magical_dmg_taken": {
+            "type": "basic",
+            "value": 1
          }
       },
       "tower_defense:monster": {}

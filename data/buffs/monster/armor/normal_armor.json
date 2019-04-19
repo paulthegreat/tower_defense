@@ -1,0 +1,12 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.normal_armor.display_name)",
+   "description": "i18n(tower_defense:data.buffs.normal_armor.description)",
+   "icon": "file(normal_armor.png)",
+   "modifiers": {
+      "multiplicative_physical_dmg_taken": {
+         "add": -0.5
+      }
+   }
+}

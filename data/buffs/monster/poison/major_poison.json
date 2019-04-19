@@ -1,0 +1,26 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "display_name": "i18n(tower_defense:data.buffs.major_poison.display_name)",
+   "description": "i18n(tower_defense:data.buffs.major_poison.description)",
+   "duration": "15m",
+   "repeat_add_action": "renew_duration",
+   "icon": "file(major_poison.png)",
+   "modifiers": {
+      "speed": {
+         "multiply": 0.85
+      },
+      "multiplicative_physical_dmg_taken": {
+         "add": 0.2
+      }
+   },
+   "script": "tower_defense:buff_scripts:periodic_health_modification",
+   "script_info": {
+      "damage": 100,
+      "damage_type": "magical",
+      "pulse": "3m",
+      "cannot_kill": true,
+      "pulse_immediately": false,
+      "pulse_on_destroy": false
+   }
+}

@@ -23,7 +23,11 @@ function MonsterComponent:activate()
       :on_changed(function()
          local location = radiant.entities.get_world_grid_location(self._entity)
          if self._location and location ~= self._location then
-            self:set_path_length(self._sv.path_length - 1)
+            -- TODO: reconsider how this is calculated if knockback or path deviations are involved
+            -- for now just ignore y-only changes (flying unit temporarily/permanently gaining/losing grounded status)
+            if self._location.x ~= location.x or self._location.z ~= location.z then
+               self:set_path_length(self._sv.path_length - 1)
+            end
          end
          self._location = location
          self:_update_seen()

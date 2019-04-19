@@ -7,7 +7,7 @@
    "persistent": true,
    "modifiers": {
       "speed": {
-         "add": 5
+         "multiply": 1.05
       }
    }
 }

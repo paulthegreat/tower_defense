@@ -1,0 +1,18 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "display_name": "i18n(tower_defense:data.buffs.minor_burning.display_name)",
+   "description": "i18n(tower_defense:data.buffs.minor_burning.description)",
+   "duration": "6m",
+   "max_stacks": 3,
+   "repeat_add_action": "stack_and_refresh",
+   "icon": "file(minor_burning.png)",
+   "script": "tower_defense:buff_scripts:periodic_health_modification",
+   "script_info": {
+      "damage": 2,
+      "damage_type": "magical",
+      "pulse": "2m",
+      "pulse_immediately": true,
+      "pulse_on_destroy": false
+   }
+}

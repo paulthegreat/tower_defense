@@ -6,8 +6,8 @@
    "icon": "file(minor_armor_increase.png)",
    "persistent": true,
    "modifiers": {
-      "multiplicative_armor_modifier": {
-         "add": 0.05
+      "multiplicative_physical_dmg_taken": {
+         "multiply": 0.95
       }
    }
 }
