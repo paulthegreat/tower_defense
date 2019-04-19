@@ -508,6 +508,20 @@ function TowerComponent:_shoot(target, attack_info)
             if attack_info.hit_effect then
                radiant.effects.run_effect(target, attack_info.hit_effect)
             end
+            if attack_info.ground_effect then
+               local proxy = radiant.entities.create_entity('stonehearth:object:transient', { debug_text = 'running death effect' })
+               local location = radiant.entities.get_world_grid_location(target)
+
+               radiant.terrain.place_entity(proxy, location)
+
+               local effect = radiant.effects.run_effect(proxy, attack_info.ground_effect)
+
+               effect:set_finished_cb(
+                  function()
+                     radiant.entities.destroy_entity(proxy)
+                  end
+               )
+            end
             local total_damage = stonehearth.combat:calculate_ranged_damage(attacker, target, attack_info)
             local battery_context = BatteryContext(attacker, target, total_damage)
             stonehearth.combat:inflict_debuffs(attacker, target, attack_info)
