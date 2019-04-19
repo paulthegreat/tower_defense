@@ -30,17 +30,10 @@ App.StonehearthUnitFrameView = App.View.extend({
       "stonehearth:attributes": {
          "attributes": {}
       },
-      "stonehearth:building": {},
-      "stonehearth:fabricator": {},
       "stonehearth:incapacitation": {
          "sm": {}
       },
-      "stonehearth:item_quality": {
-      },
       "stonehearth:commands": {},
-      "stonehearth:job" : {
-         'curr_job_controller' : {}
-      },
       "stonehearth:buffs" : {
          "buffs" : {
             "*" : {}
@@ -48,30 +41,7 @@ App.StonehearthUnitFrameView = App.View.extend({
       },
       'stonehearth:expendable_resources' : {},
       "stonehearth:unit_info": {},
-      "stonehearth:stacks": {},
-      "stonehearth:material": {},
-      "stonehearth:workshop": {
-         "crafter": {},
-         "crafting_progress": {},
-         "order": {}
-      },
-      "stonehearth:pet": {},
-      "stonehearth:party" : {},
-      "stonehearth:party_member" : {
-         "party" : {
-            "stonehearth:unit_info" : {}
-         }
-      },
-      "stonehearth:siege_weapon" : {},
-      "stonehearth:door": {},
-      "stonehearth:iconic_form" : {
-         "root_entity" : {
-            "uri" : {},
-            'stonehearth:item_quality': {},
-            'stonehearth:traveler_gift': {},
-         }
-      },
-      "stonehearth:traveler_gift": {}
+      "stonehearth:material": {}
    },
 
    allowedClasses: null,
@@ -430,103 +400,6 @@ App.StonehearthUnitFrameView = App.View.extend({
       App.stonehearthClient.giveCombatCommand(command, this.get('uri'));
    },
 
-   //Friday TODO: get icons for classes, do styling!
-   _updateEquipment: function () {
-      if (!this.$('#equipmentPane')) return;
-      this.$('#equipmentPane').find('.tooltipstered').tooltipster('destroy');
-
-      if (this.get('model.stonehearth:iconic_form') && this.get('model.stonehearth:iconic_form').root_entity) {
-         var playerId = this.get('model.player_id');
-         var currPlayerId = App.stonehearthClient.getPlayerId();
-         var isPlayerOwner = playerId == currPlayerId;
-         var equipmentPiece = this.get('model.stonehearth:iconic_form').root_entity.uri.components['stonehearth:equipment_piece'];
-         if(equipmentPiece && isPlayerOwner && (equipmentPiece.required_job_level || equipmentPiece.roles)) {
-            var tooltipString = i18n.t('stonehearth:ui.game.unit_frame.no_requirements');
-            if (equipmentPiece.roles) {
-               //this._collectClasses(equipmentPiece.roles);
-               var classArray = radiant.findRelevantClassesArray(equipmentPiece.roles);
-               this.set('allowedClasses', classArray);
-               tooltipString = i18n.t(
-                  'stonehearth:ui.game.unit_frame.equipment_description',
-                  {class_list: radiant.getClassString(classArray)});
-            }
-            if (equipmentPiece.required_job_level) {
-               this.$('#levelRequirement').text( i18n.t('stonehearth:ui.game.unit_frame.level')  + equipmentPiece.required_job_level);
-               tooltipString += i18n.t(
-                  'stonehearth:ui.game.unit_frame.level_description',
-                  {level_req: equipmentPiece.required_job_level});
-            } else {
-               this.$('#levelRequirement').text('');
-            }
-
-            //Make tooltips
-            //Setup tooltips for the combat commands
-            var requirementsTooltip = App.tooltipHelper.createTooltip(
-                i18n.t('stonehearth:ui.game.unit_frame.class_lv_title'),
-               tooltipString);
-            this.$('#acceptableClasses').tooltipster({
-               content: $(requirementsTooltip)
-            });
-
-            this.$('#equipmentPane').show();
-         } else {
-            this.$('#equipmentPane').hide();
-         }
-      } else {
-         this.$('#equipmentPane').hide();
-      }
-   }.observes('model.stonehearth:iconic_form.root_entity.uri'),
-
-   _updateSiege: function() {
-      var self = this;
-      self.set('siegeNumUses', self.get('model.stonehearth:siege_weapon.num_uses'));
-      self.set('siegeMaxUses', self.get('model.stonehearth:siege_weapon.max_uses'));
-   }.observes('model.stonehearth:siege_weapon.num_uses'),
-
-   _updateItemLimit: function() {
-      var self = this;
-      var uri = self._getRootUri();
-      var setItemLimitInfo = function(info) {
-         var itemName = info && ("i18n(stonehearth:ui.game.unit_frame.placement_tags." + info.placement_tag + ")");
-         self.set('placementTag', itemName);
-         self.set('numPlaced', info && info.num_placed);
-         self.set('maxPlaceable', info && info.max_placeable);
-      };
-      if (uri) {
-         radiant.call('stonehearth:check_can_place_item', uri, self._getItemQuality())
-            .done(function(response) {
-               setItemLimitInfo(response);
-            })
-            .fail(function(response) {
-               setItemLimitInfo(response);
-            });
-      } else {
-         setItemLimitInfo(null);
-      }
-   }.observes('model.stonehearth:siege_weapon', 'mode.stonehearth:iconic_form.root_entity.components.stonehearth:siege_weapon'),
-
-   _updateDoorLock: function() {
-      var self = this;
-      var isLocked = self.get('model.stonehearth:door.locked');
-      var str = isLocked ? 'locked' : 'unlocked';
-      self.set('hasLock', isLocked != null);
-      self.set('doorLockIcon', '/stonehearth/ui/game/unit_frame/images/door_' + str + '.png');
-      self.set('doorLockedText', str);
-   }.observes('model.stonehearth:door.locked'),
-
-   _updatePartyBanner: function() {
-      var image_uri = this.get('model.stonehearth:party_member.party.stonehearth:unit_info.icon');
-      if (this.$('#partyButton')) {
-         if (image_uri) {
-            this.$('#partyButton').css('background-image', 'url(' + image_uri + ')');
-            this.$('#partyButton').show();
-         } else {
-            //TODO: is this the best way to figure out if we don't have a party?
-            this.$('#partyButton').hide();
-         }
-      }
-   }.observes('model.stonehearth:party_member.party.stonehearth:unit_info'),
-
    _updateHealth: function() {
       var self = this;
       var currentHealth = self.get('model.stonehearth:expendable_resources.resources.health');
@@ -536,127 +409,34 @@ App.StonehearthUnitFrameView = App.View.extend({
       self.set('maxHealth', Math.ceil(maxHealth));
    }.observes('model.stonehearth:expendable_resources', 'model.stonehearth:attributes.attributes.max_health'),
 
-   _updateRescue: function() {
-      var self = this;
-
-      var curState = self.get('model.stonehearth:incapacitation.sm.current_state');
-
-      self.set('needsRescue', Boolean(curState) && (curState == 'awaiting_rescue' || curState == 'rescuing'));
-   }.observes('model.stonehearth:incapacitation.sm'),
-
-   _updateCraftingProgress: function() {
-      var self = this;
-      var progress = self.get('model.stonehearth:workshop.crafting_progress');
-      if (progress) {
-         var doneSoFar = progress.game_seconds_done;
-         var total = progress.game_seconds_total;
-         var percentage = Math.round((doneSoFar * 100) / total);
-         self.set('progress', percentage);
-         Ember.run.scheduleOnce('afterRender', self, function() {
-            self.$('#progress').css("width", percentage / 100 * this.$('#progressbar').width());
-         });
-      }
-   }.observes('model.stonehearth:workshop.crafting_progress'),
-
-   _clearItemQualityIndicator: function() {
-      var self = this;
-      if (self.$('#qualityGem')) {
-         if (self.$('#qualityGem').hasClass('tooltipstered')) {
-            self.$('#qualityGem').tooltipster('destroy');
-         }
-         self.$('#qualityGem').removeClass();
-      }
-      self.$('#nametag').removeClass();
-      self.set('qualityItemCreationDescription', null);
-   },
-
-   _applyQuality: function() {
-      var self = this;
-
-      self._clearItemQualityIndicator();
-
-      var itemQuality = self._getItemQuality();
-      
-      if (itemQuality > 1) {
-         var qualityLvl = 'quality-' + itemQuality;
-
-         var craftedKey = 'stonehearth:ui.game.unit_frame.crafted_by';
-         if (self.get('model.stonehearth:item_quality.author_type') == 'place') {
-            craftedKey = 'stonehearth:ui.game.unit_frame.crafted_in';
-         }
-
-         var authorName = self._getItemAuthor();
-         if (authorName) {
-            self.set('qualityItemCreationDescription', i18n.t(
-               craftedKey,
-               { author_name: authorName }));
-         }
-         self.$('#qualityGem').addClass(qualityLvl + '-icon');
-         self.$('#nametag').addClass(qualityLvl);
-
-         var qualityTooltip = App.tooltipHelper.createTooltip(i18n.t('stonehearth:ui.game.unit_frame.quality.' + qualityLvl));
-         self.$('#qualityGem').tooltipster({
-            content: self.$(qualityTooltip)
-         });
-      }
-   }.observes('model.stonehearth:item_quality'),
-
-   _applyGifter: function() {
-      var self = this;
-
-      self.set('gifterDescription', null)
-      var gifterName = self._getGifterName()
-      if (gifterName) {
-         self.set('gifterDescription', i18n.t(
-            'stonehearth:ui.game.unit_frame.traveler.gifted_by',
-            { gifter_name: gifterName }));
-      }
-   }.observes('model.stonehearth:traveler_gift'),
-
-   _updateAppeal: function() {
-      var self = this;
-
-      // First, get a client-side approximation so we avoid flicker in most cases.
-      var uri = self.get('model.uri');
-      var catalogData = App.catalog.getCatalogData(uri);
-      if (catalogData && catalogData.appeal) {
-         var appeal = catalogData.appeal;
-         var itemQuality = self._getItemQuality();
-         if (itemQuality) {
-            appeal = radiant.applyItemQualityBonus('appeal', appeal, itemQuality);
-         }
-         self.set('appeal', appeal);
-      } else {
-         self.set('appeal', null);
-      }
-
-      // Then, for server objects, ask the server to give us the truth, the full truth, and nothing but the truth.
-      // This matters e.g. for plants that are affected by the Vitality town bonus.
-      var address = self.get('model.__self');
-      if (address && !address.startsWith('object://tmp/')) {
-         radiant.call('stonehearth:get_appeal_command', address)
-            .done(function (response) {
-               self.set('appeal', response.result);
-            });
-      }
-   }.observes('model.uri'),
-
    _getRootUri: function() {
       var iconic = this.get('model.stonehearth:iconic_form.root_entity.uri.__self');
       return iconic || this.get('model.uri');
    },
 
-   _getItemQuality: function() {
-      return this.get('model.stonehearth:item_quality.quality') || this.get('model.stonehearth:iconic_form.root_entity.stonehearth:item_quality.quality');
-   },
+   _updateTargetFilters: function() {
+      var self = this;
+      var types = self.get('model.tower_defense:tower.target_filters');
+      // TODO: actually implement this
+      //self.set('targetFilters', radiant.map_to_array(types));
+   }.observes('model.tower_defense:tower.target_filters'),
 
-   _getItemAuthor: function() {
-      return this.get('model.stonehearth:item_quality.author_name') || this.get('model.stonehearth:iconic_form.root_entity.stonehearth:item_quality.author_name');
-   },
+   _updateStickyTargeting: function() {
+      var self = this;
+      var sticky = self.get('model.tower_defense:tower.sticky_targeting');
+      self.set('stickyTargeting', sticky);
+   }.observes('model.tower_defense:tower.sticky_targeting'),
 
-   _getGifterName: function() {
-      return this.get('model.stonehearth:traveler_gift.gifter_name') || this.get('model.stonehearth:iconic_form.root_entity.stonehearth:traveler_gift.gifter_name');
-   },
+   _stickyTargetingChanged: function() {
+      var self = this;
+      var sticky = self.get('stickyTargeting');
+      if (self._prevStickyTargeting !== sticky) {
+         self._prevStickyTargeting = sticky;
+         if (sticky != self.get('model.tower_defense:tower.sticky_targeting')) {
+            radiant.call('tower_defense:set_tower_sticky_targeting', self.get('uri'), sticky);
+         }
+      }
+   }.observes('stickyTargeting'),
 
    actions: {
       selectParty: function() {

@@ -631,3 +631,25 @@
 #unitFrame.hidden {
    display: none;
 }
+
+#towerTargetingWindow {
+   position: absolute;
+   top: 420px;
+   left: 210px;
+   width: 400px;
+   height: 500px;
+   z-index: 5;
+
+   #body {
+      .outlined;
+      position: absolute;
+      top: 68px;
+      left: 10px;
+      font-family: @baseFontFamily;
+      color: #fff;
+      
+      .number {
+         text-align: right;
+      }
+   }
+}

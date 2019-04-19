@@ -32,7 +32,8 @@ end
 
 function TowerService:register_tower(tower, location)
    local tower_comp = tower:get_component('tower_defense:tower')
-   local targetable_region = self:_cache_tower_range(tower_comp, location)
+   local targetable_region_ground, targetable_region_air = self:_cache_tower_range(tower_comp, location)
+   local targetable_region = targetable_region_ground + targetable_region_air
    local detection_coords_in_range = {}
    if tower_comp:reveals_invis() and not targetable_region:empty() then
       detection_coords_in_range = self:_get_range_coords(targetable_region)
@@ -49,7 +50,7 @@ function TowerService:register_tower(tower, location)
 
    radiant.events.trigger(radiant, 'tower_defense:tower_registered', tower)
 
-   return targetable_region
+   return targetable_region_ground, targetable_region_air
 end
 
 function TowerService:unregister_tower(tower_id)
@@ -99,9 +100,7 @@ function TowerService:_cache_tower_range(tower_comp, location)
       air_intersection = Region3()
    end
 
-   targetable_region = ground_intersection + air_intersection
-
-   return targetable_region
+   return ground_intersection, air_intersection
 end
 
 function TowerService:_get_range_coords(region)

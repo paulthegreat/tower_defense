@@ -16,6 +16,7 @@ local STATES = {
    FINDING_TARGET = 'finding_target',   -- finding a target to use ability on
 }
 
+-- TODO: define these in constants so we can reference all of them in the UI
 local FILTER_HP_LOW = 'lowest_health'
 local FILTER_HP_HIGH = 'highest_health'
 local FILTER_CLOSEST_TO_TOWER = 'closest_to_tower'
@@ -63,6 +64,10 @@ function TowerComponent:activate()
       self:_client_activate()
    else
       self._shoot_timers = {}
+
+      if self._sv.sticky_targeting == nil then
+         self:set_sticky_targeting(self._json.targeting.sticky_targeting)
+      end
 
       if not self._sv.target_filters then
          self:set_target_filters(self._json.targeting.target_filters)
@@ -134,6 +139,15 @@ function TowerComponent:_destroy_listeners()
    end
 end
 
+function TowerComponent:_initialize()
+   self:_unregister()
+   self._weapon = stonehearth.combat:get_main_weapon(self._entity)
+   self._combat_state = self._entity:add_component('stonehearth:combat_state')
+   self._weapon_data = self._weapon and self._weapon:is_valid() and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
+   self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
+   self:_register()
+end
+
 function TowerComponent:reveals_invis()
    return self._sv.reveals_invis
 end
@@ -166,6 +180,11 @@ end
 
 function TowerComponent:get_original_facing()
    return self._sv.original_facing
+end
+
+function TowerComponent:set_sticky_targeting(sticky)
+   self._sv.sticky_targeting = sticky or false
+   self.__saved_variables:mark_changed()
 end
 
 function TowerComponent:set_target_filters(target_filters)
@@ -201,7 +220,11 @@ function TowerComponent:get_best_target()
       return
    end
 
-   local targets = radiant.values(radiant.terrain.get_entities_in_region(self._sv.targetable_path_region, _target_filter_fn))
+   local targets = radiant.terrain.get_entities_in_region(self._sv.targetable_path_region, _target_filter_fn)
+   if self._sv.sticky_targeting and self._current_target and self._current_target:is_valid() and targets[self._current_target:get_id()] then
+      return self._current_target, attack_info
+   end
+   targets = radiant.values(targets)
    
    local debuff_cache = {}
 
@@ -284,7 +307,13 @@ function TowerComponent:_get_filter_value(filter, target, weapon, attack_info, d
       end
       
    elseif filter == FILTER_TARGET_TYPE then
-
+      local match_count = 0
+      for _, target_type in ipairs(self._sv.preferred_target_types) do
+         if radiant.entities.is_material(target, target_type) then
+            match_count = match_count + 1
+         end
+      end
+      return match_count
    end
 
    return 0
@@ -324,10 +353,15 @@ function TowerComponent:_register()
    if self._location then
       self:_load_targetable_region()
       if self._sv.targetable_region then
-         self._sv.attacks_ground = self._json.targeting.attacks_ground
-         self._sv.attacks_air = self._json.targeting.attacks_air
+         if self._sv.attacks_ground == nil then
+            self._sv.attacks_ground = self._json.targeting.attacks_ground
+         end
+         if self._sv.attacks_air == nil then
+            self._sv.attacks_air = self._json.targeting.attacks_air
+         end
 
-         self._sv.targetable_path_region = tower_defense.tower:register_tower(self._entity, self._location)
+         self._sv.targetable_path_region_ground, self._sv.targetable_path_region_air = tower_defense.tower:register_tower(self._entity, self._location)
+         self:_update_targetable_path_region()
       end
       self.__saved_variables:mark_changed()
    end
@@ -363,6 +397,28 @@ function TowerComponent:_create_targetable_region()
    return region
 end
 
+function TowerComponent:set_attacks_ground(attacks)
+   self._sv.attacks_ground = attacks
+   self:_update_targetable_path_region()
+end
+
+function TowerComponent:set_attacks_air(attacks)
+   self._sv.attacks_air = attacks
+   self:_update_targetable_path_region()
+end
+
+function TowerComponent:_update_targetable_path_region()
+   local region = Region3()
+   if self._sv.attacks_ground then
+      region = region + self._sv.targetable_path_region_ground
+   end
+   if self._sv.attacks_air then
+      region = region + self._sv.targetable_path_region_air
+   end
+   self._sv.targetable_path_region = region
+   self.__saved_variables:mark_changed()
+end
+
 function TowerComponent:_on_wave_started(wave)
    if wave > self._sv._wave_created then
       self:_update_sell_command(wave)
@@ -386,15 +442,6 @@ end
 --[[
    state machine stuff for targeting/acting
 ]]
-
-function TowerComponent:_initialize()
-   self:_unregister()
-   self._weapon = stonehearth.combat:get_main_weapon(self._entity)
-   self._combat_state = self._entity:add_component('stonehearth:combat_state')
-   self._weapon_data = self._weapon and self._weapon:is_valid() and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
-   self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
-   self:_register()
-end
 
 function TowerComponent:_reinitialize(sm)
    self:_initialize()

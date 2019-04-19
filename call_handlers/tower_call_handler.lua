@@ -133,4 +133,22 @@ function TowerCallHandler:_get_tower_cost(uri)
    return entity_data and entity_data.cost or 1
 end
 
+function TowerCallHandler:set_tower_sticky_targeting(session, response, tower, sticky)
+   validator.expect_argument_types({'Entity'}, tower)
+
+   local tower_comp = tower:get_component('tower_defense:tower')
+   if tower_comp then
+      tower_comp:set_sticky_targeting(sticky)
+   end
+end
+
+function TowerCallHandler:set_tower_target_filters(session, response, tower, filters)
+   validator.expect_argument_types({'Entity', 'table'}, tower, filters)
+
+   local tower_comp = tower:get_component('tower_defense:tower')
+   if tower_comp then
+      tower_comp:set_target_filters(filters)
+   end
+end
+
 return TowerCallHandler

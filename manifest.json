@@ -188,6 +188,14 @@
       "sell_less": {
          "controller": "file(call_handlers/tower_call_handler.lua)",
          "endpoint": "server"
+      },
+      "set_tower_sticky_targeting": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
+         "endpoint": "server"
+      },
+      "set_tower_target_filters": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
+         "endpoint": "server"
       }
    },
    "object_commands": {
