@@ -44,40 +44,15 @@ end
 
 function TowerComponent:activate()
    self._json = radiant.entities.get_json(self) or {}
-   if not self._json.targeting then
-      self._json.targeting = {}
-   end
-
-   if self._sv.reveals_invis == nil then
-      self._sv.reveals_invis = self._json.reveals_invis or false
-      self.__saved_variables:mark_changed()
-   end
-
-   if not radiant.is_server then
-      self:_client_activate()
-   else
+   
+   if radiant.is_server then
       FILTER_TYPES = stonehearth.constants.tower_defense.tower.target_filters
       self._shoot_timers = {}
-
-      if self._sv.sticky_targeting == nil then
-         self:set_sticky_targeting(self._json.targeting.sticky_targeting)
-      end
-
-      if not self._sv.target_filters then
-         self:set_target_filters(self._json.targeting.target_filters)
-      end
-
-      if not self._sv.preferred_target_types then
-         self:set_preferred_target_types(self._json.targeting.preferred_target_types)
-      end
 
       -- update commands
       -- add a listener for wave change if necessary
       local cur_wave = tower_defense.game:get_current_wave()
       self:_update_sell_command(cur_wave)
-
-      -- make sure we have any other commands, like auto-targeting and upgrade options
-
 
       -- set up a listener for added to / removed from world for registering/unregistering with tower service
       self._parent_trace = self._entity:add_component('mob'):trace_parent('tower added or removed')
@@ -93,15 +68,10 @@ function TowerComponent:activate()
    end
 end
 
--- as a client component, we just care about rendering regions
-function TowerComponent:_client_activate()
-   self:_load_targetable_region()
-end
-
 function TowerComponent:post_activate()
+   self:_initialize()
+   
    if radiant.is_server then
-      self:_initialize()
-      
       local sm = self._sv.sm
       self:_declare_states(sm)
       self:_declare_triggers(sm)
@@ -140,12 +110,99 @@ function TowerComponent:_destroy_listeners()
 end
 
 function TowerComponent:_initialize()
-   self:_unregister()
-   self._weapon = stonehearth.combat:get_main_weapon(self._entity)
+   if radiant.is_server then
+      self:_unregister()
+      self._weapon = stonehearth.combat:get_main_weapon(self._entity)
+      if not self._weapon or not self._weapon:is_valid() then
+         local prev_weapon
+         prev_weapon, self._weapon = radiant.entities.equip_item(self._entity, self._json.default_weapon)
+         if prev_weapon then
+            log:error('there wasn\'t a primary weapon for %s, but %s got replaced by the default equipment %s!', self._entity, prev_weapon, self._weapon)
+            return
+         end
+         if self._weapon and not self._weapon:is_valid() then
+            self._weapon = nil
+         end
+
+         -- if there was no weapon and we equipped the default weapon, add upgrade commands
+         local commands = self._entity:add_component('stonehearth:commands')
+         local upgrades = self._json.upgrades or {}
+         if upgrades.damage then
+            commands:add_command('tower_defense:commands:upgrade_tower_damage')
+         end
+         if upgrades.utility then
+            commands:add_command('tower_defense:commands:upgrade_tower_utility')
+         end
+      end
+   else
+      self._weapon = self._json.default_weapon
+   end
+
    self._combat_state = self._entity:add_component('stonehearth:combat_state')
-   self._weapon_data = self._weapon and self._weapon:is_valid() and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
-   self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
-   self:_register()
+   self._weapon_data = self._weapon and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
+   self:_load_targetable_region()
+
+   if radiant.is_server then
+      -- these settings will only be loaded for the default weapon, not for upgrade weapons
+      local targeting = self._weapon_data.targeting or {}
+      if self._sv.sticky_targeting == nil then
+         self:set_sticky_targeting(targeting.sticky_targeting)
+      end
+
+      if not self._sv.target_filters then
+         self:set_target_filters(targeting.target_filters)
+      end
+
+      if not self._sv.preferred_target_types then
+         self:set_preferred_target_types(targeting.preferred_target_types)
+      end
+
+      self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
+      self:_register()
+   end
+end
+
+function TowerComponent:try_upgrade_tower(upgrade)
+   -- find the upgrade in the component data and try to load it
+   -- try to spend the resources to upgrade it
+   -- if successful, apply the equipment, which should automatically reinitialize via the state machine, and return true
+   local player = tower_defense.game:get_player(self._entity:get_player_id())
+   local upgrade_data = (self._json.upgrades or {})[upgrade]
+   local cost = upgrade_data and upgrade_data.cost
+   local uri = upgrade_data and upgrade_data.uri
+   local result = {}
+   if not cost or not uri or not player then
+      -- everything has a cost... if we can get it
+      result.reject = true
+      result.message = 'i18n(tower_defense:alerts.upgrade_tower.unavailable)'
+   else
+      for resource, amount in pairs(cost) do
+         local missing = player:can_spend_resource(resource, amount)
+         if missing > 0 then
+            result[resource] = missing
+         end
+      end
+   end
+
+   if not result.reject and next(result) then
+      result.reject = true
+      result.message = 'i18n(tower_defense:alerts.upgrade_tower.missing_resources)'
+   end
+   
+   if not result.reject then
+      for resource, amount in pairs(cost) do
+         player:spend_resource(resource, amount)
+      end
+      radiant.entities.equip_item(self._entity, upgrade_data.uri)
+      local commands = self._entity:add_component('stonehearth:commands')
+      commands:remove_command('tower_defense:commands:upgrade_tower_damage')
+      commands:remove_command('tower_defense:commands:upgrade_tower_utility')
+      
+      result.resolve = true
+      result.message = 'i18n(tower_defense:alerts.upgrade_tower.success)'
+   end
+
+   return result
 end
 
 function TowerComponent:reveals_invis()
@@ -154,11 +211,6 @@ end
 
 function TowerComponent:get_targetable_region()
    return self._sv.targetable_region
-end
-
-function TowerComponent:_load_targetable_region()
-   self._sv.targetable_region = self:_create_targetable_region()
-   self.__saved_variables:mark_changed()
 end
 
 function TowerComponent:get_targetable_path_region()
@@ -354,20 +406,9 @@ function TowerComponent:_register()
    -- pass that in to the tower service registration function
    -- store the resulting targetable path intersection ranges
    self._location = radiant.entities.get_world_grid_location(self._entity)
-   if self._location then
-      self:_load_targetable_region()
-      if self._sv.targetable_region then
-         if self._sv.attacks_ground == nil then
-            self._sv.attacks_ground = self._json.targeting.attacks_ground
-         end
-         if self._sv.attacks_air == nil then
-            self._sv.attacks_air = self._json.targeting.attacks_air
-         end
-
-         self._sv.targetable_path_region_ground, self._sv.targetable_path_region_air = tower_defense.tower:register_tower(self._entity, self._location)
-         self:_update_targetable_path_region()
-      end
-      self.__saved_variables:mark_changed()
+   if self._location and self._sv.targetable_region then
+      self._sv.targetable_path_region_ground, self._sv.targetable_path_region_air = tower_defense.tower:register_tower(self._entity, self._location)
+      self:_update_targetable_path_region()
    end
 end
 
@@ -379,8 +420,8 @@ function TowerComponent:_unregister()
    self._shoot_timers = {}
 end
 
-function TowerComponent:_create_targetable_region()
-   local targeting = self._json.targeting or {}
+function TowerComponent:_load_targetable_region()
+   local targeting = self._weapon_data and self._weapon_data.targeting or {}
    local region
    if targeting.type == 'rectangle' then
       region = Region3(radiant.util.to_cube3(targeting.region)):translated(Point3(-.5, 0, -.5)):rotated(radiant.entities.get_facing(self._entity)):translated(Point3(.5, 0, .5))
@@ -398,7 +439,11 @@ function TowerComponent:_create_targetable_region()
       region:optimize('targetable region')
    end
 
-   return region
+   self._sv.targetable_region = region
+   self._sv.reveals_invis = targeting.reveals_invis or false
+   self._sv.attacks_ground = targeting.attacks_ground or false
+   self._sv.attacks_air = targeting.attacks_air or false
+   self.__saved_variables:mark_changed()
 end
 
 function TowerComponent:set_attacks_ground(attacks)

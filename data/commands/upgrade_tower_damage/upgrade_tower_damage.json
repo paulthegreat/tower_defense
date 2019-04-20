@@ -1,0 +1,15 @@
+{
+   "type": "command",
+   "name": "upgrade_tower_damage",
+   "display_name": "i18n(tower_defense:data.commands.upgrade_tower_damage.display_name)",
+   "description": "i18n(tower_defense:data.commands.upgrade_tower_damage.description)",
+   "icon": "file(upgrade_tower_damage.png)",
+   "ordinal": 1,
+   "action": "call",
+   "function": "tower_defense:upgrade_tower",
+   "sound_on_complete": {
+      "track": "stonehearth:sounds:ui:scenarios:redalert",
+      "volume": 20
+   },
+   "args": ["damage"]
+}

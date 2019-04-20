@@ -105,18 +105,20 @@ end
 function TowerCallHandler:sell_full(session, response, tower)
    validator.expect_argument_types({'Entity'}, tower)
 
-   self:_sell_tower(session.player_id, tower)
+   self:_sell_tower(session, response, tower)
 end
 
 function TowerCallHandler:sell_less(session, response, tower)
    validator.expect_argument_types({'Entity'}, tower)
 
-   self:_sell_tower(session.player_id, tower, 0.2)
+   self:_sell_tower(session, response, tower, 0.2)
 end
 
-function TowerCallHandler:_sell_tower(player_id, tower, multiplier)
+function TowerCallHandler:_sell_tower(session, response, tower, multiplier)
    -- can't sell other players' towers!
+   local player_id = session.player_id
    if player_id ~= tower:get_player_id() then
+      response:reject({})
       return
    end
 
@@ -126,6 +128,7 @@ function TowerCallHandler:_sell_tower(player_id, tower, multiplier)
       tower_defense.game:add_player_gold(player_id, value)
    end
    radiant.entities.destroy_entity(tower)
+   response:resolve({})
 end
 
 function TowerCallHandler:_get_tower_cost(uri)
@@ -148,6 +151,22 @@ function TowerCallHandler:set_tower_target_filters(session, response, tower, fil
    local tower_comp = tower:get_component('tower_defense:tower')
    if tower_comp then
       tower_comp:set_target_filters(filters)
+   end
+end
+
+function TowerCallHandler:upgrade_tower(session, response, tower, upgrade)
+   validator.expect_argument_types({'Entity'}, tower)
+
+   local tower_comp = tower:get_component('tower_defense:tower')
+   if tower_comp then
+      local result = tower_comp:try_upgrade_tower(upgrade)
+      if result.resolve then
+         response:resolve(result)
+      else
+         response:reject(result)
+      end
+   else
+      response:reject('invalid entity: has no tower component')
    end
 end
 

@@ -1,0 +1,15 @@
+{
+   "type": "command",
+   "name": "upgrade_tower_utility",
+   "display_name": "i18n(tower_defense:data.commands.upgrade_tower_utility.display_name)",
+   "description": "i18n(tower_defense:data.commands.upgrade_tower_utility.description)",
+   "icon": "file(upgrade_tower_utility.png)",
+   "ordinal": 2,
+   "action": "call",
+   "function": "tower_defense:upgrade_tower",
+   "sound_on_complete": {
+      "track": "stonehearth:sounds:ui:scenarios:caravan",
+      "volume": 20
+   },
+   "args": ["utility"]
+}

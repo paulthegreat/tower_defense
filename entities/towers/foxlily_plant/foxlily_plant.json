@@ -16,28 +16,27 @@
          "model_origin": { "x": 0, "y": 0, "z": 0 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
-      "stonehearth:equipment": {
-         "items": [
-            "tower_defense:towers:foxlily_plant:weapon"
-         ]
-      },
       "stonehearth:buffs": {
          "buffs": {
             "tower_defense:buffs:tower:plant_grower": true
          }
       },
       "tower_defense:tower": {
-         "targeting": {
-            "type": "circle",
-            "radius": 6,
-            "attacks_ground": true,
-            "attacks_air": true,
-            "target_filters": [
-               "highest_health",
-               "closest_to_end"
-            ]
-         },
-         "reveals_invis": true
+         "default_weapon": "tower_defense:towers:foxlily_plant:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:foxlily_plant:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:foxlily_plant:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
       }
    },
    "entity_data": {

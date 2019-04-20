@@ -4,6 +4,7 @@
    "display_name": "i18n(tower_defense:data.commands.sell_full.display_name)",
    "description": "i18n(tower_defense:data.commands.sell_full.description)",
    "icon": "file(sell_full.png)",
+   "ordinal": 10,
    "action": "call",
    "function": "tower_defense:sell_full",
    "sound_on_complete": {

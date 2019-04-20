@@ -66,6 +66,8 @@
       "buff_scripts:wave_end_add_buff": "file(data/buffs/scripts/wave_end_add_buff.lua)",
       "commands:sell_full": "file(data/commands/sell_full/sell_full.json)",
       "commands:sell_less": "file(data/commands/sell_less/sell_less.json)",
+      "commands:upgrade_tower_damage": "file(data/commands/upgrade_tower_damage/upgrade_tower_damage.json)",
+      "commands:upgrade_tower_utility": "file(data/commands/upgrade_tower_utility/upgrade_tower_utility.json)",
       "data:kingdom_level_costs:default": "file(data/kingdoms/level_costs/default.json)",
       "data:map_generation" : "file(data/map_generation/default_map_generation.json)",
       "data:map_generation:desert" : "file(data/map_generation/desert_map_generation.json)",
@@ -97,6 +99,8 @@
       "towers:small_turret:weapon": "file(entities/towers/small_turret/small_turret_weapon.json)",
       "towers:foxlily_plant": "file(entities/towers/foxlily_plant/foxlily_plant.json)",
       "towers:foxlily_plant:weapon": "file(entities/towers/foxlily_plant/foxlily_plant_weapon.json)",
+      "towers:foxlily_plant:weapon_damage": "file(entities/towers/foxlily_plant/foxlily_plant_weapon_damage.json)",
+      "towers:foxlily_plant:weapon_utility": "file(entities/towers/foxlily_plant/foxlily_plant_weapon_utility.json)",
       "towers:cactus_plant": "file(entities/towers/cactus_plant/cactus_plant.json)",
       "towers:cactus_plant:weapon": "file(entities/towers/cactus_plant/cactus_plant_weapon.json)",
       "towers:earthbud_plant": "file(entities/towers/earthbud_plant/earthbud_plant.json)",
@@ -209,6 +213,10 @@
          "endpoint": "server"
       },
       "set_tower_target_filters": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
+         "endpoint": "server"
+      },
+      "upgrade_tower": {
          "controller": "file(call_handlers/tower_call_handler.lua)",
          "endpoint": "server"
       }

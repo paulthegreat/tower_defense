@@ -8,36 +8,34 @@
          "targeting": {
             "type": "circle",
             "radius": 6,
-            "comment block":{
-               "type": "rectangle",
-               "region": {
-                  "min": {"x": -1, "y": 0, "z": -12},
-                  "max": {"x": 2, "y": 1, "z": 0}
-               },
-               "close comment": "instead of type circle"
-            },
             "attacks_ground": true,
             "attacks_air": true,
             "target_filters": [
                "closest_to_end",
                "highest_health"
             ],
-            "reveals_invis": false
+            "reveals_invis": true
+         }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "infection": {
+               "uri": "tower_defense:buffs:monster:poison:minor",
+               "chance": 1
+            }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "fire",
-            "effect": "/tower_defense/data/effects/fire_particles.json",
+            "name": "plant",
+            "effect": "/tower_defense/data/effects/plant_particles.json",
             "projectile": {
                "speed": 30,
                "uri": "stonehearth:weapons:bullet",
                "start_offset": { "x": 0, "y": 1, "z": 0 },
-               "end_offset": { "x": 0, "y": 2.1, "z": 0 }
+               "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
-            "hit_effect": "/stonehearth/data/effects/lightning_effect/lightning_effect.json",
-            "ground_effect": "stonehearth:effects:lightning_impact_ground",
-            "attack_times": [100],
+            "attack_times": [500],
             "cooldown": 1000,
             "priority": 0
          }

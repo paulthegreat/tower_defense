@@ -39,10 +39,17 @@ $(document).ready(function(){
                   }
                });
          } else {
-            radiant.callv(command['function'], args);
-            if (command.sound_on_complete) {
-               radiant.call('radiant:play_sound', command.sound_on_complete );
-            }
+            radiant.callv(command['function'], args)
+               .deferred.done(function(response) {
+                  if (command.sound_on_complete) {
+                     radiant.call('radiant:play_sound', command.sound_on_complete );
+                  }
+               })
+               .fail(function(response) {
+                  if (response.message) {
+                     alert(i18n.t(response.message, response));
+                  }
+               });
          }
 
          event_name = command['function'].toString().replace(':','_')

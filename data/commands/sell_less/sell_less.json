@@ -4,6 +4,7 @@
    "display_name": "i18n(tower_defense:data.commands.sell_less.display_name)",
    "description": "i18n(tower_defense:data.commands.sell_less.description)",
    "icon": "file(sell_less.png)",
+   "ordinal": 10,
    "action": "call",
    "function": "tower_defense:sell_less",
    "sound_on_complete": {
