@@ -225,6 +225,7 @@ function TowerComponent:get_best_target()
       return self._current_target, attack_info
    end
    targets = radiant.values(targets)
+   --log:debug('%s found %s potential targets: %s', self._entity, #targets, radiant.util.table_tostring(targets))
    
    local debuff_cache = {}
 
@@ -236,12 +237,15 @@ function TowerComponent:get_best_target()
       local best_targets = {}
       local best_value
 
+      --log:debug('%s evaluating targets with filter %s: %s', self._entity, filter, radiant.util.table_tostring(targets))
       for _, target in ipairs(targets) do
          local value = self:_get_filter_value(filter, target, weapon, attack_info, debuff_cache)
+         --log:debug('%s filter %s value for %s: %s', self._entity, filter, target, value)
          if not best_value or value == best_value then
             best_value = value
             table.insert(best_targets, target)
          elseif value > best_value then
+            best_value = value
             best_targets = {target}
          end
       end
