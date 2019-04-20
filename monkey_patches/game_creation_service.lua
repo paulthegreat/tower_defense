@@ -23,7 +23,9 @@ function GameCreationService:new_game_command(session, response, num_tiles_x, nu
    stonehearth.world_generation:create_empty_world(options.biome_src)
 
    local result = {
-      map_info = {}
+      map_info = {
+         biome_src = options.biome_src
+      }
    }
 
 	return result
@@ -40,12 +42,8 @@ function GameCreationService:_generate_world(session, response, map_info)
       stonehearth.terrain._enable_full_vision = true
       
       -- generate the world!
-      local map
-      if(tower_defense.game:get_game_options().biome_src=="stonehearth:biome:desert") then
-         map=radiant.resources.load_json("/tower_defense/data/desert_map_generation.json")
-      else
-         map=radiant.resources.load_json("tower_defense:data:map_generation")
-      end
+      local biome = radiant.resources.load_json(map_info.biome_src)
+      local map = radiant.resources.load_json(biome.tower_defense_generation_file or 'tower_defense:data:map_generation')
 
       -- first generate the world terrain
       local block_types = radiant.terrain.get_block_types()
