@@ -205,6 +205,80 @@ App.StonehearthUnitFrameView = App.View.extend({
 
          radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), filters);
       });
+
+      // https://stackoverflow.com/questions/2072848/reorder-html-table-rows-using-drag-and-drop
+      // if checked and dragged, reorder (always remain checked)
+      // if unchecked and dragged, mark checked and reorder only if dragged at least above lowest checked, otherwise ignore
+      self.$().on('mousedown', '.grabbable', function (e) {
+         var tr = $(e.target).closest('tr');
+         var sy = e.pageY;
+         var drag;
+
+         if ($(e.target).is('tr')) {
+            tr = $(e.target);
+         }
+         var index = tr.index();
+         $(tr).addClass('grabbed');
+
+         var thisFilter = $(this).attr('filterType');
+         var curFilters = self.get('model.tower_defense:tower.target_filters');
+         var isChecked = false;
+         radiant.each(curFilters, function(i, key) {
+            if (thisFilter == key) {
+               isChecked = true;
+            }
+         });
+
+         function move (e) {
+            if (!drag && Math.abs(e.pageY - sy) < 10) {
+               return;
+            }
+            drag = true;
+
+            tr.siblings().each(function() {
+               var s = $(this), i = s.index(), y = s.offset().top;
+
+               if (e.pageY >= y && e.pageY < y + s.outerHeight()) {
+                  if (i < tr.index()) {
+                     s.insertAfter(tr);
+                  }
+                  else {
+                     s.insertBefore(tr);
+                  }
+                  return false;
+               }
+            });
+         }
+
+         function up (e) {
+            var newIndex = tr.index();
+            if (drag && index != newIndex) {
+               drag = false;
+               if (!isChecked) {
+                  if (newIndex < curFilters.length) {
+                     // we dragged an unchecked filter up into the checked filters, so check it and apply changes
+                     curFilters.splice(newIndex, 0, thisFilter);
+                     radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), curFilters);
+                  }
+                  else {
+                     // we dragged an unchecked filter, so just reset the table
+                     self._updateTargetFilters();
+                  }
+               }
+               else {
+                  // first remove the old one
+                  curFilters.splice(index, 1);
+                  // then add the new one
+                  curFilters.splice(newIndex, 0, thisFilter);
+                  radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), curFilters);
+               }
+            }
+            $(document).unbind('mousemove', move).unbind('mouseup', up);
+            $(tr).removeClass('grabbed');
+         }
+
+         $(document).mousemove(move).mouseup(up);
+      });
    },
 
    willDestroyElement: function() {
@@ -461,7 +535,7 @@ App.StonehearthUnitFrameView = App.View.extend({
       });
       filterArr.sort((a, b) => {
          if (a.ordinal == null && b.ordinal == null) {
-            return 0;
+            return a.key < b.key ? -1 : (a.key > b.key ? 1 : 0);
         }
         else if (a.ordinal == null) {
             return 1;
@@ -484,7 +558,7 @@ App.StonehearthUnitFrameView = App.View.extend({
       radiant.each(self.get('targetFilters'), function(_, filter) {
          self.$('#' + filter.id).prop('checked', filter.ordinal != null);
          
-         App.tooltipHelper.attachTooltipster(self.$('.filterType').find('[filterType="' + filter.key + '"]'),
+         App.tooltipHelper.attachTooltipster(self.$('.filterType[filterType="' + filter.key + '"]'),
             $(App.tooltipHelper.createTooltip(null,
                i18n.t(filter.description)
             ))

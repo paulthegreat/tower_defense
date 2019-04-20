@@ -4,6 +4,7 @@
    "display_name": "i18n(tower_defense:data.buffs.major_slow.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_slow.description)",
    "icon": "file(major_slow.png)",
+   "repeat_add_action": "renew_duration",
    "duration": "10m",
    "modifiers": {
       "speed": {

@@ -183,7 +183,7 @@
                      <input class="filterTypeCheckbox" type="checkbox" {{bind-attr id=this.id filterType=this.key}}>
                      <label {{bind-attr for=this.id}}></label>
                   </td>
-                  <td class="filterType" {{bind-attr filterType=this.key}}>{{i18n_key this.display_name}}</td>
+                  <td class="filterType grabbable" {{bind-attr filterType=this.key}}>{{i18n_key this.display_name}}</td>
                </tr>
                {{/each}}
             </table>

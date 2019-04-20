@@ -1,0 +1,14 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "display_name": "i18n(tower_defense:data.buffs.minor_wound.display_name)",
+   "description": "i18n(tower_defense:data.buffs.minor_wound.description)",
+   "icon": "file(minor_wound.png)",
+   "repeat_add_action": "renew_duration",
+   "duration": "10m",
+   "modifiers": {
+      "multiplicative_healing_modifier": {
+         "multiply": 0.75
+      }
+   }
+}

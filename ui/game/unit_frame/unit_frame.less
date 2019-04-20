@@ -654,7 +654,7 @@
       font-family: @baseFontFamily;
       color: #fff;
       
-      .tableHeader{
+      .tableHeader {
          display: inline-block;
          padding-right: 10px;
          padding-top: 10px;
@@ -668,6 +668,22 @@
             width: 60px;
             text-align: center;
          }
+      }
+
+      .grabbable {
+         .handCursor;
+         user-select: none;
+      }
+      tr.grabbed {
+         box-shadow: 0 0 5px 0 rgb(240, 240, 240);
+         background-color: rgba(240, 240, 240, 0.25);
+      }
+      tbody > tr.grabbed:active {
+         user-input: none;
+      }
+      tbody > tr.grabbed:active * {
+         user-input: none;
+         .handCursor;
       }
    }
 }
