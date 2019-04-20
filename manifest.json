@@ -143,6 +143,7 @@
       "/stonehearth/services/server/weather/weather_state.lua": "file(services/server/weather/weather_state.lua)"
    },
    "components" : {
+      "ai": "file(components/ai/ai_component.lua)",
       "monster": "file(components/monster/monster_component.lua)",
       "tower": "file(components/tower/tower_component.lua)"
    },

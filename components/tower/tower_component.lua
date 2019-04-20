@@ -18,6 +18,7 @@ local STATES = {
 
 local FILTER_TYPES
 
+-- TODO: change this to take into account tower-specific (self) invis detection
 local _target_filter_fn = function(entity)
    local monster_comp = entity:get_component('tower_defense:monster')
    return monster_comp and monster_comp:is_visible()
@@ -112,6 +113,7 @@ end
 
 function TowerComponent:destroy()
    self:_destroy_listeners()
+   self:_stop_current_effect()
    if self._sv.sm then
       self._sv.sm:destroy()
       self._sv.sm = nil
@@ -130,6 +132,11 @@ function TowerComponent:_destroy_listeners()
       self._parent_trace:destroy()
       self._parent_trace = nil
    end
+   if self._gameloop_listener then
+      self._gameloop_listener:destroy()
+      self._gameloop_listener = nil
+   end
+   self:_destroy_cooldown_listener()
 end
 
 function TowerComponent:_initialize()
@@ -454,7 +461,7 @@ function TowerComponent:_destroy_cooldown_listener()
 end
 
 function TowerComponent:_set_idle()
-   self:_set_status_text_key('stonehearth:ai.actions.status_text.idle')
+   self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.idle')
    radiant.entities.turn_to(self._entity, self._sv.original_facing)
 end
 
@@ -501,11 +508,11 @@ function TowerComponent:_engage_current_target(sm)
    local attack_info = self._current_attack_info
 
    if not target or not target:is_valid() or not weapon_data or not attack_info then
-      log:error('target/weapon/attack_info was null when trying to _engage_current_target')
+      log:error('target/weapon/attack_info nil/invalid in _engage_current_target: %s, %s, %s', target or 'nil', weapon_data or 'nil', attack_info or 'nil')
       return
    end
 
-   self:_set_status_text_key('stonehearth:ai.actions.status_text.attack_melee_adjacent', { target = target })
+   self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.attack_melee_adjacent', { target = target })
 
    self:_stop_current_effect()
    radiant.entities.turn_to_face(self._entity, target)
@@ -663,26 +670,6 @@ function TowerComponent:_get_projectile_offsets(projectile_data)
    return attacker_offset, target_offset
 end
 
-function TowerComponent:_set_status_text_key(key, data)
-   self._sv.status_text_key = key
-   if data and data['target'] then
-      local entity = data['target']
-      if type(entity) == 'string' then
-         local catalog_data = stonehearth.catalog:get_catalog_data(entity)
-         if catalog_data then
-            data['target_display_name'] = catalog_data.display_name
-            data['target_custom_name'] = ''
-         end
-      elseif entity and entity:is_valid() then
-         data['target_display_name'] = radiant.entities.get_display_name(entity)
-         data['target_custom_name']  = radiant.entities.get_custom_name(entity)
-      end
-      data['target'] = nil
-   end
-   self._sv.status_text_data = data
-   self.__saved_variables:mark_changed()
-end
-
 function TowerComponent:_declare_states(sm)
    sm:add_states(STATES)
    sm:set_start_state(STATES.IDLE)
@@ -782,7 +769,14 @@ function TowerComponent:_declare_state_transitions(sm)
       end, true)
 
    sm:on_state_enter(STATES.FINDING_TARGET, function(restoring)
-         self:_engage_current_target(sm)
+         if restoring then
+            self._gameloop_listener = radiant.on_game_loop_once('restored in finding target, going to waiting for cooldown', function()
+               self._gameloop_listener = nil
+               sm:go_into(STATES.WAITING_FOR_COOLDOWN)
+            end)
+         else
+            self:_engage_current_target(sm)
+         end
       end, true)
 
    sm:on_state_exit(STATES.WAITING_FOR_TARGETABLE, function(restoring)

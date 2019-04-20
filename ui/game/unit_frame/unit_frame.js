@@ -24,6 +24,7 @@ App.StonehearthUnitFrameView = App.View.extend({
    templateName: 'unitFrame',
    uriProperty: 'model',
    components: {
+      "tower_defense:ai": {},
       "tower_defense:tower": {
          "status_text_data": {}
       },
@@ -352,7 +353,7 @@ App.StonehearthUnitFrameView = App.View.extend({
 
          this.$('#unitFrame').css('width', Math.max(500, width) + 'px'); //don't want it getting too bitty
       });
-   }.observes('model.uri', 'model.stonehearth:commands.commands', 'model.tower_defense:tower', 'model.stonehearth:unit_info', 'model.stonehearth:job'),
+   }.observes('model.uri', 'model.stonehearth:commands.commands', 'model.tower_defense:ai', 'model.stonehearth:unit_info', 'model.stonehearth:job'),
 
    _updateMaterial: function() {
       var self = this;

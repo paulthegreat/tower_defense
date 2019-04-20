@@ -84,9 +84,9 @@
                      <div class="description">{{i18n_key view.description self=view.model}}</div>
                   {{/if}}
                </div>
-               {{#if view.model.tower_defense:tower}}
+               {{#if view.model.tower_defense:ai}}
                   <div id="activityDiv">
-                     <div class="activity">{{i18n_key view.model.tower_defense:tower.status_text_key data=view.model.tower_defense:tower.status_text_data}}</div>
+                     <div class="activity">{{i18n_key view.model.tower_defense:ai.status_text_key data=view.model.tower_defense:ai.status_text_data}}</div>
                   </div>
                {{/if}}
                {{#if view.model.stonehearth:workshop.order}}
