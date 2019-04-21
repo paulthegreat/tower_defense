@@ -7,8 +7,10 @@
    "post_selection_text": "i18n(tower_defense:ui.shell.select_game_story.game_modes.normal.post_selection_text)",
    "image": "/stonehearth/data/game_mode/normal/normal.png",
    "starting_resources": {
-      "gold": 10
+      "gold": 15
    },
+   "tower_gold_cost_multiplier": 1,
+   "final_wave": 30,
    "weather": {
       "starting_weather": [
          {

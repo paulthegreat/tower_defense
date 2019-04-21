@@ -24,6 +24,10 @@ function GameService:initialize()
       self._sv.health = 100
    end
 
+   if self._sv.game_options then
+      self._game_options = radiant.resources.load_json(self._sv.game_options.game_mode)
+   end
+
    if not self._sv.wave_controller and self._sv.started then
       self:_create_countdown_timer(true)
    end
@@ -83,11 +87,20 @@ function GameService:_on_wave_succeeded(bonus)
    self:_end_of_round()
 end
 
+function GameService:get_tower_gold_cost_multiplier_command(session, response)
+   response:resolve({multiplier = self:get_tower_gold_cost_multiplier()})
+end
+
+function GameService:get_tower_gold_cost_multiplier()
+   return self._game_options and self._game_options.tower_gold_cost_multiplier or 1
+end
+
 function GameService:get_game_options()
    return self._sv.game_options
 end
 
 function GameService:set_game_options(options)
+   self._game_options = radiant.resources.load_json(options.game_mode)
    self._sv.game_options = options
    self.__saved_variables:mark_changed()
    stonehearth.weather:start(options.game_mode)
@@ -157,7 +170,7 @@ function GameService:_end_of_round()
       return
    end
 
-   if not self._waves.waves[self._sv.wave + 1] then
+   if not self._waves.waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave > self._game_options.final_wave) then
       -- no more waves! you won!
       return
    end
@@ -237,9 +250,8 @@ function GameService:add_player(player_id)
 
    self._sv.num_players = self._sv.num_players + 1
 
-   local game_options = radiant.resources.load_json(self._sv.game_options.game_mode)
-   local starting_resources = game_options.starting_resources or {}
-   local common_starting_resources = game_options.common_starting_resources or {}
+   local starting_resources = self._game_options.starting_resources or {}
+   local common_starting_resources = self._game_options.common_starting_resources or {}
 
    self._sv.players[player_id] = radiant.create_controller('tower_defense:game_player', player_id, starting_resources)
 

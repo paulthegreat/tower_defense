@@ -223,7 +223,8 @@
    },
    "object_commands": {
       "game": [
-         "get_current_player_command"
+         "get_current_player_command",
+         "get_tower_gold_cost_multiplier_command"
       ]
    },
    "ui": {

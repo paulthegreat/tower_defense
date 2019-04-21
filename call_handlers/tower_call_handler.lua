@@ -133,7 +133,8 @@ end
 
 function TowerCallHandler:_get_tower_cost(uri)
    local entity_data = radiant.entities.get_entity_data(uri, 'tower_defense:tower_data')
-   return entity_data and entity_data.cost or 1
+   local multiplier = tower_defense.game:get_tower_gold_cost_multiplier()
+   return (entity_data and entity_data.cost or 1) * multiplier
 end
 
 function TowerCallHandler:set_tower_sticky_targeting(session, response, tower, sticky)

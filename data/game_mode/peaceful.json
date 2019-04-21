@@ -9,9 +9,8 @@
    "starting_resources": {
       "gold": 15
    },
-   "common_starting_resources": {
-      "gold": 5
-   },
+   "tower_gold_cost_multiplier": 0.8,
+   "final_wave": 20,
    "weather": {
       "starting_weather": [
          {

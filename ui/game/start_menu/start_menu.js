@@ -67,46 +67,50 @@ App.StonehearthStartMenuView = App.View.extend({
 
       App.stonehearth.startMenu = self.$('#startMenu');
 
-      $.get('/stonehearth/data/ui/start_menu.json')
-         .done(function(json) {
-            self._buildMenu(json);
-            self._addHotkeys();
-            self._tracePlayers();
+      radiant.call_obj('tower_defense.game', 'get_tower_gold_cost_multiplier_command')
+         .done(function(response) {
+            self._towerGoldCostMultiplier = response.multiplier || 1;
+            $.get('/stonehearth/data/ui/start_menu.json')
+               .done(function(json) {
+                  self._buildMenu(json);
+                  self._addHotkeys();
+                  self._tracePlayers();
 
-            // Add badges for notifications
-            App.bulletinBoard.getTrace()
-               .progress(function(result) {
-                  var bulletins = result.bulletins;
-                  var alerts = result.alerts;
-                  var numBulletins = bulletins ? Object.keys(bulletins).length : 0;
-                  var numAlerts = alerts ? Object.keys(alerts).length : 0;
+                  // Add badges for notifications
+                  App.bulletinBoard.getTrace()
+                     .progress(function(result) {
+                        var bulletins = result.bulletins;
+                        var alerts = result.alerts;
+                        var numBulletins = bulletins ? Object.keys(bulletins).length : 0;
+                        var numAlerts = alerts ? Object.keys(alerts).length : 0;
 
-                  if (numBulletins > 0 || numAlerts > 0) {
-                     //self.$('#bulletin_manager').pulse();
-                     self.$('#bulletin_manager').addClass('active');
-                  } else {
-                     self.$('#bulletin_manager').removeClass('active');
-                  }
-                  self._updateBulletinCount(numBulletins + numAlerts);
+                        if (numBulletins > 0 || numAlerts > 0) {
+                           //self.$('#bulletin_manager').pulse();
+                           self.$('#bulletin_manager').addClass('active');
+                        } else {
+                           self.$('#bulletin_manager').removeClass('active');
+                        }
+                        self._updateBulletinCount(numBulletins + numAlerts);
+                     });
+
+                  // Add badges for number of players connected
+                  var presenceCallback = function(presenceData) {
+                     var numConnected = 0;
+                     radiant.each(presenceData, function(playerId, data) {
+                        var connectionStates = App.constants.multiplayer.connection_state;
+                        if (data.connection_state == connectionStates.CONNECTED || data.connection_state == connectionStates.CONNECTING) {
+                           numConnected++;
+                        }
+                     });
+
+                     self._updateConnectedPlayerCount(numConnected);
+                  };
+
+                  App.presenceClient.addChangeCallback(self.CHANGE_CALLBACK_NAME, presenceCallback, true);
+                  self._presenceCallbackName = self.CHANGE_CALLBACK_NAME;
+
+                  App.resolveStartMenuLoad();
                });
-
-            // Add badges for number of players connected
-            var presenceCallback = function(presenceData) {
-               var numConnected = 0;
-               radiant.each(presenceData, function(playerId, data) {
-                  var connectionStates = App.constants.multiplayer.connection_state;
-                  if (data.connection_state == connectionStates.CONNECTED || data.connection_state == connectionStates.CONNECTING) {
-                     numConnected++;
-                  }
-               });
-
-               self._updateConnectedPlayerCount(numConnected);
-            };
-
-            App.presenceClient.addChangeCallback(self.CHANGE_CALLBACK_NAME, presenceCallback, true);
-            self._presenceCallbackName = self.CHANGE_CALLBACK_NAME;
-
-            App.resolveStartMenuLoad();
          });
    },
 
@@ -144,6 +148,12 @@ App.StonehearthStartMenuView = App.View.extend({
       var newDataTbl = {};
       radiant.each(catalogData, function(uri, entityData) {
          if (entityData.tower) {
+            entityData.tower.cost = Math.ceil(entityData.tower.cost * self._towerGoldCostMultiplier);
+            entityData.tower.detailed_description = entityData.tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)';
+            entityData.tower.description = entityData.description;
+            entityData.tower.required_kingdoms = self._getRequiredKingdoms(entityData.tower);
+            entityData.tower.requirement_text = entityData.tower.requirement_text || self._getRequirementText(entityData.tower);
+
             entityData.tower.kingdoms.forEach(kingdom => {
                var kingdomTowers = newDataTbl[kingdom];
                if (!kingdomTowers) {
@@ -173,10 +183,9 @@ App.StonehearthStartMenuView = App.View.extend({
       radiant.each(newDataTbl, function(k, v) {
          v.towers.sort((a, b) => a.tower.ordinal - b.tower.ordinal);
          radiant.each(v.towers, function(i, t) {
-            t.tower.required_kingdoms = self._getRequiredKingdoms(t.tower);
             var entry = {
                name: t.display_name,
-               description: t.tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)',
+               description: t.tower.detailed_description,
                icon: t.icon,
                ordinal: (t.tower.ordinal || t.tower.level || 0) + t.name,
                class: 'button',
@@ -184,10 +193,9 @@ App.StonehearthStartMenuView = App.View.extend({
                menu_action: 'td_create_tower',
                uri: t.uri,
                tower: true,
-               requirement_text: t.tower.requirement_text || self._getRequirementText(t.tower),
+               requirement_text: t.tower.requirement_text,
                towerData: t.tower
             };
-            entry.towerData.description = t.description;
             v.entry.items[`${k}_tower_${i}`] = entry;
          })
 
