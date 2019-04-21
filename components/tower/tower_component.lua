@@ -383,17 +383,19 @@ function TowerComponent:_verify_debuff_cache(debuff_cache, attack_info)
       -- store total debuff duration (no duration = 999) times priority (no priority = 1) for each debuff
       -- so we can subtract actual value from potential
       local total_duration = 0
-      for _, debuff in ipairs(debuffs) do
-         local exp_debuff = radiant.resources.load_json(debuff)
-         local priority = exp_debuff.priority or 1
-         local duration = (exp_debuff.duration and stonehearth.calendar:parse_duration(exp_debuff.duration) or 999) * priority
-         
-         exp_debuffs[debuff] = {
-            data = exp_debuff,
-            priority = priority,
-            duration = duration
-         }
-         total_duration = total_duration + duration
+      for _, debuff_data in ipairs(debuffs) do
+         for name, debuff in pairs(debuff_data) do
+            local exp_debuff = radiant.resources.load_json(debuff.uri)
+            local priority = exp_debuff.priority or 1
+            local duration = (exp_debuff.duration and stonehearth.calendar:parse_duration(exp_debuff.duration) or 999) * priority
+            
+            exp_debuffs[debuff.uri] = {
+               data = exp_debuff,
+               priority = priority,
+               duration = duration
+            }
+            total_duration = total_duration + duration
+         end
       end
 
       debuff_cache.debuffs = exp_debuffs
