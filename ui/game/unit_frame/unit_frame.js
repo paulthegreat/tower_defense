@@ -26,7 +26,7 @@ App.StonehearthUnitFrameView = App.View.extend({
    components: {
       "tower_defense:ai": {},
       "tower_defense:tower": {
-         "status_text_data": {}
+         "stats": {}
       },
       "stonehearth:attributes": {
          "attributes": {}

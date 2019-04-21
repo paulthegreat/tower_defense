@@ -83,6 +83,9 @@
                   {{else}}
                      <div class="description">{{i18n_key view.description self=view.model}}</div>
                   {{/if}}
+                  {{#if view.model.tower_defense:tower}}
+                     <div class="description">dmg:{{view.model.tower_defense:tower.stats.damage}}  kills:{{view.model.tower_defense:tower.stats.kills}}</div>
+                  {{/if}}
                </div>
                {{#if view.model.tower_defense:ai}}
                   <div id="activityDiv">

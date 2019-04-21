@@ -11,6 +11,7 @@ function MonsterComponent:initialize()
    self._sv.invis_material = self._json.invis_render_material or MAT_MOST_INVIS
    self._sv.seen_invis_material = self._json.seen_invis_render_material or MAT_SOME_INVIS
    self._sv.path_length = 999999
+   self._sv.path_traveled = 0
 end
 
 function MonsterComponent:activate()
@@ -26,6 +27,7 @@ function MonsterComponent:activate()
             -- TODO: reconsider how this is calculated if knockback or path deviations are involved
             -- for now just ignore y-only changes (flying unit temporarily/permanently gaining/losing grounded status)
             if self._location.x ~= location.x or self._location.z ~= location.z then
+               self._sv.path_traveled=self._sv.path_traveled+1
                self:set_path_length(self._sv.path_length - 1)
             end
          end
@@ -88,6 +90,10 @@ end
 
 function MonsterComponent:get_path_length()
    return self._sv.path_length
+end
+
+function MonsterComponent:get_path_traveled()
+   return self._sv.path_traveled
 end
 
 function MonsterComponent:set_path_length(length)

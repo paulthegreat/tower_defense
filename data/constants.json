@@ -22,6 +22,11 @@
                   "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_tower.display_name)",
                   "description": "i18n(tower_defense:data.tower.target_filter.closest_to_tower.description)"
                },
+               "FILTER_CLOSEST_TO_START": {
+                  "key": "closest_to_start",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_start.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_start.description)"
+               },
                "FILTER_CLOSEST_TO_END": {
                   "key": "closest_to_end",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_end.display_name)",
