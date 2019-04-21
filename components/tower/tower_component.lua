@@ -45,6 +45,8 @@ end
 function TowerComponent:activate()
    self._json = radiant.entities.get_json(self) or {}
    
+   self._target_hit_trace = radiant.events.listen(self._entity, 'stonehearth:combat:target_hit', self, self._on_target_hit)
+
    if radiant.is_server then
       FILTER_TYPES = stonehearth.constants.tower_defense.tower.target_filters
       self._shoot_timers = {}
@@ -106,6 +108,10 @@ function TowerComponent:_destroy_listeners()
       self._gameloop_listener:destroy()
       self._gameloop_listener = nil
    end
+   if self._target_hit_trace then
+      self._target_hit_trace:destroy()
+      self._target_hit_trace = nil
+   end
    self:_destroy_cooldown_listener()
 end
 
@@ -142,6 +148,11 @@ function TowerComponent:_initialize()
    self._weapon_data = self._weapon and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
    self:_load_targetable_region()
 
+   --e:get_component('tower_defense')._stats
+   self._stats={}
+   self._stats.damage=0
+   self._stats.kills=0
+
    if radiant.is_server then
       -- these settings will only be loaded for the default weapon, not for upgrade weapons
       local targeting = self._weapon_data.targeting or {}
@@ -159,6 +170,24 @@ function TowerComponent:_initialize()
 
       self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
       self:_register()
+   end
+end
+
+function TowerComponent:_on_target_hit(context)
+   local attacker = context.attacker
+   local target = context.target
+
+   if not target or not target:is_valid() then
+      return nil
+   end
+
+   local damage = context.damage
+   self._stats.damage=self._stats.damage+damage
+
+   --probably a better way to get kills but the 'stonehearth:kill_event' seems to be for when this thing is killed
+   local health = radiant.entities.get_health(target)
+   if health and health<=0 then
+      self._stats.kills=self._stats.kills+1
    end
 end
 
