@@ -165,6 +165,7 @@
    },
    "controllers" : {
       "game_player": "file(services/server/game/game_player.lua)",
+      "tower_stats": "file(components/tower/tower_stats.lua)",
       "wave": "file(services/server/game/wave.lua)"
    },
    "functions": {

@@ -34,6 +34,7 @@ function TowerComponent:create()
 
       self._sv.sm = radiant.create_controller('radiant:state_machine')
       self._sv.sm:set_log_entity(self._entity)
+      self._sv.stats = radiant.create_controller('tower_defense:tower_stats')
    end
    self._sv.original_facing = 0
 end
@@ -148,13 +149,6 @@ function TowerComponent:_initialize()
    self._weapon_data = self._weapon and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
    self:_load_targetable_region()
 
-   --e:get_component('tower_defense:tower')._sv.stats
-   if not self._sv.stats then
-      self._sv.stats={}
-      self._sv.stats.damage=0
-      self._sv.stats.kills=0
-   end
-
    if radiant.is_server then
       -- these settings will only be loaded for the default weapon, not for upgrade weapons
       local targeting = self._weapon_data.targeting or {}
@@ -184,15 +178,13 @@ function TowerComponent:_on_target_hit(context)
    end
 
    local damage = context.damage
-   self._sv.stats.damage=self._sv.stats.damage+damage
+   self._sv.stats:increment_damage(damage)
 
    --probably a better way to get kills but the 'stonehearth:kill_event' seems to be for when this thing is killed
    local health = radiant.entities.get_health(target)
    if health and health<=0 then
-      self._sv.stats.kills=self._sv.stats.kills+1
+      self._sv.stats:increment_kills(1)
    end
-   --this will happen a lot should find another way
-   self.__saved_variables:mark_changed()
 end
 
 function TowerComponent:try_upgrade_tower(upgrade)
