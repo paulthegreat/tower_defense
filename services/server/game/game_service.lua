@@ -122,6 +122,11 @@ function GameService:get_path_end_point_for_monster(monster)
    return self._sv.map_data.end_point
 end
 
+function GameService:get_last_monster_location(monster_id)
+   local wave_controller = self._sv.wave_controller
+   return wave_controller and wave_controller:get_last_monster_location(monster_id)
+end
+
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
    if map_data.starting_health then

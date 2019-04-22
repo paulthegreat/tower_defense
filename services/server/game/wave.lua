@@ -13,6 +13,7 @@ function Wave:initialize()
    self._sv._unspawned_monsters = {}
    self._sv._spawned_monsters = {}
    self._sv.remaining_monsters = 0
+   self._sv._last_monster_location = {}
 end
 
 function Wave:create(wave_data, map_data)
@@ -93,6 +94,10 @@ end
 
 function Wave:start()
    self:_spawn_next_monster()
+end
+
+function Wave:get_last_monster_location(monster_id)
+   return self._sv._last_monster_location[monster_id]
 end
 
 function Wave:_create_next_spawn_timer(time)
@@ -176,8 +181,8 @@ function Wave:_activate_monster(monster)
          log:debug('monster %s escaped!', monster.monster)
          radiant.events.trigger(self, 'tower_defense:wave:monster_escaped', monster.damage or 1)
 
-         radiant.entities.destroy_entity(monster.monster)
          self:_remove_monster(id)
+         radiant.entities.destroy_entity(monster.monster)
       end)
 end
 
@@ -192,6 +197,8 @@ function Wave:_remove_monster(id)
          monster_info.escape_listener:destroy()
          monster_info.escape_listener = nil
       end
+
+      self._sv._last_monster_location[id] = radiant.entities.get_world_location(monster_info.monster)
 
       self._sv._spawned_monsters[id] = nil
       self._sv.remaining_monsters = math.max(0, self._sv.remaining_monsters - 1)

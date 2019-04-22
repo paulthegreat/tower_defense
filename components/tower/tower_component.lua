@@ -16,12 +16,17 @@ local STATES = {
    FINDING_TARGET = 'finding_target',   -- finding a target to use ability on
 }
 
+local MAX_PATH_HEIGHT_DIFFERENTIAL = 5 -- used for creating target regions for aoe attacks that can hit both ground and air
 local FILTER_TYPES
 
 -- TODO: change this to take into account tower-specific (self) invis detection
 local _target_filter_fn = function(entity)
    local monster_comp = entity:get_component('tower_defense:monster')
    return monster_comp and monster_comp:is_visible()
+end
+
+local _target_aoe_filter_fn = function(entity)
+   return entity:get_component('tower_defense:monster') ~= nil
 end
 
 function TowerComponent:create()
@@ -606,7 +611,7 @@ function TowerComponent:_engage_current_target(sm)
       local shoot_timer
       shoot_timer = stonehearth.combat:set_timer('tower attack shoot', time, function()
          self._shoot_timers[shoot_timer] = nil
-         self:_shoot(target, attack_info)
+         self:_shoot(target, weapon_data, attack_info)
          if i == #attack_info.attack_times and tower_defense.game:has_active_wave() then
             sm:go_into(STATES.WAITING_FOR_COOLDOWN)
          end
@@ -617,7 +622,7 @@ function TowerComponent:_engage_current_target(sm)
    return true
 end
 
-function TowerComponent:_shoot(target, attack_info)
+function TowerComponent:_shoot(target, weapon_data, attack_info)
    if not target:is_valid() then
       return
    end
@@ -625,18 +630,18 @@ function TowerComponent:_shoot(target, attack_info)
    local attacker = self._entity
    local assault_context
    local impact_time = radiant.gamestate.now()
+   local target_id = target:get_id()
 
    -- if we have projectile data, create and launch the projectile, running combat effects upon completion
    -- otherwise, run them immediately
    local finish_fn = function(projectile, impact_trace)
-      if target:is_valid() and not projectile or projectile:is_valid() then
+      if not projectile or projectile:is_valid() then
          if not assault_context.target_defending then
-            if attack_info.hit_effect then
-               radiant.effects.run_effect(target, attack_info.hit_effect)
-            end
+            local location = target:is_valid() and radiant.entities.get_world_location(target)
+                                 or tower_defense.game:get_last_monster_location(target_id)
+            
             if attack_info.ground_effect then
                local proxy = radiant.entities.create_entity('stonehearth:object:transient', { debug_text = 'running death effect' })
-               local location = radiant.entities.get_world_grid_location(target)
 
                radiant.terrain.place_entity(proxy, location)
 
@@ -648,10 +653,37 @@ function TowerComponent:_shoot(target, attack_info)
                   end
                )
             end
-            local total_damage = stonehearth.combat:calculate_ranged_damage(attacker, target, attack_info)
-            local battery_context = BatteryContext(attacker, target, total_damage)
-            stonehearth.combat:inflict_debuffs(attacker, target, attack_info)
-            stonehearth.combat:battery(battery_context)
+
+            local targets
+            local aoe_attack = attack_info.aoe
+            local aoe_weapon = weapon_data.aoe
+            if aoe_attack or aoe_weapon then
+               local range = (aoe_attack and aoe_attack.range) or (aoe_weapon and aoe_weapon.range)
+               local cube = Cube3(Point3(-range, 0, -range), Point3(-range, 1, -range))
+               if (aoe_attack and aoe_attack.hits_ground_and_air) or ((not aoe_attack or aoe_attack.hits_ground_and_air == nil) and aoe_weapon.hits_ground_and_air) then
+                  -- note: not storing an air "height" anymore, only their paths, height could technically vary
+                  -- so just have some max variance that is always used
+                  cube = cube:extruded('y', MAX_PATH_HEIGHT_DIFFERENTIAL, MAX_PATH_HEIGHT_DIFFERENTIAL)
+               end
+               targets = radiant.terrain.get_entities_in_cube(cube:translated(location), _target_aoe_filter_fn)
+            else
+               targets = {target}
+            end
+
+            for _, each_target in pairs(targets) do
+               if each_target:is_valid() then
+                  local is_secondary_target = each_target ~= target
+                  local hit_effect = is_secondary_target and aoe_attack and aoe_attack.hit_effect or (not is_secondary_target and attack_info.hit_effect)
+                  if hit_effect then
+                     radiant.effects.run_effect(each_target, hit_effect)
+                  end
+
+                  local total_damage = stonehearth.combat:calculate_damage(attacker, target, attack_info, is_secondary_target)
+                  local battery_context = BatteryContext(attacker, target, total_damage)
+                  stonehearth.combat:inflict_debuffs(attacker, target, attack_info)
+                  stonehearth.combat:battery(battery_context)
+               end
+            end
          end
       end
 
