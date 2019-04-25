@@ -59,7 +59,12 @@ function MonsterComponent:_update_seen()
 end
 
 function MonsterComponent:is_visible()
-   return not self._sv._invisible or self._sv._seen
+   local visible = not self._sv._invisible or self._sv._seen
+   if not visible then
+      local attributes = self._entity:get_component('stonehearth:attributes')
+      visible = attributes:get_attribute('reveal', 0) > 0
+   end
+   return visible
 end
 
 function MonsterComponent:set_seen(seen)

@@ -32,6 +32,10 @@
          "multiplicative_healing_modifier": {
             "type": "basic",
             "value": 1
+         },
+         "reveal": {
+            "type": "basic",
+            "value": 0
          }
       },
       "tower_defense:monster": {}

@@ -1,0 +1,14 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "display_name": "i18n(tower_defense:data.buffs.normal_reveal.display_name)",
+   "description": "i18n(tower_defense:data.buffs.normal_reveal.description)",
+   "icon": "file(normal_reveal.png)",
+   "repeat_add_action": "renew_duration",
+   "duration": "12m",
+   "modifiers": {
+      "reveal": {
+         "add": 1
+      }
+   }
+}

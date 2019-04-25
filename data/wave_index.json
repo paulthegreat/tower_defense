@@ -1,46 +1,46 @@
 {
    "waves": [
       {
+         "uri": "tower_defense:data:waves:sample_wave"
+      },
+      {
          "uri": "tower_defense:data:waves:sample_wave",
-         "modifiers": {
-            "health": {
-               "multiply": 1
+         "multipliers": {
+            "attributes": {
+               "max_health": 1.2,
+               "speed": 1.1,
+               "multiplicative_physical_dmg_taken": 1
             },
-            "armor": {
-               "multiply": 1
-            },
-            "gold": {
-               "multiply": 1
-            }
+            "gold_bounty": 2
          }
       },
       {
-         "uri": "tower_defense:data:waves:sample_wave_2",
-         "modifiers": {
-            "health": {
-               "multiply": 1
+         "uri": "tower_defense:data:waves:sample_wave",
+         "multipliers": {
+            "attributes": {
+               "max_health": 1.5,
+               "speed": 1.2,
+               "multiplicative_physical_dmg_taken": 1
             },
-            "armor": {
-               "multiply": 1
-            },
-            "gold": {
-               "multiply": 1
-            }
+            "gold_bounty": 3
          }
       },
       {
-         "uri": "tower_defense:data:waves:sample_wave_3",
-         "modifiers": {
-            "health": {
-               "multiply": 1
+         "uri": "tower_defense:data:waves:sample_wave",
+         "multipliers": {
+            "attributes": {
+               "max_health": 2,
+               "speed": 1.3,
+               "multiplicative_physical_dmg_taken": 1
             },
-            "armor": {
-               "multiply": 1
-            },
-            "gold": {
-               "multiply": 1
-            }
+            "gold_bounty": 4
          }
+      },
+      {
+         "uri": "tower_defense:data:waves:sample_wave_2"
+      },
+      {
+         "uri": "tower_defense:data:waves:sample_wave_3"
       }
    ]
 }

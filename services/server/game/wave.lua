@@ -25,6 +25,7 @@ end
 
 function Wave:activate()
    self._wave_data = radiant.resources.load_json(self._sv._wave_data.uri)
+   self._multipliers = self._sv._wave_data.multipliers or {}
    
    if self._sv._next_spawn_timer then
       self._sv._next_spawn_timer:bind(function()
@@ -117,7 +118,7 @@ end
 function Wave:_spawn_next_monster()
    local monster_info = table.remove(self._sv._unspawned_monsters, 1)
    if monster_info then
-      local health_multiplier = tower_defense.game:get_num_players()
+      local multiplayer_health_multiplier = tower_defense.game:get_num_players()
       local did_spawn = false
       for _, monster in ipairs(monster_info.monsters) do
          local pop = stonehearth.population:get_population(monster.population)
@@ -127,12 +128,21 @@ function Wave:_spawn_next_monster()
                location = self._sv._map_data.air_spawn_location
             end
 
+            local bounty = radiant.shallow_copy(monster.bounty or {})
+            if bounty.gold and self._multipliers.gold_bounty then
+               bounty.gold = bounty.gold * self._multipliers.gold_bounty
+            end
+
             local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
             for _, new_monster in ipairs(new_monsters) do
+               local attrib_component = new_monster:add_component('stonehearth:attributes')
                -- multiply monster health by number of players
-               if health_multiplier ~= 1 then
-                  local attrib_component = new_monster:add_component('stonehearth:attributes')
-                  attrib_component:set_attribute('max_health', attrib_component:get_attribute('max_health') * health_multiplier)
+               if multiplayer_health_multiplier ~= 1 then
+                  attrib_component:set_attribute('max_health', attrib_component:get_attribute('max_health') * multiplayer_health_multiplier)
+               end
+               -- apply any other wave-based attribute multipliers
+               for attribute, multiplier in pairs(self._multipliers.attributes or {}) do
+                  attrib_component:set_attribute(attribute, attrib_component:get_attribute(attribute) * multiplier)
                end
                
                if monster.buffs then
@@ -172,7 +182,7 @@ function Wave:_activate_monster(monster)
    local id = monster.monster:get_id()
    monster.kill_listener = radiant.events.listen_once(monster.monster, 'stonehearth:kill_event', function()
          log:debug('monster %s killed!', monster.monster)
-         radiant.events.trigger(self, 'tower_defense:wave:monster_killed', monster.bounty or {})
+         radiant.events.trigger(self, 'tower_defense:wave:monster_killed', monster.bounty)
          
          self:_remove_monster(id)
       end)
@@ -214,7 +224,11 @@ function Wave:_check_wave_end()
       self.__saved_variables:mark_changed()
 
       log:debug('wave succeeded!')
-      radiant.events.trigger(self, 'tower_defense:wave:succeeded', self._wave_data.completion_bonus or {})
+      local bonus = radiant.shallow_copy(self._wave_data.completion_bonus or {})
+      if bonus.gold and self._multipliers.gold_bounty then
+         bonus.gold = bonus.gold * self._multipliers.gold_bounty
+      end
+      radiant.events.trigger(self, 'tower_defense:wave:succeeded', bonus)
    end
 end
 
