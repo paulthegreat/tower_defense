@@ -27,12 +27,20 @@ $(document).ready(function(){
             });
          }
 
+         var play_sound = function(sound_data) {
+            sound_data = radiant.shallow_copy(sound_data);
+            if (Array.isArray(sound_data.track)) {
+               sound_data.track = sound_data.track[Math.floor(Math.random() * sound_data.track.length)];
+            }
+            radiant.call('radiant:play_sound', sound_data );
+         };
+
          if (command.object) {
             //if the command is "repeating" then call it again when done
             radiant.call_objv(command.object, command['function'], args)
                .deferred.done(function(response){
                   if (command.sound_on_complete) {
-                     radiant.call('radiant:play_sound', command.sound_on_complete );
+                     play_sound( command.sound_on_complete );
                   }
                   if (command.repeating == true) {
                      self.doCommand(entity, player_id, command);
@@ -42,7 +50,7 @@ $(document).ready(function(){
             radiant.callv(command['function'], args)
                .deferred.done(function(response) {
                   if (command.sound_on_complete) {
-                     radiant.call('radiant:play_sound', command.sound_on_complete );
+                     play_sound( command.sound_on_complete );
                   }
                })
                .fail(function(response) {

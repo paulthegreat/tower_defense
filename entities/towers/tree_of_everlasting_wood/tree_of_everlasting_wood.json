@@ -1,0 +1,87 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.15
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/trees/oak_tree/sprout/tree_oak_sprout.qb"
+            ]
+         },
+         "1_stacks": {
+            "models": [
+               "/stonehearth/entities/trees/oak_tree/stem/tree_oak_stem.qb"
+            ]
+         },
+         "2_stacks": {
+            "models": [
+               {
+                  "type": "one_of",
+                  "items": [
+                     "/stonehearth/entities/trees/oak_tree/small_oak_tree/small_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/small_oak_tree/small_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/small_oak_tree/small_oak_tree.qb"
+                  ]
+               }
+            ]
+         },
+         "3_stacks": {
+            "models": [
+               {
+                  "type": "one_of",
+                  "items": [
+                     "/stonehearth/entities/trees/oak_tree/medium_oak_tree/medium_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/medium_oak_tree/medium_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/medium_oak_tree/medium_oak_tree.qb"
+                  ]
+               }
+            ]
+         },
+         "4_stacks": {
+            "models": [
+               {
+                  "type": "one_of",
+                  "items": [
+                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb"
+                  ]
+               }
+            ]
+         },
+         "5_stacks": {
+            "models": [
+               "/stonehearth/entities/trees/oak_tree/anciant_oak_tree/anciant_oak_tree.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "stonehearth:buffs": {
+         "buffs": {
+            "tower_defense:buffs:tower:wood_investor": true
+         }
+      },
+      "tower_defense:tower": {}
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.tree_of_everlasting_wood.display_name)",
+         "description": "i18n(tower_defense:entities.towers.tree_of_everlasting_wood.description)",
+         "icon": "/stonehearth/entities/trees/oak_tree/medium_oak_tree/medium_oak_tree.png"
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["plant"],
+         "level": 1,
+         "ordinal": 103,
+         "cost": {
+            "wood": 1
+         }
+      }
+   }
+}

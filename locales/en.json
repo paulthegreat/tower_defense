@@ -97,7 +97,7 @@
    "entities": {
       "towers": {
          "generic": {
-            "detailed_description": "[str(i18n_data.description)]<div class='towerCost'><span class='costValue'>[str(i18n_data.cost)]</span><img class='costImg gold'></div>",
+            "detailed_description": "[str(i18n_data.description)]",
             "requires_kingdoms": "Requires level <span class='requiredLevel'>[str(i18n_data.level)]</span> [str(i18n_data.required_kingdoms)]"
          },
          "cactus_plant": {
@@ -123,6 +123,10 @@
          "small_turret": {
             "display_name": "Small Turret",
             "description": "It's a small turret! What do you want?"
+         },
+         "tree_of_everlasting_wood": {
+            "display_name": "Tree of Everlasting Wood",
+            "description": "Grows and regrows, and can be harvested for more and more wood."
          },
          "turnip_shooter": {
             "display_name": "Turnip Shooter",
@@ -225,7 +229,9 @@
       },
       "towers": {
          "build": {
-            "not_enough_gold": "Not enough gold! Needed [str(needed)], only have [str(player_gold)] ([str(common_gold)] in common pool)."
+            "unavailable": "Unavailable tower?",
+            "missing_resources": "Missing resources to build this tower",
+            "success": "Successfully built tower!"
          }
       }
    }

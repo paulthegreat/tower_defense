@@ -74,32 +74,62 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
    -- if not, we'll cancel out
    
    local player_id = session.player_id
+   local player = tower_defense.game:get_player(player_id)
    
    local cost = self:_get_tower_cost(uri)
-   local can_build = cost and tower_defense.game:spend_player_gold(player_id, cost)
-   if not can_build then
-      response:reject({
-         message = 'i18n(tower_defense:alerts.towers.build.not_enough_gold)',
-         i18n_data = {
-            needed = cost,
-            player_gold = tower_defense.game:get_player_gold(player_id),
-            common_gold = tower_defense.game:get_common_gold()
-         }
-      })
-      return false
+   local result = {}
+
+   if not cost or not uri or not player then
+      -- everything has a cost... if we can get it
+      result.reject = true
+      result.message = 'i18n(tower_defense:alerts.build.unavailable)'
+   else
+      for resource, amount in pairs(cost) do
+         local missing = player:can_spend_resource(resource, amount)
+         if missing > 0 then
+            result[resource] = missing
+         end
+      end
+   end
+
+   if not result.reject and next(result) then
+      result.reject = true
+      result.message = 'i18n(tower_defense:alerts.build.missing_resources)'
    end
    
-   local entity = radiant.entities.create_entity(uri, { owner = player_id })
+   if not result.reject then
+      for resource, amount in pairs(cost) do
+         player:spend_resource(resource, amount)
+      end
 
-   radiant.terrain.place_entity(entity, location, { force_iconic = false })
-   radiant.entities.turn_to(entity, rotation)
-   entity:get_component('tower_defense:tower'):placed(rotation)
-   local inventory = stonehearth.inventory:get_inventory(player_id)
-   if inventory and not inventory:contains_item(entity) then
-      inventory:add_item(entity)
+      local entity = radiant.entities.create_entity(uri, { owner = player_id })
+
+      radiant.terrain.place_entity(entity, location, { force_iconic = false })
+      radiant.entities.turn_to(entity, rotation)
+      entity:get_component('tower_defense:tower'):placed(rotation)
+      local inventory = stonehearth.inventory:get_inventory(player_id)
+      if inventory and not inventory:contains_item(entity) then
+         inventory:add_item(entity)
+      end
+
+      result.resolve = true
+      result.message = 'i18n(tower_defense:alerts.upgrade_tower.success)'
    end
 
-   return true
+   -- local can_build = cost and tower_defense.game:spend_player_gold(player_id, cost)
+   -- if not can_build then
+   --    response:reject({
+   --       message = 'i18n(tower_defense:alerts.towers.build.not_enough_gold)',
+   --       i18n_data = {
+   --          needed = cost,
+   --          player_gold = tower_defense.game:get_player_gold(player_id),
+   --          common_gold = tower_defense.game:get_common_gold()
+   --       }
+   --    })
+   --    return false
+   -- end
+   
+   return result
 end
 
 function TowerCallHandler:sell_full(session, response, tower)
@@ -123,9 +153,10 @@ function TowerCallHandler:_sell_tower(session, response, tower, multiplier)
    end
 
    -- get the value of the tower, refund it to the player, and destroy the tower
-   local value = math.floor(self:_get_tower_cost(tower:get_uri()) * (multiplier or 1))
-   if value > 0 then
-      tower_defense.game:add_player_gold(player_id, value)
+   local player = tower_defense.game:get_player(player_id)
+   local cost = self:_get_tower_cost(tower:get_uri())
+   for resource, amount in pairs(cost) do
+      player:add_resource(resource, math.floor(amount * (multiplier or 1)))
    end
    radiant.entities.destroy_entity(tower)
    response:resolve({})
@@ -134,7 +165,11 @@ end
 function TowerCallHandler:_get_tower_cost(uri)
    local entity_data = radiant.entities.get_entity_data(uri, 'tower_defense:tower_data')
    local multiplier = tower_defense.game:get_tower_gold_cost_multiplier()
-   return (entity_data and entity_data.cost or 1) * multiplier
+   local cost = {}
+   for resource, amount in pairs(entity_data.cost) do
+      cost[resource] = (resource == stonehearth.constants.tower_defense.player_resources.GOLD and amount * multiplier) or amount
+   end
+   return cost
 end
 
 function TowerCallHandler:set_tower_sticky_targeting(session, response, tower, sticky)
@@ -168,6 +203,24 @@ function TowerCallHandler:upgrade_tower(session, response, tower, upgrade)
       end
    else
       response:reject('invalid entity: has no tower component')
+   end
+end
+
+function TowerCallHandler:harvest_wood_command(session, response, tower, buff_uri)
+   if self:harvest_wood(tower, buff_uri) then
+      response:resolve({})
+   else
+      response:reject({})
+   end
+end
+
+function TowerCallHandler:harvest_wood(tower, buff_uri)
+   local buffs_comp = tower:add_component('stonehearth:buffs')
+   local stacks = buffs_comp:get_buff_stacks(buff_uri)
+   if stacks and stacks > 0 then
+      tower_defense.game:add_player_wood(tower:get_player_id(), stacks - 1)
+      buffs_comp:remove_buff(buff_uri, true)
+      return true
    end
 end
 

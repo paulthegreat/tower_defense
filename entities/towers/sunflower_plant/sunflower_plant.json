@@ -16,26 +16,8 @@
          "model_origin": { "x": 0, "y": 0, "z": 0 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
-      "stonehearth:equipment": {
-         "items": [
-            "tower_defense:towers:sunflower_plant:weapon"
-         ]
-      },
       "tower_defense:tower": {
-         "targeting": {
-            "type": "rectangle",
-            "region": {
-               "min": {"x": -1, "y": 0, "z": -12},
-               "max": {"x": 2, "y": 1, "z": 0}
-            },
-            "attacks_ground": true,
-            "attacks_air": true,
-            "target_filters": [
-               "highest_health",
-               "closest_to_end"
-            ]
-         },
-         "reveals_invis": true
+         "default_weapon": "tower_defense:towers:sunflower_plant:weapon"
       }
    },
    "entity_data": {
@@ -49,7 +31,9 @@
          "kingdoms": ["plant"],
          "level": 2,
          "ordinal": 202,
-         "cost": 10
+         "cost": {
+            "gold": 10
+         }
       }
    }
 }

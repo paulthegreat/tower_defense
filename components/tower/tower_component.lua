@@ -125,7 +125,7 @@ function TowerComponent:_initialize(equipment_changed)
    if radiant.is_server then
       self:_unregister()
       self._weapon = stonehearth.combat:get_main_weapon(self._entity)
-      if not self._weapon or not self._weapon:is_valid() then
+      if (not self._weapon or not self._weapon:is_valid()) and self._json.default_weapon then
          local prev_weapon
          prev_weapon, self._weapon = radiant.entities.equip_item(self._entity, self._json.default_weapon)
          if prev_weapon then
@@ -271,7 +271,7 @@ function TowerComponent:set_sticky_targeting(sticky)
 end
 
 function TowerComponent:set_target_filters(target_filters)
-   self._sv.target_filters = target_filters or {}
+   self._sv.target_filters = target_filters
    self.__saved_variables:mark_changed()
 end
 

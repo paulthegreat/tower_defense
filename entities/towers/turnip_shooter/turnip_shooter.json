@@ -21,11 +21,6 @@
          "model_origin": { "x": -0.05, "y": 0, "z": 0 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
-      "stonehearth:equipment": {
-         "items": [
-            "tower_defense:towers:turnip_shooter:weapon"
-         ]
-      },
       "effect_list": {
          "default": "/stonehearth/data/rigs/entities/gizmos/turnip_shooter/effects/idle.json",
          "initial_pose_animation": "idle.json"
@@ -42,16 +37,7 @@
          ]
       },
       "tower_defense:tower": {
-         "targeting": {
-            "type": "circle",
-            "radius": 6,
-            "attacks_ground": true,
-            "attacks_air": true,
-            "target_filters": [
-               "closest_to_end",
-               "highest_health"
-            ]
-         }
+         "default_weapon": "tower_defense:towers:turnip_shooter:weapon"
       }
    },
    "entity_data": {
@@ -65,7 +51,9 @@
          "kingdoms": ["air"],
          "level": 1,
          "ordinal": 1,
-         "cost": 5
+         "cost": {
+            "gold": 5
+         }
       }
    }
 }

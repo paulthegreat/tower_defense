@@ -57,6 +57,8 @@
       "buffs:monster:weather:minor_speed_increase": "file(data/buffs/monster/weather/minor_speed_increase.json)",
       "buffs:tower:plant_growth": "file(data/buffs/tower/plant_growth/plant_growth.json)",
       "buffs:tower:plant_grower": "file(data/buffs/tower/plant_grower/plant_grower.json)",
+      "buffs:tower:wood_investment": "file(data/buffs/tower/wood_investment/wood_investment.json)",
+      "buffs:tower:wood_investor": "file(data/buffs/tower/wood_investor/wood_investor.json)",
       "buffs:tower:weather:minor_accuracy_decrease": "file(data/buffs/tower/weather/minor_accuracy_decrease.json)",
       "buffs:tower:weather:minor_accuracy_increase": "file(data/buffs/tower/weather/minor_accuracy_increase.json)",
       "buffs:tower:weather:minor_cooldown_decrease": "file(data/buffs/tower/weather/minor_cooldown_decrease.json)",
@@ -65,8 +67,10 @@
       "buffs:tower:weather:minor_damage_increase": "file(data/buffs/tower/weather/minor_damage_increase.json)",
       "buff_scripts:monster:invisible": "file(data/buffs/monster/invisible/invisible_buff.lua)",
       "buff_scripts:tower:plant_growth": "file(data/buffs/tower/plant_growth/plant_growth.lua)",
+      "buff_scripts:tower:wood_investment": "file(data/buffs/tower/wood_investment/wood_investment.lua)",
       "buff_scripts:periodic_health_modification": "file(data/buffs/scripts/periodic_health_modification.lua)",
       "buff_scripts:wave_end_add_buff": "file(data/buffs/scripts/wave_end_add_buff.lua)",
+      "commands:harvest_wood_investment": "file(data/commands/harvest_wood_investment/harvest_wood_investment.json)",
       "commands:sell_full": "file(data/commands/sell_full/sell_full.json)",
       "commands:sell_less": "file(data/commands/sell_less/sell_less.json)",
       "commands:upgrade_tower_damage": "file(data/commands/upgrade_tower_damage/upgrade_tower_damage.json)",
@@ -94,6 +98,9 @@
       "monsters:air:poyo": "file(entities/monsters/air/poyo/poyo.json)",
       "path": "file(entities/path/path.json)",
       "sounds:coins": "file(data/sounds/coins.ogg)",
+      "sounds:chop_wood_01": "file(data/sounds/chop_wood_01.ogg)",
+      "sounds:chop_wood_02": "file(data/sounds/chop_wood_02.ogg)",
+      "sounds:chop_wood_03": "file(data/sounds/chop_wood_03.ogg)",
       "task_groups:monster": "file(ai/task_groups/monster_task_group.lua)",
       "task_groups:tower_combat": "file(ai/task_groups/tower_combat_task_group.lua)",
       "towers:template_turret": "file(entities/towers/template_turret/template_turret.json)",
@@ -114,6 +121,7 @@
       "towers:sugarbell_plant:weapon": "file(entities/towers/sugarbell_plant/sugarbell_plant_weapon.json)",
       "towers:turnip_shooter": "file(entities/towers/turnip_shooter/turnip_shooter.json)",
       "towers:turnip_shooter:weapon": "file(entities/towers/turnip_shooter/turnip_shooter_weapon.json)",
+      "towers:tree_of_everlasting_wood": "file(entities/towers/tree_of_everlasting_wood/tree_of_everlasting_wood.json)",
       "weather:blizzard": "file(data/weather/blizzard)",
       "weather:cloudy": "file(data/weather/cloudy)",
       "weather:cloudy:desert": "file(data/weather/cloudy/cloudy_desert.json)",
@@ -217,6 +225,10 @@
          "endpoint": "server"
       },
       "set_tower_target_filters": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
+         "endpoint": "server"
+      },
+      "harvest_wood_command": {
          "controller": "file(call_handlers/tower_call_handler.lua)",
          "endpoint": "server"
       },

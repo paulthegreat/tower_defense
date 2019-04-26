@@ -3,20 +3,32 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:combat:weapon_data": {
-         "base_damage": 5,
-         "base_ranged_damage": 5,
-         "range": 35,
-         "projectile_speed": 30,
-         "projectile_uri": "stonehearth:weapons:turnip_bullet",
-         "projectile_start_offset": { "x": 0, "y": 0.4, "z": 0 },
-         "projectile_end_offset": { "x": 0, "y": 0.4, "z": 0 }
+         "targeting": {
+            "type": "circle",
+            "radius": 6,
+            "attacks_ground": true,
+            "attacks_air": true,
+            "target_filters": [
+               "lowest_health",
+               "closest_to_start"
+            ],
+            "reveals_invis": false
+         }
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "fire",
-            "effect": "fire",
-            "active_frame": 9,
-            "cooldown": 10,
+            "name": "plant",
+            "effect": "/tower_defense/data/effects/plant_particles.json",
+            "base_damage": 2,
+            "projectile": {
+               "speed": 10,
+               "uri": "stonehearth:weapons:turnip_bullet",
+               "scale_mult": 0.5,
+               "start_offset": { "x": 0, "y": 0.6, "z": 0 },
+               "end_offset": { "x": 0, "y": 1, "z": 0 }
+            },
+            "attack_times": [500],
+            "cooldown": 1000,
             "priority": 0
          }
       ]

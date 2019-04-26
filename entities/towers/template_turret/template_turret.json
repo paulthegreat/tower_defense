@@ -16,12 +16,9 @@
          "model_origin": { "x": 0, "y": 0, "z": 0 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
-      "stonehearth:equipment": {
-         "items": [
-            "tower_defense:towers:template_turret:weapon"
-         ]
-      },
-      "tower_defense:tower": {}
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:template_turret:weapon"
+      }
    },
    "entity_data": {
       "stonehearth:catalog": {
@@ -34,7 +31,9 @@
          "kingdoms": ["fire"],
          "level": 1,
          "ordinal": 1,
-         "cost": 1
+         "cost": {
+            "gold": 1
+         }
       }
    }
 }

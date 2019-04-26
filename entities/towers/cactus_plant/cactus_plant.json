@@ -16,23 +16,8 @@
          "model_origin": { "x": -0.1, "y": 0, "z": 0 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
-      "stonehearth:equipment": {
-         "items": [
-            "tower_defense:towers:cactus_plant:weapon"
-         ]
-      },
       "tower_defense:tower": {
-         "targeting": {
-            "type": "circle",
-            "radius": 6,
-            "attacks_ground": true,
-            "attacks_air": true,
-            "target_filters": [
-               "highest_health",
-               "closest_to_end"
-            ]
-         },
-         "reveals_invis": true
+         "default_weapon": "tower_defense:towers:cactus_plant:weapon"
       }
    },
    "entity_data": {
@@ -46,7 +31,9 @@
          "kingdoms": ["plant"],
          "level": 1,
          "ordinal": 102,
-         "cost": 10
+         "cost": {
+            "gold": 10
+         }
       }
    }
 }

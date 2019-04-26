@@ -1,0 +1,14 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.wood_investment.display_name)",
+   "description": "i18n(tower_defense:data.buffs.wood_investment.description)",
+   "icon": "file(wood_investment.png)",
+   "script": "tower_defense:buff_scripts:tower:wood_investment",
+   "script_info": {
+      "harvest_command": "tower_defense:commands:harvest_wood_investment"
+   },
+   "repeat_add_action": "stack_and_refresh",
+   "max_stacks": 5,
+   "persistent": true
+}

@@ -1,0 +1,22 @@
+{
+   "type": "command",
+   "name": "harvest_wood_investment",
+   "display_name": "i18n(tower_defense:data.commands.harvest_wood_investment.display_name)",
+   "description": "i18n(tower_defense:data.commands.harvest_wood_investment.description)",
+   "disabled_description": "i18n(tower_defense:data.commands.harvest_wood_investment.disabled_description)",
+   "icon": "file(harvest_wood_investment.png)",
+   "ordinal": 5,
+   "sound_on_complete": {
+      "track": [
+         "tower_defense:sounds:chop_wood_01",
+         "tower_defense:sounds:chop_wood_02",
+         "tower_defense:sounds:chop_wood_03"
+      ],
+      "volume": 40
+   },
+   "action": "call",
+   "function": "tower_defense:harvest_wood_command",
+   "args": [
+      "tower_defense:buffs:tower:wood_investment"
+   ]
+}

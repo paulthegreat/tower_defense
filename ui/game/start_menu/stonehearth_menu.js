@@ -118,9 +118,12 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
       }
 
       var description = i18n.t(node.description, data);
+      if (node.towerData && node.towerData.cost) {
+         description += `<div class='towerCost'>${node.towerData.cost}</div>`;
+      }
       if (node.requirement_text && item.hasClass('locked')) {
          description = description + '<span class=warn>' + i18n.t(node.requirement_text, {i18n_data: node.towerData}) + '</span>';
-      };
+      }
       if (node.kingdom) {
          item.off('click.upgrade');
          
@@ -128,8 +131,8 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
             var cost = '';
             radiant.each(node.kingdom_level_cost, function(resource, amount) {
                cost += `<span class='costValue'>${amount}</span><img class='costImg ${resource}'> `;
-            })
-            description = description + '<span class=warn>' + i18n.t('i18n(tower_defense:ui.game.menu.build_menu.kingdom_level_cost)', {i18n_data: {cost: cost} }) + '</span>';
+            });
+            description += '<span class=warn>' + i18n.t('i18n(tower_defense:ui.game.menu.build_menu.kingdom_level_cost)', {i18n_data: {cost: cost} }) + '</span>';
             item.on('click.upgrade', function(e) {
                if (e.altKey) {
                   radiant.call('tower_defense:unlock_kingdom_command', node.kingdom)

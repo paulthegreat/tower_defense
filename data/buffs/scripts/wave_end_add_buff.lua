@@ -11,13 +11,9 @@ function WaveEndAddBuffScript:on_buff_added(entity, buff)
    -- only grow after it's been planted for a full wave, to avoid incentivizing last-second pauses at the end of waves to build
    self._wave_start_listener = radiant.events.listen_once(radiant, 'tower_defense:wave:started', function()
       self._wave_start_listener = nil
-      self._wave_started = true
-   end)
-
-   self._wave_end_listener = radiant.events.listen(radiant, 'tower_defense:wave:ended', function()
-      if self._wave_started then
+      self._wave_end_listener = radiant.events.listen(radiant, 'tower_defense:wave:ended', function()
          radiant.entities.add_buff(entity, self._tuning.buff_to_add, self._tuning.buff_to_add_options)
-      end
+      end)
    end)
 end
 

@@ -88,6 +88,10 @@ function AceBuff:get_stacks()
    return self._sv.stacks
 end
 
+function AceBuff:get_max_stacks()
+   return self._sv.max_stacks
+end
+
 function AceBuff:get_duration()
    local expire_time = self._sv.expire_time
    return expire_time and (expire_time - stonehearth.calendar:get_elapsed_time()) or -1

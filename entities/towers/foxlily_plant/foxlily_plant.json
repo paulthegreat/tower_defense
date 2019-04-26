@@ -50,7 +50,9 @@
          "kingdoms": ["plant"],
          "level": 1,
          "ordinal": 101,
-         "cost": 10
+         "cost": {
+            "gold": 10
+         }
       }
    }
 }
