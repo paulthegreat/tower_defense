@@ -3,16 +3,15 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:combat:weapon_data": {
-         "base_damage": 1,
-         "base_ranged_damage": 1,
          "targeting": {
             "type": "circle",
             "radius": 6,
             "attacks_ground": true,
             "attacks_air": true,
             "target_filters": [
-               "closest_to_end",
-               "highest_health"
+               "shortest_debuff_time",
+               "highest_health",
+               "closest_to_start"
             ],
             "reveals_invis": true
          }
@@ -29,10 +28,12 @@
          {
             "name": "plant",
             "effect": "/tower_defense/data/effects/plant_particles.json",
+            "base_damage": 2,
             "projectile": {
-               "speed": 30,
-               "uri": "stonehearth:weapons:bullet",
-               "start_offset": { "x": 0, "y": 1, "z": 0 },
+               "speed": 12,
+               "uri": "stonehearth:weapons:turnip_bullet",
+               "scale_mult": 0.5,
+               "start_offset": { "x": 0, "y": 0.8, "z": 0 },
                "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
             "attack_times": [500],

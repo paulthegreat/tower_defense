@@ -2,6 +2,7 @@
    "type": "entity",
    "components": {
       "stonehearth:equipment_piece": {
+         "military_score": 1,
          "slot": "mainhand",
          "render_type": "none"
       }

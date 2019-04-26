@@ -121,7 +121,7 @@ function TowerComponent:_destroy_listeners()
    self:_destroy_cooldown_listener()
 end
 
-function TowerComponent:_initialize()
+function TowerComponent:_initialize(equipment_changed)
    if radiant.is_server then
       self:_unregister()
       self._weapon = stonehearth.combat:get_main_weapon(self._entity)
@@ -155,17 +155,18 @@ function TowerComponent:_initialize()
    self:_load_targetable_region()
 
    if radiant.is_server then
-      -- these settings will only be loaded for the default weapon, not for upgrade weapons
-      local targeting = self._weapon_data.targeting or {}
-      if self._sv.sticky_targeting == nil then
+      -- these settings should be loaded the first time any weapon is equipped
+      -- because upgrade weapons may have different behavior with different default targeting
+      local targeting = self._weapon_data and self._weapon_data.targeting or {}
+      if equipment_changed or self._sv.sticky_targeting == nil then
          self:set_sticky_targeting(targeting.sticky_targeting)
       end
 
-      if not self._sv.target_filters then
+      if equipment_changed or not self._sv.target_filters then
          self:set_target_filters(targeting.target_filters)
       end
 
-      if not self._sv.preferred_target_types then
+      if equipment_changed or not self._sv.preferred_target_types then
          self:set_preferred_target_types(targeting.preferred_target_types)
       end
 
@@ -279,11 +280,11 @@ function TowerComponent:set_preferred_target_types(preferred_target_types)
    self.__saved_variables:mark_changed()
 end
 
-function TowerComponent:get_best_target()
+function TowerComponent:get_best_targets(from_target_id, attacked_targets, region_override, attack_info_override)
    -- first check what total targets are available
    -- then apply filters in order until we have a single tower remaining or we run out of filters
    -- return the first (if any) remaining tower
-   if not self._sv.targetable_path_region or self._sv.targetable_path_region:empty() then
+   if (not region_override or region_override:empty()) and (not self._sv.targetable_path_region or self._sv.targetable_path_region:empty()) then
       return
    end
 
@@ -297,48 +298,103 @@ function TowerComponent:get_best_target()
       return
    end
 
-   local attack_info = stonehearth.combat:choose_attack_action(self._entity, attack_types)
+   local attack_info = attack_info_override or stonehearth.combat:choose_attack_action(self._entity, attack_types)
    if not attack_info then
       return
    end
 
-   local targets = radiant.terrain.get_entities_in_region(self._sv.targetable_path_region, _target_filter_fn)
-   if self._sv.sticky_targeting and self._current_target and self._current_target:is_valid() and targets[self._current_target:get_id()] then
-      return self._current_target, attack_info
+   local num_targets = attack_info.num_targets or 1
+   local max_secondary_attacks_per_target = attack_info.secondary_attack and attack_info.secondary_attack.max_attacks_per_target or 1
+   local best_targets = {}
+   local region_targets = radiant.terrain.get_entities_in_region(region_override or self._sv.targetable_path_region, _target_filter_fn)
+
+   if from_target_id then
+      region_targets[from_target_id] = nil
+      num_targets = attack_info.secondary_attack and attack_info.secondary_attack.num_targets or 1
    end
-   targets = radiant.values(targets)
+   if attacked_targets and next(attacked_targets) then
+      for id, num in pairs(attacked_targets) do
+         if num >= max_secondary_attacks_per_target then
+            region_targets[id] = nil
+         end
+      end
+   end
+
+   if self._sv.sticky_targeting and self._current_targets and #self._current_targets > 0 then
+      -- if sticky targeting is on, try to attack as many of the previous (current) targets as possible
+      -- (as long as they're still valid entities and in the targetable region)
+      -- if the full num_targets quota has been reached, simply return
+      -- otherwise, we'll go through the same filtering process as we would without sticky targeting
+      for _, current_target in ipairs(self._current_targets) do
+         local id = current_target:is_valid() and current_target:get_id()
+         if id and region_targets[id] then
+            table.insert(best_targets, current_target)
+            region_targets[id] = nil
+            num_targets = num_targets - 1
+         end
+      end
+      if num_targets <= 0 then
+         return best_targets, attack_info
+      end
+   end
+
+   local targets = radiant.values(region_targets)
    --log:debug('%s found %s potential targets: %s', self._entity, #targets, radiant.util.table_tostring(targets))
+
+   if #targets <= num_targets then
+      return targets, attack_info
+   end
    
    local debuff_cache = {}
 
    for _, filter in ipairs(self._sv.target_filters) do
-      if #targets < 2 then
-         break
-      end
-
-      local best_targets = {}
+      local ranked_targets = {}
       local best_value
 
       --log:debug('%s evaluating targets with filter %s: %s', self._entity, filter, radiant.util.table_tostring(targets))
       for _, target in ipairs(targets) do
-         local value = self:_get_filter_value(filter, target, weapon, attack_info, debuff_cache)
-         --log:debug('%s filter %s value for %s: %s', self._entity, filter, target, value)
-         if not best_value or value == best_value then
-            best_value = value
-            table.insert(best_targets, target)
-         elseif value > best_value then
-            best_value = value
-            best_targets = {target}
+         table.insert(ranked_targets, {
+            target = target,
+            value = self:_get_filter_value(filter, target, attack_info, debuff_cache)
+         })
+      end
+
+      table.sort(ranked_targets, function(a, b) return a.value > b.value end)
+
+      local lowest = ranked_targets[num_targets]
+      local lowest_ranked = {}
+      for _, ranked_target in ipairs(ranked_targets) do
+         if ranked_target.value > lowest.value then
+            table.insert(best_targets, ranked_target.target)
+            num_targets = num_targets - 1
+         elseif ranked_target.value == lowest.value then
+            table.insert(lowest_ranked, ranked_target.target)
          end
       end
 
-      targets = best_targets
+      if #lowest_ranked <= num_targets then
+         for _, lowest in ipairs(lowest_ranked) do
+            table.insert(best_targets, lowest)
+            num_targets = num_targets - 1
+         end
+         break
+      else
+         targets = lowest_ranked
+      end
    end
 
-   return targets[1], attack_info
+   -- for any remaining targets we need to get (final filters resulted in ties), just grab them from the list arbitrarily
+   for i = 1, num_targets do
+      if #targets < 1 then
+         break
+      end
+      table.insert(best_targets, table.remove(targets))
+   end
+
+   return best_targets, attack_info
 end
 
-function TowerComponent:_get_filter_value(filter, target, weapon, attack_info, debuff_cache)
+function TowerComponent:_get_filter_value(filter, target, attack_info, debuff_cache)
    if filter == FILTER_TYPES.FILTER_HP_LOW.key then
       return -(radiant.entities.get_health(target) or 0)
 
@@ -389,11 +445,8 @@ function TowerComponent:_get_filter_value(filter, target, weapon, attack_info, d
       return stacks
       
    elseif filter == FILTER_TYPES.FILTER_MOST_TARGETS.key then
-      local reach = attack_info.aoe_effect and weapon.reach
-      if reach then
-         local cube = Cube3(Point3(-reach, 0, -reach), Point3(reach, 1, reach)):translated(radiant.entities.get_world_location(target))
-         return radiant.size(radiant.terrain.get_entities_in_cube(cube, _target_filter_fn))
-      end
+      local targets = self:_get_aoe_targets(attack_info.aoe, radiant.entities.get_world_location(target))
+      return targets and radiant.size(targets) or 0
       
    elseif filter == FILTER_TYPES.FILTER_TARGET_TYPE.key then
       local match_count = 0
@@ -528,7 +581,7 @@ end
 ]]
 
 function TowerComponent:_reinitialize(sm)
-   self:_initialize()
+   self:_initialize(true)
 
    if next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() and tower_defense.game:has_active_wave() then
       sm:go_into(STATES.WAITING_FOR_COOLDOWN)
@@ -566,6 +619,27 @@ function TowerComponent:_get_shortest_cooldown(attack_types)
    return shortest_cd
 end
 
+function TowerComponent:_get_aoe_targets(aoe_attack_info, location)
+   local cube = self:_get_attack_cube(aoe_attack_info, location)
+   return radiant.terrain.get_entities_in_cube(cube, _target_aoe_filter_fn)
+end
+
+function TowerComponent:_get_attack_cube(info, location)
+   local range = info and info.range
+   if not range then
+      return nil
+   end
+
+   local cube = Cube3(Point3(-range, 0, -range), Point3(range, 1, range))
+   if info.hits_ground_and_air then
+      -- note: not storing an air "height" anymore, only their paths, height could technically vary
+      -- so just have some max variance that is always used
+      cube = cube:extruded('y', MAX_PATH_HEIGHT_DIFFERENTIAL, MAX_PATH_HEIGHT_DIFFERENTIAL)
+   end
+
+   return cube:translated(location)
+end
+
 function TowerComponent:_stop_current_effect()
    if self._current_effect then
       self._current_effect:stop()
@@ -574,32 +648,48 @@ function TowerComponent:_stop_current_effect()
 end
 
 function TowerComponent:_find_target_and_engage(sm)
-   local target, attack_info = self:get_best_target()
-   if not target then
+   local targets, attack_info = self:get_best_targets()
+   if not targets or #targets < 1 then
       log:debug('%s couldn\'t find target, going to waiting_for_targetable', self._entity)
       sm:go_into(STATES.WAITING_FOR_TARGETABLE)
    else
-      log:debug('%s found target, going to engage %s', self._entity, target)
-      self._current_target = target
+      log:debug('%s found target(s), going to engage %s', self._entity, radiant.util.table_tostring(targets))
+      self._current_targets = targets
       self._current_attack_info = attack_info
       sm:go_into(STATES.FINDING_TARGET)
    end
 end
 
 function TowerComponent:_engage_current_target(sm)
-   local target = self._current_target
-   local weapon_data = self._weapon_data
+   local targets = self._current_targets
    local attack_info = self._current_attack_info
 
-   if not target or not target:is_valid() or not weapon_data or not attack_info then
-      log:error('target/weapon/attack_info nil/invalid in _engage_current_target: %s, %s, %s', target or 'nil', weapon_data or 'nil', attack_info or 'nil')
+   if not attack_info then
+      log:error('attack_info nil in _engage_current_target')
       return
    end
 
-   self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.attack_melee_adjacent', { target = target })
+   if not targets or #targets < 1 then
+      log:error('no targets in _engage_current_target')
+      return
+   end
+
+   for i = #targets, 1, -1 do
+      if not targets[i]:is_valid() then
+         table.remove(targets, i)
+      end
+   end
+
+   if #targets < 1 then
+      log:error('no valid targets in _engage_current_target')
+      return
+   end
+
+   local first_target = targets[1]
+   self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.attack_melee_adjacent', { target = first_target })
 
    self:_stop_current_effect()
-   radiant.entities.turn_to_face(self._entity, target)
+   radiant.entities.turn_to_face(self._entity, first_target)
    stonehearth.combat:start_cooldown(self._entity, attack_info)
 
    -- if we have a tower effect, start it up
@@ -611,7 +701,13 @@ function TowerComponent:_engage_current_target(sm)
       local shoot_timer
       shoot_timer = stonehearth.combat:set_timer('tower attack shoot', time, function()
          self._shoot_timers[shoot_timer] = nil
-         self:_shoot(target, weapon_data, attack_info)
+         for _, target in ipairs(targets) do
+            -- only need to shoot if the target is still valid
+            local target_id = target:is_valid() and target:get_id()
+            if target_id then
+               self:_shoot(target, attack_info, 1, 0, {[target_id] = 1})
+            end
+         end
          if i == #attack_info.attack_times and tower_defense.game:has_active_wave() then
             sm:go_into(STATES.WAITING_FOR_COOLDOWN)
          end
@@ -622,11 +718,7 @@ function TowerComponent:_engage_current_target(sm)
    return true
 end
 
-function TowerComponent:_shoot(target, weapon_data, attack_info)
-   if not target:is_valid() then
-      return
-   end
-
+function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attacks, attacked_targets)
    local attacker = self._entity
    local assault_context
    local impact_time = radiant.gamestate.now()
@@ -654,21 +746,8 @@ function TowerComponent:_shoot(target, weapon_data, attack_info)
                )
             end
 
-            local targets
             local aoe_attack = attack_info.aoe
-            local aoe_weapon = weapon_data.aoe
-            if aoe_attack or aoe_weapon then
-               local range = (aoe_attack and aoe_attack.range) or (aoe_weapon and aoe_weapon.range)
-               local cube = Cube3(Point3(-range, 0, -range), Point3(-range, 1, -range))
-               if (aoe_attack and aoe_attack.hits_ground_and_air) or ((not aoe_attack or aoe_attack.hits_ground_and_air == nil) and aoe_weapon.hits_ground_and_air) then
-                  -- note: not storing an air "height" anymore, only their paths, height could technically vary
-                  -- so just have some max variance that is always used
-                  cube = cube:extruded('y', MAX_PATH_HEIGHT_DIFFERENTIAL, MAX_PATH_HEIGHT_DIFFERENTIAL)
-               end
-               targets = radiant.terrain.get_entities_in_cube(cube:translated(location), _target_aoe_filter_fn)
-            else
-               targets = {target}
-            end
+            local targets = aoe_attack and self:_get_aoe_targets(aoe_attack, location) or {target}
 
             for _, each_target in pairs(targets) do
                if each_target:is_valid() then
@@ -678,10 +757,27 @@ function TowerComponent:_shoot(target, weapon_data, attack_info)
                      radiant.effects.run_effect(each_target, hit_effect)
                   end
 
-                  local total_damage = stonehearth.combat:calculate_damage(attacker, target, attack_info, is_secondary_target)
+                  local total_damage = stonehearth.combat:calculate_damage(attacker, target, attack_info, damage_multiplier, is_secondary_target)
                   local battery_context = BatteryContext(attacker, target, total_damage)
                   stonehearth.combat:inflict_debuffs(attacker, target, attack_info)
                   stonehearth.combat:battery(battery_context)
+               end
+            end
+
+            local secondary_attack = attack_info.secondary_attack
+            if secondary_attack and num_attacks < (secondary_attack.num_attacks or 1) then
+               local cube = self:_get_attack_cube(secondary_attack, location)
+               if cube then
+                  local secondary_targets = self:get_best_targets(target_id, attacked_targets, cube, attack_info)
+                  if secondary_targets and next(secondary_targets) then
+                     num_attacks = num_attacks + 1
+                     damage_multiplier = damage_multiplier * (secondary_attack.damage_multiplier or 1)
+                     for _, secondary_target in ipairs(secondary_targets) do
+                        local secondary_target_id = secondary_target:get_id()
+                        attacked_targets[secondary_target_id] = (attacked_targets[secondary_target_id] or 0) + 1
+                        self:_shoot(secondary_target, attack_info, damage_multiplier, num_attacks, attacked_targets)
+                     end
+                  end
                end
             end
          end
@@ -700,7 +796,7 @@ function TowerComponent:_shoot(target, weapon_data, attack_info)
 
    if attack_info.projectile then
       local attacker_offset, target_offset = self:_get_projectile_offsets(attack_info.projectile)
-      local projectile = self:_create_projectile(attacker, target, attack_info.projectile.speed, attack_info.projectile.uri, attacker_offset, target_offset)
+      local projectile = self:_create_projectile(attacker, target, attack_info.projectile, attacker_offset, target_offset)
       local projectile_component = projectile:add_component('stonehearth:projectile')
       local flight_time = projectile_component:get_estimated_flight_time()
       impact_time = impact_time + flight_time
@@ -728,15 +824,30 @@ function TowerComponent:_shoot(target, weapon_data, attack_info)
    stonehearth.combat:begin_assault(assault_context)
 
    if not attack_info.projectile then
-      finish_fn()
+      -- if you want there to be a non-projectile delay between shooting and hitting on the primary attack, just set a later attack_time
+      local hit_delay = num_attacks > 1 and attack_info.secondary_attack and attack_info.secondary_attack.hit_delay
+      if hit_delay then
+         local secondary_attack_timer = stonehearth.combat:set_timer('secondary attack cooldown', hit_delay, function()
+            secondary_attack_timer = nil
+            finish_fn()
+         end)
+      else
+         finish_fn()
+      end
    end
 end
 
-function TowerComponent:_create_projectile(attacker, target, projectile_speed, projectile_uri, attacker_offset, target_offset)
-   projectile_uri = projectile_uri or 'stonehearth:weapons:arrow' -- default projectile is an arrow
-   local projectile = radiant.entities.create_entity(projectile_uri, { owner = attacker })
+function TowerComponent:_create_projectile(attacker, target, projectile_data, attacker_offset, target_offset)
+   local uri = projectile_data.uri or 'stonehearth:weapons:arrow' -- default projectile is an arrow
+   local projectile = radiant.entities.create_entity(uri, { owner = attacker })
+   
+   if projectile_data.scale_mult then
+      local render_info = projectile:add_component('render_info')
+      render_info:set_scale(render_info:get_scale() * projectile_data.scale_mult)
+   end
+
    local projectile_component = projectile:add_component('stonehearth:projectile')
-   projectile_component:set_speed(projectile_speed or 1)
+   projectile_component:set_speed(projectile_data.speed or 1)
    projectile_component:set_target_offset(target_offset)
    projectile_component:set_target(target)
 
@@ -765,7 +876,7 @@ function TowerComponent:_get_projectile_offsets(projectile_data)
    if projectile_data then
       local projectile_start_offset = projectile_data.start_offset
       local projectile_end_offset = projectile_data.end_offset
-      -- Get start and end offsets from weapon data if provided
+      -- Get start and end offsets from attack_info data if provided
       if projectile_start_offset then
          attacker_offset = Point3(projectile_start_offset.x,
                                        projectile_start_offset.y,

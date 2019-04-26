@@ -9,30 +9,12 @@ local DMG_TYPES = {
    PURE = 'pure'
 }
 
-function TDCombatService:calculate_damage(attacker, target, attack_info, secondary_target)
-   local weapon = stonehearth.combat:get_main_weapon(attacker)
-
-   if not weapon or not weapon:is_valid() then
-      return 0
-   end
-
-   local weapon_data = radiant.entities.get_entity_data(weapon, 'stonehearth:combat:weapon_data')
+function TDCombatService:calculate_damage(attacker, target, attack_info, damage_multiplier, secondary_target)
    local base_damage
-   if secondary_target then
-      if attack_info.aoe then
-         base_damage = attack_info.aoe.secondary_damage
-      end
-      if not base_damage and weapon_data.aoe then
-         base_damage = weapon_data.aoe.secondary_damage
-      end
-   end
-
-   if not base_damage then
-      if attack_info.base_damage then
-         base_damage = attack_info.base_damage
-      else
-         base_damage = weapon_data.base_damage
-      end
+   if secondary_target and attack_info.aoe then
+      base_damage = attack_info.aoe.secondary_damage
+   else
+      base_damage = attack_info.base_damage
    end
 
    if type(base_damage) == 'table' then
@@ -40,7 +22,7 @@ function TDCombatService:calculate_damage(attacker, target, attack_info, seconda
    end
 
    local damage = self:get_adjusted_damage_value(attacker, target, base_damage, attack_info.damage_type,
-                                                attack_info.damage_multiplier, attack_info.target_armor_multiplier)
+                                                damage_multiplier, attack_info.target_armor_multiplier)
    
    if attack_info.minimum_damage and damage <= attack_info.minimum_damage then
       damage = attack_info.minimum_damage
