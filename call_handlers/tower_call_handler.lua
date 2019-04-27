@@ -167,7 +167,7 @@ function TowerCallHandler:_get_tower_cost(uri)
    local multiplier = tower_defense.game:get_tower_gold_cost_multiplier()
    local cost = {}
    for resource, amount in pairs(entity_data.cost) do
-      cost[resource] = (resource == stonehearth.constants.tower_defense.player_resources.GOLD and amount * multiplier) or amount
+      cost[resource] = (resource == stonehearth.constants.tower_defense.player_resources.GOLD and math.ceil(amount * multiplier)) or amount
    end
    return cost
 end

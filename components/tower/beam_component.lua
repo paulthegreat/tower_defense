@@ -32,10 +32,15 @@ function BeamComponent:post_activate()
 end
 
 function BeamComponent:destroy()
+   if self._target_tracker then
+      self._target_tracker:destroy()
+      self._target_tracker = nil
+   end
 end
 
-function BeamComponent:set_target(target)
-	self._sv._target = target
+function BeamComponent:set_target(target, offset)
+	self._sv.target = target
+   self._sv.target_offset = offset
    self.__saved_variables:mark_changed()
 end
 
@@ -44,21 +49,21 @@ function BeamComponent:set_duration(duration)
    self._duration = duration
 end
 
-function BeamComponent:set_target_offset(offset)
-   -- for non-zero xz, change _get_vector_to_target to transform the offset from local to world coordinates
-   assert(offset.x == 0 and offset.z == 0, 'not implemented')
-   self._sv._target_offset = offset
-   self.__saved_variables:mark_changed()
-end
-
 function BeamComponent:start()
-	local beam_duration_timer = stonehearth.combat:set_timer('beam duration', self._duration, function()
-   	   beam_duration_timer = nil
-			if self._entity and self._entity:is_valid() then
-				radiant.entities.destroy_entity(self._entity)
-			end
-		end
-	)
+	stonehearth.combat:set_timer('beam duration', self._duration, function()
+      if self._entity and self._entity:is_valid() then
+         radiant.events.trigger(self._entity, 'tower_defense:combat:beam_terminated')
+         radiant.entities.destroy_entity(self._entity)
+      end
+   end)
+
+   local target = self._sv.target
+   if target and target:is_valid() then
+      self._target_tracker = target:add_component('mob'):trace_transform('beam target moved')
+         :on_changed(function()
+            radiant.entities.turn_to_face(self._entity, target)
+         end)
+   end
 end
 
 return BeamComponent

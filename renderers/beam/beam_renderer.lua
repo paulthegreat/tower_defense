@@ -14,16 +14,10 @@ function BeamRenderer:initialize(render_entity, datastore)
    self._datastore = datastore
 	self._beam_node = RenderRootNode:add_debug_shapes_node('beam for ' .. tostring(self._entity))
    self._gameloop_trace = radiant.on_game_loop('beam movement', function()
-			self._target = self._datastore:get_data()._target
-			self._target_offset = self._datastore:get_data()._target_offset
-
-         if self._target and self._target:is_valid() then
-				self:_update_shape()
-         end
+         local data = self._datastore:get_data()
+         self:_update_shape(data.target, data.target_offset)
 		end
 	)
-
-   self._visible_volume_trace = radiant.events.listen(stonehearth.subterranean_view, 'stonehearth:visible_volume_changed', self, self._update_shape)
 end
 
 function BeamRenderer:_destroy_gameloop_trace()
@@ -45,20 +39,18 @@ function BeamRenderer:destroy()
    end
 end
 
-function BeamRenderer:_update_shape()
+function BeamRenderer:_update_shape(target, target_offset)
    self._beam_node:clear()
 
-	if stonehearth.subterranean_view:is_visible(self._entity) then
-		local target_location = self._target:add_component('mob'):get_world_location()
-		local target_point = target_location + self._target_offset
-		local location = radiant.entities.get_world_location(self._entity)
-		if location then
-			x, y, z = beam_point:get_xyz()
-			point:set(x, y + Y_OFFSET, z)
-			self._beam_node:add_line(location, target_point, self._color)
-		end
-	end
-   self._beam_node:create_buffers()
+   if target and target:is_valid() then
+      local target_location = target:add_component('mob'):get_world_location()
+      local target_point = target_location + (target_offset or Point3.zero)
+      local location = radiant.entities.get_world_location(self._entity)
+      if location then
+         self._beam_node:add_line(location, target_point, self._color)
+      end
+      self._beam_node:create_buffers()
+   end
 end
 
 return BeamRenderer

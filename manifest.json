@@ -174,7 +174,7 @@
    "component_renderers" : {
       "monster": "file(renderers/monster/monster_renderer.lua)",
       "tower": "file(renderers/tower/tower_renderer.lua)",
-      "beam": "file(renderers/tower/beam_renderer.lua)"
+      "beam": "file(renderers/beam/beam_renderer.lua)"
    },
    "controllers" : {
       "game_player": "file(services/server/game/game_player.lua)",

@@ -31,13 +31,13 @@
             "xprojectile": {
                "speed": 30,
                "uri": "stonehearth:weapons:bullet",
-               "start_offset": { "x": 0, "y": 1, "z": 0 },
-               "end_offset": { "x": 0, "y": 2.1, "z": 0 }
+               "start_offset": { "x": 0, "y": 0.8, "z": 0 },
+               "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
             "beam": {
                "duration": 500,
-               "start_offset": { "x": 0, "y": 1, "z": 0 },
-               "end_offset": { "x": 0, "y": 2.1, "z": 0 }
+               "start_offset": { "x": 0, "y": 0.8, "z": 0 },
+               "end_offset": { "x": 0, "y": 0.8, "z": 0 }
             },
             "xhit_effect": "/stonehearth/data/effects/lightning_effect/lightning_effect.json",
             "xground_effect": "stonehearth:effects:lightning_impact_ground",

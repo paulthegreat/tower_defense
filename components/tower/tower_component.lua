@@ -821,9 +821,10 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
    elseif attack_info.beam then
       local attacker_offset, target_offset = self:_get_offsets(attack_info.beam)
       local beam = self:_create_beam(attacker, target, attack_info.beam, attacker_offset, target_offset)
+      impact_time = impact_time + (attack_info.beam.duration or 1)
 
       local impact_trace
-      impact_trace = stonehearth.combat:set_timer('beam duration', attack_info.beam.duration or 1, function()
+      impact_trace = radiant.events.listen(beam, 'tower_defense:combat:beam_terminated', function()
             finish_fn(nil, beam, impact_trace)
          end)
 
@@ -844,7 +845,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
    assault_context = AssaultContext('melee', attacker, target, impact_time)
    stonehearth.combat:begin_assault(assault_context)
 
-   if not attack_info.projectile then
+   if not attack_info.projectile and not attack_info.beam then
       -- if you want there to be a non-projectile delay between shooting and hitting on the primary attack, just set a later attack_time
       local hit_delay = num_attacks > 1 and attack_info.secondary_attack and attack_info.secondary_attack.hit_delay
       if hit_delay then
@@ -890,6 +891,7 @@ function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offse
    local beam_origin = self:_get_world_location(attacker_offset, attacker)
    radiant.terrain.place_entity_at_exact_location(beam, beam_origin)
 
+   beam_component:start()
    return beam
 end
 

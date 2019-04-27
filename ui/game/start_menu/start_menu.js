@@ -294,13 +294,14 @@ App.StonehearthStartMenuView = App.View.extend({
       //    return true;
       // }
 
+      var changed = false;
       radiant.each(kingdoms, function(k, v) {
          if (self._playerKingdomsCache[k] != v) {
-            return true;
+            changed = true;
          }
       });
 
-      return false;
+      return changed;
    },
 
    _onMenuClick: function(self, menuId, nodeData) {
