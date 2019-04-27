@@ -28,14 +28,19 @@
             "name": "fire",
             "effect": "/tower_defense/data/effects/fire_particles.json",
             "base_damage": 1,
-            "projectile": {
+            "xprojectile": {
                "speed": 30,
                "uri": "stonehearth:weapons:bullet",
                "start_offset": { "x": 0, "y": 1, "z": 0 },
                "end_offset": { "x": 0, "y": 2.1, "z": 0 }
             },
-            "hit_effect": "/stonehearth/data/effects/lightning_effect/lightning_effect.json",
-            "ground_effect": "stonehearth:effects:lightning_impact_ground",
+            "beam": {
+               "duration": 500,
+               "start_offset": { "x": 0, "y": 1, "z": 0 },
+               "end_offset": { "x": 0, "y": 2.1, "z": 0 }
+            },
+            "xhit_effect": "/stonehearth/data/effects/lightning_effect/lightning_effect.json",
+            "xground_effect": "stonehearth:effects:lightning_impact_ground",
             "attack_times": [100],
             "cooldown": 1000,
             "priority": 0

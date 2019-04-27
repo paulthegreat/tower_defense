@@ -880,10 +880,11 @@ function TowerComponent:_create_projectile(attacker, target, projectile_data, at
 end
 
 function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offset, target_offset)
-   local uri = beam_data.uri or 'tower_defense:weapons:beam'
+   local uri = beam_data.uri or 'stonehearth:object:transient'
    local beam = radiant.entities.create_entity(uri, { owner = attacker })
    
    local beam_component = beam:add_component('tower_defense:beam')
+   beam_component:set_duration(beam_data.duration or 1)
    beam_component:set_target(target, target_offset)
 
    local beam_origin = self:_get_world_location(attacker_offset, attacker)
