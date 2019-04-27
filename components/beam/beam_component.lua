@@ -1,4 +1,3 @@
-local Quaternion = _radiant.csg.Quaternion
 local Point3 = _radiant.csg.Point3
 local log = radiant.log.create_logger('beam')
 

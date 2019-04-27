@@ -2,6 +2,7 @@ local build_util = require 'lib.build_util'
 local Point3 = _radiant.csg.Point3
 local Region3 = _radiant.csg.Region3
 local Color4 = _radiant.csg.Color4
+local Quaternion = _radiant.csg.Quaternion
 
 local BeamRenderer = class()
 local log = radiant.log.create_logger('beam.renderer')
@@ -10,8 +11,10 @@ local COLOR = Color4(0, 255, 0, 255)
 function BeamRenderer:initialize(render_entity, datastore)
    self._entity = render_entity:get_entity()
    self._color = COLOR
+   --self._parent_node = render_entity:get_node()
 
    self._datastore = datastore
+   self._cubemitter = _radiant.client.create_cubemitter(RenderRootNode, '/tower_defense/data/effects/beamtest.cubemitter.json')
 	self._beam_node = RenderRootNode:add_debug_shapes_node('beam for ' .. tostring(self._entity))
    self._gameloop_trace = radiant.on_game_loop('beam movement', function()
          local data = self._datastore:get_data()
@@ -37,6 +40,10 @@ function BeamRenderer:destroy()
       self._visible_volume_trace:destroy()
       self._visible_volume_trace = nil
    end
+   if self._cubemitter then
+      self._cubemitter:destroy()
+      self._cubemitter = nil
+   end
 end
 
 function BeamRenderer:_update_shape(target, target_offset)
@@ -49,8 +56,20 @@ function BeamRenderer:_update_shape(target, target_offset)
       if location then
          self._beam_node:add_line(location, target_point, self._color)
       end
-      self._beam_node:create_buffers()
+
+      local midpoint=(location+target_point)/2
+      local orientation = Quaternion()
+      orientation:look_at(location, target_point)
+      local rot = orientation:get_euler_angle()
+      local length = (target_point-location):length()
+
+      local emission_data = self._cubemitter:get_emission_data()
+      emission_data:set_origin():as_rectangle(0.25, length)--width, height
+      self._cubemitter:set_transform(midpoint.x, midpoint.y, midpoint.z, math.deg(rot.x)+90, math.deg(rot.y), math.deg(rot.z), 1, 1, 1)
+      --emission_data:set_rotation(0,0,0)
+
    end
+   self._beam_node:create_buffers()
 end
 
 return BeamRenderer
