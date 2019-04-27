@@ -18,6 +18,11 @@
          },
          "2_stacks": {
             "models": [
+               "/stonehearth/entities/trees/oak_tree/sapling_oak_tree/sapling_oak_tree.qb"
+            ]
+         },
+         "3_stacks": {
+            "models": [
                {
                   "type": "one_of",
                   "items": [
@@ -28,7 +33,7 @@
                }
             ]
          },
-         "3_stacks": {
+         "4_stacks": {
             "models": [
                {
                   "type": "one_of",
@@ -40,7 +45,7 @@
                }
             ]
          },
-         "4_stacks": {
+         "5_stacks": {
             "models": [
                {
                   "type": "one_of",
@@ -50,11 +55,6 @@
                      "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb"
                   ]
                }
-            ]
-         },
-         "5_stacks": {
-            "models": [
-               "/stonehearth/entities/trees/oak_tree/anciant_oak_tree/anciant_oak_tree.qb"
             ]
          }
       },

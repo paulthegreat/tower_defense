@@ -726,8 +726,8 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
 
    -- if we have projectile data, create and launch the projectile, running combat effects upon completion
    -- otherwise, run them immediately
-   local finish_fn = function(projectile, impact_trace)
-      if not projectile or projectile:is_valid() then
+   local finish_fn = function(projectile, beam, impact_trace)
+      if (not projectile or projectile:is_valid()) and (not beam or beam:is_valid()) then
          if not assault_context.target_defending then
             local location = target:is_valid() and radiant.entities.get_world_location(target)
                                  or tower_defense.game:get_last_monster_location(target_id)
@@ -795,7 +795,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
    end
 
    if attack_info.projectile then
-      local attacker_offset, target_offset = self:_get_projectile_offsets(attack_info.projectile)
+      local attacker_offset, target_offset = self:_get_offsets(attack_info.projectile)
       local projectile = self:_create_projectile(attacker, target, attack_info.projectile, attacker_offset, target_offset)
       local projectile_component = projectile:add_component('stonehearth:projectile')
       local flight_time = projectile_component:get_estimated_flight_time()
@@ -803,11 +803,32 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
 
       local impact_trace
       impact_trace = radiant.events.listen(projectile, 'stonehearth:combat:projectile_impact', function()
-            finish_fn(projectile, impact_trace)
+            finish_fn(projectile, nil, impact_trace)
          end)
 
       local destroy_trace
       destroy_trace = radiant.events.listen(projectile, 'radiant:entity:pre_destroy', function()
+            if assault_context then
+               stonehearth.combat:end_assault(assault_context)
+               assault_context = nil
+            end
+
+            if destroy_trace then
+               destroy_trace:destroy()
+               destroy_trace = nil
+            end
+         end)
+   elseif attack_info.beam then
+      local attacker_offset, target_offset = self:_get_offsets(attack_info.beam)
+      local beam = self:_create_beam(attacker, target, attack_info.beam, attacker_offset, target_offset)
+
+      local impact_trace
+      impact_trace = stonehearth.combat:set_timer('beam duration', attack_info.beam.duration or 1, function()
+            finish_fn(nil, beam, impact_trace)
+         end)
+
+      local destroy_trace
+      destroy_trace = radiant.events.listen(beam, 'radiant:entity:pre_destroy', function()
             if assault_context then
                stonehearth.combat:end_assault(assault_context)
                assault_context = nil
@@ -858,6 +879,19 @@ function TowerComponent:_create_projectile(attacker, target, projectile_data, at
    return projectile
 end
 
+function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offset, target_offset)
+   local uri = beam_data.uri or 'tower_defense:weapons:beam'
+   local beam = radiant.entities.create_entity(uri, { owner = attacker })
+   
+   local beam_component = beam:add_component('tower_defense:beam')
+   beam_component:set_target(target, target_offset)
+
+   local beam_origin = self:_get_world_location(attacker_offset, attacker)
+   radiant.terrain.place_entity_at_exact_location(beam, beam_origin)
+
+   return beam
+end
+
 -- local_to_world not doing the right thing
 function TowerComponent:_get_world_location(point, entity)
    local mob = entity:add_component('mob')
@@ -869,23 +903,23 @@ function TowerComponent:_get_world_location(point, entity)
    return world_location
 end
 
-function TowerComponent:_get_projectile_offsets(projectile_data)
+function TowerComponent:_get_offsets(data)
    local attacker_offset = Point3(-0.5, 0.8, -0.5)
    local target_offset = Point3(0, 1, 0)
 
-   if projectile_data then
-      local projectile_start_offset = projectile_data.start_offset
-      local projectile_end_offset = projectile_data.end_offset
+   if data then
+      local start_offset = data.start_offset
+      local end_offset = data.end_offset
       -- Get start and end offsets from attack_info data if provided
-      if projectile_start_offset then
-         attacker_offset = Point3(projectile_start_offset.x,
-                                       projectile_start_offset.y,
-                                       projectile_start_offset.z)
+      if start_offset then
+         attacker_offset = Point3(start_offset.x,
+                                 start_offset.y,
+                                 start_offset.z)
       end
-      if projectile_end_offset then
-         target_offset = Point3(projectile_end_offset.x,
-                                       projectile_end_offset.y,
-                                       projectile_end_offset.z)
+      if end_offset then
+         target_offset = Point3(end_offset.x,
+                                 end_offset.y,
+                                 end_offset.z)
       end
    end
 

@@ -32,8 +32,14 @@ function WeatherService:initialize()
          self:_switch_weather()
       end)
 
-   -- Initialize weather state.
-   self:_initialize()
+   -- Initialize weather state. Wait until tower_defense has loaded
+   if tower_defense then
+      self:_initialize()
+   else
+      radiant.events.listen_once(radiant, 'tower_defense:server:init', function()
+         self:_initialize()
+      end)
+   end
 end
 
 function WeatherService:destroy()

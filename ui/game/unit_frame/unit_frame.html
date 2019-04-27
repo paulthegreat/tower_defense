@@ -26,7 +26,7 @@
                      <div class="name" {{bind-attr class=view.hasPortrait:compressed:extended}}>{{i18n_key view.display_name self=view.model}}</div>
                   </div>
                   {{#if view.model.stonehearth:expendable_resources.resources.health}}
-                     <div id="bubble">
+                     <div class="bubble">
                         <div id="heart"></div>
                         <div class="value">{{view.currentHealth}} / {{view.maxHealth}}</div>
                      </div>
@@ -41,7 +41,7 @@
                      {{/if}}
                   {{/if}}
                   {{#if view.appeal}}
-                     <div id="bubble">
+                     <div class="bubble">
                         <div id="sparkles"></div>
                         <div class="value">{{view.appeal}}</div>
                      </div>
@@ -54,6 +54,11 @@
                      </div>
                      <div id="levelRequirement"></div>
                   </div>
+                  {{#if view.model.tower_defense:tower}}
+                     <div class="bubble">
+                        <div class="value">dmg: {{view.model.tower_defense:tower.stats.damage}}  kills: {{view.model.tower_defense:tower.stats.kills}}</div>
+                     </div>
+                  {{/if}}
                </div>
                <div id="descriptionDiv">
                   {{#if view.model.stonehearth:job.class_icon}}
@@ -82,9 +87,6 @@
                      <div class="description">{{i18n_key view.model.stonehearth:job.curr_job_name}}</div>
                   {{else}}
                      <div class="description">{{i18n_key view.description self=view.model}}</div>
-                  {{/if}}
-                  {{#if view.model.tower_defense:tower}}
-                     <div class="description">dmg:{{view.model.tower_defense:tower.stats.damage}}  kills:{{view.model.tower_defense:tower.stats.kills}}</div>
                   {{/if}}
                </div>
                {{#if view.model.tower_defense:ai}}
