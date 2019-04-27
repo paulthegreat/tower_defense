@@ -166,7 +166,7 @@
       "ai": "file(components/ai/ai_component.lua)",
       "monster": "file(components/monster/monster_component.lua)",
       "tower": "file(components/tower/tower_component.lua)",
-      "beam": "file(components/tower/beam_component.lua)"
+      "beam": "file(components/beam/beam_component.lua)"
    },
    "client_components" : {
       "tower": "file(components/tower/tower_component.lua)"
