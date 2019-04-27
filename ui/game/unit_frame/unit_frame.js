@@ -118,6 +118,9 @@ App.StonehearthUnitFrameView = App.View.extend({
                var this_buff = radiant.shallow_copy(buff);
                if (this_buff.max_stacks > 1) {
                   this_buff.hasStacks = true;
+                  if (this_buff.stacks_vis != null) {
+                     this_buff.stacks = this_buff.stacks_vis;
+                  }
                }
                self._buffs.push(this_buff);
             }

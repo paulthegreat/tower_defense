@@ -216,9 +216,10 @@ end
 
 function TowerCallHandler:harvest_wood(tower, buff_uri)
    local buffs_comp = tower:add_component('stonehearth:buffs')
-   local stacks = buffs_comp:get_buff_stacks(buff_uri)
-   if stacks and stacks > 0 then
-      tower_defense.game:add_player_wood(tower:get_player_id(), stacks - 1)
+   local buff = buffs_comp:get_buff(buff_uri)
+   local wood = buff and buff:get_stacks_vis()
+   if wood and wood > 0 then
+      tower_defense.game:add_player_wood(tower:get_player_id(), wood)
       buffs_comp:remove_buff(buff_uri, true)
       return true
    end
