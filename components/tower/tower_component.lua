@@ -56,6 +56,7 @@ function TowerComponent:activate()
    if radiant.is_server then
       FILTER_TYPES = stonehearth.constants.tower_defense.tower.target_filters
       self._shoot_timers = {}
+      self._facing_targets = {}
 
       -- update commands
       -- add a listener for wave change if necessary
@@ -299,7 +300,7 @@ function TowerComponent:get_best_targets(from_target_id, attacked_targets, regio
    end
 
    local attack_info = attack_info_override or stonehearth.combat:choose_attack_action(self._entity, attack_types)
-   if not attack_info then
+   if not attack_info or not attack_info.attack_times or #attack_info.attack_times < 1 then
       return
    end
 
@@ -599,6 +600,7 @@ end
 
 function TowerComponent:_set_idle()
    self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.idle')
+   self._facing_targets = {}
    radiant.entities.turn_to(self._entity, self._sv.original_facing)
 end
 
@@ -647,6 +649,35 @@ function TowerComponent:_stop_current_effect()
    end
 end
 
+function TowerComponent:_try_lock_facing_target(target)
+   if target and target:is_valid() then
+      table.insert(self._facing_targets, target)
+   else
+      return
+   end
+
+   if target and not self._current_facing_listener then
+      self._current_facing_listener = radiant.on_game_loop('face target', function()
+         local current_target = self._facing_targets[1]
+         if not current_target or not current_target:is_valid() then
+            self:_unlock_facing_target()
+         else
+            radiant.entities.turn_to_face(self._entity, current_target)
+         end
+      end)
+   end
+end
+
+function TowerComponent:_unlock_facing_target()
+   table.remove(self._facing_targets)
+   if #self._facing_targets == 0 then
+      if self._current_facing_listener then
+         self._current_facing_listener:destroy()
+         self._current_facing_listener = nil
+      end
+   end
+end
+
 function TowerComponent:_find_target_and_engage(sm)
    local targets, attack_info = self:get_best_targets()
    if not targets or #targets < 1 then
@@ -689,7 +720,7 @@ function TowerComponent:_engage_current_target(sm)
    self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.attack_melee_adjacent', { target = first_target })
 
    self:_stop_current_effect()
-   radiant.entities.turn_to_face(self._entity, first_target)
+   self:_try_lock_facing_target(first_target)
    stonehearth.combat:start_cooldown(self._entity, attack_info)
 
    -- if we have a tower effect, start it up
@@ -709,6 +740,7 @@ function TowerComponent:_engage_current_target(sm)
             end
          end
          if i == #attack_info.attack_times and tower_defense.game:has_active_wave() then
+            self:_unlock_facing_target()
             sm:go_into(STATES.WAITING_FOR_COOLDOWN)
          end
       end)
@@ -723,6 +755,8 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
    local assault_context
    local impact_time = radiant.gamestate.now()
    local target_id = target:get_id()
+
+   self:_try_lock_facing_target(target)
 
    -- if we have projectile data, create and launch the projectile, running combat effects upon completion
    -- otherwise, run them immediately
@@ -792,6 +826,8 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
          impact_trace:destroy()
          impact_trace = nil
       end
+
+      self:_unlock_facing_target()
    end
 
    if attack_info.projectile then

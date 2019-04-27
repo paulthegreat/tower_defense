@@ -56,13 +56,13 @@ function BeamComponent:start()
       end
    end)
 
-   local target = self._sv.target
-   if target and target:is_valid() then
-      self._target_tracker = target:add_component('mob'):trace_transform('beam target moved')
-         :on_changed(function()
-            radiant.entities.turn_to_face(self._entity, target)
-         end)
-   end
+   -- local target = self._sv.target
+   -- if target and target:is_valid() then
+   --    self._target_tracker = target:add_component('mob'):trace_transform('beam target moved')
+   --       :on_changed(function()
+   --          radiant.entities.turn_to_face(self._entity, target)
+   --       end)
+   -- end
 end
 
 return BeamComponent
