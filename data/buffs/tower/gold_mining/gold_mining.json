@@ -1,0 +1,15 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.gold_mining.display_name)",
+   "description": "i18n(tower_defense:data.buffs.gold_mining.description)",
+   "icon": "file(gold_mining.png)",
+   "script": "tower_defense:buff_scripts:tower:gold_mining",
+   "script_info": {
+      "starting_gold": 21,
+      "reduction_per_stack": 1
+   },
+   "repeat_add_action": "stack_and_refresh",
+   "max_stacks": 16,
+   "persistent": true
+}

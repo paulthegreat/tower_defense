@@ -18,7 +18,7 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "plant",
-            "effect": "/tower_defense/data/effects/plant_particles.json",
+            "effect": "tower_defense:effects:plant_particles",
             "base_damage": 2,
             "projectile": {
                "speed": 10,

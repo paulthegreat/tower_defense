@@ -1,0 +1,44 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "color_map": "stonehearth:color_map:resources",
+         "material_maps": [
+            "/stonehearth/data/materials/material_maps/resources_material_map.json"
+         ]
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/resources/gold/gold_ore/gold_ore.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "stonehearth:buffs": {
+         "buffs": {
+            "tower_defense:buffs:tower:gold_miner": true
+         }
+      },
+      "tower_defense:tower": {}
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.gold_mine.display_name)",
+         "description": "i18n(tower_defense:entities.towers.gold_mine.description)",
+         "icon": "/stonehearth/entities/resources/gold/gold_ore/gold_ore.png"
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["earth"],
+         "level": 1,
+         "ordinal": 103,
+         "cost": {
+            "gold": 50
+         }
+      }
+   }
+}

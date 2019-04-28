@@ -28,11 +28,11 @@
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {
-         "kingdoms": ["plant"],
-         "level": 2,
-         "ordinal": 201,
+         "kingdoms": ["plant", "earth"],
+         "level": 1,
+         "ordinal": 141,
          "cost": {
-            "gold": 10
+            "gold": 100
          }
       }
    }

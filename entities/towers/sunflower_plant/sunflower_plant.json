@@ -29,10 +29,10 @@
       },
       "tower_defense:tower_data": {
          "kingdoms": ["plant"],
-         "level": 2,
-         "ordinal": 202,
+         "level": 3,
+         "ordinal": 301,
          "cost": {
-            "gold": 10
+            "gold": 800
          }
       }
    }

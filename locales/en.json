@@ -112,6 +112,10 @@
             "display_name": "Foxlily",
             "description": "foxy description"
          },
+         "gold_mine": {
+            "display_name": "Gold Mine",
+            "description": "Provides decreasing (but always valuable) gold after every wave."
+         },
          "sugarbell_plant": {
             "display_name": "Sugarbell",
             "description": "sweet description"
@@ -126,7 +130,7 @@
          },
          "tree_of_everlasting_wood": {
             "display_name": "Tree of Everlasting Wood",
-            "description": "Grows and regrows, and can be harvested for more and more wood."
+            "description": "Can be harvested for more wood every wave. Regrows after harvesting."
          },
          "turnip_shooter": {
             "display_name": "Turnip Shooter",

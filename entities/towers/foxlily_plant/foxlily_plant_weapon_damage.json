@@ -9,17 +9,25 @@
             "attacks_ground": true,
             "attacks_air": true,
             "target_filters": [
-               "lowest_health",
-               "closest_to_start"
+               "shortest_debuff_time",
+               "lowest_health"
             ],
-            "reveals_invis": true
+            "reveals_invis": false
+         }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "poison": {
+               "uri": "tower_defense:buffs:monster:poison:normal",
+               "chance": 1
+            }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "plant",
-            "effect": "/tower_defense/data/effects/plant_particles.json",
-            "base_damage": 3,
+            "effect": "tower_defense:effects:plant_particles",
+            "base_damage": 40,
             "projectile": {
                "speed": 20,
                "uri": "stonehearth:weapons:turnip_bullet",

@@ -8,7 +8,7 @@
       "model_variants": {
          "default": {
             "models": [
-               "/stonehearth/entities/plants/foxlily_plant/foxlily_plant.qb"
+               "/stonehearth/entities/plants/silkweed/silkweed/silkweed.qb"
             ]
          }
       },
@@ -22,16 +22,16 @@
          }
       },
       "tower_defense:tower": {
-         "default_weapon": "tower_defense:towers:foxlily_plant:weapon",
+         "default_weapon": "tower_defense:towers:anaconda_vine:weapon",
          "upgrades": {
             "damage": {
-               "uri": "tower_defense:towers:foxlily_plant:weapon_damage",
+               "uri": "tower_defense:towers:anaconda_vine:weapon_damage",
                "cost": {
                   "wood": 3
                }
             },
             "utility": {
-               "uri": "tower_defense:towers:foxlily_plant:weapon_utility",
+               "uri": "tower_defense:towers:anaconda_vine:weapon_utility",
                "cost": {
                   "wood": 3
                }
@@ -41,17 +41,17 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.foxlily_plant.display_name)",
-         "description": "i18n(tower_defense:entities.towers.foxlily_plant.description)",
-         "icon": "/stonehearth/entities/plants/foxlily_plant/foxlily_plant.png",
+         "display_name": "i18n(tower_defense:entities.towers.anaconda_vine.display_name)",
+         "description": "i18n(tower_defense:entities.towers.anaconda_vine.description)",
+         "icon": "/stonehearth/entities/plants/silkweed/silkweed/silkweed.png",
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {
          "kingdoms": ["plant"],
          "level": 2,
-         "ordinal": 201,
+         "ordinal": 202,
          "cost": {
-            "gold": 120
+            "gold": 150
          }
       }
    }

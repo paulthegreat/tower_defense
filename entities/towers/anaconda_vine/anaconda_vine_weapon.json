@@ -5,21 +5,25 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 6,
+            "radius": 5,
             "attacks_ground": true,
-            "attacks_air": true,
+            "attacks_air": false,
             "target_filters": [
                "shortest_debuff_time",
                "highest_health",
-               "closest_to_start"
+               "closest_to_end"
             ],
             "reveals_invis": false
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "poison": {
-               "uri": "tower_defense:buffs:monster:poison:normal",
+            "slow": {
+               "uri": "tower_defense:buffs:monster:slow:minor",
+               "chance": 1
+            },
+            "wound": {
+               "uri": "tower_defense:buffs:monster:wound:normal",
                "chance": 1
             }
          }
@@ -28,16 +32,10 @@
          {
             "name": "plant",
             "effect": "tower_defense:effects:plant_particles",
-            "base_damage": 40,
-            "projectile": {
-               "speed": 10,
-               "uri": "stonehearth:weapons:turnip_bullet",
-               "scale_mult": 0.5,
-               "start_offset": { "x": 0, "y": 0.6, "z": 0 },
-               "end_offset": { "x": 0, "y": 1, "z": 0 }
-            },
-            "attack_times": [500],
-            "cooldown": 1500,
+            "base_damage": 80,
+            "target_effect": "stonehearth:effects:abilities:snare_trap",
+            "attack_times": [500, 1000, 1500],
+            "cooldown": 2500,
             "priority": 0
          }
       ]

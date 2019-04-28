@@ -13,13 +13,13 @@
                "highest_health",
                "closest_to_start"
             ],
-            "reveals_invis": true
+            "reveals_invis": false
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "infection": {
-               "uri": "tower_defense:buffs:monster:poison:minor",
+            "poison": {
+               "uri": "tower_defense:buffs:monster:poison:normal",
                "chance": 1
             }
          }
@@ -27,8 +27,9 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "plant",
-            "effect": "/tower_defense/data/effects/plant_particles.json",
-            "base_damage": 2,
+            "effect": "tower_defense:effects:plant_particles",
+            "base_damage": 30,
+            "num_targets": 3,
             "projectile": {
                "speed": 12,
                "uri": "stonehearth:weapons:turnip_bullet",
@@ -37,7 +38,7 @@
                "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
             "attack_times": [500],
-            "cooldown": 1000,
+            "cooldown": 1200,
             "priority": 0
          }
       ]
