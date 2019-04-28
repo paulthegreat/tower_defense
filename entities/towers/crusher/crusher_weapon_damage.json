@@ -9,7 +9,6 @@
             "attacks_ground": true,
             "attacks_air": false,
             "target_filters": [
-               "shortest_debuff_time",
                "highest_health",
                "closest_to_end"
             ],
@@ -18,12 +17,8 @@
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "slow": {
-               "uri": "tower_defense:buffs:monster:slow:normal",
-               "chance": 1
-            },
             "wound": {
-               "uri": "tower_defense:buffs:monster:wound:major",
+               "uri": "tower_defense:buffs:monster:wound:minor",
                "chance": 1
             }
          }
@@ -31,12 +26,14 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "plant",
-            "effect": "tower_defense:effects:plant_particles",
-            "base_damage": 750,
-            "damage_type": "pure",
-            "hit_effect": "stonehearth:effects:abilities:snare_trap",
+            "effect": "tower_defense:effects:earth_particles",
+            "hit_effect": "tower_defense:effects:earth_particles",
+            "base_damage": 200,
+            "aoe": {
+               "range": 1.5
+            },
             "attack_times": [1000],
-            "cooldown": 2500,
+            "cooldown": 3000,
             "priority": 0
          }
       ]

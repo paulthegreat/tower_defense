@@ -33,7 +33,7 @@
             "name": "plant",
             "effect": "tower_defense:effects:plant_particles",
             "base_damage": 180,
-            "target_effect": "stonehearth:effects:abilities:snare_trap",
+            "hit_effect": "stonehearth:effects:abilities:snare_trap",
             "attack_times": [500, 1000, 1500],
             "cooldown": 2500,
             "priority": 0

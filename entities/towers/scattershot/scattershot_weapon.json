@@ -1,0 +1,37 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 5,
+            "attacks_ground": true,
+            "attacks_air": false,
+            "target_filters": [
+               "lowest_health",
+               "closest_to_end"
+            ],
+            "reveals_invis": false
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "plant",
+            "effect": "tower_defense:effects:earth_particles",
+            "base_damage": 3,
+            "num_targets": 3,
+            "projectile": {
+               "speed": 15,
+               "uri": "stonehearth:weapons:bullet",
+               "scale_mult": 1,
+               "start_offset": { "x": 0, "y": 0.6, "z": 0 },
+               "end_offset": { "x": 0, "y": 1, "z": 0 }
+            },
+            "attack_times": [500],
+            "cooldown": 2000,
+            "priority": 0
+         }
+      ]
+   }
+}

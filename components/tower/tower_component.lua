@@ -783,20 +783,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
             local aoe_attack = attack_info.aoe
             local targets = aoe_attack and self:_get_aoe_targets(aoe_attack, location) or {target}
 
-            for _, each_target in pairs(targets) do
-               if each_target:is_valid() then
-                  local is_secondary_target = each_target ~= target
-                  local hit_effect = is_secondary_target and aoe_attack and aoe_attack.hit_effect or (not is_secondary_target and attack_info.hit_effect)
-                  if hit_effect then
-                     radiant.effects.run_effect(each_target, hit_effect)
-                  end
-
-                  local total_damage = stonehearth.combat:calculate_damage(attacker, target, attack_info, damage_multiplier, is_secondary_target)
-                  local battery_context = BatteryContext(attacker, target, total_damage)
-                  stonehearth.combat:inflict_debuffs(attacker, target, attack_info)
-                  stonehearth.combat:battery(battery_context)
-               end
-            end
+            self:_inflict_attack(targets, target, attack_info, damage_multiplier)
 
             local secondary_attack = attack_info.secondary_attack
             if secondary_attack and num_attacks < (secondary_attack.num_attacks or 1) then
@@ -834,6 +821,13 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
       local attacker_offset, target_offset = self:_get_offsets(attack_info.projectile)
       local projectile = self:_create_projectile(attacker, target, attack_info.projectile, attacker_offset, target_offset)
       local projectile_component = projectile:add_component('stonehearth:projectile')
+      if attack_info.projectile.passthrough_attack then
+         projectile_component:set_passthrough_attack_cb(function(targets)
+               self:_inflict_attack(targets, target, attack_info, damage_multiplier)
+            end, _target_filter_fn)
+      end
+      projectile_component:start()
+
       local flight_time = projectile_component:get_estimated_flight_time()
       impact_time = impact_time + flight_time
 
@@ -895,6 +889,26 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
    end
 end
 
+function TowerComponent:_inflict_attack(targets, primary_target, attack_info, damage_multiplier)
+   local attacker = self._entity
+   local aoe_attack = attack_info.aoe
+
+   for _, each_target in pairs(targets) do
+      if each_target:is_valid() then
+         local is_secondary_target = each_target ~= primary_target
+         local hit_effect = is_secondary_target and aoe_attack and aoe_attack.hit_effect or (not is_secondary_target and attack_info.hit_effect)
+         if hit_effect then
+            radiant.effects.run_effect(each_target, hit_effect)
+         end
+
+         local total_damage = stonehearth.combat:calculate_damage(attacker, each_target, attack_info, damage_multiplier, is_secondary_target)
+         local battery_context = BatteryContext(attacker, each_target, total_damage)
+         stonehearth.combat:inflict_debuffs(attacker, each_target, attack_info)
+         stonehearth.combat:battery(battery_context)
+      end
+   end
+end
+
 function TowerComponent:_create_projectile(attacker, target, projectile_data, attacker_offset, target_offset)
    local uri = projectile_data.uri or 'stonehearth:weapons:arrow' -- default projectile is an arrow
    local projectile = radiant.entities.create_entity(uri, { owner = attacker })
@@ -912,7 +926,6 @@ function TowerComponent:_create_projectile(attacker, target, projectile_data, at
    local projectile_origin = self:_get_world_location(attacker_offset, attacker)
    radiant.terrain.place_entity_at_exact_location(projectile, projectile_origin)
 
-   projectile_component:start()
    return projectile
 end
 

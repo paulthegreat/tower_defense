@@ -9,6 +9,12 @@ function ProjectileComponent:set_target(target)
    self._target_id = target:get_id()
 end
 
+function ProjectileComponent:set_passthrough_attack_cb(attack_cb, target_filter_fn)
+   self._attack_cb = attack_cb
+   self._target_filter_fn = target_filter_fn
+   self._attacked_targets = {}
+end
+
 function ProjectileComponent:start()
    if self._gameloop_trace then
       return
@@ -45,6 +51,27 @@ function ProjectileComponent:start()
 
          local projectile_location = self._mob:get_world_location()
          local new_projectile_location = projectile_location + vector
+
+         if self._attack_cb then
+            -- determine passed-through targets
+            local attacked_targets = self._attacked_targets
+            local targets = {}
+            
+            _physics:walk_line(projectile_location, new_projectile_location, function(location)
+               for id, entity in pairs(radiant.terrain.get_entities_at_point(location, self._target_filter_fn)) do
+                  if not attacked_targets[id] then
+                     targets[id] = entity
+                  end
+               end
+            end, 0)
+
+            if next(targets) then
+               self._attack_cb(targets, self._target)
+               for id, _ in pairs(targets) do
+                  attacked_targets[id] = true
+               end
+            end
+         end
 
          self._mob:move_to(new_projectile_location)
          self:_face_direction(vector)
