@@ -1,0 +1,12 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.major_armor_piercing.display_name)",
+   "description": "i18n(tower_defense:data.buffs.major_armor_piercing.description)",
+   "icon": "file(major_armor_piercing.png)",
+   "modifiers": {
+      "multiplicative_physical_dmg_taken": {
+         "add": 0.75
+      }
+   }
+}
