@@ -9,6 +9,18 @@ local DMG_TYPES = {
    PURE = 'pure'
 }
 
+function TDCombatService:start_cooldown(entity, action_info)
+   local combat_state = self:get_combat_state(entity)
+   if not combat_state then
+      return
+   end
+   if action_info.cooldown then
+      local attributes_component = entity:get_component('stonehearth:attributes')
+      local cooldown_modifier = attributes_component and attributes_component:get_attribute('multiplicative_cooldown_modifier') or 1
+      combat_state:start_cooldown(action_info.name, action_info.cooldown * cooldown_modifier)
+   end
+end
+
 function TDCombatService:calculate_damage(attacker, target, attack_info, damage_multiplier, secondary_target)
    local base_damage
    if secondary_target and attack_info.aoe then

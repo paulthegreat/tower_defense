@@ -1,0 +1,12 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "script": "tower_defense:buff_scripts:tower:aura_buff",
+   "invisible_to_player": true,
+   "persistent": true,
+   "script_info": {
+      "buffs": [
+         "tower_defense:buffs:tower:cooldown_decrease:major"
+      ]
+   }
+}

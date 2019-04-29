@@ -824,7 +824,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
       if attack_info.projectile.passthrough_attack then
          projectile_component:set_passthrough_attack_cb(function(targets)
                self:_inflict_attack(targets, target, attack_info, damage_multiplier)
-            end, _target_filter_fn)
+            end, _target_aoe_filter_fn)
       end
       projectile_component:start()
 
@@ -851,6 +851,22 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
    elseif attack_info.beam then
       local attacker_offset, target_offset = self:_get_offsets(attack_info.beam)
       local beam = self:_create_beam(attacker, target, attack_info.beam, attacker_offset, target_offset)
+      local beam_component = beam:add_component('tower_defense:beam')
+      if attack_info.beam.attack_times then
+         for _, time in ipairs(attack_info.beam.attack_times) do
+            local shoot_timer
+            shoot_timer = stonehearth.combat:set_timer('beam attack damage', time, function()
+               self._shoot_timers[shoot_timer] = nil
+               if target:is_valid() and beam:is_valid() then
+                  local targets = beam_component:get_intersection_targets(_target_aoe_filter_fn)
+                  self:_inflict_attack(targets, target, attack_info, damage_multiplier)
+               end
+            end)
+            self._shoot_timers[shoot_timer] = true
+         end
+      end
+      beam_component:start()
+
       impact_time = impact_time + (attack_info.beam.duration or 1)
 
       local impact_trace
@@ -940,7 +956,6 @@ function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offse
    local beam_origin = self:_get_world_location(attacker_offset, attacker)
    radiant.terrain.place_entity_at_exact_location(beam, beam_origin)
 
-   beam_component:start()
    return beam
 end
 

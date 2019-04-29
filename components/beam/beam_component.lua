@@ -65,4 +65,18 @@ function BeamComponent:start()
    -- end
 end
 
+function BeamComponent:get_intersection_targets(target_filter_fn)
+   local location = radiant.entities.get_world_location(self._entity)
+   local target_location = radiant.entities.get_world_location(target)
+   local targets = {}
+   
+   _physics:walk_line(location, target_location, function(location)
+      for id, entity in pairs(radiant.terrain.get_entities_at_point(location, target_filter_fn)) do
+         targets[id] = entity
+      end
+   end, 0)
+
+   return targets
+end
+
 return BeamComponent
