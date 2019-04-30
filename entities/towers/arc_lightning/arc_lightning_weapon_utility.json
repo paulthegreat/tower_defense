@@ -4,26 +4,15 @@
    "entity_data": {
       "stonehearth:combat:weapon_data": {
          "targeting": {
-            "type": "rectangle",
-            "region": {
-               "min": {"x": -1, "y": 0, "z": -21},
-               "max": {"x": 2, "y": 1, "z": 0}
-            },
+            "type": "circle",
+            "radius": 4,
             "attacks_ground": true,
-            "attacks_air": false,
+            "attacks_air": true,
             "target_filters": [
-               "closest_to_start",
+               "closest_to_end",
                "highest_health"
             ],
             "reveals_invis": false
-         }
-      },
-      "stonehearth:buffs": {
-         "inflictable_debuffs": {
-            "burning": {
-               "uri": "tower_defense:buffs:monster:burning:major",
-               "chance": 1
-            }
          }
       },
       "stonehearth:combat:ranged_attacks": [
@@ -31,20 +20,25 @@
             "name": "plant",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 50,
+            "base_damage": 150,
             "damage_type": "magical",
             "beam": {
-               "passthrough_attack": true,
                "__particle_effect": "tower_defense:effects:fire_beam",
-               "particle_color": [255, 128, 0, 192],
-               "beam_color": [255, 128, 0, 255],
-               "duration": 1500,
-               "attack_times": [300, 600, 900, 1200, 1500],
+               "particle_color": [180, 192, 255, 192],
+               "beam_color": [180, 192, 255, 192],
+               "duration": 300,
+               "attack_times": [200],
                "start_offset": { "x": 0, "y": 0.8, "z": 0 },
                "end_offset": { "x": 0, "y": 0.8, "z": 0 }
             },
+            "secondary_attack": {
+               "range": 4,
+               "hits_ground_and_air": true,
+               "num_attacks": 4,
+               "damage_multiplier": 0.8
+            },
             "attack_times": [500],
-            "cooldown": 3000,
+            "cooldown": 2000,
             "priority": 0
          }
       ]

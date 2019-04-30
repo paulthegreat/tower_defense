@@ -750,13 +750,60 @@ function TowerComponent:_engage_current_target(sm)
    return true
 end
 
-function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attacks, attacked_targets)
+
+-- local_to_world not doing the right thing
+local get_world_location = function(point, entity)
+   local mob = entity:add_component('mob')
+   local facing = mob:get_facing()
+   local entity_location = mob:get_world_location()
+
+   local offset = radiant.math.rotate_about_y_axis(point, facing)
+   local world_location = entity_location + offset
+   return world_location
+end
+
+local get_secondary_world_location = function(point, entity_id)
+   local entity = radiant.entities.get_entity(entity_id)
+   local location = entity and entity:is_valid() and radiant.entities.get_world_location(entity) or tower_defense.game:get_last_monster_location(entity_id)
+   local facing = entity and radiant.entities.get_facing(entity) or 0
+
+   local offset = radiant.math.rotate_about_y_axis(point, facing)
+   local world_location = location + offset
+   return world_location
+end
+
+local get_offsets = function(data)
+   local attacker_offset = Point3(-0.5, 0.8, -0.5)
+   local target_offset = Point3(0, 1, 0)
+
+   if data then
+      local start_offset = data.start_offset
+      local end_offset = data.end_offset
+      -- Get start and end offsets from attack_info data if provided
+      if start_offset then
+         attacker_offset = Point3(start_offset.x,
+                                 start_offset.y,
+                                 start_offset.z)
+      end
+      if end_offset then
+         target_offset = Point3(end_offset.x,
+                                 end_offset.y,
+                                 end_offset.z)
+      end
+   end
+
+   return attacker_offset, target_offset
+end
+
+function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attacks, attacked_targets, source_target_id)
    local attacker = self._entity
    local assault_context
    local impact_time = radiant.gamestate.now()
    local target_id = target:get_id()
 
-   self:_try_lock_facing_target(target)
+   if not source_target_id then
+      self:_try_lock_facing_target(target)
+   end
 
    -- if we have projectile data, create and launch the projectile, running combat effects upon completion
    -- otherwise, run them immediately
@@ -766,37 +813,41 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
             local location = target:is_valid() and radiant.entities.get_world_location(target)
                                  or tower_defense.game:get_last_monster_location(target_id)
             
-            if attack_info.ground_effect then
-               local proxy = radiant.entities.create_entity('stonehearth:object:transient', { debug_text = 'running death effect' })
+            -- this can trigger after the wave is done, and thus there are no remaining monsters
+            -- and the wave controller has been destroyed, so there are no more last monster locations
+            if location then
+               if attack_info.ground_effect then
+                  local proxy = radiant.entities.create_entity('stonehearth:object:transient', { debug_text = 'running death effect' })
 
-               radiant.terrain.place_entity(proxy, location)
+                  radiant.terrain.place_entity(proxy, location)
 
-               local effect = radiant.effects.run_effect(proxy, attack_info.ground_effect)
+                  local effect = radiant.effects.run_effect(proxy, attack_info.ground_effect)
 
-               effect:set_finished_cb(
-                  function()
-                     radiant.entities.destroy_entity(proxy)
-                  end
-               )
-            end
+                  effect:set_finished_cb(
+                     function()
+                        radiant.entities.destroy_entity(proxy)
+                     end
+                  )
+               end
 
-            local aoe_attack = attack_info.aoe
-            local targets = aoe_attack and self:_get_aoe_targets(aoe_attack, location) or {target}
+               local aoe_attack = attack_info.aoe
+               local targets = aoe_attack and self:_get_aoe_targets(aoe_attack, location) or {target}
 
-            self:_inflict_attack(targets, target, attack_info, damage_multiplier)
+               self:_inflict_attack(targets, target, attack_info, damage_multiplier)
 
-            local secondary_attack = attack_info.secondary_attack
-            if secondary_attack and num_attacks < (secondary_attack.num_attacks or 1) then
-               local cube = self:_get_attack_cube(secondary_attack, location)
-               if cube then
-                  local secondary_targets = self:get_best_targets(target_id, attacked_targets, cube, attack_info)
-                  if secondary_targets and next(secondary_targets) then
-                     num_attacks = num_attacks + 1
-                     damage_multiplier = damage_multiplier * (secondary_attack.damage_multiplier or 1)
-                     for _, secondary_target in ipairs(secondary_targets) do
-                        local secondary_target_id = secondary_target:get_id()
-                        attacked_targets[secondary_target_id] = (attacked_targets[secondary_target_id] or 0) + 1
-                        self:_shoot(secondary_target, attack_info, damage_multiplier, num_attacks, attacked_targets)
+               local secondary_attack = attack_info.secondary_attack
+               if secondary_attack and num_attacks < (secondary_attack.num_attacks or 1) then
+                  local cube = self:_get_attack_cube(secondary_attack, location)
+                  if cube then
+                     local secondary_targets = self:get_best_targets(target_id, attacked_targets, Region3(cube), attack_info)
+                     if secondary_targets and next(secondary_targets) then
+                        num_attacks = num_attacks + 1
+                        damage_multiplier = damage_multiplier * (secondary_attack.damage_multiplier or 1)
+                        for _, secondary_target in ipairs(secondary_targets) do
+                           local secondary_target_id = secondary_target:get_id()
+                           attacked_targets[secondary_target_id] = (attacked_targets[secondary_target_id] or 0) + 1
+                           self:_shoot(secondary_target, attack_info, damage_multiplier, num_attacks, attacked_targets, target_id)
+                        end
                      end
                   end
                end
@@ -814,12 +865,14 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
          impact_trace = nil
       end
 
-      self:_unlock_facing_target()
+      if not source_target_id then
+         self:_unlock_facing_target()
+      end
    end
 
    if attack_info.projectile then
-      local attacker_offset, target_offset = self:_get_offsets(attack_info.projectile)
-      local projectile = self:_create_projectile(attacker, target, attack_info.projectile, attacker_offset, target_offset)
+      local attacker_offset, target_offset = get_offsets(attack_info.projectile)
+      local projectile = self:_create_projectile(attacker, target, attack_info.projectile, attacker_offset, target_offset, source_target_id)
       local projectile_component = projectile:add_component('stonehearth:projectile')
       if attack_info.projectile.passthrough_attack then
          projectile_component:set_passthrough_attack_cb(function(targets)
@@ -849,8 +902,8 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
             end
          end)
    elseif attack_info.beam then
-      local attacker_offset, target_offset = self:_get_offsets(attack_info.beam)
-      local beam = self:_create_beam(attacker, target, attack_info.beam, attacker_offset, target_offset)
+      local attacker_offset, target_offset = get_offsets(attack_info.beam)
+      local beam = self:_create_beam(attacker, target, attack_info.beam, attacker_offset, target_offset, source_target_id)
       local beam_component = beam:add_component('tower_defense:beam')
       if attack_info.beam.attack_times then
          for _, time in ipairs(attack_info.beam.attack_times) do
@@ -925,7 +978,7 @@ function TowerComponent:_inflict_attack(targets, primary_target, attack_info, da
    end
 end
 
-function TowerComponent:_create_projectile(attacker, target, projectile_data, attacker_offset, target_offset)
+function TowerComponent:_create_projectile(attacker, target, projectile_data, attacker_offset, target_offset, source_target_id)
    local uri = projectile_data.uri or 'stonehearth:weapons:arrow' -- default projectile is an arrow
    local projectile = radiant.entities.create_entity(uri, { owner = attacker })
    
@@ -939,13 +992,18 @@ function TowerComponent:_create_projectile(attacker, target, projectile_data, at
    projectile_component:set_target_offset(target_offset)
    projectile_component:set_target(target)
 
-   local projectile_origin = self:_get_world_location(attacker_offset, attacker)
-   radiant.terrain.place_entity_at_exact_location(projectile, projectile_origin)
+   if source_target_id then
+      local projectile_origin = get_secondary_world_location(attacker_offset, source_target_id)
+      radiant.terrain.place_entity_at_exact_location(projectile, projectile_origin)
+   else
+      local projectile_origin = get_world_location(attacker_offset, attacker)
+      radiant.terrain.place_entity_at_exact_location(projectile, projectile_origin)
+   end
 
    return projectile
 end
 
-function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offset, target_offset)
+function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offset, target_offset, source_target_id)
    local uri = beam_data.uri or 'stonehearth:object:transient'
    local beam = radiant.entities.create_entity(uri, { owner = attacker })
    
@@ -954,44 +1012,16 @@ function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offse
    beam_component:set_target(target, target_offset)
    beam_component:set_style(beam_data.particle_effect, beam_data.particle_color, beam_data.beam_color)
 
-   local beam_origin = self:_get_world_location(attacker_offset, attacker)
-   radiant.terrain.place_entity_at_exact_location(beam, beam_origin)
-
-   return beam
-end
-
--- local_to_world not doing the right thing
-function TowerComponent:_get_world_location(point, entity)
-   local mob = entity:add_component('mob')
-   local facing = mob:get_facing()
-   local entity_location = mob:get_world_location()
-
-   local offset = radiant.math.rotate_about_y_axis(point, facing)
-   local world_location = entity_location + offset
-   return world_location
-end
-
-function TowerComponent:_get_offsets(data)
-   local attacker_offset = Point3(-0.5, 0.8, -0.5)
-   local target_offset = Point3(0, 1, 0)
-
-   if data then
-      local start_offset = data.start_offset
-      local end_offset = data.end_offset
-      -- Get start and end offsets from attack_info data if provided
-      if start_offset then
-         attacker_offset = Point3(start_offset.x,
-                                 start_offset.y,
-                                 start_offset.z)
-      end
-      if end_offset then
-         target_offset = Point3(end_offset.x,
-                                 end_offset.y,
-                                 end_offset.z)
-      end
+   if source_target_id then
+      beam_component:set_origin(source_target_id, attacker_offset, get_secondary_world_location)
+      local beam_origin = get_secondary_world_location(attacker_offset, source_target_id)
+      radiant.terrain.place_entity_at_exact_location(beam, beam_origin)
+   else
+      local beam_origin = get_world_location(attacker_offset, attacker)
+      radiant.terrain.place_entity_at_exact_location(beam, beam_origin)
    end
 
-   return attacker_offset, target_offset
+   return beam
 end
 
 function TowerComponent:_declare_states(sm)

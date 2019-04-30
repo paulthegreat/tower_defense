@@ -35,6 +35,10 @@ function BeamComponent:destroy()
       self._target_tracker:destroy()
       self._target_tracker = nil
    end
+   if self._origin_mover then
+      self._origin_mover:destroy()
+      self._origin_mover = nil
+   end
 end
 
 function BeamComponent:set_target(target, offset)
@@ -56,6 +60,15 @@ function BeamComponent:set_style(particle_effect, particle_color, beam_color)
    end
    self._sv.beam_color = beam_color and Color4(unpack(beam_color))
    self.__saved_variables:mark_changed()
+end
+
+function BeamComponent:set_origin(entity_id, offset, get_world_location_fn)
+   self._origin_mover = radiant.on_game_loop('beam origin movement', function()
+      local location = get_world_location_fn(offset, entity_id)
+      if location and self._entity and self._entity:is_valid() then
+         radiant.entities.move_to(self._entity, location)
+      end
+   end)
 end
 
 function BeamComponent:start()

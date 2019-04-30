@@ -30,6 +30,7 @@
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "base_damage": 25,
+            "damage_type": "magical",
             "aoe": {
                "range": 2
             },

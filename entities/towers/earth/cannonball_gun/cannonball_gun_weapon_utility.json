@@ -35,6 +35,9 @@
             "name": "plant",
             "effect": "tower_defense:effects:earth_particles",
             "base_damage": 100,
+            "aoe": {
+               "range": 1
+            },
             "projectile": {
                "speed": 10,
                "passthrough_attack": true,

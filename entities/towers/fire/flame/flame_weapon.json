@@ -30,6 +30,7 @@
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "base_damage": 2,
+            "damage_type": "magical",
             "attack_times": [500],
             "cooldown": 1500,
             "priority": 0
