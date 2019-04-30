@@ -1,8 +1,8 @@
 -- Health modification generic class
 --
-local PeriodicAuraTowerBuff = class()
+local PeriodicAuraMonsterBuff = class()
 
-function PeriodicAuraTowerBuff:on_buff_added(entity, buff)
+function PeriodicAuraMonsterBuff:on_buff_added(entity, buff)
    local json = buff:get_json()
    self._tuning = json.script_info
    if not self._tuning or not self._tuning.buffs then
@@ -13,10 +13,10 @@ function PeriodicAuraTowerBuff:on_buff_added(entity, buff)
    self:_create_pulse_listener(buff)
 end
 
-function PeriodicAuraTowerBuff:_create_pulse_listener(buff)
+function PeriodicAuraMonsterBuff:_create_pulse_listener(buff)
    self:_destroy_pulse_listener()
    
-   local interval = self._tuning.pulse or "5m"
+   local interval = self._tuning.pulse or "3m"
    self._pulse_listener = stonehearth.calendar:set_interval("Aura Buff "..buff:get_uri().." pulse", interval, 
          function()
             self:_on_pulse(buff)
@@ -24,22 +24,26 @@ function PeriodicAuraTowerBuff:_create_pulse_listener(buff)
    self:_on_pulse(buff)
 end
 
-function PeriodicAuraTowerBuff:_destroy_pulse_listener()
+function PeriodicAuraMonsterBuff:_destroy_pulse_listener()
    if self._pulse_listener then
       self._pulse_listener:destroy()
       self._pulse_listener = nil
    end
 end
 
-function PeriodicAuraTowerBuff:_on_pulse(buff)
+function PeriodicAuraMonsterBuff:_on_pulse(buff)
+   -- if there's no active wave, cancel out
+   if not tower_defense.game:has_active_wave() then
+      return
+   end
+
    local tower_comp = self._entity:get_component('tower_defense:tower')
-   local region = tower_comp and tower_comp:get_targetable_region()
+   local region = tower_comp and tower_comp:get_targetable_path_region()
 
    if region then
-      local location = radiant.entities.get_world_grid_location(self._entity)
-      local entities = radiant.terrain.get_entities_in_region(region:translated(location))
+      local entities = radiant.terrain.get_entities_in_region(region)
       for _, entity in pairs(entities) do
-         if entity:get_component('tower_defense:tower') then
+         if entity:get_component('tower_defense:monster') then
             for _, buff in ipairs(self._tuning.buffs) do
                radiant.entities.add_buff(entity, buff)
             end
@@ -48,4 +52,4 @@ function PeriodicAuraTowerBuff:_on_pulse(buff)
    end
 end
 
-return PeriodicAuraTowerBuff
+return PeriodicAuraMonsterBuff

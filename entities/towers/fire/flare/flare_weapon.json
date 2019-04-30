@@ -1,0 +1,39 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 6,
+            "attacks_ground": true,
+            "attacks_air": true,
+            "target_filters": [
+               "shortest_debuff_time",
+               "highest_health",
+               "closest_to_start"
+            ],
+            "reveals_invis": false
+         }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "reveal": {
+               "uri": "tower_defense:buffs:monster:reveal:normal",
+               "chance": 1
+            }
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "plant",
+            "effect": "tower_defense:effects:fire_particles",
+            "hit_effect": "tower_defense:effects:fire_particles",
+            "base_damage": 1,
+            "attack_times": [500],
+            "cooldown": 2000,
+            "priority": 0
+         }
+      ]
+   }
+}

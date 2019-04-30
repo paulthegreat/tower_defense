@@ -1,0 +1,58 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.1
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/decoration/clay_lamp/clay_lamp.qb"
+            ]
+         }
+      },
+      "stonehearth:lamp": {
+         "light_policy": "always_on",
+         "light_effect": "stonehearth:effects:oil_lamp_effect_ground",
+         "light_origin": { "x": 0, "y": 1, "z": 0 }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:sunburst:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:sunburst:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:sunburst:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.sunburst.display_name)",
+         "description": "i18n(tower_defense:entities.towers.sunburst.description)",
+         "icon": "/stonehearth/entities/decoration/clay_lamp/clay_lamp.png",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["fire"],
+         "level": 2,
+         "ordinal": 201,
+         "cost": {
+            "gold": 180
+         }
+      }
+   }
+}

@@ -1,0 +1,44 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 6,
+            "attacks_ground": true,
+            "attacks_air": true,
+            "target_filters": [
+               "shortest_debuff_time",
+               "lowest_health"
+            ],
+            "reveals_invis": false
+         }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "poison": {
+               "uri": "tower_defense:buffs:monster:poison:normal",
+               "chance": 1
+            }
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "plant",
+            "effect": "tower_defense:effects:plant_particles",
+            "base_damage": 40,
+            "projectile": {
+               "speed": 20,
+               "uri": "stonehearth:weapons:turnip_bullet",
+               "scale_mult": 0.5,
+               "start_offset": { "x": 0, "y": 0.8, "z": 0 },
+               "end_offset": { "x": 0, "y": 1, "z": 0 }
+            },
+            "attack_times": [200, 350, 500],
+            "cooldown": 800,
+            "priority": 0
+         }
+      ]
+   }
+}

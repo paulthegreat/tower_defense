@@ -8,31 +8,31 @@
       "model_variants": {
          "default": {
             "models": [
-               "/stonehearth/entities/test/testCube/testCube.qb"
+               "/stonehearth/entities/armor/bronze_circlet/bronze_circlet_iconic.qb"
             ]
          }
       },
       "mob": {
-         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "model_origin": { "x": -0.1, "y": 0, "z": 0 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
       "tower_defense:tower": {
-         "default_weapon": "tower_defense:towers:template_turret:weapon"
+         "default_weapon": "tower_defense:towers:air_101:weapon"
       }
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.template_turret.display_name)",
-         "description": "i18n(tower_defense:entities.towers.template_turret.description)",
-         "icon": "/stonehearth/entities/test/testCube/testCube.png",
+         "display_name": "i18n(tower_defense:entities.towers.air_101.display_name)",
+         "description": "i18n(tower_defense:entities.towers.air_101.description)",
+         "icon": "/stonehearth/entities/armor/bronze_circlet/bronze_circlet.png",
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {
-         "kingdoms": [],
+         "kingdoms": ["air"],
          "level": 1,
-         "ordinal": 1,
+         "ordinal": 101,
          "cost": {
-            "gold": 1
+            "gold": 5
          }
       }
    }

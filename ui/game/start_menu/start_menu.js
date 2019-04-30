@@ -147,7 +147,7 @@ App.StonehearthStartMenuView = App.View.extend({
 
       var newDataTbl = {};
       radiant.each(catalogData, function(uri, entityData) {
-         if (entityData.tower) {
+         if (entityData.tower && Array.isArray(entityData.tower.kingdoms)) {
             entityData.tower.cost = self._getCostString(entityData.tower.cost);
             entityData.tower.detailed_description = entityData.tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)';
             entityData.tower.description = entityData.description;

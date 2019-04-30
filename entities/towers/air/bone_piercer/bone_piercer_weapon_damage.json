@@ -1,0 +1,31 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 5,
+            "attacks_ground": false,
+            "attacks_air": true,
+            "target_filters": [
+               "lowest_health",
+               "closest_to_end"
+            ],
+            "reveals_invis": false
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "plant",
+            "effect": "tower_defense:effects:air_particles",
+            "hit_effect": "/stonehearth/data/effects/hit_sparks/dust_poof.json",
+            "base_damage": 50,
+            "damage_type": "pure",
+            "attack_times": [200, 500],
+            "cooldown": 1000,
+            "priority": 0
+         }
+      ]
+   }
+}

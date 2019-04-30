@@ -1,0 +1,52 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "rectangle",
+            "region": {
+               "min": {"x": -1, "y": 0, "z": -21},
+               "max": {"x": 2, "y": 1, "z": 0}
+            },
+            "attacks_ground": true,
+            "attacks_air": false,
+            "target_filters": [
+               "closest_to_start",
+               "highest_health"
+            ],
+            "reveals_invis": false
+         }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "magic_armor_piercing": {
+               "uri": "tower_defense:buffs:monster:magic_armor_piercing:minor",
+               "chance": 1
+            },
+            "slow": {
+               "uri": "tower_defense:buffs:monster:slow:minor",
+               "chance": 1
+            }
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "plant",
+            "effect": "tower_defense:effects:earth_particles",
+            "base_damage": 100,
+            "projectile": {
+               "speed": 10,
+               "passthrough_attack": true,
+               "uri": "stonehearth:weapons:bullet",
+               "scale_mult": 3,
+               "start_offset": { "x": 0, "y": 0.6, "z": 0 },
+               "end_offset": { "x": 0, "y": 1, "z": 0 }
+            },
+            "attack_times": [500],
+            "cooldown": 4000,
+            "priority": 0
+         }
+      ]
+   }
+}

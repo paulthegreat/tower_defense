@@ -1,0 +1,23 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "components": {
+      "stonehearth:equipment_piece": {
+         "injected_buffs": [
+            "tower_defense:buffs:tower:aura_monster:armor_piercing:minor"
+         ]
+      }
+   },
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 4,
+            "attacks_ground": true,
+            "attacks_air": true,
+            "target_filters": [],
+            "reveals_invis": true
+         }
+      }
+   }
+}

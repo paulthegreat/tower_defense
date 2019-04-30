@@ -1,0 +1,26 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "components": {
+      "stonehearth:equipment_piece": {
+         "injected_buffs": [
+            "tower_defense:buffs:tower:cooldown_decrease:major_aura"
+         ]
+      }
+   },
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 3,
+            "attacks_ground": false,
+            "attacks_air": false,
+            "target_filters": [
+               "lowest_health",
+               "closest_to_end"
+            ],
+            "reveals_invis": false
+         }
+      }
+   }
+}

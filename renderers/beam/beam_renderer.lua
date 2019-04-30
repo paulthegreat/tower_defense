@@ -6,19 +6,25 @@ local Quaternion = _radiant.csg.Quaternion
 
 local BeamRenderer = class()
 local log = radiant.log.create_logger('beam.renderer')
-local COLOR = Color4(0, 255, 0, 255)
+local BEAM_COLOR = Color4(0, 255, 0, 255)
+local PARTICLE_COLOR = Color4(0, 1, 0, 1)
 
 function BeamRenderer:initialize(render_entity, datastore)
    self._entity = render_entity:get_entity()
-   self._color = COLOR
    --self._parent_node = render_entity:get_node()
 
    self._datastore = datastore
-   self._cubemitter = _radiant.client.create_cubemitter(RenderRootNode, '/tower_defense/data/effects/beamtest.cubemitter.json')
 	self._beam_node = RenderRootNode:add_debug_shapes_node('beam for ' .. tostring(self._entity))
    self._gameloop_trace = radiant.on_game_loop('beam movement', function()
          local data = self._datastore:get_data()
-         self:_update_shape(data.target, data.target_offset)
+         if data.target then
+            if not self._cubemitter then
+               self._cubemitter = _radiant.client.create_cubemitter(RenderRootNode, data.particle_effect or '/tower_defense/data/effects/beamtest.cubemitter.json')
+               local color = data.particle_color or PARTICLE_COLOR
+               self._cubemitter:get_particle_data():get_color():set_start():as_color(color.r, color.g, color.b, color.a)
+            end
+            self:_update_shape(data.target, data.target_offset, data.beam_color)
+         end
 		end
 	)
 end
@@ -46,7 +52,7 @@ function BeamRenderer:destroy()
    end
 end
 
-function BeamRenderer:_update_shape(target, target_offset)
+function BeamRenderer:_update_shape(target, target_offset, beam_color)
    self._beam_node:clear()
 
    if target and target:is_valid() then
@@ -54,7 +60,7 @@ function BeamRenderer:_update_shape(target, target_offset)
       local target_point = target_location + (target_offset or Point3.zero)
       local location = radiant.entities.get_world_location(self._entity)
       if location then
-         self._beam_node:add_line(location, target_point, self._color)
+         self._beam_node:add_line(location, target_point, beam_color or BEAM_COLOR)
       end
 
       local midpoint=(location+target_point)/2
@@ -68,7 +74,6 @@ function BeamRenderer:_update_shape(target, target_offset)
       emission_data:set_rate():as_constant(50+30*length)
       self._cubemitter:set_transform(midpoint.x, midpoint.y, midpoint.z, math.deg(rot.x)+90, math.deg(rot.y), math.deg(rot.z), 1, 1, 1)
       --emission_data:set_rotation(0,0,0)
-
    end
    self._beam_node:create_buffers()
 end

@@ -48,7 +48,7 @@
          "material_tags": ["ground", "air"]
       },
       "tower_defense:tower_data": {
-         "kingdoms": ["air"],
+         "kingdoms": [],
          "level": 1,
          "ordinal": 1,
          "cost": {

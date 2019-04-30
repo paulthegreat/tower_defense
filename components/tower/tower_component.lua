@@ -858,7 +858,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
             shoot_timer = stonehearth.combat:set_timer('beam attack damage', time, function()
                self._shoot_timers[shoot_timer] = nil
                if target:is_valid() and beam:is_valid() then
-                  local targets = beam_component:get_intersection_targets(_target_aoe_filter_fn)
+                  local targets = attack_info.beam.passthrough_attack and beam_component:get_intersection_targets(_target_aoe_filter_fn) or {target}
                   self:_inflict_attack(targets, target, attack_info, damage_multiplier)
                end
             end)
@@ -952,6 +952,7 @@ function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offse
    local beam_component = beam:add_component('tower_defense:beam')
    beam_component:set_duration(beam_data.duration or 1)
    beam_component:set_target(target, target_offset)
+   beam_component:set_style(beam_data.particle_effect, beam_data.particle_color, beam_data.beam_color)
 
    local beam_origin = self:_get_world_location(attacker_offset, attacker)
    radiant.terrain.place_entity_at_exact_location(beam, beam_origin)
