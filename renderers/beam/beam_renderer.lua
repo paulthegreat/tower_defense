@@ -7,7 +7,7 @@ local Quaternion = _radiant.csg.Quaternion
 local BeamRenderer = class()
 local log = radiant.log.create_logger('beam.renderer')
 local BEAM_COLOR = Color4(0, 255, 0, 255)
-local PARTICLE_COLOR = Color4(0, 1, 0, 1)
+local PARTICLE_COLOR = Color4(0, 255, 0, 255)
 
 function BeamRenderer:initialize(render_entity, datastore)
    self._entity = render_entity:get_entity()
@@ -21,7 +21,7 @@ function BeamRenderer:initialize(render_entity, datastore)
             if not self._cubemitter then
                self._cubemitter = _radiant.client.create_cubemitter(RenderRootNode, data.particle_effect or '/tower_defense/data/effects/beamtest.cubemitter.json')
                local color = data.particle_color or PARTICLE_COLOR
-               self._cubemitter:get_particle_data():get_color():set_start():as_color(color.r, color.g, color.b, color.a)
+               self._cubemitter:get_particle_data():get_color():set_start():as_color(color.r / 255, color.g / 255, color.b / 255, color.a / 255)
             end
             self:_update_shape(data.target, data.target_offset, data.beam_color)
          end
@@ -41,10 +41,6 @@ function BeamRenderer:destroy()
    if self._beam_node then
       self._beam_node:destroy()
       self._beam_node = nil
-   end
-   if self._visible_volume_trace then
-      self._visible_volume_trace:destroy()
-      self._visible_volume_trace = nil
    end
    if self._cubemitter then
       self._cubemitter:destroy()

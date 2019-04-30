@@ -8,6 +8,7 @@ local SECONDS_PER_GAMELOOP = 0.05
 
 function BeamComponent:initialize()
    self._duration = 0
+   self._sv.color = _radiant.csg.Color4(255, 0, 0, 255)
 end
 
 function BeamComponent:create()
@@ -51,13 +52,6 @@ function BeamComponent:set_style(particle_effect, particle_color, beam_color)
    self._sv.particle_effect = particle_effect
    -- we assume colors are passed as arrays of 4 numbers
    if particle_color then
-      if particle_color[1] > 1 or particle_color[2] > 1 or particle_color[3] > 1 or particle_color[4] > 1 then
-         -- if any number is over 1, assume it's in integer (max 255) format
-         particle_color[1] = particle_color[1] / 255
-         particle_color[2] = particle_color[2] / 255
-         particle_color[3] = particle_color[3] / 255
-         particle_color[4] = particle_color[4] / 255
-      end
       self._sv.particle_color = Color4(unpack(particle_color))
    end
    self._sv.beam_color = beam_color and Color4(unpack(beam_color))
