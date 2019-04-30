@@ -35,7 +35,7 @@
             "num_targets": 2,
             "beam": {
                "__particle_effect": "tower_defense:effects:fire_beam",
-               "particle_color": [255, 255, 0, 224],
+               "particle_color": [255, 128, 0, 192],
                "beam_color": [255, 128, 0, 255],
                "duration": 1500,
                "attack_times": [300, 600, 900, 1200, 1500],
