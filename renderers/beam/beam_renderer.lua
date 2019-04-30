@@ -18,6 +18,7 @@ function BeamRenderer:initialize(render_entity, datastore)
 	self._beam_node = RenderRootNode:add_debug_shapes_node('beam for ' .. tostring(self._entity))
    self._gameloop_trace = radiant.on_game_loop('beam movement', function()
          local data = self._datastore:get_data()
+         self._color = data.color or COLOR
          self:_update_shape(data.target, data.target_offset)
 		end
 	)
@@ -35,10 +36,6 @@ function BeamRenderer:destroy()
    if self._beam_node then
       self._beam_node:destroy()
       self._beam_node = nil
-   end
-   if self._visible_volume_trace then
-      self._visible_volume_trace:destroy()
-      self._visible_volume_trace = nil
    end
    if self._cubemitter then
       self._cubemitter:destroy()
@@ -66,6 +63,7 @@ function BeamRenderer:_update_shape(target, target_offset)
       local emission_data = self._cubemitter:get_emission_data()
       emission_data:set_origin():as_rectangle(0.25, length)--width, height
       emission_data:set_rate():as_constant(50+30*length)
+      self._cubemitter:get_particle_data():get_color():set_start():as_color(self._color.r / 255, self._color.g / 255, self._color.b / 255, self._color.a / 255)
       self._cubemitter:set_transform(midpoint.x, midpoint.y, midpoint.z, math.deg(rot.x)+90, math.deg(rot.y), math.deg(rot.z), 1, 1, 1)
       --emission_data:set_rotation(0,0,0)
 

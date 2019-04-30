@@ -9,6 +9,7 @@ function BeamComponent:initialize()
    self._sv._target = nil
    self._sv._target_offset = Point3.zero
    self._duration = 0
+   self._sv.color = _radiant.csg.Color4(255, 0, 0, 255)
 end
 
 function BeamComponent:create()
@@ -46,6 +47,10 @@ end
 -- in s at normal gameduration
 function BeamComponent:set_duration(duration)
    self._duration = duration
+end
+
+function BeamComponent:set_color(color)
+   self._sv.color = color
 end
 
 function BeamComponent:start()
