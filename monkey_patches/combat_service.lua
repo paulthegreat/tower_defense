@@ -22,15 +22,23 @@ function TDCombatService:start_cooldown(entity, action_info)
 end
 
 function TDCombatService:calculate_damage(attacker, target, attack_info, damage_multiplier, secondary_target)
+   if damage_multiplier == 0 then
+      return 0
+   end
+   
    local base_damage
    if secondary_target and attack_info.aoe then
-      base_damage = attack_info.aoe.secondary_damage
+      base_damage = attack_info.aoe.secondary_damage or attack_info.base_damage
    else
       base_damage = attack_info.base_damage
    end
 
    if type(base_damage) == 'table' then
       base_damage = rng:get_real(base_damage[1], base_damage[2])
+   end
+
+   if base_damage == 0 then
+      return 0
    end
 
    local damage = self:get_adjusted_damage_value(attacker, target, base_damage, attack_info.damage_type,
@@ -68,23 +76,10 @@ function TDCombatService:get_adjusted_damage_value(attacker, target, damage, dam
    end
 
    if damage_type == DMG_TYPES.PHYSICAL then
-      --Get the damage reduction from armor
-      local total_armor = target and self:calculate_total_armor(target) or 0
-
-      -- Reduce armor if attacker has armor reduction attributes
-      local multiplicative_target_armor_modifier = attributes_component and attributes_component:get_attribute('multiplicative_target_armor_modifier', 1) or 1
-      local additive_target_armor_modifier = attributes_component and attributes_component:get_attribute('additive_target_armor_modifier', 0) or 0
-
-      if attack_armor_multiplier then
-         multiplicative_target_armor_modifier = multiplicative_target_armor_modifier * attack_armor_multiplier
-      end
-
-      total_armor = total_armor * multiplicative_target_armor_modifier + additive_target_armor_modifier
-
       local target_attributes_component = target and target:get_component('stonehearth:attributes')
       local multiplicative_physical_dmg_taken_modifier = target_attributes_component and target_attributes_component:get_attribute('multiplicative_physical_dmg_taken', 1) or 1
 
-      total_damage = total_damage * multiplicative_physical_dmg_taken_modifier - total_armor
+      total_damage = total_damage * multiplicative_physical_dmg_taken_modifier
    elseif damage_type == DMG_TYPES.MAGICAL then
       local target_attributes_component = target and target:get_component('stonehearth:attributes')
       local multiplicative_magical_dmg_taken_modifier = target_attributes_component and target_attributes_component:get_attribute('multiplicative_magical_dmg_taken', 1) or 1

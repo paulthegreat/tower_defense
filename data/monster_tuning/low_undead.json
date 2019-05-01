@@ -5,8 +5,7 @@
       "max_health": {
          "base": 15
       },
-      "speed": 30,
-      "additive_armor_modifier": 0
+      "speed": 30
    },
    "equipment": {
       "weapon": [

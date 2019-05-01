@@ -1,0 +1,53 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.05
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/monsters/goblins/goblin_small_totem/goblin_small_totem.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": -0.1, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:seismic_slammer:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:seismic_slammer:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:seismic_slammer:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.seismic_slammer.display_name)",
+         "description": "i18n(tower_defense:entities.towers.seismic_slammer.description)",
+         "icon": "/stonehearth/entities/monsters/goblins/goblin_small_totem/goblin_small_totem.png",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["earth"],
+         "level": 3,
+         "ordinal": 301,
+         "cost": {
+            "gold": 1100
+         }
+      }
+   }
+}

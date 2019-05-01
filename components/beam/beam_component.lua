@@ -63,9 +63,11 @@ function BeamComponent:set_style(particle_effect, particle_color, beam_color)
 end
 
 function BeamComponent:set_origin(entity_id, offset, get_world_location_fn)
+   local prev_location
    self._origin_mover = radiant.on_game_loop('beam origin movement', function()
       local location = get_world_location_fn(offset, entity_id)
-      if location and self._entity and self._entity:is_valid() then
+      if location and self._entity and self._entity:is_valid() and not prev_location or prev_location ~= location then
+         prev_location = location
          radiant.entities.move_to(self._entity, location)
       end
    end)

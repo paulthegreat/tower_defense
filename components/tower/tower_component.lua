@@ -19,13 +19,12 @@ local STATES = {
 local MAX_PATH_HEIGHT_DIFFERENTIAL = 5 -- used for creating target regions for aoe attacks that can hit both ground and air
 local FILTER_TYPES
 
--- TODO: change this to take into account tower-specific (self) invis detection
 local _target_filter_fn = function(entity)
    local monster_comp = entity:get_component('tower_defense:monster')
    return monster_comp and monster_comp:is_visible()
 end
 
-local _target_aoe_filter_fn = function(entity)
+local _ignore_target_invis_filter_fn = function(entity)
    return entity:get_component('tower_defense:monster') ~= nil
 end
 
@@ -307,7 +306,8 @@ function TowerComponent:get_best_targets(from_target_id, attacked_targets, regio
    local num_targets = attack_info.num_targets or 1
    local max_secondary_attacks_per_target = attack_info.secondary_attack and attack_info.secondary_attack.max_attacks_per_target or 1
    local best_targets = {}
-   local region_targets = radiant.terrain.get_entities_in_region(region_override or self._sv.targetable_path_region, _target_filter_fn)
+   local region_targets = radiant.terrain.get_entities_in_region(region_override or self._sv.targetable_path_region,
+         self._sv.sees_invis and _ignore_target_invis_filter_fn or _target_filter_fn)
 
    if from_target_id then
       region_targets[from_target_id] = nil
@@ -342,8 +342,11 @@ function TowerComponent:get_best_targets(from_target_id, attacked_targets, regio
    local targets = radiant.values(region_targets)
    --log:debug('%s found %s potential targets: %s', self._entity, #targets, radiant.util.table_tostring(targets))
 
-   if #targets <= num_targets then
-      return targets, attack_info
+   if #targets + #best_targets <= num_targets then
+      for _, target in ipairs(targets) do
+         table.insert(best_targets, target)
+      end
+      return best_targets, attack_info
    end
    
    local debuff_cache = {}
@@ -530,6 +533,7 @@ function TowerComponent:_load_targetable_region()
 
    self._sv.targetable_region = region
    self._sv.reveals_invis = targeting.reveals_invis or false
+   self._sv.sees_invis = targeting.sees_invis or false
    self._sv.attacks_ground = targeting.attacks_ground or false
    self._sv.attacks_air = targeting.attacks_air or false
    self.__saved_variables:mark_changed()
@@ -623,7 +627,7 @@ end
 
 function TowerComponent:_get_aoe_targets(aoe_attack_info, location)
    local cube = self:_get_attack_cube(aoe_attack_info, location)
-   return radiant.terrain.get_entities_in_cube(cube, _target_aoe_filter_fn)
+   return radiant.terrain.get_entities_in_cube(cube, _ignore_target_invis_filter_fn)
 end
 
 function TowerComponent:_get_attack_cube(info, location)
@@ -728,15 +732,18 @@ function TowerComponent:_engage_current_target(sm)
       self._current_effect = radiant.effects.run_effect(self._entity, attack_info.effect)
    end
 
+   local damage_multiplier = attack_info.damage_multiplier_per_attack or 1
+   local this_damage_multiplier = 1
    for i, time in ipairs(attack_info.attack_times) do
       local shoot_timer
       shoot_timer = stonehearth.combat:set_timer('tower attack shoot', time, function()
          self._shoot_timers[shoot_timer] = nil
+         local dmg_mult = this_damage_multiplier
          for _, target in ipairs(targets) do
             -- only need to shoot if the target is still valid
             local target_id = target:is_valid() and target:get_id()
             if target_id then
-               self:_shoot(target, attack_info, 1, 0, {[target_id] = 1})
+               self:_shoot(target, attack_info, dmg_mult, 0, {[target_id] = 1})
             end
          end
          if i == #attack_info.attack_times and tower_defense.game:has_active_wave() then
@@ -745,6 +752,8 @@ function TowerComponent:_engage_current_target(sm)
          end
       end)
       self._shoot_timers[shoot_timer] = true
+
+      this_damage_multiplier = this_damage_multiplier * damage_multiplier
    end
    
    return true
@@ -877,7 +886,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
       if attack_info.projectile.passthrough_attack then
          projectile_component:set_passthrough_attack_cb(function(targets)
                self:_inflict_attack(targets, target, attack_info, damage_multiplier)
-            end, _target_aoe_filter_fn)
+            end, _ignore_target_invis_filter_fn)
       end
       projectile_component:start()
 
@@ -911,7 +920,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
             shoot_timer = stonehearth.combat:set_timer('beam attack damage', time, function()
                self._shoot_timers[shoot_timer] = nil
                if target:is_valid() and beam:is_valid() then
-                  local targets = attack_info.beam.passthrough_attack and beam_component:get_intersection_targets(_target_aoe_filter_fn) or {target}
+                  local targets = attack_info.beam.passthrough_attack and beam_component:get_intersection_targets(_ignore_target_invis_filter_fn) or {target}
                   self:_inflict_attack(targets, target, attack_info, damage_multiplier)
                end
             end)
