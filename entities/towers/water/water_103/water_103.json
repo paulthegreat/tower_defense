@@ -1,0 +1,39 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.03
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/decoration/craftsman_statue/fountain_garden/fountain_garden.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:water_103:weapon"
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.water_103.display_name)",
+         "description": "i18n(tower_defense:entities.towers.water_103.description)",
+         "icon": "/stonehearth/entities/decoration/craftsman_statue/fountain_garden/fountain_garden.png",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["water"],
+         "level": 1,
+         "ordinal": 103,
+         "cost": {
+            "gold": 35
+         }
+      }
+   }
+}

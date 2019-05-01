@@ -19,7 +19,7 @@
          {
             "name": "plant",
             "effect": "tower_defense:effects:air_particles",
-            "base_damage": 3,
+            "base_damage": 5,
             "projectile": {
                "speed": 25,
                "uri": "stonehearth:weapons:bullet",
