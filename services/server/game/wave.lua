@@ -26,6 +26,7 @@ end
 function Wave:activate()
    self._wave_data = radiant.resources.load_json(self._sv._wave_data.uri)
    self._multipliers = self._sv._wave_data.multipliers or {}
+   self._buffs = self._sv._wave_data.buffs or {}
    
    if self._sv._next_spawn_timer then
       self._sv._next_spawn_timer:bind(function()
@@ -145,6 +146,7 @@ function Wave:_spawn_next_monster()
                   attrib_component:set_attribute(attribute, attrib_component:get_attribute(attribute) * multiplier)
                end
                
+               self:_apply_buffs(new_monster, self._buffs)
                if monster.buffs then
                   self:_apply_buffs(new_monster, monster.buffs)
                end
