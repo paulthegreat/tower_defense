@@ -7,7 +7,7 @@
             "type": "circle",
             "radius": 5,
             "attacks_ground": true,
-            "attacks_air": false,
+            "attacks_air": true,
             "target_filters": [
                "shortest_debuff_time",
                "most_targets",

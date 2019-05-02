@@ -6,6 +6,7 @@ local AssaultContext = require 'stonehearth.services.server.combat.assault_conte
 local BatteryContext = require 'stonehearth.services.server.combat.battery_context'
 
 local log = radiant.log.create_logger('tower_component')
+local rng = _radiant.math.get_default_rng()
 
 local TowerComponent = class()
 
@@ -81,7 +82,7 @@ function TowerComponent:post_activate()
    
    if radiant.is_server then
       local sm = self._sv.sm
-      self:_declare_states(sm)
+      self:_declare_states(sm, self._is_restore)
       self:_declare_triggers(sm)
       self:_declare_state_event_handlers(sm)
       self:_declare_state_transitions(sm)
@@ -1071,13 +1072,25 @@ function TowerComponent:_create_ground_presence(owner, target, ground_presence_d
 
    local origin = radiant.entities.get_world_location(target)
    radiant.terrain.place_entity_at_exact_location(ground_presence, origin)
+   if ground_presence_data.facing == 'target' then
+      radiant.entities.turn_to(ground_presence, radiant.entities.get_facing(target))
+   elseif ground_presence_data.facing == 'random_cardinal' then
+      radiant.entities.turn_to(ground_presence, rng:get_int(0, 3) * 90)
+   elseif ground_presence_data.facing == 'random' then
+      radiant.entities.turn_to(ground_presence, rng:get_real(0, 360))
+   end
 
    return ground_presence
 end
 
-function TowerComponent:_declare_states(sm)
+function TowerComponent:_declare_states(sm, is_restore)
    sm:add_states(STATES)
-   sm:set_start_state(STATES.IDLE)
+
+   if not is_restore and next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() and tower_defense.game:has_active_wave() then
+      sm:set_start_state(STATES.WAITING_FOR_COOLDOWN)
+   else
+      sm:set_start_state(STATES.IDLE)
+   end
 end
 
 function TowerComponent:_declare_triggers(sm)

@@ -4,25 +4,25 @@
       "model_variants": {
          "default": {
             "models": [
-               "file(magma_pool.qb)"
+               "file(mangrove_roots.qb)"
             ]
          }
       },
       "effect_list": {
-         "default": "stonehearth:effects:dry_stone_heat"
+         "default": "tower_defense:effects:water_particles"
       },
       "render_info": {
          "scale": 0.1
       },
       "mob": {
-         "model_origin": { "x": 0, "y": 0.1, "z": 0 },
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
       "region_collision_shape": {
          "region": [
             {
-               "min": { "x": -1, "y": 0, "z": -1 },
-               "max": { "x": 2, "y": 1, "z": 2 }
+               "min": { "x": -0.1, "y": 0, "z": -0.1 },
+               "max": { "x": 1.1, "y": 1, "z": 1.1 }
             }
          ],
          "region_collision_type": "none"
@@ -31,8 +31,8 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.ground_presence.magma_pool.display_name)",
-         "description": "i18n(tower_defense:entities.ground_presence.magma_pool.description)",
+         "display_name": "i18n(tower_defense:entities.ground_presence.mangrove_roots.display_name)",
+         "description": "i18n(tower_defense:entities.ground_presence.mangrove_roots.description)",
          "category": "ground_presence",
          "material_tags": [
             "ground_presence"

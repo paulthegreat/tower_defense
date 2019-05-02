@@ -24,6 +24,7 @@
             },
             "ground_presence": {
                "uri": "tower_defense:ground_presence:magma_pool",
+               "facing": "random_cardinal",
                "duration": 4000,
                "period": 1000,
                "do_on_duration_finished": true,

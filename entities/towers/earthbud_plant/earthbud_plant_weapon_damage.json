@@ -18,6 +18,10 @@
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
+            "poison": {
+               "uri": "tower_defense:buffs:monster:poison:normal",
+               "chance": 1
+            },
             "wound": {
                "uri": "tower_defense:buffs:monster:wound:normal",
                "chance": 1

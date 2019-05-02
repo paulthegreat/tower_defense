@@ -3,12 +3,12 @@
    "type": "entity",
    "components": {
       "render_info": {
-         "scale": 0.06
+         "scale": 0.05
       },
       "model_variants": {
          "default": {
             "models": [
-               "/stonehearth/entities/plants/earthbud/earthbud_3.qb"
+               "file(mangrove.qb)"
             ]
          }
       },
@@ -22,16 +22,16 @@
          }
       },
       "tower_defense:tower": {
-         "default_weapon": "tower_defense:towers:earthbud_plant:weapon",
+         "default_weapon": "tower_defense:towers:mangrove:weapon",
          "upgrades": {
             "damage": {
-               "uri": "tower_defense:towers:earthbud_plant:weapon_damage",
+               "uri": "tower_defense:towers:mangrove:weapon_damage",
                "cost": {
                   "wood": 3
                }
             },
             "utility": {
-               "uri": "tower_defense:towers:earthbud_plant:weapon_utility",
+               "uri": "tower_defense:towers:mangrove:weapon_utility",
                "cost": {
                   "wood": 3
                }
@@ -41,17 +41,17 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.earthbud_plant.display_name)",
-         "description": "i18n(tower_defense:entities.towers.earthbud_plant.description)",
-         "icon": "/stonehearth/entities/plants/earthbud/earthbud.png",
+         "display_name": "i18n(tower_defense:entities.towers.mangrove.display_name)",
+         "description": "i18n(tower_defense:entities.towers.mangrove.description)",
+         "icon": "file(mangrove.png)",
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {
-         "kingdoms": ["plant", "earth"],
-         "level": 1,
-         "ordinal": 141,
+         "kingdoms": ["water", "plants"],
+         "level": 2,
+         "ordinal": 251,
          "cost": {
-            "gold": 115
+            "gold": 750
          }
       }
    }

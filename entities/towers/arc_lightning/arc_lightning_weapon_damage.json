@@ -18,7 +18,7 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "burning": {
-               "uri": "tower_defense:buffs:monster:burning:major",
+               "uri": "tower_defense:buffs:monster:burning:minor",
                "chance": 1
             }
          }
@@ -42,8 +42,8 @@
             "secondary_attack": {
                "range": 4,
                "hits_ground_and_air": true,
-               "num_attacks": 4,
-               "damage_multiplier": 0.8
+               "num_attacks": 8,
+               "damage_multiplier": 0.9
             },
             "attack_times": [500],
             "cooldown": 2000,
