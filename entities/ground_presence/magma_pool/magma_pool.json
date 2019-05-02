@@ -9,7 +9,7 @@
          }
       },
       "effect_list": {
-         "default": "tower_defense:effects:fire_particles"
+         "default": "stonehearth:effects:dry_stone_heat"
       },
       "render_info": {
          "scale": 0.1

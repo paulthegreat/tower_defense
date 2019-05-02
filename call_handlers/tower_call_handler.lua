@@ -116,6 +116,12 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
       result.message = 'i18n(tower_defense:alerts.upgrade_tower.success)'
    end
 
+   if result.resolve then
+      response:resolve(result)
+   else
+      response:reject(result)
+   end
+
    -- local can_build = cost and tower_defense.game:spend_player_gold(player_id, cost)
    -- if not can_build then
    --    response:reject({
@@ -128,8 +134,6 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
    --    })
    --    return false
    -- end
-   
-   return result
 end
 
 function TowerCallHandler:sell_full(session, response, tower)

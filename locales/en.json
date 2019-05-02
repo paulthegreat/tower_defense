@@ -203,21 +203,20 @@
             "biome_picker_title": "Select a Biome",
             "game_mode_select_start": ", a location that is sure to be",
             "game_mode_picker_title": "Select a Difficulty",
-            "biome_favored_label": "(favored)",
             "game_modes": {
                "normal": {
                   "display_name": "Normal",
-                  "description": "Start with normal gold and have a mix of weather effects.",
+                  "description": "Towers cost a normal amount of gold, and there are a mix of weather effects.",
                   "post_selection_text": "normal difficulty."
                },
                "peaceful": {
                   "display_name": "Easy",
-                  "description": "Start with extra gold and have only neutral or positive weather effects.",
+                  "description": "Towers cost less gold, there are fewer waves, and there are only neutral or positive weather effects.",
                   "post_selection_text": "fairly easy."
                },
                "hard": {
                   "display_name": "Hard",
-                  "description": "Start with little gold and have only neutral or negative weather effecs.",
+                  "description": "Towers cost more gold, there are extra advanced waves, and there are only neutral or negative weather effecs.",
                   "post_selection_text": "rather difficult."
                }
             },

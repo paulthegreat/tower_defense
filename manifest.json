@@ -113,6 +113,7 @@
       "effects:plant_particles": "file(data/effects/plant_particles.json)",
       "effects:water_particles": "file(data/effects/water_particles.json)",
       "effects:lightning_bolt": "file(data/effects/lightning_bolt.json)",
+      "effects:dry_stone_heat": "file(data/effects/dry_stone_heat.json)",
       "end_portal:firepit_titan": "file(entities/end_portal/firepit_titan/firepit_titan.json)",
       "ground_presence:magma_pool": "file(entities/ground_presence/magma_pool/magma_pool.json)",
       "kingdoms:monsters:air": "file(data/populations/monsters/air_population.json)",
@@ -387,6 +388,7 @@
          "file(ui/game/game_state_window/game_state_window.html)"
       ],
       "js": [
+         "file(ui/game/game.js)",
          "file(ui/game/resource_display/resource_display.js)",
          "file(ui/game/game_state_window/game_state_window.js)",
          "file(ui/game/start_menu/stonehearth_menu.js)",

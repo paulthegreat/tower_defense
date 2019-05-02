@@ -3,6 +3,8 @@
    just like beams and projectiles
 ]]
 
+local log = radiant.log.create_logger('ground_presence_component')
+
 local GroundPresenceComponent = class()
 
 function GroundPresenceComponent:restore()
@@ -14,6 +16,10 @@ function GroundPresenceComponent:destroy()
    if self._periodic_listener then
       self._periodic_listener:destroy()
       self._periodic_listener = nil
+   end
+   if self._wave_end_listener then
+      self._wave_end_listener:destroy()
+      self._wave_end_listener = nil
    end
 end
 
@@ -32,6 +38,7 @@ function GroundPresenceComponent:start()
    
    local affected_entities = {}
    local periodic_fn = function(duration_finished)
+      log:debug('%s periodic_fn checking region %s', self._entity, region:get_bounds())
       local entities = radiant.terrain.get_entities_in_region(region)
       for id, entity in pairs(entities) do
          if entity:get_component('tower_defense:monster') then
@@ -52,12 +59,21 @@ function GroundPresenceComponent:start()
          radiant.entities.destroy_entity(self._entity)
       end
    end)
+
+   if settings.destroy_on_wave_end then
+      self._wave_end_listener = radiant.events.listen_once(radiant, 'tower_defense:wave:ended', function()
+         if self._entity and self._entity:is_valid() then
+            radiant.events.trigger(self._entity, 'tower_defense:combat:ground_presence_terminated')
+            radiant.entities.destroy_entity(self._entity)
+         end
+      end)
+   end
    
    if not self._attack_cb then
       return
    end
 
-   self._periodic_listener = stonehearth.combat:set_timer('ground presence', settings.period or 1000, periodic_fn)
+   self._periodic_listener = stonehearth.combat:set_interval('ground presence', settings.period or 1000, periodic_fn)
    periodic_fn(false)
 end
 

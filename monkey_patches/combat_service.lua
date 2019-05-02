@@ -9,6 +9,11 @@ local DMG_TYPES = {
    PURE = 'pure'
 }
 
+function TDCombatService:set_interval(reason, duration, fn)
+   local game_seconds = stonehearth.calendar:realtime_to_game_seconds(duration, true)
+   return stonehearth.calendar:set_interval(reason, game_seconds, fn)
+end
+
 function TDCombatService:start_cooldown(entity, action_info)
    local combat_state = self:get_combat_state(entity)
    if not combat_state then

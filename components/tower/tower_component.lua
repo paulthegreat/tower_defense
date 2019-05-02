@@ -228,6 +228,7 @@ function TowerComponent:try_upgrade_tower(upgrade)
       local commands = self._entity:add_component('stonehearth:commands')
       commands:remove_command('tower_defense:commands:upgrade_tower_damage')
       commands:remove_command('tower_defense:commands:upgrade_tower_utility')
+      self:_reinitialize()
       
       result.resolve = true
       result.message = 'i18n(tower_defense:alerts.upgrade_tower.success)'
@@ -606,6 +607,7 @@ function TowerComponent:_set_idle()
    self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.idle')
    self._facing_targets = {}
    radiant.entities.turn_to(self._entity, self._sv.original_facing)
+   self:_stop_current_effect()
 end
 
 function TowerComponent:_get_shortest_cooldown(attack_types)
@@ -1098,15 +1100,6 @@ function TowerComponent:_declare_triggers(sm)
          STATES.FINDING_TARGET
       },
    })
-
-   sm:trigger_on_event('stonehearth:equipment_changed', self._entity, {
-      states = {
-         STATES.IDLE,
-         STATES.WAITING_FOR_TARGETABLE,
-         STATES.WAITING_FOR_COOLDOWN,
-         STATES.FINDING_TARGET
-      },
-   })
 end
 
 function TowerComponent:_declare_state_event_handlers(sm)
@@ -1115,9 +1108,6 @@ function TowerComponent:_declare_state_event_handlers(sm)
          if self._attack_types and next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() then
             sm:go_into(STATES.WAITING_FOR_TARGETABLE)
          end
-      end,
-      ['stonehearth:equipment_changed'] = function(event_args, event_source)
-         self:_reinitialize(sm)
       end,
    })
 
@@ -1128,26 +1118,17 @@ function TowerComponent:_declare_state_event_handlers(sm)
       ['tower_defense:wave:ended'] = function(event_args, event_source)
          sm:go_into(STATES.IDLE)
       end,
-      ['stonehearth:equipment_changed'] = function(event_args, event_source)
-         self:_reinitialize(sm)
-      end,
    })
    
    sm:on_state_event_triggered(STATES.WAITING_FOR_COOLDOWN, {
       ['tower_defense:wave:ended'] = function(event_args, event_source)
          sm:go_into(STATES.IDLE)
       end,
-      ['stonehearth:equipment_changed'] = function(event_args, event_source)
-         self:_reinitialize(sm)
-      end,
    })
    
    sm:on_state_event_triggered(STATES.FINDING_TARGET, {
       ['tower_defense:wave:ended'] = function(event_args, event_source)
          sm:go_into(STATES.IDLE)
-      end,
-      ['stonehearth:equipment_changed'] = function(event_args, event_source)
-         self:_reinitialize(sm)
       end,
    })
 end
