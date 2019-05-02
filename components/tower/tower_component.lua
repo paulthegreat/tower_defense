@@ -449,7 +449,7 @@ function TowerComponent:_get_filter_value(filter, target, attack_info, debuff_ca
       return stacks
       
    elseif filter == FILTER_TYPES.FILTER_MOST_TARGETS.key then
-      local targets = self:_get_aoe_targets(attack_info.aoe, radiant.entities.get_world_location(target))
+      local targets = self:_get_aoe_targets(attack_info.aoe or attack_info.secondary_attack, radiant.entities.get_world_location(target))
       return targets and radiant.size(targets) or 0
       
    elseif filter == FILTER_TYPES.FILTER_TARGET_TYPE.key then
@@ -627,7 +627,7 @@ end
 
 function TowerComponent:_get_aoe_targets(aoe_attack_info, location)
    local cube = self:_get_attack_cube(aoe_attack_info, location)
-   return radiant.terrain.get_entities_in_cube(cube, _ignore_target_invis_filter_fn)
+   return cube and radiant.terrain.get_entities_in_cube(cube, _ignore_target_invis_filter_fn)
 end
 
 function TowerComponent:_get_attack_cube(info, location)
@@ -816,9 +816,9 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
 
    -- if we have projectile data, create and launch the projectile, running combat effects upon completion
    -- otherwise, run them immediately
-   local finish_fn = function(projectile, beam, impact_trace)
-      if (not projectile or projectile:is_valid()) and (not beam or beam:is_valid()) then
-         if not assault_context.target_defending then
+   local finish_fn = function(attack_entity, impact_trace)
+      if not attack_entity or attack_entity:is_valid() then
+         if not assault_context or not assault_context.target_defending then
             local location = target:is_valid() and radiant.entities.get_world_location(target)
                                  or tower_defense.game:get_last_monster_location(target_id)
             
@@ -895,7 +895,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
 
       local impact_trace
       impact_trace = radiant.events.listen(projectile, 'stonehearth:combat:projectile_impact', function()
-            finish_fn(projectile, nil, impact_trace)
+            finish_fn(projectile, impact_trace)
          end)
 
       local destroy_trace
@@ -933,11 +933,38 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
 
       local impact_trace
       impact_trace = radiant.events.listen(beam, 'tower_defense:combat:beam_terminated', function()
-            finish_fn(nil, beam, impact_trace)
+            finish_fn(beam, impact_trace)
          end)
 
       local destroy_trace
       destroy_trace = radiant.events.listen(beam, 'radiant:entity:pre_destroy', function()
+            if assault_context then
+               stonehearth.combat:end_assault(assault_context)
+               assault_context = nil
+            end
+
+            if destroy_trace then
+               destroy_trace:destroy()
+               destroy_trace = nil
+            end
+         end)
+   elseif attack_info.ground_presence then
+      local ground_presence = self:_create_ground_presence(attacker, target, attack_info.ground_presence)
+      local ground_presence_component = ground_presence:add_component('tower_defense:ground_presence')
+      ground_presence_component:set_attack_cb(function(target, attack_info)
+            self:_inflict_attack({target}, target, attack_info, damage_multiplier)
+         end, _ignore_target_invis_filter_fn)
+      ground_presence_component:start()
+
+      impact_time = impact_time + (attack_info.ground_presence.duration or 1)
+
+      local impact_trace
+      impact_trace = radiant.events.listen(ground_presence, 'tower_defense:combat:ground_presence_terminated', function()
+            finish_fn(ground_presence, impact_trace)
+         end)
+
+      local destroy_trace
+      destroy_trace = radiant.events.listen(ground_presence, 'radiant:entity:pre_destroy', function()
             if assault_context then
                stonehearth.combat:end_assault(assault_context)
                assault_context = nil
@@ -1031,6 +1058,19 @@ function TowerComponent:_create_beam(attacker, target, beam_data, attacker_offse
    end
 
    return beam
+end
+
+function TowerComponent:_create_ground_presence(owner, target, ground_presence_data)
+   local uri = ground_presence_data.uri or 'stonehearth:object:transient'
+   local ground_presence = radiant.entities.create_entity(uri, { owner = owner })
+   
+   local ground_presence_component = ground_presence:add_component('tower_defense:ground_presence')
+   ground_presence_component:set_settings(ground_presence_data)
+
+   local origin = radiant.entities.get_world_location(target)
+   radiant.terrain.place_entity_at_exact_location(ground_presence, origin)
+
+   return ground_presence
 end
 
 function TowerComponent:_declare_states(sm)

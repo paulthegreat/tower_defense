@@ -1,0 +1,42 @@
+{
+   "type": "entity",
+   "components": {
+      "model_variants": {
+         "default": {
+            "models": [
+               "file(magma_pool.qb)"
+            ]
+         }
+      },
+      "effect_list": {
+         "default": "tower_defense:effects:fire_particles"
+      },
+      "render_info": {
+         "scale": 0.1
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0.1, "z": 0 },
+         "region_origin": { "x": 0, "y": 0, "z": 0 }
+      },
+      "region_collision_shape": {
+         "region": [
+            {
+               "min": { "x": -1, "y": 0, "z": -1 },
+               "max": { "x": 2, "y": 1, "z": 2 }
+            }
+         ],
+         "region_collision_type": "none"
+      },
+      "tower_defense:ground_presence": {}
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.ground_presence.magma_pool.display_name)",
+         "description": "i18n(tower_defense:entities.ground_presence.magma_pool.description)",
+         "category": "ground_presence",
+         "material_tags": [
+            "ground_presence"
+         ]
+      }
+   }
+}

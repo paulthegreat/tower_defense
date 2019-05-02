@@ -5,14 +5,12 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 6,
+            "radius": 5,
             "attacks_ground": true,
             "attacks_air": false,
             "target_filters": [
                "most_targets",
-               "shortest_debuff_time",
-               "highest_health",
-               "closest_to_start"
+               "closest_to_tower"
             ],
             "reveals_invis": false
          }
@@ -20,11 +18,7 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "burning": {
-               "uri": "tower_defense:buffs:monster:burning:normal",
-               "chance": 1
-            },
-            "armor_piercing": {
-               "uri": "tower_defense:buffs:monster:armor_piercing:normal",
+               "uri": "tower_defense:buffs:monster:burning:minor",
                "chance": 1
             }
          }
@@ -34,13 +28,22 @@
             "name": "plant",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 25,
-            "damage_type": "magical",
-            "aoe": {
-               "range": 1
+            "projectile": {
+               "speed": 25,
+               "uri": "stonehearth:weapons:bullet",
+               "scale_mult": 1,
+               "start_offset": { "x": 0, "y": 0.6, "z": 0 },
+               "end_offset": { "x": 0, "y": 0.8, "z": 0 }
             },
-            "attack_times": [600],
-            "cooldown": 2000,
+            "base_damage": 70,
+            "damage_type": "physical",
+            "secondary_attack": {
+               "range": 3,
+               "num_targets": 5,
+               "damage_multiplier": 0.5
+            },
+            "attack_times": [2000],
+            "cooldown": 3000,
             "priority": 0
          }
       ]

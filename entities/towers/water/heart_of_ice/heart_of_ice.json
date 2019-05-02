@@ -28,7 +28,7 @@
       "stonehearth:catalog": {
          "display_name": "i18n(tower_defense:entities.towers.heart_of_ice.display_name)",
          "description": "i18n(tower_defense:entities.towers.heart_of_ice.description)",
-         "icon": "/stonehearth/entities/decoration/manipulation/wet_stone/wet_stone.png",
+         "icon": "/stonehearth/entities/manipulation/wet_stone/wet_stone.png",
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {

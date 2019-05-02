@@ -1,0 +1,57 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.1,
+         "color_map": "stonehearth:color_map:magic",
+         "material_maps": [
+            "/stonehearth/data/materials/material_maps/magic_material_map.json"
+         ]
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/manipulation/dry_stone/dry_stone.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:magma_pools:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:magma_pools:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:magma_pools:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.magma_pools.display_name)",
+         "description": "i18n(tower_defense:entities.towers.magma_pools.description)",
+         "icon": "/stonehearth/entities/manipulation/dry_stone/dry_stone.png",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["fire", "earth"],
+         "level": 2,
+         "ordinal": 231,
+         "cost": {
+            "gold": 550
+         }
+      }
+   }
+}

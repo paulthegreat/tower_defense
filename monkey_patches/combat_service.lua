@@ -37,7 +37,7 @@ function TDCombatService:calculate_damage(attacker, target, attack_info, damage_
       base_damage = rng:get_real(base_damage[1], base_damage[2])
    end
 
-   if base_damage == 0 then
+   if not base_damage or base_damage == 0 then
       return 0
    end
 

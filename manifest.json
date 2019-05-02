@@ -109,6 +109,7 @@
       "effects:water_particles": "file(data/effects/water_particles.json)",
       "effects:lightning_bolt": "file(data/effects/lightning_bolt.json)",
       "end_portal:firepit_titan": "file(entities/end_portal/firepit_titan/firepit_titan.json)",
+      "ground_presence:magma_pool": "file(entities/ground_presence/magma_pool/magma_pool.json)",
       "kingdoms:monsters:air": "file(data/populations/monsters/air_population.json)",
       "kingdoms:fire": "file(data/populations/players/fire_population.json)",
       "kingdoms:air": "file(data/populations/players/air_population.json)",
@@ -235,6 +236,14 @@
       "towers:arc_lightning:weapon": "file(entities/towers/arc_lightning/arc_lightning_weapon.json)",
       "towers:arc_lightning:weapon_damage": "file(entities/towers/arc_lightning/arc_lightning_weapon_damage.json)",
       "towers:arc_lightning:weapon_utility": "file(entities/towers/arc_lightning/arc_lightning_weapon_utility.json)",
+      "towers:fire_grenade": "file(entities/towers/fire_grenade/fire_grenade.json)",
+      "towers:fire_grenade:weapon": "file(entities/towers/fire_grenade/fire_grenade_weapon.json)",
+      "towers:fire_grenade:weapon_damage": "file(entities/towers/fire_grenade/fire_grenade_weapon_damage.json)",
+      "towers:fire_grenade:weapon_utility": "file(entities/towers/fire_grenade/fire_grenade_weapon_utility.json)",
+      "towers:magma_pools": "file(entities/towers/magma_pools/magma_pools.json)",
+      "towers:magma_pools:weapon": "file(entities/towers/magma_pools/magma_pools_weapon.json)",
+      "towers:magma_pools:weapon_damage": "file(entities/towers/magma_pools/magma_pools_weapon_damage.json)",
+      "towers:magma_pools:weapon_utility": "file(entities/towers/magma_pools/magma_pools_weapon_utility.json)",
       "towers:earthbud_plant": "file(entities/towers/earthbud_plant/earthbud_plant.json)",
       "towers:earthbud_plant:weapon": "file(entities/towers/earthbud_plant/earthbud_plant_weapon.json)",
       "towers:stone_vine": "file(entities/towers/stone_vine/stone_vine.json)",
@@ -285,17 +294,18 @@
    },
    "components" : {
       "ai": "file(components/ai/ai_component.lua)",
+      "beam": "file(components/beam/beam_component.lua)",
+      "ground_presence": "file(components/ground_presence/ground_presence_component.lua)",
       "monster": "file(components/monster/monster_component.lua)",
-      "tower": "file(components/tower/tower_component.lua)",
-      "beam": "file(components/beam/beam_component.lua)"
+      "tower": "file(components/tower/tower_component.lua)"
    },
    "client_components" : {
       "tower": "file(components/tower/tower_component.lua)"
    },
    "component_renderers" : {
+      "beam": "file(renderers/beam/beam_renderer.lua)",
       "monster": "file(renderers/monster/monster_renderer.lua)",
-      "tower": "file(renderers/tower/tower_renderer.lua)",
-      "beam": "file(renderers/beam/beam_renderer.lua)"
+      "tower": "file(renderers/tower/tower_renderer.lua)"
    },
    "controllers" : {
       "game_player": "file(services/server/game/game_player.lua)",
