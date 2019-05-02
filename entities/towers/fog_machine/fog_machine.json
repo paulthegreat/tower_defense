@@ -1,0 +1,53 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.1
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/furniture/comfy_bed_pet/comfy_bed_pet.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": -0.05, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:fog_machine:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:fog_machine:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:fog_machine:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.fog_machine.display_name)",
+         "description": "i18n(tower_defense:entities.towers.fog_machine.description)",
+         "icon": "/stonehearth/entities/furniture/comfy_bed_pet/comfy_bed_pet.png",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["air", "water"],
+         "level": 1,
+         "ordinal": 111,
+         "cost": {
+            "gold": 200
+         }
+      }
+   }
+}

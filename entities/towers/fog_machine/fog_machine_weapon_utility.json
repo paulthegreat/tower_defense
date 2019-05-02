@@ -1,0 +1,42 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 4,
+            "attacks_ground": true,
+            "attacks_air": false,
+            "target_filters": [],
+            "reveals_invis": true,
+            "sees_invis": true
+         }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "armor_piercing": {
+               "uri": "tower_defense:buffs:monster:armor_piercing:minor",
+               "chance": 1
+            },
+            "slow": {
+               "uri": "tower_defense:buffs:monster:slow:minor",
+               "chance": 1
+            }
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "plant",
+            "effect": "tower_defense:effects:air_particles",
+            "hit_effect": "tower_defense:effects:water_particles",
+            "base_damage": 5,
+            "damage_type": "magical",
+            "num_targets": 999,
+            "attack_times": [500],
+            "cooldown": 4000,
+            "priority": 0
+         }
+      ]
+   }
+}
