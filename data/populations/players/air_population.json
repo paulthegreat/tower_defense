@@ -1,5 +1,6 @@
 {
    "type": "kingdom",
+   "kingdom_level_costs": "tower_defense:data:kingdom_level_costs:air",
    "display_name": "i18n(tower_defense:data.population.air.display_name)",
    "kingdom_id": "air",
    "favored_biome": "stonehearth:biome:temperate",
