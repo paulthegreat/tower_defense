@@ -617,7 +617,15 @@ App.StonehearthCommandButtonView = App.View.extend({
       var hkaction = this.content.hotkey_action;
       this.$('div').attr('hotkey_action', hkaction);
       this._super();
-      App.hotkeyManager.makeTooltipWithHotkeys(this.$('div'), this.content.display_name, this.content.description);
+
+      var description = this.content.description;
+      var upgradeType = this.content.args && this.content.args[0];
+      if (upgradeType == 'damage' || upgradeType == 'utility') {
+         var catalogData = App.catalog.getCatalogData(this.get("parentView.model.uri"));
+         var towerWeapons = catalogData.tower && catalogData.tower.weapons && catalogData.tower.weapons.upgrades;
+         description = tower_defense.getTowerWeaponTooltipContent(towerWeapons[upgradeType].uri);
+      }
+      App.hotkeyManager.makeTooltipWithHotkeys(this.$('div'), this.content.display_name, description);
    },
 
    willDestroyElement: function() {

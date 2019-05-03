@@ -536,6 +536,33 @@
             "filterName": {
                "display_name": "Filter"
             }
+         },
+         "tooltips": {
+            "tower_weapons": {
+               "range_title": "Range:",
+               "damage_title": "Damage:",
+               "cooldown_title": "Cooldown:",
+               "buffs_title": "Buffs:",
+               "aoe_radius": "AOE Radius:",
+               "aoe_damage": "AOE Damage:",
+               "secondary_range": "Secondary Range:",
+               "secondary_attacks": "Secondary Attacks:",
+               "secondary_dmg_mult": "Secondary Dmg Mult:",
+               "passthrough_attack": "Attack hits all enemies passed through",
+               "ground_presence": "Ground Presence:",
+               "gp_duration": "Duration:",
+               "gp_period": "Period:",
+               "range_circle": "[str(radius)] (circ)",
+               "range_rectangle": "[str(x)]x[str(z)] (rect)",
+               "damage": "<span class='damageType-[str(damage_type)]'>[str(base_damage)]<img class='damageTypeImg [str(damage_type)]'></span>",
+               "attacks_ground": " [Ground]",
+               "attacks_air": " [Air]",
+               "reveals_invis": " [Reveals]",
+               "sees_invis": " [Sees]",
+               "num_attacks": " x [str(num_attacks)] attacks",
+               "num_targets": " x [str(num_targets)] targets",
+               "max_attacks_per_target": " ([str(max_per_target)] max per target)"
+            }
          }
       },
       "shell": {

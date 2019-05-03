@@ -118,8 +118,13 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
       }
 
       var description = i18n.t(node.description, data);
-      if (node.towerData && node.towerData.cost) {
-         description += `<div class='towerCost'>${node.towerData.cost}</div>`;
+      if (node.towerData) {
+         if (node.towerData.weapons && node.towerData.weapons.default_weapon) {
+            description += tower_defense.getTowerWeaponTooltipContent(node.towerData.weapons.default_weapon);
+         }
+         if (node.towerData.cost) {
+            description += `<div class='towerCost'>${node.towerData.cost}</div>`;
+         }
       }
       if (node.requirement_text && item.hasClass('locked')) {
          description = description + '<span class=warn>' + i18n.t(node.requirement_text, {i18n_data: node.towerData}) + '</span>';

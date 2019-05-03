@@ -404,7 +404,8 @@
          "file(ui/game/start_menu/stonehearth_menu.js)",
          "file(ui/game/traces/catalog.js)",
          "file(ui/shell/select_game_story/select_game_story.js)",
-         "file(ui/root/js/stonehearth/stonehearth_client.js)"
+         "file(ui/root/js/stonehearth/stonehearth_client.js)",
+         "file(ui/root/js/tower_defense.js)"
       ],
       "less": [
          "file(ui/game/resource_display/resource_display.less)",

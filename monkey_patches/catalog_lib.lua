@@ -33,8 +33,17 @@ function td_catalog_lib._update_catalog_data(catalog_data, uri, json)
 
    if json and json.entity_data and json.entity_data['tower_defense:tower_data'] then
       catalog_data.tower = json.entity_data['tower_defense:tower_data']
-      if json.components and json.components['stonehearth:equipment_piece'] and json.components['stonehearth:equipment_piece'].items then
-         catalog_data.tower.equipment = td_catalog_lib.get_tower_equipment(json.components['stonehearth:equipment_piece'].items)
+      if json.components and json.components['tower_defense:tower'] then
+         catalog_data.tower.weapons = json.components['tower_defense:tower']
+      end
+   end
+
+   if catalog_data.category == 'tower_weapon' and json.entity_data['stonehearth:combat:weapon_data'] then
+      catalog_data.tower_weapon_targeting = json.entity_data['stonehearth:combat:weapon_data'].targeting
+      local attacks = json.entity_data['stonehearth:combat:ranged_attacks']
+      if attacks then
+         -- we only care about the primary attack (if there even are any extra attacks)
+         catalog_data.tower_weapon_attack_info = attacks[1]
       end
    end
 end
@@ -52,6 +61,7 @@ function td_catalog_lib.get_buffs(buff_data)
                display_name = json.display_name,
                description = json.description,
                icon = json.icon,
+               max_stacks = json.max_stacks or 1,
                invisible_to_player = json.invisible_to_player,
                invisible_on_crafting = json.invisible_on_crafting
             })

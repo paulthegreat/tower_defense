@@ -47,7 +47,7 @@
          "material_tags": ["ground"]
       },
       "tower_defense:tower_data": {
-         "kingdoms": ["water", "plants"],
+         "kingdoms": ["water", "plant"],
          "level": 2,
          "ordinal": 251,
          "cost": {
