@@ -26,17 +26,17 @@
    color: @goldColor;
 }
 
-.costImg {
+.inlineImg {
    height: 20px;
    //padding: 2px;
    vertical-align: middle;
    margin-top: -8px;
 }
 
-.costImg.gold {
+.inlineImg.gold {
    content: url(/tower_defense/ui/game/start_menu/images/gold_10.png);
 }
-.costImg.wood {
+.inlineImg.wood {
    content: url(/tower_defense/ui/game/start_menu/images/wood.png);
 }
 
@@ -52,12 +52,17 @@
 }
 
 .entryTitle {
+   font-size: 16px;
    font-family: 'groboldregular';
    color: lightslategray;
 }
 
+.entryTitle.indented {
+   padding-left: 20px;
+}
+
 .entryValue {
-   font-family: 'groboldregular';
+   padding-left: 20px;
    color: whitesmoke;
 }
 
@@ -71,18 +76,40 @@
    color: darkorchid;
 }
 
-.damageTypeImg{
-   height: 20px;
-   vertical-align: middle;
-   margin-top: -8px;
+.passthroughAttack {
+   font-style: italic;
+   font-weight: 800;
 }
 
-.damageTypeImg.physical {
+.inlineImg.physical {
    content: url(/tower_defense/ui/game/start_menu/images/damageTypePhysical.png);
 }
-.damageTypeImg.magical {
+.inlineImg.magical {
    content: url(/tower_defense/ui/game/start_menu/images/damageTypeMagical.png);
 }
-.damageTypeImg.pure {
+.inlineImg.pure {
    content: url(/tower_defense/ui/game/start_menu/images/damageTypePure.png);
+}
+
+.inlineImg.circle {
+   content: url(/tower_defense/ui/game/start_menu/images/target_circle.png);
+}
+.inlineImg.square {
+   content: url(/tower_defense/ui/game/start_menu/images/target_square.png);
+}
+.inlineImg.rect {
+   content: url(/tower_defense/ui/game/start_menu/images/target_rect.png);
+}
+
+.inlineImg.ground {
+   content: url(/tower_defense/ui/game/start_menu/images/ground.png);
+}
+.inlineImg.air {
+   content: url(/tower_defense/ui/game/start_menu/images/air.png);
+}
+.inlineImg.reveals {
+   content: url(/tower_defense/ui/game/start_menu/images/reveals_invis.png);
+}
+.inlineImg.sees {
+   content: url(/tower_defense/ui/game/start_menu/images/sees_invis.png);
 }

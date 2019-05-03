@@ -136,16 +136,16 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
    -- end
 end
 
-function TowerCallHandler:sell_full(session, response, tower)
+function TowerCallHandler:sell_full(session, response, tower, gold_multiplier)
    validator.expect_argument_types({'Entity'}, tower)
 
-   self:_sell_tower(session, response, tower)
+   self:_sell_tower(session, response, tower, gold_multiplier)
 end
 
-function TowerCallHandler:sell_less(session, response, tower)
+function TowerCallHandler:sell_less(session, response, tower, gold_multiplier)
    validator.expect_argument_types({'Entity'}, tower)
 
-   self:_sell_tower(session, response, tower, 0.2)
+   self:_sell_tower(session, response, tower, gold_multiplier)
 end
 
 function TowerCallHandler:_sell_tower(session, response, tower, multiplier)

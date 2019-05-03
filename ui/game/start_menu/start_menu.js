@@ -148,7 +148,8 @@ App.StonehearthStartMenuView = App.View.extend({
       var newDataTbl = {};
       radiant.each(catalogData, function(uri, entityData) {
          if (entityData.tower && Array.isArray(entityData.tower.kingdoms)) {
-            entityData.tower.cost = self._getCostString(entityData.tower.cost);
+            entityData.tower.gold_cost = (entityData.tower.cost && entityData.tower.cost.gold || 0) * self._towerGoldCostMultiplier;
+            entityData.tower.cost = tower_defense.getCostString(entityData.tower.cost, self._towerGoldCostMultiplier);
             entityData.tower.detailed_description = entityData.tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)';
             entityData.tower.description = entityData.description;
             entityData.tower.required_kingdoms = self._getRequiredKingdoms(entityData.tower);
@@ -211,18 +212,6 @@ App.StonehearthStartMenuView = App.View.extend({
       });
 
       return newData;
-   },
-
-   _getCostString: function(costTable) {
-      var self = this;
-      var cost = '';
-      radiant.each(costTable, function(resource, amount) {
-         if (resource == 'gold') {
-            amount = Math.ceil(amount * self._towerGoldCostMultiplier);
-         }
-         cost += `<span class='costValue'>${amount}</span><img class='costImg ${resource}'> `;
-      });
-      return cost;
    },
 
    _getRequiredKingdoms: function(towerData) {

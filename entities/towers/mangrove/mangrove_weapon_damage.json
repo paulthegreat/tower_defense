@@ -31,10 +31,10 @@
                      "base_damage": 50,
                      "damage_type": "physical"
                   },
-                  "buffs": {
-                     "tower_defense:buffs:monster:slow:major": {},
-                     "tower_defense:buffs:monster:poison:major": {}
-                  }
+                  "buffs": [
+                     "tower_defense:buffs:monster:slow:major",
+                     "tower_defense:buffs:monster:poison:major"
+                  ]
                }
             },
             "attack_times": [600],

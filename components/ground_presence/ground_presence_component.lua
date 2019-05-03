@@ -99,8 +99,8 @@ function GroundPresenceComponent:_do_things(entity, things)
    end
 
    if things.buffs then
-      for uri, options in pairs(things.buffs) do
-         radiant.entities.add_buff(entity, uri, options)
+      for _, uri in ipairs(things.buffs) do
+         radiant.entities.add_buff(entity, uri)
       end
    end
 end

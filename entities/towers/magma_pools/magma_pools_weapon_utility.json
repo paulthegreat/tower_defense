@@ -22,7 +22,7 @@
             "ground_presence": {
                "uri": "tower_defense:ground_presence:magma_pool",
                "facing": "random_cardinal",
-               "range": 1,
+               "range": 1.5,
                "duration": 4000,
                "period": 1000,
                "do_on_duration_finished": true,
@@ -31,10 +31,10 @@
                      "base_damage": 50,
                      "damage_type": "magical"
                   },
-                  "buffs": {
-                     "tower_defense:buffs:monster:burning:major": {},
-                     "tower_defense:buffs:monster:magic_armor_piercing:major": {}
-                  }
+                  "buffs": [
+                     "tower_defense:buffs:monster:burning:major",
+                     "tower_defense:buffs:monster:magic_armor_piercing:major"
+                  ]
                }
             },
             "attack_times": [800],

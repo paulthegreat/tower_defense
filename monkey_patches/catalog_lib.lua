@@ -44,6 +44,15 @@ function td_catalog_lib._update_catalog_data(catalog_data, uri, json)
       if attacks then
          -- we only care about the primary attack (if there even are any extra attacks)
          catalog_data.tower_weapon_attack_info = attacks[1]
+
+         local ground_presence = catalog_data.tower_weapon_attack_info.ground_presence
+         if ground_presence then
+            for _, instance in ipairs({'first_time', 'other_times', 'every_time'}) do
+               if ground_presence[instance] and ground_presence[instance].buffs then
+                  ground_presence[instance].buffs = td_catalog_lib.get_buffs(ground_presence[instance].buffs)
+               end
+            end
+         end
       end
    end
 end
@@ -53,18 +62,30 @@ function td_catalog_lib.get_buffs(buff_data)
    if buff_data then
       for buff, data in pairs(buff_data) do
          local uri = type(data) == 'table' and data.uri or data
+         local jsons = {}
          local json = radiant.resources.load_json(uri)
          if json then
-            table.insert(buffs, {
-               uri = uri,
-               axis = json.axis,
-               display_name = json.display_name,
-               description = json.description,
-               icon = json.icon,
-               max_stacks = json.max_stacks or 1,
-               invisible_to_player = json.invisible_to_player,
-               invisible_on_crafting = json.invisible_on_crafting
-            })
+            -- check if this buff is just being used to apply other buffs
+            if json.invisible_to_player and json.script_info and json.script_info.buffs then
+               for _, sub_uri in ipairs(json.script_info.buffs) do
+                  jsons[sub_uri] = radiant.resources.load_json(sub_uri)
+               end
+            else
+               jsons[uri] = json
+            end
+
+            for uri, json in pairs(jsons) do
+               table.insert(buffs, {
+                  uri = uri,
+                  axis = json.axis,
+                  display_name = json.display_name,
+                  description = json.description,
+                  icon = json.icon,
+                  max_stacks = json.max_stacks or 1,
+                  invisible_to_player = json.invisible_to_player,
+                  invisible_on_crafting = json.invisible_on_crafting
+               })
+            end
          end
       end
    end

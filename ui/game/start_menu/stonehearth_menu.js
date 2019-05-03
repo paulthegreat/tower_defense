@@ -133,10 +133,7 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
          item.off('click.upgrade');
          
          if (node.kingdom_level_cost) {
-            var cost = '';
-            radiant.each(node.kingdom_level_cost, function(resource, amount) {
-               cost += `<span class='costValue'>${amount}</span><img class='costImg ${resource}'> `;
-            });
+            var cost = tower_defense.getCostString(node.kingdom_level_cost);
             description += '<span class=warn>' + i18n.t('i18n(tower_defense:ui.game.menu.build_menu.kingdom_level_cost)', {i18n_data: {cost: cost} }) + '</span>';
             item.on('click.upgrade', function(e) {
                if (e.altKey) {

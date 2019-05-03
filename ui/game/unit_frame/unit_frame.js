@@ -42,7 +42,12 @@ App.StonehearthUnitFrameView = App.View.extend({
       },
       'stonehearth:expendable_resources' : {},
       "stonehearth:unit_info": {},
-      "stonehearth:material": {}
+      "stonehearth:material": {},
+      "stonehearth:equipment": {
+         "equipped_items": {
+            "mainhand": {} // if we ever want to equip more than one item and show the user that data, this may have to change
+         }
+      }
    },
 
    allowedClasses: null,
@@ -581,6 +586,21 @@ App.StonehearthUnitFrameView = App.View.extend({
          );
    }.observes('model.tower_defense:tower.sticky_targeting'),
 
+   _updateWeapon: function() {
+      var self = this;
+      var uri = self.get('model.stonehearth:equipment.equipped_items.mainhand.uri');
+      if (uri) {
+         App.tooltipHelper.attachTooltipster(self.$('#descriptionDiv'),
+               $(App.tooltipHelper.createTooltip(i18n.t(self.get('display_name')),
+                  tower_defense.getTowerWeaponTooltipContent(uri)
+               ))
+            );
+      }
+      else if(self.$('#descriptionDiv').hasClass('tooltipstered')) {
+         self.$('#descriptionDiv').tooltipster('destroy');
+      }
+   }.observes('model.stonehearth:equipment.equipped_items.mainhand.uri'),
+
    actions: {
       selectParty: function() {
          radiant.call_obj('stonehearth.party_editor', 'select_party_for_entity_command', this.get('uri'))
@@ -618,14 +638,23 @@ App.StonehearthCommandButtonView = App.View.extend({
       this.$('div').attr('hotkey_action', hkaction);
       this._super();
 
+      var display_name = this.content.display_name;
       var description = this.content.description;
-      var upgradeType = this.content.args && this.content.args[0];
-      if (upgradeType == 'damage' || upgradeType == 'utility') {
-         var catalogData = App.catalog.getCatalogData(this.get("parentView.model.uri"));
+
+      var argValue = this.content.args && this.content.args[0];
+      var catalogData = App.catalog.getCatalogData(this.get("parentView.model.uri"));
+      if (argValue == 'damage' || argValue == 'utility') {
          var towerWeapons = catalogData.tower && catalogData.tower.weapons && catalogData.tower.weapons.upgrades;
-         description = tower_defense.getTowerWeaponTooltipContent(towerWeapons[upgradeType].uri);
+         description = tower_defense.getTowerWeaponTooltipContent(towerWeapons[argValue].uri);
       }
-      App.hotkeyManager.makeTooltipWithHotkeys(this.$('div'), this.content.display_name, description);
+      else if (typeof argValue == 'number') {
+         // assume this is the gold multiplier value for selling
+         var cost = catalogData.tower && catalogData.tower.gold_cost;
+         if (cost) {
+            display_name = i18n.t(display_name, {value: Math.floor(cost * argValue)});
+         }
+      }
+      App.hotkeyManager.makeTooltipWithHotkeys(this.$('div'), display_name, description);
    },
 
    willDestroyElement: function() {

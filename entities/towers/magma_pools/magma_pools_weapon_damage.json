@@ -31,9 +31,9 @@
                      "base_damage": 50,
                      "damage_type": "magical"
                   },
-                  "buffs": {
-                     "tower_defense:buffs:monster:burning:major": {}
-                  }
+                  "buffs": [
+                     "tower_defense:buffs:monster:burning:major"
+                  ]
                }
             },
             "attack_times": [800],
