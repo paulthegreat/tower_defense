@@ -1,10 +1,10 @@
 {
-	"info" : {
-		"name" : "SH:TD",
-		"namespace" : "tower_defense",
-		"version" : 3,
-		"steam_file_id" : "1704290816"
-	},
+   "info": {
+      "name": "SH:TD",
+      "namespace": "tower_defense",
+      "version": 3,
+      "steam_file_id": "1704290816"
+   },
    "author": "Paul and the Greats",
    "dependencies": [
       "stonehearth",
@@ -15,8 +15,8 @@
    ],
    "client_init_script": "file(tower_defense_client)",
    "server_init_script": "file(tower_defense_server)",
-	"default_locale" : "en",
-	"aliases" : {
+   "default_locale": "en",
+   "aliases": {
       "actions:idle_action": "file(ai/actions/idle_action.lua)",
       "actions:monster_follow_path": "file(ai/actions/monster_follow_path_action.lua)",
       "actions:tower_attack": "file(ai/actions/tower_attack_action.lua)",
@@ -99,8 +99,8 @@
       "data:kingdom_level_costs:fire": "file(data/kingdoms/level_costs/fire.json)",
       "data:kingdom_level_costs:plants": "file(data/kingdoms/level_costs/plants.json)",
       "data:kingdom_level_costs:water": "file(data/kingdoms/level_costs/water.json)",
-      "data:map_generation" : "file(data/map_generation/default_map_generation.json)",
-      "data:map_generation:desert" : "file(data/map_generation/desert_map_generation.json)",
+      "data:map_generation": "file(data/map_generation/default_map_generation.json)",
+      "data:map_generation:desert": "file(data/map_generation/desert_map_generation.json)",
       "data:monster_tuning:low_air": "file(data/monster_tuning/low_air.json)",
       "data:monster_tuning:low_undead": "file(data/monster_tuning/low_undead.json)",
       "data:waves": "file(data/wave_index.json)",
@@ -113,7 +113,6 @@
       "effects:plant_particles": "file(data/effects/plant_particles.json)",
       "effects:water_particles": "file(data/effects/water_particles.json)",
       "effects:lightning_bolt": "file(data/effects/lightning_bolt.json)",
-      "effects:dry_stone_heat": "file(data/effects/dry_stone_heat.json)",
       "end_portal:firepit_titan": "file(entities/end_portal/firepit_titan/firepit_titan.json)",
       "ground_presence:magma_pool": "file(entities/ground_presence/magma_pool/magma_pool.json)",
       "ground_presence:mangrove_roots": "file(entities/ground_presence/mangrove_roots/mangrove_roots.json)",
@@ -285,14 +284,14 @@
       "weather:thunderstorm": "file(data/weather/thunderstorm)",
       "weather:windy": "file(data/weather/windy)"
    },
-	"mixintos" : {
+   "mixintos": {
       "stonehearth:hotkeys": "file(data/hotkeys.json)",
       "stonehearth:data:constants": "file(data/constants.json)",
       "stonehearth:biome:arctic": "file(data/biome/arctic.json)",
       "stonehearth:biome:desert": "file(data/biome/desert.json)",
       "stonehearth:biome:temperate": "file(data/biome/temperate.json)"
    },
-	"overrides" : {
+   "overrides": {
       "/stonehearth/ai/actions/run_to_location_action.lua": "file(ai/actions/run_to_location_action.lua)",
       "/stonehearth/data/ui/start_menu.json": "file(data/ui/start_menu.json)",
       "/stonehearth/mixins/monster/monster.json": "file(mixins/monster/monster.json)",
@@ -309,22 +308,22 @@
       "/stonehearth/services/server/weather/weather_service.lua": "file(services/server/weather/weather_service.lua)",
       "/stonehearth/services/server/weather/weather_state.lua": "file(services/server/weather/weather_state.lua)"
    },
-   "components" : {
+   "components": {
       "ai": "file(components/ai/ai_component.lua)",
       "beam": "file(components/beam/beam_component.lua)",
       "ground_presence": "file(components/ground_presence/ground_presence_component.lua)",
       "monster": "file(components/monster/monster_component.lua)",
       "tower": "file(components/tower/tower_component.lua)"
    },
-   "client_components" : {
+   "client_components": {
       "tower": "file(components/tower/tower_component.lua)"
    },
-   "component_renderers" : {
+   "component_renderers": {
       "beam": "file(renderers/beam/beam_renderer.lua)",
       "monster": "file(renderers/monster/monster_renderer.lua)",
       "tower": "file(renderers/tower/tower_renderer.lua)"
    },
-   "controllers" : {
+   "controllers": {
       "game_player": "file(services/server/game/game_player.lua)",
       "tower_stats": "file(components/tower/tower_stats.lua)",
       "wave": "file(services/server/game/wave.lua)"

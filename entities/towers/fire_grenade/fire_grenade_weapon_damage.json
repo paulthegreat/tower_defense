@@ -38,7 +38,8 @@
             "base_damage": 120,
             "damage_type": "physical",
             "secondary_attack": {
-               "range": 5,
+               "range": 4,
+               "hits_ground_and_air": true,
                "num_targets": 8,
                "damage_multiplier": 0.8
             },

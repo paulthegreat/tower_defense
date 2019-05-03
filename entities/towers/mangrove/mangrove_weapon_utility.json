@@ -22,6 +22,7 @@
             "ground_presence": {
                "uri": "tower_defense:ground_presence:mangrove_roots",
                "facing": "random_cardinal",
+               "range": 0.6,
                "duration": 40000,
                "period": 100,
                "do_on_duration_finished": false,

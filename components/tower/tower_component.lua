@@ -451,7 +451,7 @@ function TowerComponent:_get_filter_value(filter, target, attack_info, debuff_ca
       return stacks
       
    elseif filter == FILTER_TYPES.FILTER_MOST_TARGETS.key then
-      local targets = self:_get_aoe_targets(attack_info.aoe or attack_info.secondary_attack, radiant.entities.get_world_location(target))
+      local targets = self:_get_aoe_targets(attack_info.aoe or attack_info.secondary_attack or attack_info.ground_presence, radiant.entities.get_world_location(target))
       return targets and radiant.size(targets) or 0
       
    elseif filter == FILTER_TYPES.FILTER_TARGET_TYPE.key then
@@ -646,7 +646,7 @@ function TowerComponent:_get_attack_cube(info, location)
       cube = cube:extruded('y', MAX_PATH_HEIGHT_DIFFERENTIAL, MAX_PATH_HEIGHT_DIFFERENTIAL)
    end
 
-   return cube:translated(location)
+   return cube:translated(location + Point3(0.5, 0, 0.5))
 end
 
 function TowerComponent:_stop_current_effect()

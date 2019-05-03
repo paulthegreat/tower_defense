@@ -4,6 +4,202 @@
          "plant_growth": {
             "display_name": "Growth",
             "description": "The tower grows by 10% in size and damage."
+         },
+         "invisible": {
+            "invisible_buff": {
+               "display_name": "Invisible",
+               "description": "Cannot be directly targeted unless revealed by a tower or debuff."
+            }
+         },
+         "minor_armor": {
+            "display_name": "Minor Armor",
+            "description": "Reduces physical damage taken by 25%"
+         },
+         "normal_armor": {
+            "display_name": "Armor",
+            "description": "Reduces physical damage taken by 50%"
+         },
+         "major_armor": {
+            "display_name": "Major Armor",
+            "description": "Reduces physical damage taken by 75%"
+         },
+         "minor_armor_piercing": {
+            "display_name": "Minor Armor Pierced",
+            "description": "Counterracts 25% of physical damage reduction"
+         },
+         "normal_armor_piercing": {
+            "display_name": "Armor Pierced",
+            "description": "Counterracts 50% of physical damage reduction"
+         },
+         "major_armor_piercing": {
+            "display_name": "Major Armor Pierced",
+            "description": "Counterracts 75% of physical damage reduction"
+         },
+         "major_burning": {
+            "display_name": "Major Burning",
+            "description": "Burns for 200 magical per stack every 2 seconds for 6 seconds. Stacks to 3."
+         },
+         "minor_burning": {
+            "display_name": "Minor Burning",
+            "description": "Burns for 2 magical per stack every 2 seconds for 6 seconds. Stacks to 3."
+         },
+         "normal_burning": {
+            "display_name": "Burning",
+            "description": "Burns for 20 magical per stack every 2 seconds for 6 seconds. Stacks to 3."
+         },
+         "major_healing": {
+            "display_name": "Major Healing",
+            "description": "Heals for 10% of max HP every second"
+         },
+         "minor_healing": {
+            "display_name": "Minor Healing",
+            "description": "Heals for 1% of max HP every second"
+         },
+         "normal_healing": {
+            "display_name": "Healing",
+            "description": "Heals for 3% of max HP every second"
+         },
+         "minor_magic_armor": {
+            "display_name": "Minor Magic Armor",
+            "description": "Reduces magical damage taken by 25%"
+         },
+         "normal_magic_armor": {
+            "display_name": "Magic Armor",
+            "description": "Reduces magical damage taken by 50%"
+         },
+         "major_magic_armor": {
+            "display_name": "Major Magic Armor",
+            "description": "Reduces magical damage taken by 75%"
+         },
+         "minor_magic_armor_piercing": {
+            "display_name": "Minor Magic Armor Pierced",
+            "description": "Counterracts 25% of magical damage reduction"
+         },
+         "normal_magic_armor_piercing": {
+            "display_name": "Magic Armor Pierced",
+            "description": "Counterracts 50% of magical damage reduction"
+         },
+         "major_magic_armor_piercing": {
+            "display_name": "Major Magic Armor Pierced",
+            "description": "Counterracts 75% of magical damage reduction"
+         },
+         "minor_poison": {
+            "display_name": "Minor Poison",
+            "description": "Slows by 5%, increases physical damage taken by 10%, and causes 1 non-lethal magical damage every 3 seconds for 15 seconds."
+         },
+         "normal_poison": {
+            "display_name": "Poison",
+            "description": "Slows by 10%, increases physical damage taken by 15%, and causes 10 non-lethal magical damage every 3 seconds for 15 seconds."
+         },
+         "major_poison": {
+            "display_name": "Major Poison",
+            "description": "Slows by 15%, increases physical damage taken by 20%, and causes 100 non-lethal magical damage every 3 seconds for 15 seconds."
+         },
+         "minor_reveal": {
+            "display_name": "Minor Reveal",
+            "description": "Reveals invisibility for a few seconds"
+         },
+         "normal_reveal": {
+            "display_name": "Reveal",
+            "description": "Reveals invisibility for a short while"
+         },
+         "major_reveal": {
+            "display_name": "Major Reveal",
+            "description": "Permanently reveals invisibility"
+         },
+         "minor_slow": {
+            "display_name": "Minor Slow",
+            "description": "Slows movement by 25%"
+         },
+         "normal_slow": {
+            "display_name": "Slow",
+            "description": "Slows movement by 50%"
+         },
+         "major_slow": {
+            "display_name": "Major Slow",
+            "description": "Slows movement by 75%"
+         },
+         "minor_wound": {
+            "display_name": "Minor Wound",
+            "description": "Reduces healing by 25%"
+         },
+         "normal_wound": {
+            "display_name": "Wound",
+            "description": "Reduces healing by 50%"
+         },
+         "major_wound": {
+            "display_name": "Major Wound",
+            "description": "Reduces healing by 75%"
+         },
+         "tower": {
+            "minor_avoidance_decrease": {
+               "display_name": "Minor Avoidance Decrease",
+               "description": "[NYI] Reduces avoidance by 5%"
+            },
+            "minor_avoidance_increase": {
+               "display_name": "Minor Avoidance",
+               "description": "[NYI] Increases avoidance by 5%"
+            },
+            "minor_armor_decrease": {
+               "display_name": "Minor Physical Damage",
+               "description": "Increases physical damage taken by 5%"
+            },
+            "minor_armor_increase": {
+               "display_name": "Minor Physical Damage Reduction",
+               "description": "Reduces physical damage taken by 5%"
+            },
+            "minor_speed_decrease": {
+               "display_name": "Minor Speed Reduction",
+               "description": "Reduces speed by 5%"
+            },
+            "minor_speed_increase": {
+               "display_name": "Minor Speed",
+               "description": "Increases speed by 5%"
+            },
+            "major_cooldown_decrease": {
+               "display_name": "Major Cooldown Reduction",
+               "description": "Reduces cooldown times by 25%"
+            },
+            "normal_cooldown_decrease": {
+               "display_name": "Cooldown Reduction",
+               "description": "Reduces cooldown times by 10%"
+            },
+            "minor_cooldown_decrease": {
+               "display_name": "Minor Cooldown Reduction",
+               "description": "Reduces cooldown times by 5%"
+            },
+            "minor_cooldown_increase": {
+               "display_name": "Minor Cooldown",
+               "description": "Increases cooldown times by 5%"
+            },
+            "normal_damage_increase": {
+               "display_name": "Damage",
+               "description": "Increases damage by 10%"
+            },
+            "minor_damage_increase": {
+               "display_name": "Minor Damage",
+               "description": "Increases damage by 5%"
+            },
+            "minor_damage_decrease": {
+               "display_name": "Minor Damage Reduction",
+               "description": "Reduces damage by 5%"
+            },
+            "minor_accuracy_decrease": {
+               "display_name": "Minor Accuracy Reduction",
+               "description": "[NYI] Reduces accuracy by 5%"
+            },
+            "minor_accuracy_increase": {
+               "display_name": "Minor Accuracy",
+               "description": "[NYI] Increases accuracy by 5%"
+            }
+         },
+         "gold_mining": {
+            "display_name": "Gold Mining",
+            "description": "Grants the displayed amount of gold at the end of the round."
+         },
+         "wood_investment": {
+            "display_name": "Wood Investment",
+            "description": "Grants the displayed amount of wood when harvested."
          }
       },
       "population": {
@@ -51,6 +247,18 @@
          "sell_less": {
             "display_name": "Sell for 20%",
             "description": "You waited too long! Inflation! Depreciation! This tower is garbage now."
+         },
+         "harvest_wood_investment": {
+            "display_name": "Harvest",
+            "description": "Yields wood as shown in the Wood Investment buff and resets growth to 0."
+         },
+         "upgrade_tower_damage": {
+            "display_name": "Upgrade Damage",
+            "description": "[This tooltip will get replaced by a dynamic one.]"
+         },
+         "upgrade_tower_utility": {
+            "display_name": "Upgrade Utility",
+            "description": "[This tooltip will get replaced by a dynamic one.]"
          }
       },
       "tower": {
@@ -102,27 +310,27 @@
          },
          "cactus_plant": {
             "display_name": "Cactus",
-            "description": "spiky description"
+            "description": "Simple plinking poison attack"
          },
          "earthbud_plant": {
             "display_name": "Earthbud",
-            "description": "dirty description"
+            "description": "Moderate damage and inflicts normal wound in small AOE"
          },
          "foxlily_plant": {
             "display_name": "Foxlily",
-            "description": "foxy description"
+            "description": "Inflicts normal poison, targets ground and air"
          },
          "gold_mine": {
             "display_name": "Gold Mine",
-            "description": "Provides decreasing (but always valuable) gold after every wave."
+            "description": "Gives gold at the end of each round, starting at 20 and going down by 1 each time to a minimum of 5"
          },
          "sugarbell_plant": {
             "display_name": "Sugarbell",
-            "description": "sweet description"
+            "description": "Moderate damage, a quick attack, inflicts minor poison"
          },
          "sunflower_plant": {
             "display_name": "Sunflower",
-            "description": "sunny description"
+            "description": "Spits its seed at up to 5 targets at once, inflicting major poison"
          },
          "small_turret": {
             "display_name": "Small Turret",
@@ -135,6 +343,152 @@
          "turnip_shooter": {
             "display_name": "Turnip Shooter",
             "description": "It shoots turnips! Gross."
+         },
+         "water_101": {
+            "display_name": "Water 101",
+            "description": "Low damage, but cheap, fast attack, inflicts minor slow."
+         },
+         "water_102": {
+            "display_name": "Water 102",
+            "description": "Moderate damage, targets ground and air."
+         },
+         "water_103": {
+            "display_name": "Water 103",
+            "description": "Attacks two targets and inflicts minor slow."
+         },
+         "chain_frost": {
+            "display_name": "Chain Frost",
+            "description": "Like the Dota 2 ability"
+         },
+         "frost_blast": {
+            "display_name": "Frost Blast",
+            "description": "Like the Dota 2 ability"
+         },
+         "heart_of_ice": {
+            "display_name": "Heart of Ice",
+            "description": "Moderate damage, inflicts major slow, and targets ground and air"
+         },
+         "air_101": {
+            "display_name": "Li'l Plinker",
+            "description": "Fast moderate attacks on air"
+         },
+         "air_102": {
+            "display_name": "Ol' Plonker",
+            "description": "Slow, moderate attacks on air and ground"
+         },
+         "air_103": {
+            "display_name": "Buffer",
+            "description": "Reduces cooldown times of all nearby towers"
+         },
+         "duster": {
+            "display_name": "Duster",
+            "description": "Passively reveals invisible monsters in full attack region"
+         },
+         "bone_piercer": {
+            "display_name": "Bone Piercer",
+            "description": "Fast pure damage attack targeting air"
+         },
+         "refreshing_wind": {
+            "display_name": "Refreshing Wind",
+            "description": "Major cooldown reduction aura tower"
+         },
+         "flame": {
+            "display_name": "Flame",
+            "description": "Applies low level burning debuff"
+         },
+         "flare": {
+            "display_name": "Flare",
+            "description": "Very low damage, applies medium duration reveal debuff to targets"
+         },
+         "fire_103": {
+            "display_name": "Fire 103",
+            "description": "Very quickly applies 3 stacks of minor burning to the target"
+         },
+         "sunburst": {
+            "display_name": "Sunburst",
+            "description": "Passively reveals in full range and permanently reveals attacked targets"
+         },
+         "fire_plume": {
+            "display_name": "Fire Plume",
+            "description": "Narrow aoe attack that applies normal burning"
+         },
+         "laserbeam": {
+            "display_name": "Laserbeam",
+            "description": "Fires a beam that periodically deals damage and inflicts major burning."
+         },
+         "template_turret": {
+            "display_name": "Template Turret",
+            "description": "Template Turret Description"
+         },
+         "earth_pounder": {
+            "display_name": "Earth Pounder",
+            "description": "Cheap and hard-hitting, Earth's bread and butter"
+         },
+         "scattershot": {
+            "display_name": "Scattershot",
+            "description": "Shoots up to 3 targets at once for moderate damage"
+         },
+         "crusher": {
+            "display_name": "Crusher",
+            "description": "Slow attack, good single-target damage, wounds"
+         },
+         "cannonball_gun": {
+            "display_name": "Cannonball Gun",
+            "description": "Shoots a cannonball that hits every target it moves through"
+         },
+         "seismic_slammer": {
+            "display_name": "Seismic Slammer",
+            "description": "Echo Slam: the tower"
+         },
+         "anaconda_vine": {
+            "display_name": "Anaconda Vine",
+            "description": "Moderate damage, wounds and slows"
+         },
+         "fog_machine": {
+            "display_name": "Fog Machine",
+            "description": "Low damage, inflicts minor armor piercing, passively reveals in full range"
+         },
+         "blizzard": {
+            "display_name": "Blizzard",
+            "description": "Moderate damage, applies heavy slow debuff in narrow AOE"
+         },
+         "lightning_bolt": {
+            "display_name": "Lightning Bolt",
+            "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals target and nearby enemies for a couple seconds"
+         },
+         "arc_lightning": {
+            "display_name": "Arc Lightning",
+            "description": "Chain lightning, like Dota 2 Zeus ability, hits a target in a short range, then bounces to a new target in a short range X times"
+         },
+         "fire_grenade": {
+            "display_name": "Fire Grenade",
+            "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, but all apply burning"
+         },
+         "magma_pools": {
+            "display_name": "Magma",
+            "description": "Its attack creates a pool of magma on the ground that lasts for a few seconds, causing burning to any enemies in it"
+         },
+         "stone_vine": {
+            "display_name": "Stone Vine",
+            "description": "Slow attack, high damage plus debuffs"
+         },
+         "boygrove": {
+            "display_name": "Boygrove",
+            "description": "Inflicts minor poison and minor slow, targets ground and air"
+         },
+         "mangrove": {
+            "display_name": "Mangrove",
+            "description": "Each attack grows roots in that place that last for a while; only does damage (and large slows) through the roots"
+         }
+      },
+      "ground_presence": {
+         "magma_pool": {
+            "display_name": "Magma Pool",
+            "description": "Inflicts damage and burning on monsters that walk through it."
+         },
+         "mangrove_roots": {
+            "display_name": "Mangrove Roots",
+            "description": "Inflicts physical damage and greatly slows monsters that walk through it."
          }
       }
    },
@@ -157,7 +511,6 @@
                "display_name": "Give Wood",
                "give_gold_10": "Give Wood (10)",
                "10_description": "Give yourself 10 wood, you cheater."
-
             }
          },
          "resourceDisplay": {
@@ -193,7 +546,7 @@
                }
             }
          },
-         "select_game_story":{
+         "select_game_story": {
             "title": "Choose your adventure",
             "story_start": "This is the story of...",
             "kingdom_section_start": "...a settlement from ",
