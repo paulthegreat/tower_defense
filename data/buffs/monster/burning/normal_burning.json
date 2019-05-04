@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "debuff",
+   "category": "burning",
    "display_name": "i18n(tower_defense:data.buffs.normal_burning.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_burning.description)",
    "duration": "6m",

@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "debuff",
+   "category": "slow",
    "display_name": "i18n(tower_defense:data.buffs.minor_slow.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_slow.description)",
    "icon": "file(minor_slow.png)",

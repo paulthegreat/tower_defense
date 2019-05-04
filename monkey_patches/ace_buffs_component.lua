@@ -58,6 +58,16 @@ function AceBuffsComponent:has_category_buffs(category)
    return self._sv.buffs_by_category[category] ~= nil
 end
 
+function AceBuffsComponent:get_debuffs()
+   local debuffs = {}
+   for uri, buff in pairs(self._sv.buffs) do
+      if buff:get_axis() == 'debuff' then
+         table.insert(debuffs, uri)
+      end
+   end
+   return debuffs
+end
+
 function AceBuffsComponent:get_buff(uri)
    return self._sv.buffs[uri]
 end

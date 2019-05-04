@@ -84,6 +84,10 @@ function AceBuff:remove_stack()
    end
 end
 
+function AceBuff:get_axis()
+   return self._sv.axis
+end
+
 function AceBuff:get_stacks()
    return self._sv.stacks
 end

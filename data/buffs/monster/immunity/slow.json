@@ -1,0 +1,9 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "disallowed_categories": ["slow"],
+   "display_name": "i18n(tower_defense:data.buffs.immunity.slow.display_name)",
+   "description": "i18n(tower_defense:data.buffs.immunity.slow.description)",
+   "icon": "file(slow.png)",
+   "persistent": true
+}

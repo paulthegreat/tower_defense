@@ -1,0 +1,13 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.random_self_purge.display_name)",
+   "description": "i18n(tower_defense:data.buffs.random_self_purge.description)",
+   "icon": "file(random_self_purge.png)",
+   "script": "tower_defense:buff_scripts:monster:periodic_purge",
+   "persistent": true,
+   "script_data": {
+      "type": "random",
+      "pulse": "5m"
+   }
+}

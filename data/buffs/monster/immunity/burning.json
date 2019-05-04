@@ -1,0 +1,9 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "disallowed_categories": ["burning"],
+   "display_name": "i18n(tower_defense:data.buffs.immunity.burning.display_name)",
+   "description": "i18n(tower_defense:data.buffs.immunity.burning.description)",
+   "icon": "file(burning.png)",
+   "persistent": true
+}

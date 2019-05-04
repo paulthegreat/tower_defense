@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "debuff",
+   "category": "poison",
    "display_name": "i18n(tower_defense:data.buffs.minor_poison.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_poison.description)",
    "duration": "15m",

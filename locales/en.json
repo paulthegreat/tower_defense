@@ -6,10 +6,20 @@
             "description": "The tower grows by 10% in size and damage."
          },
          "invisible": {
-            "invisible_buff": {
-               "display_name": "Invisible",
-               "description": "Cannot be directly targeted unless revealed by a tower or debuff."
-            }
+            "display_name": "Invisible",
+            "description": "Cannot be directly targeted unless revealed by a tower or debuff."
+         },
+         "aoe_purge": {
+            "display_name": "AOE Purge",
+            "description": "Periodically purges all nearby monsters of all debuffs"
+         },
+         "full_self_purge": {
+            "display_name": "Full Self Purge",
+            "description": "Periodically purges all debuffs from itself"
+         },
+         "random_self_purge": {
+            "display_name": "Random Purge",
+            "description": "Periodically purges a random debuff from itself"
          },
          "minor_armor": {
             "display_name": "Minor Armor",
@@ -200,6 +210,20 @@
          "wood_investment": {
             "display_name": "Wood Investment",
             "description": "Grants the displayed amount of wood when harvested."
+         },
+         "immunity": {
+            "burning": {
+               "display_name": "Burning Immunity",
+               "description": "Immune to all Burning debuffs"
+            },
+            "poison": {
+               "display_name": "Poison Immunity",
+               "description": "Immune to all Poison debuffs"
+            },
+            "slow": {
+               "display_name": "Slow Immunity",
+               "description": "Immune to all Slow debuffs"
+            }
          }
       },
       "population": {

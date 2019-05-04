@@ -1,8 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
-   "display_name": "i18n(tower_defense:data.buffs.invisible.invisible_buff.display_name)",
-   "description": "i18n(tower_defense:data.buffs.invisible.invisible_buff.description)",
+   "display_name": "i18n(tower_defense:data.buffs.invisible.display_name)",
+   "description": "i18n(tower_defense:data.buffs.invisible.description)",
    "icon": "file(invisible_buff.png)",
    "script": "tower_defense:buff_scripts:monster:invisible",
    "persistent": true

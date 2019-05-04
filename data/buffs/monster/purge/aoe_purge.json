@@ -1,0 +1,13 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(tower_defense:data.buffs.aoe_purge.display_name)",
+   "description": "i18n(tower_defense:data.buffs.aoe_purge.description)",
+   "icon": "file(aoe_purge.png)",
+   "script": "tower_defense:buff_scripts:monster:periodic_purge",
+   "persistent": true,
+   "script_data": {
+      "pulse": "5m",
+      "range": 3
+   }
+}
