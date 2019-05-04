@@ -350,18 +350,20 @@ App.StonehearthUnitFrameView = App.View.extend({
       }
    }.observes('model.uri'),
 
+   // overriding this to get rid of the activity part
    _updateUnitFrameWidth: function() {
       //the following is some rough dynamic sizing to prevent descriptions and command buttons from overlapping
       //it has to happen after render to check the elements for the unit frame for the newly selected item, not the previous
       Ember.run.scheduleOnce('afterRender', this, function() {
-         var width = Math.max(this.$('#descriptionDiv').width(), this.$('#activityDiv').width()) + this.$('#commandButtons').width() + 30; // + 30 to account for margins
+         var width = Math.max(this.$('#descriptionDiv').width() + this.$('#commandButtons').width() + 30, // + 30 to account for margins
+                              this.$('#topBar').width());
          if (this.get('hasPortrait')) {
             width += this.$('#portrait-frame').width();
          }
 
          this.$('#unitFrame').css('width', Math.max(500, width) + 'px'); //don't want it getting too bitty
       });
-   }.observes('model.uri', 'model.stonehearth:commands.commands', 'model.tower_defense:ai', 'model.stonehearth:unit_info', 'model.stonehearth:job'),
+   }.observes('model.uri', 'model.stonehearth:commands.commands', 'model.stonehearth:unit_info', 'model.stonehearth:job'),
 
    _updateMaterial: function() {
       var self = this;

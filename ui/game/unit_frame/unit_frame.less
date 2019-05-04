@@ -2,10 +2,10 @@
    display: inline-block;
    position: absolute;
    bottom: 13px;
-   right: 69.5%;
-   height: 100px;
+   left: 90px;
+   height: 120px;
    width: 500px;
-   z-index: 0;
+   z-index: 1;
    //-webkit-transform: scale(0.5,0.5);
 
    #buffs {
@@ -49,7 +49,7 @@
       left: 0px;
       bottom: 0px;
       z-index: 4;
-      height: 78px;
+      height: 99px;
       background-image: url(images/unit-frame-bg.png);
       background-repeat: repeat;
       background-clip: padding-box;
@@ -70,8 +70,9 @@
          #portrait-frame {
             display: inline-block;
             position:relative;
-            width: 86px;
-            height: 79px;
+            height: 99px;
+            width: 99px;
+            background-size: cover;
             top: 16px;
             left: -12px;
             margin-right: -20px;
@@ -91,7 +92,7 @@
             position:relative;
             width: inherit;
             height: inherit;
-            background-size: 86px, 86px;
+            background-size: 99px, 99px;
             background-repeat: no-repeat;
             z-index: 4;
          }
@@ -271,6 +272,12 @@
             margin: 4px;
          }
 
+         #activityDiv.hasPortrait {
+            position: absolute;
+            bottom: -20px;
+            left: 88px;
+         }
+
          #jobIcon,
          #moodIcon,
          .itemIcon,
@@ -414,7 +421,7 @@
    #commandButtons {
       .nobr;
       position: absolute;
-      bottom: -8px;
+      bottom: 12px;
       right: 8px;
       z-index: 12;
 
