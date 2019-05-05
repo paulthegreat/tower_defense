@@ -1,0 +1,45 @@
+{
+   "mixins": "stonehearth:mixins:monster",
+   "type": "entity",
+   "components": {
+      "model_variants": {
+         "default": {
+            "models": [
+               {
+                  "type": "one_of",
+                  "items": [
+                     "file(alligator.qb)",
+                     "file(alligator_bonehide.qb)"
+                  ]
+               }
+            ]
+         }
+      },
+      "stonehearth:attributes": {
+         "max_health": {
+            "type": "basic",
+            "value": 50
+         },
+         "speed": {
+            "type": "basic",
+            "value": 40
+         }
+      },
+      "render_info": {
+         "animation_table": "file(/stonehearth/data/rigs/entities/monster/forest/alligator)",
+         "color_map": "stonehearth:color_map:mob",
+         "material_maps": [
+            "/stonehearth/data/materials/material_maps/mob_material_map.json"
+         ],
+         "scale": 0.1
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "player_id": "animals",
+         "display_name": "i18n(stonehearth:entities.monsters.forest.alligator.display_name)",
+         "description": "i18n(stonehearth:entities.monsters.forest.alligator.description)",
+         "icon": "file(alligator.png)"
+      }
+   }
+}

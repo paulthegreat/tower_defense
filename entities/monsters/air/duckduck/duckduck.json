@@ -1,0 +1,59 @@
+{
+   "mixins": "tower_defense:mixins:flying_monster",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "animation_table": "file(/stonehearth/data/rigs/entities/monster/avian/ostrich)",
+         "scale": 0.06
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "file(duckduck.qb)"
+            ]
+         }
+      },
+      "stonehearth:attributes": {
+         "max_health": {
+            "type": "basic",
+            "value": 25
+         },
+         "speed": {
+            "type": "basic",
+            "value": 40
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:entity_radius": 0.5,
+      "stonehearth:species": {
+         "id": "duckduck",
+         "display_name": "i18n(stonehearth:entities.monsters.avian.duckduck.species)"
+      },
+      "stonehearth:portrait": {
+         "portrait_types": {
+            "headshot": {
+               "camera": {
+                  "pos": [
+                     24,
+                     1.2,
+                     -27
+                  ],
+                  "look_at": [
+                     0,
+                     1.3,
+                     0
+                  ],
+                  "fov": 55
+               }
+            }
+         }
+      },
+      "stonehearth:catalog": {
+         "player_id": "animals",
+         "display_name": "i18n(stonehearth:entities.monsters.avian.duckduck_young.display_name)",
+         "description": "i18n(stonehearth:entities.monsters.avian.duckduck_young.description)",
+         "icon": "file(duckduck.png)"
+      }
+   }
+}

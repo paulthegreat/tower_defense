@@ -19,7 +19,7 @@
       "stonehearth:attributes": {
          "max_health": {
             "type": "basic",
-            "value": 20
+            "value": 5
          },
          "speed": {
             "type": "basic",
@@ -44,13 +44,6 @@
                "weight": 3
             }
          ]
-      },
-      "stonehearth:net_worth": {
-         "value_in_gold": 8,
-         "shop_info": {
-            "buyable": false,
-            "sellable": false
-         }
       },
       "stonehearth:catalog": {
          "player_id": "animals",

@@ -1,0 +1,28 @@
+{
+   "time_to_next_monster": "3m",
+   "monsters": [
+      {
+         "count": 1,
+         "each_spawn": [
+            {
+               "population": "monster_ground",
+               "info": {
+                  "from_population": {
+                     "role": "zilla",
+                     "min": 1,
+                     "max": 1
+                  }
+               },
+               "damage": 1,
+               "bounty": {
+                  "gold": 1
+               }
+            }
+         ]
+      }
+   ],
+   "completion_bonus": {
+      "gold": 5,
+      "wood": 1
+   }
+}

@@ -22,6 +22,25 @@
             "Little",
             "Leghorn"
          ]
+      },
+      "duckduck": {
+         "male": {
+            "uri": [
+               "tower_defense:monsters:air:duckduck"
+            ],
+            "given_names": [
+               "Bawky",
+               "Clucky",
+               "Chicken",
+               "Foghorn"
+            ]
+         },
+         "surnames": [
+            "McBawkerson",
+            "Cluckington",
+            "Little",
+            "Leghorn"
+         ]
       }
    }
 }

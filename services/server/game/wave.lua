@@ -74,12 +74,21 @@ function Wave:_load_unspawned_monsters()
    self._sv._unspawned_monsters = {}
 
    for _, monster_data in ipairs(self._wave_data.monsters) do
-      -- ignoring wave modifiers for now
       for i = 1, monster_data.count or 1 do
          local monsters = {}
          for _, monster in ipairs(monster_data.each_spawn) do
             table.insert(monsters, monster)
             self._sv.remaining_monsters = self._sv.remaining_monsters + (monster.info.from_population.max or 1)
+            
+            -- if an individual monster specifies a time to next monster, break it up
+            -- this allows us to easily specify repeating sequences of monsters
+            if monster.time_to_next_monster then
+               table.insert(self._sv._unspawned_monsters, {
+                  monsters = monsters,
+                  time_to_next_monster = monster.time_to_next_monster
+               })
+               monsters = {}
+            end
          end
 
          if #monsters > 0 then
@@ -175,7 +184,7 @@ end
 
 function Wave:_apply_buffs(monster, buffs)
    for _, buff in ipairs(buffs) do
-      radiant.entities.add_buff(monster, buff.uri, buff.options)
+      radiant.entities.add_buff(monster, buff)
    end
 end
 

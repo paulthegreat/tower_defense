@@ -15,9 +15,7 @@
                   "tuning": "tower_defense:data:monster_tuning:low_undead"
                },
                "buffs": [
-                  {
-                     "uri": "tower_defense:buffs:monster:invisible"
-                  }
+                  "tower_defense:buffs:monster:invisible"
                ],
                "damage": 1,
                "bounty": {
@@ -35,9 +33,7 @@
                   "tuning": "tower_defense:data:monster_tuning:low_air"
                },
                "buffs": [
-                  {
-                     "uri": "tower_defense:buffs:monster:invisible"
-                  }
+                  "tower_defense:buffs:monster:invisible"
                ],
                "damage": 1,
                "bounty": {
