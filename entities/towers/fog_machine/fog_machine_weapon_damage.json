@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.fog_machine.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.fog_machine.weapon_damage.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -23,13 +27,15 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "fog_machine",
             "effect": "tower_defense:effects:air_particles",
             "hit_effect": "tower_defense:effects:water_particles",
             "base_damage": 5,
             "damage_type": "magical",
             "num_targets": 999,
-            "attack_times": [500],
+            "attack_times": [
+               500
+            ],
             "cooldown": 4000,
             "priority": 0
          }

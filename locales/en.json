@@ -422,15 +422,33 @@
          },
          "earthbud_plant": {
             "display_name": "Earthbud",
-            "description": "Moderate damage and inflicts normal wound in small AOE"
+            "description": "Moderate damage and inflicts normal wound in small AOE",
+            "weapon": {
+               "description": "Wounds in AOE"
+            },
+            "weapon_damage": {
+               "description": "Also applies normal poison"
+            },
+            "weapon_utility": {
+               "description": "Also targets Air"
+            }
          },
          "foxlily_plant": {
             "display_name": "Foxlily",
-            "description": "Inflicts normal poison, targets ground and air"
+            "description": "Inflicts normal poison, targets ground and air",
+            "weapon": {
+               "description": "Well-rounded poison tower"
+            },
+            "weapon_damage": {
+               "description": "Shorter cooldown, attacks 3 times"
+            },
+            "weapon_utility": {
+               "description": "Longer cooldown, lower damage, but attacks 3 targets"
+            }
          },
          "gold_mine": {
             "display_name": "Gold Mine",
-            "description": "Gives gold at the end of each round, starting at 20 and going down by 1 each time to a minimum of 5"
+            "description": "Gives decreasing gold at the end of each round. Pays off in 4 waves."
          },
          "sugarbell_plant": {
             "display_name": "Sugarbell",
@@ -438,7 +456,16 @@
          },
          "sunflower_plant": {
             "display_name": "Sunflower",
-            "description": "Spits its seed at up to 5 targets at once, inflicting major poison"
+            "description": "Spits its seed at up to 5 targets at once, inflicting major poison",
+            "weapon": {
+               "description": "Multi-target, major poison"
+            },
+            "weapon_damage": {
+               "description": "Triples damage, increases cooldown by 50%"
+            },
+            "weapon_utility": {
+               "description": "Also targets Air"
+            }
          },
          "small_turret": {
             "display_name": "Small Turret",
@@ -446,7 +473,7 @@
          },
          "tree_of_everlasting_wood": {
             "display_name": "Tree of Everlasting Wood",
-            "description": "Can be harvested for more wood every wave. Regrows after harvesting."
+            "description": "Can be harvested for more wood every wave. Auto-harvest at full growth."
          },
          "turnip_shooter": {
             "display_name": "Turnip Shooter",
@@ -466,15 +493,39 @@
          },
          "chain_frost": {
             "display_name": "Chain Frost",
-            "description": "Like the Dota 2 ability"
+            "description": "Like the Dota 2 ability",
+            "weapon": {
+               "description": "Long cooldown, essentially same ability as Dota"
+            },
+            "weapon_damage": {
+               "description": "Damage increases by 20% per bounce"
+            },
+            "weapon_utility": {
+               "description": "Shorter cooldown, faster travel time, lower damage"
+            }
          },
          "frost_blast": {
             "display_name": "Frost Blast",
-            "description": "Like the Dota 2 ability"
+            "description": "Like the Dota 2 ability",
+            "weapon": {
+               "description": "Single target damage, aoe slow"
+            },
+            "weapon_damage": {
+               "description": "AOE affects ground and air"
+            }
          },
          "heart_of_ice": {
             "display_name": "Heart of Ice",
-            "description": "Moderate damage, inflicts major slow, and targets ground and air"
+            "description": "Moderate damage, inflicts major slow, and targets ground and air",
+            "weapon": {
+               "description": "Fast attack that doesn't do a ton of damage, but applies major slow"
+            },
+            "weapon_damage": {
+               "description": "Attacks 2 targets"
+            },
+            "weapon_utility": {
+               "description": "AOE slow range 1"
+            }
          },
          "air_101": {
             "display_name": "Li'l Plinker",
@@ -490,15 +541,42 @@
          },
          "duster": {
             "display_name": "Duster",
-            "description": "Passively reveals invisible monsters in full attack region"
+            "description": "Passively reveals invisible monsters in full attack region",
+            "weapon": {
+               "description": "Passively reveals invisible monsters in full attack region"
+            },
+            "weapon_damage": {
+               "description": "Also applies minor armor piercing in passive aoe"
+            },
+            "weapon_utility": {
+               "description": "+2 range"
+            }
          },
          "bone_piercer": {
             "display_name": "Bone Piercer",
-            "description": "Fast pure damage attack targeting air"
+            "description": "Fast pure damage attack targeting air",
+            "weapon": {
+               "description": "Pure damage anti-Air"
+            },
+            "weapon_damage": {
+               "description": "Performs 2 attacks per cooldown"
+            },
+            "weapon_utility": {
+               "description": "Also applies major armor piercing"
+            }
          },
          "refreshing_wind": {
             "display_name": "Refreshing Wind",
-            "description": "Major cooldown reduction aura tower"
+            "description": "Major cooldown reduction aura tower",
+            "weapon": {
+               "description": "Major cooldown reduction aura tower"
+            },
+            "weapon_damage": {
+               "description": "Also grants normal damage increase"
+            },
+            "weapon_utility": {
+               "description": "+1 range"
+            }
          },
          "flame": {
             "display_name": "Flame",
@@ -514,15 +592,42 @@
          },
          "sunburst": {
             "display_name": "Sunburst",
-            "description": "Passively reveals in full range and permanently reveals attacked targets"
+            "description": "Passively reveals in full range and permanently reveals attacked targets",
+            "weapon": {
+               "description": "Passively reveals in full range and permanently reveals attacked targets"
+            },
+            "weapon_damage": {
+               "description": "Also applies normal burning"
+            },
+            "weapon_utility": {
+               "description": "Also targets Air"
+            }
          },
          "fire_plume": {
             "display_name": "Fire Plume",
-            "description": "Narrow aoe attack that applies normal burning"
+            "description": "Narrow aoe attack that applies normal burning",
+            "weapon": {
+               "description": "Narrow aoe attack that applies normal burning"
+            },
+            "weapon_damage": {
+               "description": "+1 splash range"
+            },
+            "weapon_utility": {
+               "description": "Also applies normal armor piercing"
+            }
          },
          "laserbeam": {
             "display_name": "Laserbeam",
-            "description": "Fires a beam that periodically deals damage and inflicts major burning."
+            "description": "Fires a beam that periodically deals damage and inflicts major burning.",
+            "weapon": {
+               "description": "Fires a long-range laserbeam that quickly burns a target"
+            },
+            "weapon_damage": {
+               "description": "Also hits all targets in the beam's path"
+            },
+            "weapon_utility": {
+               "description": "Also targets Air and attacks 2 targets"
+            }
          },
          "template_turret": {
             "display_name": "Template Turret",
@@ -538,55 +643,172 @@
          },
          "crusher": {
             "display_name": "Crusher",
-            "description": "Slow attack, good single-target damage, wounds"
+            "description": "Slow attack, good single-target damage, wounds",
+            "weapon": {
+               "description": "Slow attack, good single-target damage, wounds"
+            },
+            "weapon_damage": {
+               "description": "Hits in small aoe"
+            },
+            "weapon_utility": {
+               "description": "Also applies normal magic armor piercing"
+            }
          },
          "cannonball_gun": {
             "display_name": "Cannonball Gun",
-            "description": "Shoots a cannonball that hits every target it moves through"
+            "description": "Shoots a cannonball that hits every target it moves through",
+            "weapon": {
+               "description": "Shoots a cannonball that hits every target it moves through"
+            },
+            "weapon_damage": {
+               "description": "Improves attack and projectile speeds"
+            },
+            "weapon_utility": {
+               "description": "Also applies minor magic armor piercing and minor slow"
+            }
          },
          "seismic_slammer": {
             "display_name": "Seismic Slammer",
-            "description": "Echo Slam: the tower"
+            "description": "Echo Slam: the tower",
+            "weapon": {
+               "description": "Echo Slam: the tower"
+            },
+            "weapon_damage": {
+               "description": "Doubles splash range."
+            },
+            "weapon_utility": {
+               "description": "Also applies normal slow."
+            }
          },
          "anaconda_vine": {
             "display_name": "Anaconda Vine",
-            "description": "Moderate damage, wounds and slows"
+            "description": "Moderate damage, wounds and slows",
+            "weapon": {
+               "description": "Moderate damage, wounds and slows"
+            },
+            "weapon_damage": {
+               "description": "More than doubles damage"
+            },
+            "weapon_utility": {
+               "description": "Only 2 attacks, but a shorter cooldown, and also applies normal poison"
+            }
          },
          "fog_machine": {
             "display_name": "Fog Machine",
-            "description": "Low damage, inflicts minor armor piercing, passively reveals in full range"
+            "description": "Low damage, inflicts minor armor piercing, passively reveals in full range",
+            "weapon": {
+               "description": "Low damage, passively reveals in full range"
+            },
+            "weapon_damage": {
+               "description": "Applies normal armor piercing instead"
+            },
+            "weapon_utility": {
+               "description": "Also applies minor slow"
+            }
          },
          "blizzard": {
             "display_name": "Blizzard",
-            "description": "Moderate damage, applies heavy slow debuff in narrow AOE"
+            "description": "Moderate damage, applies heavy slow debuff in narrow AOE",
+            "weapon": {
+               "description": "Moderate damage, applies heavy slow debuff"
+            },
+            "weapon_damage": {
+               "description": "Significantly increases damage"
+            },
+            "weapon_utility": {
+               "description": "Reduces damage, but increases splash range"
+            }
          },
          "lightning_bolt": {
             "display_name": "Lightning Bolt",
-            "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals target and nearby enemies for a couple seconds"
+            "description": "Like Dota 2 Zeus ability, high single-target damage, reveals target and nearby enemies",
+            "weapon": {
+               "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals target and nearby enemies for a couple seconds"
+            },
+            "weapon_damage": {
+               "description": "Also does damage in AOE"
+            },
+            "weapon_utility": {
+               "description": "Applies normal reveal instead"
+            }
          },
          "arc_lightning": {
             "display_name": "Arc Lightning",
-            "description": "Chain lightning, like Dota 2 Zeus ability, hits a target in a short range, then bounces to a new target in a short range X times"
+            "description": "Chain lightning, like Dota 2 Zeus ability, bounces reduced damage to successive targets",
+            "weapon": {
+               "description": "Chain lightning, like Dota 2 Zeus ability, hits a target in a short range, then bounces to a new target in a short range X times"
+            },
+            "weapon_damage": {
+               "description": "Increases secondary targeting range and number of bounces"
+            },
+            "weapon_utility": {
+               "description": "Also applies minor reveal"
+            }
          },
          "fire_grenade": {
             "display_name": "Fire Grenade",
-            "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, but all apply burning"
+            "description": "Launches a burning projectile that causes a mass secondary attack with lower damage",
+            "weapon": {
+               "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, but all apply burning"
+            },
+            "weapon_damage": {
+               "description": "Increases base damage, blast range, number of secondary targets hit, and secondary damage multiplier"
+            },
+            "weapon_utility": {
+               "description": "Also applies normal magic armor piercing"
+            }
          },
          "magma_pools": {
             "display_name": "Magma",
-            "description": "Its attack creates a pool of magma on the ground that lasts for a few seconds, causing burning to any enemies in it"
+            "description": "Creates a pool of magma that inflicts burning on any enemies entering it",
+            "weapon": {
+               "description": "Its attack creates a pool of magma on the ground that lasts for a few seconds, causing burning to any enemies in it"
+            },
+            "weapon_damage": {
+               "description": "Magma pools apply effects every second instead of just when a monster first enters it"
+            },
+            "weapon_utility": {
+               "description": "Also applies major magic armor piercing"
+            }
          },
          "stone_vine": {
             "display_name": "Stone Vine",
-            "description": "Slow attack, high damage plus debuffs"
+            "description": "Slow attack, high damage plus debuffs",
+            "weapon": {
+               "description": "Slow attack, high damage plus debuffs"
+            },
+            "weapon_damage": {
+               "description": "Pure damage"
+            },
+            "weapon_utility": {
+               "description": "Slightly lower damage, but +2 range and lower cooldown"
+            }
          },
          "boygrove": {
             "display_name": "Boygrove",
-            "description": "Inflicts minor poison and minor slow, targets ground and air"
+            "description": "Inflicts minor poison and minor slow, targets ground and air",
+            "weapon": {
+               "description": "Hoping to grow up to be a real mangrove"
+            },
+            "weapon_damage": {
+               "description": "Applies normal poison instead"
+            },
+            "weapon_utility": {
+               "description": "Applies normal slow instead"
+            }
          },
          "mangrove": {
             "display_name": "Mangrove",
-            "description": "Each attack grows roots in that place that last for a while; only does damage (and large slows) through the roots"
+            "description": "Grows long-lasting roots that damage and slow all monsters entering them",
+            "weapon": {
+               "description": "Each attack grows roots in that place that last for a while; only does damage (and large slows) through the roots"
+            },
+            "weapon_damage": {
+               "description": "Also applies major poison"
+            },
+            "weapon_utility": {
+               "description": "+2 range, roots last longer"
+            }
          }
       },
       "ground_presence": {

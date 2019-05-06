@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.frost_blast.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.frost_blast.weapon_utility.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -26,7 +30,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "frost_blast",
             "effect": "tower_defense:effects:water_particles",
             "hit_effect": "tower_defense:effects:water_particles",
             "base_damage": 50,
@@ -36,7 +40,9 @@
                "base_damage": 0,
                "hits_ground_and_air": true
             },
-            "attack_times": [300],
+            "attack_times": [
+               300
+            ],
             "cooldown": 1500,
             "priority": 0
          }

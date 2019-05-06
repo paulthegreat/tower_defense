@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.lightning_bolt.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.lightning_bolt.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -27,7 +31,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "lightning_bolt",
             "effect": "tower_defense:effects:fire_particles",
             "ground_effect": "tower_defense:effects:lightning_bolt",
             "base_damage": 120,
@@ -36,7 +40,9 @@
                "range": 2,
                "secondary_damage": 0
             },
-            "attack_times": [200],
+            "attack_times": [
+               200
+            ],
             "cooldown": 2500,
             "priority": 0
          }

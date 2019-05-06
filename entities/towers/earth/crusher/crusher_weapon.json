@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.crusher.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.crusher.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -25,11 +29,13 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "crusher",
             "effect": "tower_defense:effects:earth_particles",
             "hit_effect": "tower_defense:effects:earth_particles",
             "base_damage": 200,
-            "attack_times": [1000],
+            "attack_times": [
+               1000
+            ],
             "cooldown": 3000,
             "priority": 0
          }

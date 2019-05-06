@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.fire_103.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.fire_103.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -26,12 +30,16 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "fire_103",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "base_damage": 3,
             "damage_type": "magical",
-            "attack_times": [500, 1000, 1500],
+            "attack_times": [
+               500,
+               1000,
+               1500
+            ],
             "cooldown": 2000,
             "priority": 0
          }

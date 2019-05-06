@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.anaconda_vine.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.anaconda_vine.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -30,11 +34,15 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "anaconda_vine",
             "effect": "tower_defense:effects:plant_particles",
             "base_damage": 80,
             "hit_effect": "stonehearth:effects:abilities:snare_trap",
-            "attack_times": [500, 1000, 1500],
+            "attack_times": [
+               500,
+               1000,
+               1500
+            ],
             "cooldown": 2500,
             "priority": 0
          }

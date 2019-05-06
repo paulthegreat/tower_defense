@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.stone_vine.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.stone_vine.weapon_utility.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -30,11 +34,13 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "stone_vine",
             "effect": "tower_defense:effects:plant_particles",
             "base_damage": 700,
             "hit_effect": "stonehearth:effects:abilities:snare_trap",
-            "attack_times": [1000],
+            "attack_times": [
+               1000
+            ],
             "cooldown": 2000,
             "priority": 0
          }

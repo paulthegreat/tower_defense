@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "components": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.refreshing_wind.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.refreshing_wind.weapon_damage.description)"
+      },
       "stonehearth:equipment_piece": {
          "injected_buffs": [
             "tower_defense:buffs:tower:cooldown_decrease:major_aura",

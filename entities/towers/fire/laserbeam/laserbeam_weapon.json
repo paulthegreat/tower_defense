@@ -2,12 +2,16 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.laserbeam.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.laserbeam.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "rectangle",
             "region": {
-               "min": {"x": -1, "y": 0, "z": -21},
-               "max": {"x": 2, "y": 1, "z": 0}
+               "min": { "x": -1, "y": 0, "z": -21 },
+               "max": { "x": 2, "y": 1, "z": 0 }
             },
             "attacks_ground": true,
             "attacks_air": false,
@@ -28,21 +32,39 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "laserbeam",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "base_damage": 50,
             "damage_type": "magical",
             "beam": {
                "__particle_effect": "tower_defense:effects:fire_beam",
-               "particle_color": [255, 128, 0, 192],
-               "beam_color": [255, 128, 0, 255],
+               "particle_color": [
+                  255,
+                  128,
+                  0,
+                  192
+               ],
+               "beam_color": [
+                  255,
+                  128,
+                  0,
+                  255
+               ],
                "duration": 1500,
-               "attack_times": [300, 600, 900, 1200, 1500],
+               "attack_times": [
+                  300,
+                  600,
+                  900,
+                  1200,
+                  1500
+               ],
                "start_offset": { "x": 0, "y": 0.8, "z": 0 },
                "end_offset": { "x": 0, "y": 0.8, "z": 0 }
             },
-            "attack_times": [500],
+            "attack_times": [
+               500
+            ],
             "cooldown": 3000,
             "priority": 0
          }

@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.sunburst.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.sunburst.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -26,12 +30,14 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "sunburst",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "base_damage": 20,
             "damage_type": "magical",
-            "attack_times": [500],
+            "attack_times": [
+               500
+            ],
             "cooldown": 1500,
             "priority": 0
          }

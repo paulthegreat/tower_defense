@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "components": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.air_103.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.air_103.weapon.description)"
+      },
       "stonehearth:equipment_piece": {
          "injected_buffs": [
             "tower_defense:buffs:tower:cooldown_decrease:normal_aura"

@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.magma_pools.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.magma_pools.weapon_damage.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -17,7 +21,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "magma_pools",
             "effect": "stonehearth:effects:dry_stone_heat",
             "ground_presence": {
                "uri": "tower_defense:ground_presence:magma_pool",
@@ -36,7 +40,9 @@
                   ]
                }
             },
-            "attack_times": [800],
+            "attack_times": [
+               800
+            ],
             "cooldown": 5000,
             "priority": 0
          }

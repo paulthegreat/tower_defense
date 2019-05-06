@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.foxlily_plant.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.foxlily_plant.weapon_utility.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -26,7 +30,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "foxlily_plant",
             "effect": "tower_defense:effects:plant_particles",
             "base_damage": 30,
             "num_targets": 3,
@@ -37,7 +41,9 @@
                "start_offset": { "x": 0, "y": 0.8, "z": 0 },
                "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
-            "attack_times": [500],
+            "attack_times": [
+               500
+            ],
             "cooldown": 1200,
             "priority": 0
          }

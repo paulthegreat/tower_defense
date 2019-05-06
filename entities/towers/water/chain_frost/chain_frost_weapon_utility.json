@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.chain_frost.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.chain_frost.weapon_utility.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -26,7 +30,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "chain_frost",
             "effect": "tower_defense:effects:water_particles",
             "hit_effect": "tower_defense:effects:water_particles",
             "projectile": {
@@ -43,7 +47,9 @@
                "num_attacks": 9,
                "max_attacks_per_target": 9
             },
-            "attack_times": [500],
+            "attack_times": [
+               500
+            ],
             "cooldown": 5000,
             "priority": 0
          }

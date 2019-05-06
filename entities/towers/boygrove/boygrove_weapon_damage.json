@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.boygrove.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.boygrove.weapon_damage.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -30,7 +34,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "boygrove",
             "effect": "tower_defense:effects:plant_particles",
             "base_damage": 30,
             "projectile": {
@@ -40,7 +44,9 @@
                "start_offset": { "x": 0, "y": 0.6, "z": 0 },
                "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
-            "attack_times": [250],
+            "attack_times": [
+               250
+            ],
             "cooldown": 1000,
             "priority": 0
          }

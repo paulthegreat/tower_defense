@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.fire_grenade.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.fire_grenade.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -25,7 +29,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "fire_grenade",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "projectile": {
@@ -42,7 +46,9 @@
                "num_targets": 5,
                "damage_multiplier": 0.5
             },
-            "attack_times": [2000],
+            "attack_times": [
+               2000
+            ],
             "cooldown": 3000,
             "priority": 0
          }

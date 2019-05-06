@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.bone_piercer.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.bone_piercer.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -17,12 +21,14 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "bone_piercer",
             "effect": "tower_defense:effects:air_particles",
             "hit_effect": "/stonehearth/data/effects/hit_sparks/dust_poof.json",
             "base_damage": 50,
             "damage_type": "pure",
-            "attack_times": [200],
+            "attack_times": [
+               200
+            ],
             "cooldown": 1000,
             "priority": 0
          }

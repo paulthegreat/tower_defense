@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.fire_plume.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.fire_plume.weapon_utility.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -31,7 +35,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "fire_plume",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "base_damage": 25,
@@ -39,7 +43,9 @@
             "aoe": {
                "range": 1
             },
-            "attack_times": [600],
+            "attack_times": [
+               600
+            ],
             "cooldown": 2000,
             "priority": 0
          }

@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.seismic_slammer.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.seismic_slammer.weapon_utility.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -26,7 +30,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "seismic_slammer",
             "effect": "tower_defense:effects:earth_particles",
             "hit_effect": "tower_defense:effects:earth_particles",
             "base_damage": 50,
@@ -35,7 +39,11 @@
             "aoe": {
                "range": 2
             },
-            "attack_times": [0, 300, 600],
+            "attack_times": [
+               0,
+               300,
+               600
+            ],
             "cooldown": 3000,
             "priority": 0
          }

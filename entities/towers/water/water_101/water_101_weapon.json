@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.water_101.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.water_101.weapon.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -26,13 +30,15 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "water_101",
             "effect": "tower_defense:effects:water_particles",
             "hit_effect": "tower_defense:effects:water_particles",
             "base_damage": 2,
             "num_targets": 1,
             "damage_type": "magical",
-            "attack_times": [400],
+            "attack_times": [
+               400
+            ],
             "cooldown": 1000,
             "priority": 0
          }

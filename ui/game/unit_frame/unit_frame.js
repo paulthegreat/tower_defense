@@ -647,7 +647,8 @@ App.StonehearthCommandButtonView = App.View.extend({
       var catalogData = App.catalog.getCatalogData(this.get("parentView.model.uri"));
       if (argValue == 'damage' || argValue == 'utility') {
          var towerWeapons = catalogData.tower && catalogData.tower.weapons && catalogData.tower.weapons.upgrades;
-         description = tower_defense.getTowerWeaponTooltipContent(towerWeapons[argValue].uri);
+         var cost = tower_defense.getCostString(towerWeapons[argValue].cost);
+         description = tower_defense.getTowerWeaponTooltipContent(towerWeapons[argValue].uri, `<div class='towerCost'>${cost}</div>`);
       }
       else if (typeof argValue == 'number') {
          // assume this is the gold multiplier value for selling

@@ -2,12 +2,16 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.cannonball_gun.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.cannonball_gun.weapon_damage.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "rectangle",
             "region": {
-               "min": {"x": -1, "y": 0, "z": -21},
-               "max": {"x": 2, "y": 1, "z": 0}
+               "min": { "x": -1, "y": 0, "z": -21 },
+               "max": { "x": 2, "y": 1, "z": 0 }
             },
             "attacks_ground": true,
             "attacks_air": false,
@@ -20,7 +24,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "cannonball_gun",
             "effect": "tower_defense:effects:earth_particles",
             "base_damage": 100,
             "aoe": {
@@ -34,7 +38,9 @@
                "start_offset": { "x": 0, "y": 0.6, "z": 0 },
                "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
-            "attack_times": [200],
+            "attack_times": [
+               200
+            ],
             "cooldown": 2500,
             "priority": 0
          }

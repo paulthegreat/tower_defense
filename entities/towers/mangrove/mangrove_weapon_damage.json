@@ -2,6 +2,10 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.mangrove.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.mangrove.weapon_damage.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
@@ -17,7 +21,7 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "plant",
+            "name": "mangrove",
             "effect": "tower_defense:effects:plant_particles",
             "ground_presence": {
                "uri": "tower_defense:ground_presence:mangrove_roots",
@@ -37,7 +41,9 @@
                   ]
                }
             },
-            "attack_times": [600],
+            "attack_times": [
+               600
+            ],
             "cooldown": 4000,
             "priority": 0
          }
