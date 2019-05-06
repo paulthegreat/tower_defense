@@ -9,6 +9,14 @@
             "b": 192
          }
       },
+      "monster_ground": {
+         "kingdom": "tower_defense:kingdoms:monsters:ground",
+         "color": {
+            "r": 192,
+            "g": 192,
+            "b": 32
+         }
+      },
       "amberstone": {
          "kingdom": "stonehearth:kingdoms:amberstone",
          "color": {

@@ -3,7 +3,7 @@ local rng = _radiant.math.get_default_rng()
 
 local WeatherService = class()
 
-local NUM_DAYS_TO_PLAN_AHEAD = 3
+local NUM_DAYS_TO_PLAN_AHEAD = 5
 local DEFAULT_SNOW_DECAY_PER_MINUTE = 1 / 60 / 24
 local SNOW_ADJUST_INTERVAL_GAME_MINUTES = 4
 
@@ -29,7 +29,7 @@ function WeatherService:initialize()
       end)
    
    self._wave_listener = radiant.events.listen(radiant, 'tower_defense:wave:started', function(wave)
-         self:_switch_weather()
+         self:_switch_weather(wave)
       end)
 
    -- Initialize weather state. Wait until tower_defense has loaded
@@ -91,43 +91,39 @@ function WeatherService:_initialize()
    end
 
    -- Generate weather types if we haven't already.
-   -- Paul: we generate an extra day of weather because we essentially skip the first one,
-   -- which only exists until the start of wave 1
    if not next(self._sv.next_weather_types) then
-      for i = 0, NUM_DAYS_TO_PLAN_AHEAD do
-         table.insert(self._sv.next_weather_types, self:_get_starting_weather())
+      for i = 0, NUM_DAYS_TO_PLAN_AHEAD - 1 do
+         table.insert(self._sv.next_weather_types, {
+            weather = i < 4 and self:_get_starting_weather() or self:_get_difficulty_weather(),
+            wave = i
+         })
       end
    end
 
-   self:_switch_weather()
+   if not self._sv.current_weather_state then
+      self:_switch_weather()
+   end
 end
 
-function WeatherService:_switch_weather(instigating_player_id)
-   self:_switch_to(self._sv.next_weather_types[1], instigating_player_id)
-
-   -- Consume the oldest weather choice and generate a new weather choice at the end.
-   -- worst queue pop ever.
-   local new_weather_types = {}
-   for i, v in ipairs(self._sv.next_weather_types) do
-      if i > 1 then
-         table.insert(new_weather_types, v)
-      end
-   end
+function WeatherService:_switch_weather(wave)  --instigating_player_id)
+   self:_switch_to(table.remove(self._sv.next_weather_types, 1)) --, instigating_player_id)
    
    local newly_selected_weather_type = self._sv.weather_override or self:_get_difficulty_weather()
-   table.insert(new_weather_types, newly_selected_weather_type)
-   self._sv.next_weather_types = new_weather_types
+   table.insert(self._sv.next_weather_types, {
+      weather = newly_selected_weather_type,
+      wave = self._sv.next_weather_types[#self._sv.next_weather_types].wave + 1
+   })
    self.__saved_variables:mark_changed()
 end
 
-function WeatherService:set_weather_override(weather_uri, instigating_player_id)  -- nil clears override
-   self._sv.weather_override = weather_uri
-   self._sv.next_weather_types = {}
-   for i = 0, NUM_DAYS_TO_PLAN_AHEAD do
-      table.insert(self._sv.next_weather_types, self._sv.weather_override or self:_get_difficulty_weather())
-   end
-   self:_switch_weather(instigating_player_id)
-end
+-- function WeatherService:set_weather_override(weather_uri, instigating_player_id)  -- nil clears override
+--    self._sv.weather_override = weather_uri
+--    self._sv.next_weather_types = {}
+--    for i = 0, NUM_DAYS_TO_PLAN_AHEAD do
+--       table.insert(self._sv.next_weather_types, self._sv.weather_override or self:_get_difficulty_weather())
+--    end
+--    self:_switch_weather(instigating_player_id)
+-- end
 
 function WeatherService:_get_starting_weather()
    local weighted_set = WeightedSet(rng)
@@ -145,7 +141,7 @@ function WeatherService:_get_difficulty_weather()
    return weighted_set:choose_random()
 end
 
-function WeatherService:_switch_to(weather_uri, instigating_player_id)
+function WeatherService:_switch_to(weather, instigating_player_id)
    if self._sv.current_weather_state then
       self._sv.current_weather_state:stop()
    end
@@ -155,7 +151,7 @@ function WeatherService:_switch_to(weather_uri, instigating_player_id)
    self._sv.last_weather_state = self._sv.current_weather_state
    self._sv.current_weather_state = nil
 
-   self._sv.current_weather_state = radiant.create_controller('stonehearth:weather_state', weather_uri)
+   self._sv.current_weather_state = radiant.create_controller('stonehearth:weather_state', weather)
    self._sv.current_weather_state:start(instigating_player_id)
    
    self._sv.current_weather_stamp = self._sv.current_weather_stamp + 1

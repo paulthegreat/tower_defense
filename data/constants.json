@@ -1,5 +1,8 @@
 {
    "constants": {
+      "weather": {
+         "NUM_FORECAST_DAYS": 5
+      },
       "tower_defense": {
          "player_resources": {
             "GOLD": "gold",

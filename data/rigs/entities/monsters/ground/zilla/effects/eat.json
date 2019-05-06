@@ -1,0 +1,31 @@
+{
+   "type" : "effect",
+   "tracks": {
+      "animation": {
+            "type": "animation_effect",
+            "start_time": 0,
+            "animation": "eat.json",
+            "loop": false
+      },
+      "attack_trigger" : {
+            "type": "trigger_effect",
+            "start_frame": 18,
+            "end_time": 20
+      },
+      "sound": {
+         "type": "sound_effect",
+         "duration": 1000,
+         "start_time": 0,
+         "min_distance": 20,
+         "falloff" : 7,
+         "volume": 85,
+         "track" : {
+            "type": "one_of",
+            "items": [
+               "stonehearth:sounds:alligator_bite_01",
+               "stonehearth:sounds:alligator_bite_02"
+            ]
+         }
+      }          
+   }
+}

@@ -324,6 +324,90 @@
                "description": "Prioritize attacking the target with the most matching monster types."
             }
          }
+      },
+      "waves": {
+         "wave_title": "Wave [str(wave)]: [str(title)]",
+         "no_wave_title": "Pre-Game",
+         "monster_buffs": "Monsters have the following buffs:",
+         "air_4": {
+            "display_name": "Air Boss"
+         },
+         "air_20": {
+            "display_name": "Air"
+         },
+         "ground_1": {
+            "display_name": "Ground Big Boss"
+         },
+         "ground_4": {
+            "display_name": "Ground Boss"
+         },
+         "ground_10": {
+            "display_name": "Ground Tough"
+         },
+         "ground_20": {
+            "display_name": "Ground"
+         },
+         "ground_100": {
+            "display_name": "Ground Critters"
+         }
+      },
+      "weather": {
+         "blizzard": {
+            "display_name": "Blizzard",
+            "description": "Towers have slightly increased attack cooldowns and slightly reduced accuracy (NYI)."
+         },
+         "cloudy": {
+            "display_name": "Cloudy",
+            "description": "Towers have slightly increased accuracy (NYI)."
+         },
+         "desert_cloudy": {
+            "display_name": "Desert Cloudy",
+            "description": "Towers have slightly reduced attack cooldowns."
+         },
+         "foggy": {
+            "display_name": "Foggy",
+            "description": "Monsters have slightly increased avoidance (NYI)."
+         },
+         "rain": {
+            "display_name": "Rainy",
+            "description": "Towers have slightly reduced damage.",
+            "rain_sunny": {
+               "display_name": "Sun Showers",
+               "description": "Very neutral weather."
+            }
+         },
+         "sandstorm": {
+            "display_name": "Sandstorm",
+            "description": "Monsters have slightly increased armor.",
+            "sandy_day": {
+               "display_name": "Sandy",
+               "description": "Monsters have slightly reduced armor, but Towers have slightly reduced accuracy (NYI)."
+            }
+         },
+         "snow": {
+            "display_name": "Snowy",
+            "description": "Towers have slightly increased attack cooldowns.",
+            "snow_sunny": {
+               "display_name": "Sun Snowers",
+               "description": "Towers have slightly increased attack cooldowns, but Monsters have slightly reduced movement speed."
+            }
+         },
+         "sunny": {
+            "display_name": "Sunny",
+            "description": "Weather so boring it's completely neutral."
+         },
+         "desert_sunny": {
+            "display_name": "Desert Sunny",
+            "description": "Towers have slightly increased damage."
+         },
+         "thunderstorm": {
+            "display_name": "Thunderstorm",
+            "description": "Towers have slightly reduced damage."
+         },
+         "windy": {
+            "display_name": "Windy",
+            "description": "Monsters have slightly increased movement speed."
+         }
       }
    },
    "entities": {

@@ -1,4 +1,5 @@
 local Point3 = _radiant.csg.Point3
+local catalog_lib = require 'stonehearth.lib.catalog.catalog_lib'
 
 GameService = class()
 
@@ -35,7 +36,7 @@ function GameService:initialize()
    self._wave_listeners = {}
    self:_create_wave_listeners()
 
-   self._waves = radiant.resources.load_json('tower_defense:data:waves')
+   self._waves = radiant.resources.load_json('tower_defense:data:waves').waves
    self._waiting_for_target_cbs = {}
 end
 
@@ -85,6 +86,23 @@ function GameService:_on_wave_succeeded(bonus)
       self:_give_all_players_resource(resource, amount)
    end
    self:_end_of_round()
+end
+
+function GameService:get_wave_index_command(session, response)
+   -- go through all the waves and get "catalog" buff data for the buffs and "ground/air" indicators for the spawns
+   local waves = {}
+   for _, wave in ipairs(self._waves) do
+      local wave_detail = radiant.resources.load_json(wave.uri) or {}
+      local wave_data = {
+         display_name = wave_detail.display_name
+      }
+      if wave.buffs then
+         wave_data.buffs = catalog_lib.get_buffs(wave.buffs)
+      end
+      table.insert(waves, wave_data)
+   end
+   
+   response:resolve({waves = waves})
 end
 
 function GameService:get_tower_gold_cost_multiplier_command(session, response)
@@ -175,7 +193,7 @@ function GameService:_end_of_round()
       return
    end
 
-   if not self._waves.waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave > self._game_options.final_wave) then
+   if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave > self._game_options.final_wave) then
       -- no more waves! you won!
       return
    end
@@ -203,7 +221,7 @@ function GameService:_start_round()
    self._sv.wave = self._sv.wave + 1
 
    -- load the wave data, create the controller, and start it up
-   local next_wave = self._waves.waves[self._sv.wave]
+   local next_wave = self._waves[self._sv.wave]
    if next_wave then
       local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data)
       self._sv.wave_controller = wave_controller

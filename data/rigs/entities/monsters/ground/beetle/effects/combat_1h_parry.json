@@ -1,0 +1,26 @@
+{
+   "type" : "effect",
+   "tracks": {
+      "animation": {
+            "type": "animation_effect",
+            "start_time": 0,
+            "animation": "combat_bite.json",
+            "loop": false
+      },
+      "sound": {
+         "type": "sound_effect",
+         "start_time": 150,
+         "min_distance": 27,
+         "falloff" : 5,
+         "volume": 60,
+         "track" : {
+            "type": "one_of",
+            "items": [
+               "stonehearth:sounds:hammer_sound_01",
+               "stonehearth:sounds:hammer_sound_02",
+               "stonehearth:sounds:hammer_sound_03"
+            ]
+         }
+      }         
+   }
+}      

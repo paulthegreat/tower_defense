@@ -1,0 +1,46 @@
+{
+   "type" : "effect",
+   "tracks": {
+      "animation": {
+         "type": "animation_effect",
+         "start_time": 0,
+         "animation": "run.json",
+         "loop": true
+      },
+      "step one": {
+         "type": "sound_effect",
+         "start_time":  400,
+         "min_distance": 30,
+         "falloff" : 7,
+         "volume": 1,
+         "repeat": true,
+         "track" : "stonehearth:sounds:alligator_step_01"
+      },
+      "step two": {
+         "type": "sound_effect",
+         "start_time":  1000,
+         "min_distance": 30,
+         "falloff" : 7,
+         "volume": 1,
+         "repeat": true,
+         "track" : "stonehearth:sounds:alligator_step_02"
+      },
+       "growl": {
+         "type": "sound_effect",
+         "duration": 1000,
+         "start_time": 0,
+         "min_distance": 20,
+         "falloff" : 7,
+         "volume": 1,
+         "track" : {
+            "type": "one_of",
+            "items": [
+               "stonehearth:sounds:alligator_breath_01",
+               "stonehearth:sounds:alligator_breath_02",
+               "stonehearth:sounds:alligator_breath_03",
+               "stonehearth:sounds:alligator_breath_04"
+            ]    
+         }
+      }
+   }
+}

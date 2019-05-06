@@ -131,6 +131,7 @@
       "ground_presence:magma_pool": "file(entities/ground_presence/magma_pool/magma_pool.json)",
       "ground_presence:mangrove_roots": "file(entities/ground_presence/mangrove_roots/mangrove_roots.json)",
       "kingdoms:monsters:air": "file(data/populations/monsters/air_population.json)",
+      "kingdoms:monsters:ground": "file(data/populations/monsters/ground_population.json)",
       "kingdoms:fire": "file(data/populations/players/fire_population.json)",
       "kingdoms:air": "file(data/populations/players/air_population.json)",
       "kingdoms:earth": "file(data/populations/players/earth_population.json)",
@@ -145,6 +146,7 @@
       "monsters:ground:alligator": "file(entities/monsters/ground/alligator/alligator.json)",
       "monsters:ground:beetle": "file(entities/monsters/ground/beetle/beetle.json)",
       "monsters:ground:bitsy_ant": "file(entities/monsters/ground/bitsy_ant/bitsy_ant.json)",
+      "monsters:ground:boar": "file(entities/monsters/ground/boar/boar.json)",
       "monsters:ground:zilla": "file(entities/monsters/ground/zilla/zilla.json)",
       "path": "file(entities/path/path.json)",
       "sounds:coins": "file(data/sounds/coins.ogg)",
@@ -317,6 +319,8 @@
       "/stonehearth/data/npc_index.json": "file(data/npc_index.json)",
       "/stonehearth/data/kingdoms/playable_kingdom_index.json": "file(data/kingdoms/playable_kingdom_index.json)",
       "/stonehearth/ui/shell/select_game_story/select_game_story.html": "file(/ui/shell/select_game_story/select_game_story.html)",
+      "/stonehearth/ui/game/clock_widget/clock_widget.html": "file(ui/game/clock_widget/clock_widget.html)",
+      "/stonehearth/ui/game/clock_widget/clock_widget.js": "file(ui/game/clock_widget/clock_widget.js)",
       "/stonehearth/ui/game/start_menu/start_menu.js": "file(ui/game/start_menu/start_menu.js)",
       "/stonehearth/ui/game/unit_frame/unit_frame.html": "file(ui/game/unit_frame/unit_frame.html)",
       "/stonehearth/ui/game/unit_frame/unit_frame.js": "file(ui/game/unit_frame/unit_frame.js)",
@@ -408,7 +412,8 @@
    "object_commands": {
       "game": [
          "get_current_player_command",
-         "get_tower_gold_cost_multiplier_command"
+         "get_tower_gold_cost_multiplier_command",
+         "get_wave_index_command"
       ]
    },
    "ui": {

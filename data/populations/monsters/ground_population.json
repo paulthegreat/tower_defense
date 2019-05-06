@@ -61,6 +61,25 @@
             "Leghorn"
          ]
       },
+      "boar": {
+         "male": {
+            "uri": [
+               "tower_defense:monsters:ground:boar"
+            ],
+            "given_names": [
+               "Bawky",
+               "Clucky",
+               "Chicken",
+               "Foghorn"
+            ]
+         },
+         "surnames": [
+            "McBawkerson",
+            "Cluckington",
+            "Little",
+            "Leghorn"
+         ]
+      },
       "zilla": {
          "male": {
             "uri": [

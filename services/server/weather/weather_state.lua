@@ -26,8 +26,9 @@ function WeatherState:initialize()
    self._sv.is_active = false
 end
 
-function WeatherState:create(uri)
-   self._sv.uri = uri
+function WeatherState:create(day_data)
+   self._sv.uri = day_data.weather
+   self._sv.wave = day_data.wave
 
    local json = radiant.resources.load_json(self._sv.uri, true, true)
    self._sv.display_name = json.display_name
