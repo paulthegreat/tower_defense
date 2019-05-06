@@ -54,7 +54,7 @@ function PeriodicHealthModificationBuff:_on_pulse(buff)
    if self._tuning.health_change then
       health_change = health_change * self._tuning.health_change
       if self._tuning.is_percentage then
-         health_change = resources:get_max_value('health') * health_change
+         health_change = resources:get_max_value('health') * health_change * 0.01
       end
       if health_change > 0 then
          local attributes = self._entity:get_component('stonehearth:attributes')

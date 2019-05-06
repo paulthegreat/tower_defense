@@ -50,6 +50,8 @@ App.StonehearthStartMenuView = App.View.extend({
    init: function() {
       this._super();
       var self = this;
+
+      self._kingdomOrdinals = {};
    },
 
    didInsertElement: function() {
@@ -67,49 +69,57 @@ App.StonehearthStartMenuView = App.View.extend({
 
       App.stonehearth.startMenu = self.$('#startMenu');
 
-      radiant.call_obj('tower_defense.game', 'get_tower_gold_cost_multiplier_command')
-         .done(function(response) {
-            self._towerGoldCostMultiplier = response.multiplier || 1;
-            $.get('/stonehearth/data/ui/start_menu.json')
-               .done(function(json) {
-                  self._buildMenu(json);
-                  self._addHotkeys();
-                  self._tracePlayers();
+      self._kingdomTrace  = new StonehearthDataTrace('stonehearth:playable_kingdom_index', {"kingdoms": {"*": {} } })
+         .progress(function(response) {
+            // Process the response
+            radiant.each(response.kingdoms, function(k, v) {
+               self._kingdomOrdinals[v.kingdom_id] = v.ordinal;
+            });
 
-                  // Add badges for notifications
-                  App.bulletinBoard.getTrace()
-                     .progress(function(result) {
-                        var bulletins = result.bulletins;
-                        var alerts = result.alerts;
-                        var numBulletins = bulletins ? Object.keys(bulletins).length : 0;
-                        var numAlerts = alerts ? Object.keys(alerts).length : 0;
+            radiant.call_obj('tower_defense.game', 'get_tower_gold_cost_multiplier_command')
+               .done(function(response) {
+                  self._towerGoldCostMultiplier = response.multiplier || 1;
+                  $.get('/stonehearth/data/ui/start_menu.json')
+                     .done(function(json) {
+                        self._buildMenu(json);
+                        self._addHotkeys();
+                        self._tracePlayers();
 
-                        if (numBulletins > 0 || numAlerts > 0) {
-                           //self.$('#bulletin_manager').pulse();
-                           self.$('#bulletin_manager').addClass('active');
-                        } else {
-                           self.$('#bulletin_manager').removeClass('active');
-                        }
-                        self._updateBulletinCount(numBulletins + numAlerts);
+                        // Add badges for notifications
+                        App.bulletinBoard.getTrace()
+                           .progress(function(result) {
+                              var bulletins = result.bulletins;
+                              var alerts = result.alerts;
+                              var numBulletins = bulletins ? Object.keys(bulletins).length : 0;
+                              var numAlerts = alerts ? Object.keys(alerts).length : 0;
+
+                              if (numBulletins > 0 || numAlerts > 0) {
+                                 //self.$('#bulletin_manager').pulse();
+                                 self.$('#bulletin_manager').addClass('active');
+                              } else {
+                                 self.$('#bulletin_manager').removeClass('active');
+                              }
+                              self._updateBulletinCount(numBulletins + numAlerts);
+                           });
+
+                        // Add badges for number of players connected
+                        var presenceCallback = function(presenceData) {
+                           var numConnected = 0;
+                           radiant.each(presenceData, function(playerId, data) {
+                              var connectionStates = App.constants.multiplayer.connection_state;
+                              if (data.connection_state == connectionStates.CONNECTED || data.connection_state == connectionStates.CONNECTING) {
+                                 numConnected++;
+                              }
+                           });
+
+                           self._updateConnectedPlayerCount(numConnected);
+                        };
+
+                        App.presenceClient.addChangeCallback(self.CHANGE_CALLBACK_NAME, presenceCallback, true);
+                        self._presenceCallbackName = self.CHANGE_CALLBACK_NAME;
+
+                        App.resolveStartMenuLoad();
                      });
-
-                  // Add badges for number of players connected
-                  var presenceCallback = function(presenceData) {
-                     var numConnected = 0;
-                     radiant.each(presenceData, function(playerId, data) {
-                        var connectionStates = App.constants.multiplayer.connection_state;
-                        if (data.connection_state == connectionStates.CONNECTED || data.connection_state == connectionStates.CONNECTING) {
-                           numConnected++;
-                        }
-                     });
-
-                     self._updateConnectedPlayerCount(numConnected);
-                  };
-
-                  App.presenceClient.addChangeCallback(self.CHANGE_CALLBACK_NAME, presenceCallback, true);
-                  self._presenceCallbackName = self.CHANGE_CALLBACK_NAME;
-
-                  App.resolveStartMenuLoad();
                });
          });
    },
@@ -118,6 +128,10 @@ App.StonehearthStartMenuView = App.View.extend({
       if (this._playerTrace) {
          this._playerTrace.destroy();
          this._playerTrace = null;
+      }
+      if (this._kingdomTrace) {
+         this._kingdomTrace.destroy();
+         this._kingdomTrace = null;
       }
 
       this._super();
@@ -160,6 +174,7 @@ App.StonehearthStartMenuView = App.View.extend({
                if (!kingdomTowers) {
                   kingdomTowers = {
                      key: kingdom,
+                     ordinal: self._kingdomOrdinals[kingdom],
                      towers: [],
                      entry: {
                         class: 'dock',
@@ -202,7 +217,7 @@ App.StonehearthStartMenuView = App.View.extend({
 
          newDataArr.push(v);
       });
-      newDataArr.sort((a, b) => a.key.localeCompare(b.key));
+      newDataArr.sort((a, b) => a.ordinal - b.ordinal);
       var newData = {};
       radiant.each(newDataArr, function(k, v) {
          newData[v.key] = v.entry;

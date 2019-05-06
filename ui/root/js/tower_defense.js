@@ -104,9 +104,9 @@ var tower_defense = {
                   s += tower_defense._getLine(i18n.t(`tower_defense:ui.game.tooltips.tower_weapons.gp_${instance}_damage_title`),
                      i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', gp[instance].attack_info), true);
                }
-               if (gp[instance].buffs) {
+               if (gp[instance].expanded_buffs) {
                   s += tower_defense._getLine(i18n.t(`tower_defense:ui.game.tooltips.tower_weapons.gp_${instance}_debuffs_title`),
-                     tower_defense._getBuffs(gp[instance].buffs), true);
+                     tower_defense._getBuffs(gp[instance].expanded_buffs), true);
                }
             }
          });

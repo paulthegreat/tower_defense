@@ -224,7 +224,8 @@ function TowerCallHandler:harvest_wood(tower, buff_uri)
    local wood = buff and buff:get_stacks_vis()
    if wood and wood > 0 then
       tower_defense.game:add_player_wood(tower:get_player_id(), wood)
-      buffs_comp:remove_buff(buff_uri, true)
+      --buffs_comp:remove_buff(buff_uri, true)
+      radiant.entities.destroy_entity(tower)
       return true
    end
 end

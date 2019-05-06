@@ -17,7 +17,7 @@
    "camp_standard": "stonehearth:camp_standard",
    "trappable_animals": "stonehearth:data:trapping:all_trappable_animals",
    "default_material": "wood_resource",
-   "ordinal": 1,
+   "ordinal": 5,
    "roles": {
       "default": {
          "male": {

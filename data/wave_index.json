@@ -7,14 +7,6 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 1.2
-            }
-         }
-      },
-      {
-         "uri": "tower_defense:data:waves:ground:20",
-         "multipliers": {
-            "attributes": {
                "max_health": 1.5
             }
          }
@@ -23,7 +15,15 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 1.5
+               "max_health": 2
+            }
+         }
+      },
+      {
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "max_health": 2
             },
             "gold_bounty": 2
          },
@@ -35,7 +35,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 1.5
+               "max_health": 2
             },
             "gold_bounty": 2
          },
@@ -47,7 +47,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 2
+               "max_health": 3
             },
             "gold_bounty": 2
          }
@@ -56,7 +56,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 2
+               "max_health": 3
             },
             "gold_bounty": 3
          }
@@ -65,7 +65,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 3
+               "max_health": 5
             },
             "gold_bounty": 3
          },
@@ -77,7 +77,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 3
+               "max_health": 5
             },
             "gold_bounty": 3
          },
@@ -89,7 +89,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 3
+               "max_health": 5
             },
             "gold_bounty": 5
          },
@@ -101,16 +101,16 @@
          "uri": "tower_defense:data:waves:ground:1",
          "multipliers": {
             "attributes": {
-               "max_health": 5
+               "max_health": 8
             },
-            "gold_bounty": 100
+            "gold_bounty": 5
          }
       },
       {
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 5
+               "max_health": 8
             },
             "gold_bounty": 5
          },
@@ -122,7 +122,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 5
+               "max_health": 8
             },
             "gold_bounty": 5
          },
@@ -134,7 +134,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 5,
+               "max_health": 12,
                "speed": 1.2
             },
             "gold_bounty": 8
@@ -147,20 +147,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 5,
-               "speed": 1.2
-            },
-            "gold_bounty": 8
-         },
-         "buffs": [
-            "tower_defense:buffs:monster:immunity:poison"
-         ]
-      },
-      {
-         "uri": "tower_defense:data:waves:ground:20",
-         "multipliers": {
-            "attributes": {
-               "max_health": 5,
+               "max_health": 12,
                "speed": 1.2
             },
             "gold_bounty": 8
@@ -173,7 +160,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 5,
+               "max_health": 12,
                "speed": 1.2
             },
             "gold_bounty": 8
@@ -186,7 +173,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 8,
+               "max_health": 12,
                "speed": 1.2
             },
             "gold_bounty": 10
@@ -199,7 +186,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 8,
+               "max_health": 20,
                "speed": 1.2
             },
             "gold_bounty": 10
@@ -212,7 +199,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 8,
+               "max_health": 20,
                "speed": 1.2
             },
             "gold_bounty": 10
@@ -225,7 +212,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 8,
+               "max_health": 20,
                "speed": 1.2
             },
             "gold_bounty": 10
@@ -239,7 +226,7 @@
          "uri": "tower_defense:data:waves:ground:100",
          "multipliers": {
             "attributes": {
-               "max_health": 12,
+               "max_health": 30,
                "speed": 1.2
             },
             "gold_bounty": 2
@@ -249,10 +236,10 @@
          "uri": "tower_defense:data:waves:ground:4",
          "multipliers": {
             "attributes": {
-               "max_health": 12,
+               "max_health": 30,
                "speed": 1.2
             },
-            "gold_bounty": 50
+            "gold_bounty": 10
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:normal"
@@ -262,7 +249,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 12,
+               "max_health": 30,
                "speed": 1.2
             },
             "gold_bounty": 12
@@ -275,7 +262,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 15,
+               "max_health": 50,
                "speed": 1.2
             },
             "gold_bounty": 12
@@ -285,7 +272,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 15,
+               "max_health": 50,
                "speed": 1.2
             },
             "gold_bounty": 12
@@ -298,7 +285,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 15,
+               "max_health": 50,
                "speed": 1.2
             },
             "gold_bounty": 12
@@ -311,7 +298,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 15,
+               "max_health": 50,
                "speed": 1.2
             },
             "gold_bounty": 15
@@ -324,7 +311,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
+               "max_health": 80,
                "speed": 1.5
             },
             "gold_bounty": 15
@@ -337,10 +324,10 @@
          "uri": "tower_defense:data:waves:ground:10",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
+               "max_health": 80,
                "speed": 1.5
             },
-            "gold_bounty": 30
+            "gold_bounty": 15
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major"
@@ -350,7 +337,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
+               "max_health": 80,
                "speed": 1.5
             },
             "gold_bounty": 20
@@ -363,7 +350,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
+               "max_health": 80,
                "speed": 1.5
             },
             "gold_bounty": 20
@@ -377,7 +364,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
+               "max_health": 120,
                "speed": 1.5
             },
             "gold_bounty": 20
@@ -390,7 +377,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
+               "max_health": 120,
                "speed": 1.5
             },
             "gold_bounty": 20
@@ -403,7 +390,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
+               "max_health": 120,
                "speed": 1.5
             },
             "gold_bounty": 25
@@ -416,7 +403,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
+               "max_health": 120,
                "speed": 1.5
             },
             "gold_bounty": 25
@@ -429,7 +416,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
+               "max_health": 120,
                "speed": 1.5
             },
             "gold_bounty": 25
@@ -443,7 +430,7 @@
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 50,
+               "max_health": 200,
                "speed": 1.5
             },
             "gold_bounty": 30
@@ -453,7 +440,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 50,
+               "max_health": 200,
                "speed": 1.5
             },
             "gold_bounty": 30
@@ -466,7 +453,7 @@
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 80,
+               "max_health": 400,
                "speed": 1.5
             },
             "gold_bounty": 30
@@ -476,10 +463,10 @@
          "uri": "tower_defense:data:waves:ground:4",
          "multipliers": {
             "attributes": {
-               "max_health": 80,
+               "max_health": 400,
                "speed": 1.5
             },
-            "gold_bounty": 125
+            "gold_bounty": 30
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:major",

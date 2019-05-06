@@ -6,10 +6,10 @@
    "icon": "file(gold_mining.png)",
    "script": "tower_defense:buff_scripts:tower:gold_mining",
    "script_info": {
-      "starting_gold": 21,
+      "starting_gold": 17,
       "reduction_per_stack": 1
    },
    "repeat_add_action": "stack_and_refresh",
-   "max_stacks": 16,
+   "max_stacks": 14,
    "persistent": true
 }

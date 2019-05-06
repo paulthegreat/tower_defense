@@ -14,9 +14,9 @@
                      "max": 1
                   }
                },
-               "damage": 1,
+               "damage": 5,
                "bounty": {
-                  "gold": 1
+                  "gold": 5
                }
             }
          ]

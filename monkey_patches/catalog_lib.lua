@@ -49,7 +49,7 @@ function td_catalog_lib._update_catalog_data(catalog_data, uri, json)
          if ground_presence then
             for _, instance in ipairs({'first_time', 'other_times', 'every_time'}) do
                if ground_presence[instance] and ground_presence[instance].buffs then
-                  ground_presence[instance].buffs = td_catalog_lib.get_buffs(ground_presence[instance].buffs)
+                  ground_presence[instance].expanded_buffs = td_catalog_lib.get_buffs(ground_presence[instance].buffs)
                end
             end
          end

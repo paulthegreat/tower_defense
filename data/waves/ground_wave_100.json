@@ -1,6 +1,6 @@
 {
    "display_name": "i18n(tower_defense:data.waves.ground_100.display_name)",
-   "time_to_next_monster": "1m",
+   "time_to_next_monster": "30s",
    "monsters": [
       {
          "count": 100,

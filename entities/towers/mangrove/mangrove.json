@@ -3,7 +3,7 @@
    "type": "entity",
    "components": {
       "render_info": {
-         "scale": 0.05
+         "scale": 0.045
       },
       "model_variants": {
          "default": {
@@ -13,7 +13,7 @@
          }
       },
       "mob": {
-         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "model_origin": { "x": -0.6, "y": 0.1, "z": 0.6 },
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
       "stonehearth:buffs": {

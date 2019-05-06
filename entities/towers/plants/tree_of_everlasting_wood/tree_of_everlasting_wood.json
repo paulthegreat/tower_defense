@@ -51,18 +51,6 @@
                   ]
                }
             ]
-         },
-         "5_stacks": {
-            "models": [
-               {
-                  "type": "one_of",
-                  "items": [
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb"
-                  ]
-               }
-            ]
          }
       },
       "mob": {

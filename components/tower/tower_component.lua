@@ -78,11 +78,15 @@ function TowerComponent:activate()
 end
 
 function TowerComponent:post_activate()
-   self:_initialize()
+   -- only initialize here for the client (or if restoring)
+   -- otherwise we wait until after the tower is "placed" to make sure its rotation is properly set
+   if self._is_restore or not radiant.is_server then
+      self:_initialize()
+   end
    
    if radiant.is_server then
       local sm = self._sv.sm
-      self:_declare_states(sm, self._is_restore)
+      self:_declare_states(sm)
       self:_declare_triggers(sm)
       self:_declare_state_event_handlers(sm)
       self:_declare_state_transitions(sm)
@@ -229,7 +233,7 @@ function TowerComponent:try_upgrade_tower(upgrade)
       local commands = self._entity:add_component('stonehearth:commands')
       commands:remove_command('tower_defense:commands:upgrade_tower_damage')
       commands:remove_command('tower_defense:commands:upgrade_tower_utility')
-      self:_reinitialize()
+      self:_reinitialize(self._sv.sm, true)
       
       result.resolve = true
       result.message = 'i18n(tower_defense:alerts.upgrade_tower.success)'
@@ -261,6 +265,7 @@ end
 function TowerComponent:placed(rotation)
    self._sv.original_facing = rotation
    self.__saved_variables:mark_changed()
+   self:_reinitialize(self._sv.sm, false)
 end
 
 function TowerComponent:get_original_facing()
@@ -344,7 +349,7 @@ function TowerComponent:get_best_targets(from_target_id, attacked_targets, regio
    local targets = radiant.values(region_targets)
    --log:debug('%s found %s potential targets: %s', self._entity, #targets, radiant.util.table_tostring(targets))
 
-   if #targets + #best_targets <= num_targets then
+   if #targets <= num_targets then
       for _, target in ipairs(targets) do
          table.insert(best_targets, target)
       end
@@ -587,8 +592,8 @@ end
    state machine stuff for targeting/acting
 ]]
 
-function TowerComponent:_reinitialize(sm)
-   self:_initialize(true)
+function TowerComponent:_reinitialize(sm, equipment_changed)
+   self:_initialize(equipment_changed)
 
    if next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() and tower_defense.game:has_active_wave() then
       sm:go_into(STATES.WAITING_FOR_COOLDOWN)
@@ -1083,14 +1088,9 @@ function TowerComponent:_create_ground_presence(owner, target, ground_presence_d
    return ground_presence
 end
 
-function TowerComponent:_declare_states(sm, is_restore)
+function TowerComponent:_declare_states(sm)
    sm:add_states(STATES)
-
-   if not is_restore and next(self._attack_types) and self._sv.targetable_path_region and not self._sv.targetable_path_region:empty() and tower_defense.game:has_active_wave() then
-      sm:set_start_state(STATES.WAITING_FOR_COOLDOWN)
-   else
-      sm:set_start_state(STATES.IDLE)
-   end
+   sm:set_start_state(STATES.IDLE)
 end
 
 function TowerComponent:_declare_triggers(sm)
