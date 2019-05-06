@@ -73,9 +73,9 @@ App.TowerDefenseResourceDisplay = App.View.extend({
       var playerArr = radiant.map_to_array(self.get('players') || {});
       playerArr.forEach(player => {
          var steamName = App.presenceClient.getSteamName(player.player_id);
-         player.playerName = steamName && steamName != '' ? steamName : player.player_id;
+         Ember.set(player, 'playerName', steamName && steamName != '' ? steamName : player.player_id);
          var color = App.presenceClient.getPlayerColor(player.player_id)
-         player.colorStyle = `color: rgba(${color.x}, ${color.y}, ${color.z}, 1)`;
+         Ember.set(player, 'colorStyle', `color: rgba(${color.x}, ${color.y}, ${color.z}, 1)`);
       });
 
 		self.set('player_array', playerArr);
