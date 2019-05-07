@@ -1,5 +1,19 @@
 {
    "data": {
+      "biome": {
+         "arctic": {
+            "display_name": "Terrible Placeholder",
+            "description": "It's really bad, don't play this one."
+         },
+         "desert": {
+            "display_name": "Burbenog",
+            "description": "The classic looping path style of Burbenog, with less looping for Air monsters."
+         },
+         "temperate": {
+            "display_name": "Paul's Weird One",
+            "description": "A long, semi-fractal path for Ground monsters, with a straight back-and-forth one for Air."
+         }
+      },
       "buffs": {
          "plant_growth": {
             "display_name": "Growth",

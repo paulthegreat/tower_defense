@@ -1,3 +1,6 @@
 {
-   "tower_defense_generation_file": "tower_defense:data:map_generation:temperate"
+   "tower_defense_generation_file": "tower_defense:data:map_generation:temperate",
+   "display_name": "i18n(tower_defense:data.biome.temperate.display_name)",
+   "description": "i18n(tower_defense:data.biome.temperate.description)",
+   "image": "file(images/temperate.png)"
 }

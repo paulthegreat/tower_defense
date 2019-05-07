@@ -1,3 +1,6 @@
 {
-   "tower_defense_generation_file": "tower_defense:data:map_generation:desert"
+   "tower_defense_generation_file": "tower_defense:data:map_generation:desert",
+   "display_name": "i18n(tower_defense:data.biome.desert.display_name)",
+   "description": "i18n(tower_defense:data.biome.desert.description)",
+   "image": "file(images/burbenog.png)"
 }
