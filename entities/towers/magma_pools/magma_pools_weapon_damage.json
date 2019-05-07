@@ -29,6 +29,7 @@
                "range": 1.5,
                "duration": 4000,
                "period": 1000,
+               "destroy_on_wave_end": true,
                "do_on_duration_finished": true,
                "every_time": {
                   "attack_info": {
