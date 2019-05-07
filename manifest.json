@@ -19,6 +19,7 @@
    "aliases": {
       "actions:idle_action": "file(ai/actions/idle_action.lua)",
       "actions:monster_follow_path": "file(ai/actions/monster_follow_path_action.lua)",
+      "actions:monster_get_path": "file(ai/actions/monster_get_path_action.lua)",
       "actions:tower_attack": "file(ai/actions/tower_attack_action.lua)",
       "actions:tower_attack_ranged": "file(ai/actions/tower_attack_ranged_action.lua)",
       "actions:tower_find_target": "file(ai/actions/tower_find_target_action.lua)",

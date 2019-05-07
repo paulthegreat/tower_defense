@@ -140,6 +140,14 @@ function GameService:get_path_end_point_for_monster(monster)
    return self._sv.map_data.end_point
 end
 
+function GameService:get_path_for_monster(monster)
+   -- if it's an air monster, return the air point
+   if monster:get_player_id() == 'monster_air' then
+      return self._sv.map_data.air_path.points,self._sv.map_data.air_spawn_location
+   end
+   return self._sv.map_data.path.points,self._sv.map_data.spawn_location
+end
+
 function GameService:get_last_monster_location(monster_id)
    local wave_controller = self._sv.wave_controller
    return wave_controller and wave_controller:get_last_monster_location(monster_id)
