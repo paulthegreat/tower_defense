@@ -17,7 +17,7 @@
    },
    "script": "tower_defense:buff_scripts:periodic_health_modification",
    "script_info": {
-      "damage": 10,
+      "damage": 5,
       "damage_type": "magical",
       "pulse": "3m",
       "cannot_kill": true,

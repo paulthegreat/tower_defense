@@ -63,7 +63,8 @@ function GameCreationService:_generate_world(session, response, map_info)
       local top = Point3(0, height - 1, 0)
       local air_top = Point3(0, map.air_path.height, 0)
       
-      local first_point, last_point, path_region, path_entity = self:_create_path(map.path.points, top, false, map.path.width or 3, terrain)
+      local first_point, last_point, path_region, path_entity, path_neighbor_entity = 
+            self:_create_path(map.path.points, top, false, map.path.width or 3, terrain, map.path.block_type and block_types[map.path.block_type])
       local air_first_point, air_last_point, air_path_region, air_path_entity = self:_create_path(map.air_path.points, top, true)
       
       -- hacky edge shading fix (add a null terrain block super far below us)
@@ -76,6 +77,7 @@ function GameCreationService:_generate_world(session, response, map_info)
 
       -- place path entities with movement modifiers
       radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
+      radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top + center_point)
       radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top + center_point)
 
       -- finally, add any entities that should start out in the world
@@ -103,8 +105,10 @@ function GameCreationService:_generate_world(session, response, map_info)
 	end
 end
 
-function GameCreationService:_create_path(path_array, top, is_air, width, terrain)
+function GameCreationService:_create_path(path_array, top, is_air, width, terrain, path_block_type)
    local path_region = Region3()
+   local trans_path_region
+   local path_neighbor = Region3()
    local first_point
    local last_point
 
@@ -116,20 +120,32 @@ function GameCreationService:_create_path(path_array, top, is_air, width, terrai
       if last_point then
          local cube = csg_lib.create_cube(last_point + top, this_point + top)
          path_region:add_cube(cube)
-         if terrain and width then
-            terrain:subtract_cube(cube:extruded('x', width, width):extruded('z', width, width))
+         if width and width > 0 and terrain then
+            local extruded_cube = cube:extruded('x', width, width):extruded('z', width, width)
+            path_neighbor:add_cube(extruded_cube)
+            terrain:subtract_cube(extruded_cube)
          end
       end
       last_point = this_point
    end
-   path_region:translate(-(first_point + top))
+   path_neighbor:subtract_region(path_region)
+   trans_path_region = path_region:translated(-(first_point + top))
 
    -- create path entity with movement modifier
    local path_entity = radiant.entities.create_entity('tower_defense:path', { owner = '' })
    local path_entity_region = path_entity:add_component('movement_modifier_shape')
    path_entity_region:set_region(_radiant.sim.alloc_region3())
    path_entity_region:get_region():modify(function(mod_region)
-         mod_region:copy_region(path_region)
+         mod_region:copy_region(trans_path_region)
+         mod_region:set_tag(0)
+         mod_region:optimize_by_defragmentation('path movement modifier shape')
+      end)
+
+   local path_neighbor_entity = radiant.entities.create_entity('tower_defense:path_neighbor', { owner = '' })
+   local path_neighbor_entity_region = path_neighbor_entity:add_component('movement_modifier_shape')
+   path_neighbor_entity_region:set_region(_radiant.sim.alloc_region3())
+   path_neighbor_entity_region:get_region():modify(function(mod_region)
+         mod_region:copy_region(path_neighbor:translated(-(first_point + top)))
          mod_region:set_tag(0)
          mod_region:optimize_by_defragmentation('path movement modifier shape')
       end)
@@ -140,12 +156,18 @@ function GameCreationService:_create_path(path_array, top, is_air, width, terrai
       path_entity_region:set_region_collision_type(_radiant.om.RegionCollisionShape.PLATFORM)
       path_entity_region:set_region(_radiant.sim.alloc_region3())
       path_entity_region:get_region():modify(function(mod_region)
-            mod_region:copy_region(path_region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.55, 0)))
+            mod_region:copy_region(trans_path_region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.55, 0)))
             --mod_region:optimize_by_defragmentation('path region collision shape')
          end)
+   elseif terrain and path_block_type then
+      -- if it's ground, modify the terrain directly under the path so it's a different shade
+      path_region = path_region:duplicate()
+      path_region:set_tag(path_block_type)
+      path_region:translate(Point3(0, -1, 0))
+      terrain:add_region(path_region)
    end
 
-   return first_point, last_point, path_region, path_entity
+   return first_point, last_point, trans_path_region, path_entity, path_neighbor_entity
 end
 
 function GameCreationService:start_game(session)

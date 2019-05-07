@@ -1,0 +1,14 @@
+{
+   "type": "entity",
+   "components": {
+      "movement_modifier_shape": {
+         "nav_preference_modifier": -100
+      }
+   },
+   "entity_data": {
+      "navgrid": {
+         "ignore_gravity": true,
+         "has_physics": false
+      }
+   }
+}

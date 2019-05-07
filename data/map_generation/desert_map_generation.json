@@ -17,6 +17,7 @@
       ]
    },
 	"path" : {
+      "block_type": "soil_dark",
 		"width" : 1,
 		"points" : [
 			[1,0,8],
