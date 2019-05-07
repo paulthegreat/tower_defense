@@ -109,6 +109,7 @@
       "data:map_generation": "file(data/map_generation/default_map_generation.json)",
       "data:map_generation:arctic": "file(data/map_generation/arctic_map_generation.json)",
       "data:map_generation:desert": "file(data/map_generation/desert_map_generation.json)",
+      "data:map_generation:temperate": "file(data/map_generation/temperate_map_generation.json)",
       "data:monster_tuning:low_air": "file(data/monster_tuning/low_air.json)",
       "data:monster_tuning:low_undead": "file(data/monster_tuning/low_undead.json)",
       "data:waves": "file(data/wave_index.json)",

@@ -4,6 +4,8 @@
    "display_name": "i18n(tower_defense:data.buffs.major_magic_armor_piercing.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_magic_armor_piercing.description)",
    "icon": "file(major_magic_armor_piercing.png)",
+   "repeat_add_action": "renew_duration",
+   "duration": "10m",
    "modifiers": {
       "multiplicative_magical_dmg_taken": {
          "add": 0.75
