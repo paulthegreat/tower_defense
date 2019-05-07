@@ -76,8 +76,8 @@ function GameCreationService:_generate_world(session, response, map_info)
       radiant.terrain.get_terrain_component():add_tile(terrain)
 
       -- place path entities with movement modifiers
-      radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
-      radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top + center_point)
+      --radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
+      --radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top + center_point)
       radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top + center_point)
 
       -- finally, add any entities that should start out in the world

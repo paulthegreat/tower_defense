@@ -145,6 +145,7 @@ function Wave:_spawn_next_monster()
 
             local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
             for _, new_monster in ipairs(new_monsters) do
+               radiant.terrain.place_entity_at_exact_location(new_monster, location)
                local attrib_component = new_monster:add_component('stonehearth:attributes')
                -- multiply monster health by number of players
                if multiplayer_health_multiplier ~= 1 then
