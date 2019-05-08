@@ -20,7 +20,7 @@ function ProjectileComponent:start()
       return
    end
 
-   local vector = self:_get_vector_to_target()
+   local vector, target_location = self:_get_vector_to_target()
    self:_face_direction(vector)
 
    self._gameloop_trace = radiant.on_game_loop('projectile movement', function()
@@ -57,7 +57,11 @@ function ProjectileComponent:start()
             local attacked_targets = self._attacked_targets
             local targets = {}
             
-            _physics:walk_line(projectile_location, new_projectile_location, function(location)
+            -- go through at the height of the ultimate destination
+            -- this way it doesn't matter if we're shooting down from a tower at short monsters on the path below
+            local start_point = Point3(projectile_location.x, target_location.y, projectile_location.z)
+            local end_point = Point3(new_projectile_location.x, target_location.y, new_projectile_location.z)
+            _physics:walk_line(start_point, end_point, function(location)
                for id, entity in pairs(radiant.terrain.get_entities_at_point(location, self._target_filter_fn)) do
                   if not attacked_targets[id] then
                      targets[id] = entity
@@ -85,7 +89,7 @@ function ProjectileComponent:_get_vector_to_target()
    if target_location then
       local target_point = target_location + self._target_offset
       local vector = target_point - projectile_location
-      return vector
+      return vector, target_location
    end
 end
 
