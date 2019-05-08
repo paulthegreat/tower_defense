@@ -124,6 +124,7 @@
       "data:waves:ground:10": "file(data/waves/ground_wave_10.json)",
       "data:waves:ground:20": "file(data/waves/ground_wave_20.json)",
       "data:waves:ground:100": "file(data/waves/ground_wave_100.json)",
+      "data:waves:mixed:20": "file(data/waves/mixed_wave_20.json)",
       "effects:air_particles": "file(data/effects/air_particles.json)",
       "effects:earth_particles": "file(data/effects/earth_particles.json)",
       "effects:fire_particles": "file(data/effects/fire_particles.json)",

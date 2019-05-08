@@ -1,28 +1,44 @@
 {
    "waves": [
       {
-         "uri": "tower_defense:data:waves:ground:20"
-      },
-      {
+         "wavenumber": 1,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
+               "max_health": 1
+            },
+            "gold_bounty": 1
+         }
+      },
+      {
+         "wavenumber": 2,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 1,
                "max_health": 2
-            }
+            },
+            "gold_bounty": 1
          }
       },
       {
+         "wavenumber": 3,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 3
-            }
+            },
+            "gold_bounty": 1
          }
       },
       {
+         "wavenumber": 4,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 3
             },
             "gold_bounty": 2
@@ -32,9 +48,11 @@
          ]
       },
       {
+         "wavenumber": 5,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 3
             },
             "gold_bounty": 2
@@ -44,27 +62,33 @@
          ]
       },
       {
+         "wavenumber": 6,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 5
             },
             "gold_bounty": 2
          }
       },
       {
+         "wavenumber": 7,
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 5
             },
             "gold_bounty": 3
          }
       },
       {
+         "wavenumber": 8,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 8
             },
             "gold_bounty": 3
@@ -74,9 +98,11 @@
          ]
       },
       {
+         "wavenumber": 9,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 8
             },
             "gold_bounty": 3
@@ -86,9 +112,11 @@
          ]
       },
       {
+         "wavenumber": 10,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 8
             },
             "gold_bounty": 5
@@ -98,18 +126,22 @@
          ]
       },
       {
+         "wavenumber": 11,
          "uri": "tower_defense:data:waves:ground:1",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 12
             },
             "gold_bounty": 5
          }
       },
       {
+         "wavenumber": 12,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 12
             },
             "gold_bounty": 5
@@ -119,9 +151,11 @@
          ]
       },
       {
+         "wavenumber": 13,
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
+               "speed": 1,
                "max_health": 12
             },
             "gold_bounty": 5
@@ -131,11 +165,12 @@
          ]
       },
       {
+         "wavenumber": 14,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 20
             },
             "gold_bounty": 8
          },
@@ -144,11 +179,12 @@
          ]
       },
       {
+         "wavenumber": 15,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 20
             },
             "gold_bounty": 8
          },
@@ -157,11 +193,12 @@
          ]
       },
       {
+         "wavenumber": 16,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 20
             },
             "gold_bounty": 8
          },
@@ -170,11 +207,12 @@
          ]
       },
       {
+         "wavenumber": 17,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 20,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 20
             },
             "gold_bounty": 10
          },
@@ -183,11 +221,12 @@
          ]
       },
       {
+         "wavenumber": 18,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 30
             },
             "gold_bounty": 10
          },
@@ -196,11 +235,12 @@
          ]
       },
       {
+         "wavenumber": 19,
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 30
             },
             "gold_bounty": 10
          },
@@ -209,11 +249,12 @@
          ]
       },
       {
+         "wavenumber": 20,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 30,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 30
             },
             "gold_bounty": 10
          },
@@ -223,21 +264,23 @@
          ]
       },
       {
+         "wavenumber": 21,
          "uri": "tower_defense:data:waves:ground:100",
          "multipliers": {
             "attributes": {
-               "max_health": 50,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 50
             },
             "gold_bounty": 2
          }
       },
       {
+         "wavenumber": 22,
          "uri": "tower_defense:data:waves:ground:4",
          "multipliers": {
             "attributes": {
-               "max_health": 50,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 50
             },
             "gold_bounty": 10
          },
@@ -246,11 +289,12 @@
          ]
       },
       {
+         "wavenumber": 23,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 50,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 50
             },
             "gold_bounty": 12
          },
@@ -259,21 +303,23 @@
          ]
       },
       {
-         "uri": "tower_defense:data:waves:air:20",
+         "wavenumber": 24,
+         "uri": "tower_defense:data:waves:mixed:20",
          "multipliers": {
             "attributes": {
-               "max_health": 80,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 80
             },
             "gold_bounty": 12
          }
       },
       {
+         "wavenumber": 25,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 80,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 80
             },
             "gold_bounty": 12
          },
@@ -282,11 +328,12 @@
          ]
       },
       {
+         "wavenumber": 26,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 80,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 80
             },
             "gold_bounty": 12
          },
@@ -295,11 +342,12 @@
          ]
       },
       {
+         "wavenumber": 27,
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 80,
-               "speed": 1.2
+               "speed": 1.2,
+               "max_health": 80
             },
             "gold_bounty": 15
          },
@@ -308,11 +356,12 @@
          ]
       },
       {
+         "wavenumber": 28,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 120,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 120
             },
             "gold_bounty": 15
          },
@@ -321,11 +370,12 @@
          ]
       },
       {
+         "wavenumber": 29,
          "uri": "tower_defense:data:waves:ground:10",
          "multipliers": {
             "attributes": {
-               "max_health": 120,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 120
             },
             "gold_bounty": 15
          },
@@ -334,11 +384,12 @@
          ]
       },
       {
+         "wavenumber": 30,
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 120,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 120
             },
             "gold_bounty": 20
          },
@@ -347,11 +398,12 @@
          ]
       },
       {
+         "wavenumber": 31,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 120,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 120
             },
             "gold_bounty": 20
          },
@@ -361,11 +413,12 @@
          ]
       },
       {
+         "wavenumber": 32,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 200,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 200
             },
             "gold_bounty": 20
          },
@@ -374,11 +427,12 @@
          ]
       },
       {
+         "wavenumber": 33,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 200,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 200
             },
             "gold_bounty": 20
          },
@@ -387,11 +441,12 @@
          ]
       },
       {
+         "wavenumber": 34,
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 200,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 200
             },
             "gold_bounty": 25
          },
@@ -400,11 +455,12 @@
          ]
       },
       {
+         "wavenumber": 35,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 200,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 200
             },
             "gold_bounty": 25
          },
@@ -413,11 +469,12 @@
          ]
       },
       {
+         "wavenumber": 36,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 200,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 200
             },
             "gold_bounty": 25
          },
@@ -427,21 +484,23 @@
          ]
       },
       {
+         "wavenumber": 37,
          "uri": "tower_defense:data:waves:air:20",
          "multipliers": {
             "attributes": {
-               "max_health": 300,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 300
             },
             "gold_bounty": 30
          }
       },
       {
+         "wavenumber": 38,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 300,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 300
             },
             "gold_bounty": 30
          },
@@ -450,21 +509,23 @@
          ]
       },
       {
+         "wavenumber": 39,
          "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
-               "max_health": 500,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 500
             },
             "gold_bounty": 30
          }
       },
       {
+         "wavenumber": 40,
          "uri": "tower_defense:data:waves:ground:4",
          "multipliers": {
             "attributes": {
-               "max_health": 500,
-               "speed": 1.5
+               "speed": 1.5,
+               "max_health": 500
             },
             "gold_bounty": 30
          },
