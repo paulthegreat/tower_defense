@@ -610,10 +610,12 @@ function TowerComponent:_destroy_cooldown_listener()
 end
 
 function TowerComponent:_set_idle()
-   self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.idle')
-   self._facing_targets = {}
-   radiant.entities.turn_to(self._entity, self._sv.original_facing)
-   self:_stop_current_effect()
+   if self._entity and self._entity:is_valid() then
+      self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.idle')
+      self._facing_targets = {}
+      radiant.entities.turn_to(self._entity, self._sv.original_facing)
+      self:_stop_current_effect()
+   end
 end
 
 function TowerComponent:_get_shortest_cooldown(attack_types)

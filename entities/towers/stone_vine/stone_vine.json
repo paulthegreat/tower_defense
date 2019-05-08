@@ -3,7 +3,7 @@
    "type": "entity",
    "components": {
       "render_info": {
-         "scale": 0.06
+         "scale": 0.03
       },
       "model_variants": {
          "default": {

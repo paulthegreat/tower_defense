@@ -3,7 +3,6 @@
    "description": "i18n(tower_defense:data.weather.foggy.description)",
    "icon": "file(foggy.png)",
    "sky_settings": "stonehearth:sky_settings:foggy",
-   "controller": "stonehearth:weather_scripts:foggy",
    "ambient_sound_key": "foggy",
    "vision_multiplier": 0.4,
    "hide_cloud_shadows": true,
