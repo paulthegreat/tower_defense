@@ -1,18 +1,18 @@
 {
 	"type" : "effect",
 	"tracks": {	 
-		"splash1": {
+		"cubemitter2": {
 			"type": "cubemitter",
-			"cubemitter": "/stonehearth/data/horde/particles/water/fountain/fountain_splash.cubemitter.json",
+			"cubemitter": "/stonehearth/data/horde/particles/water/fountain/basin_stone/splash_bloom.cubemitter.json",
 			"start_time": 0,
-			"end_time": 20,
+			"end_time": 250,
 			"transforms": {
-				"x":0.0,
-				"y":1.0,
-				"z":0.0,
-				"rx":90,
-				"ry":90,
-				"rz":90
+				"x": -0.08,
+				"y": 0.55,
+				"z": 0.09,
+				"rx": 90,
+				"ry": 0,
+				"rz": 0
 			}
 		}
 	}
