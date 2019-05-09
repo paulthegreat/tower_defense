@@ -11,17 +11,20 @@
             "type": "circle",
             "radius": 5,
             "attacks_ground": true,
-            "attacks_air": false,
+            "attacks_air": true,
             "target_filters": [
-               "shortest_debuff_time",
-               "highest_health",
-               "closest_to_start"
+               "closest_to_end",
+               "shortest_debuff_time"
             ],
             "reveals_invis": false
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
+            "freeze": {
+               "uri": "tower_defense:buffs:monster:freeze",
+               "chance": 0.5
+            },
             "slow": {
                "uri": "tower_defense:buffs:monster:slow:major",
                "chance": 1
@@ -34,6 +37,7 @@
             "effect": "stonehearth:effects:wet_stone_weep",
             "hit_effect": "tower_defense:effects:water_particles",
             "base_damage": 80,
+            "num_targets": 3,
             "damage_type": "magical",
             "aoe": {
                "range": 1,

@@ -1,0 +1,15 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "category": "freeze",
+   "display_name": "i18n(tower_defense:data.buffs.freeze.display_name)",
+   "description": "i18n(tower_defense:data.buffs.freeze.description)",
+   "icon": "file(freeze.png)",
+   "repeat_add_action": "renew_duration",
+   "duration": "5m",
+   "modifiers": {
+      "speed": {
+         "multiply": 0
+      }
+   }
+}

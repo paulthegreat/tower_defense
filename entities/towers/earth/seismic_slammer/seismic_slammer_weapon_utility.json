@@ -33,7 +33,8 @@
             "name": "seismic_slammer",
             "effect": "tower_defense:effects:earth_particles",
             "hit_effect": "tower_defense:effects:earth_particles",
-            "base_damage": 50,
+            "base_damage": 1,
+            "is_percentage": true,
             "num_targets": 999,
             "damage_multiplier_per_attack": 0.5,
             "aoe": {

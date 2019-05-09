@@ -24,7 +24,7 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "reveal": {
-               "uri": "tower_defense:buffs:monster:reveal:normal",
+               "uri": "tower_defense:buffs:monster:reveal:minor",
                "chance": 1
             }
          }

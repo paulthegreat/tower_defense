@@ -10,7 +10,7 @@
          "targeting": {
             "type": "circle",
             "radius": 5,
-            "attacks_ground": false,
+            "attacks_ground": true,
             "attacks_air": true,
             "target_filters": [
                "lowest_health",
@@ -32,7 +32,7 @@
             "name": "bone_piercer",
             "effect": "tower_defense:effects:air_particles",
             "hit_effect": "/stonehearth/data/effects/hit_sparks/dust_poof.json",
-            "base_damage": 50,
+            "base_damage": 100,
             "damage_type": "pure",
             "attack_times": [
                200

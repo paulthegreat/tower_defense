@@ -238,6 +238,14 @@
                "display_name": "Slow Immunity",
                "description": "Immune to all Slow debuffs"
             }
+         },
+         "freeze": {
+            "display_name": "Frozen",
+            "description": "Completely stops movement for a short period"
+         },
+         "mortal_wound": {
+            "display_name": "Mortal Wound",
+            "description": "Reduces healing by 100%"
          }
       },
       "population": {
@@ -512,10 +520,10 @@
                "description": "Long cooldown, essentially same ability as Dota"
             },
             "weapon_damage": {
-               "description": "Damage increases by 20% per bounce"
+               "description": "Damage increases by 50% per bounce"
             },
             "weapon_utility": {
-               "description": "Shorter cooldown, faster travel time, lower damage"
+               "description": "Shorter cooldown, faster travel time, longer bounce range, lower damage, slows in range 1 AOE"
             }
          },
          "frost_blast": {
@@ -525,20 +533,23 @@
                "description": "Single target damage, aoe slow"
             },
             "weapon_damage": {
-               "description": "AOE affects ground and air"
+               "description": "Does full damage in AOE but with slightly smaller AOE range"
+            },
+            "weapon_utility": {
+               "description": "AOE affects ground and air and slightly larger AOE range"
             }
          },
          "heart_of_ice": {
             "display_name": "Heart of Ice",
-            "description": "Moderate damage, inflicts major slow, and targets ground and air",
+            "description": "Fast attack that applies major slow and a chance of freezing",
             "weapon": {
-               "description": "Fast attack that doesn't do a ton of damage, but applies major slow"
+               "description": "Fast attack with moderate damage that applies major slow and has a 50% chance of freezing"
             },
             "weapon_damage": {
-               "description": "Attacks 2 targets"
+               "description": "Also applies mortal wound"
             },
             "weapon_utility": {
-               "description": "AOE slow range 1"
+               "description": "AOE slow and freeze range 1"
             }
          },
          "air_101": {
@@ -568,9 +579,9 @@
          },
          "bone_piercer": {
             "display_name": "Bone Piercer",
-            "description": "Fast pure damage attack targeting air",
+            "description": "Fast pure damage attack",
             "weapon": {
-               "description": "Pure damage anti-Air"
+               "description": "Pure damage that attacks both air and ground"
             },
             "weapon_damage": {
                "description": "Performs 2 attacks per cooldown"
@@ -685,7 +696,7 @@
             "display_name": "Seismic Slammer",
             "description": "Echo Slam: the tower",
             "weapon": {
-               "description": "Echo Slam: the tower"
+               "description": "Deals percentage-based AOE damage to all targets in range"
             },
             "weapon_damage": {
                "description": "Doubles splash range."
@@ -800,15 +811,15 @@
          },
          "boygrove": {
             "display_name": "Boygrove",
-            "description": "Inflicts minor poison and minor slow, targets ground and air",
+            "description": "Hoping to grow up to be a real mangrove",
             "weapon": {
-               "description": "Hoping to grow up to be a real mangrove"
+               "description": "Inflicts minor poison and minor slow, targets ground and air"
             },
             "weapon_damage": {
-               "description": "Applies normal poison instead"
+               "description": "Additionally applies normal poison and hits harder"
             },
             "weapon_utility": {
-               "description": "Applies normal slow instead"
+               "description": "Additionally applies normal slow and attacks 2 targets"
             }
          },
          "mangrove": {

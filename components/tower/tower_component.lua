@@ -1007,6 +1007,13 @@ end
 function TowerComponent:_inflict_attack(targets, primary_target, attack_info, damage_multiplier)
    local attacker = self._entity
    local aoe_attack = attack_info.aoe
+   local base_damage = attack_info.base_damage
+   local secondary_damage = aoe_attack and aoe_attack.secondary_damage
+
+   if attack_info.is_percentage then
+      local resources = primary_target and primary_target:get_component('stonehearth:expendable_resources')
+      damage_multiplier = damage_multiplier * (resources and (0.01 * (resources:get_value('health') or 100)) or 1)
+   end
 
    for _, each_target in pairs(targets) do
       if each_target:is_valid() then
@@ -1016,7 +1023,8 @@ function TowerComponent:_inflict_attack(targets, primary_target, attack_info, da
             radiant.effects.run_effect(each_target, hit_effect)
          end
 
-         local total_damage = stonehearth.combat:calculate_damage(attacker, each_target, attack_info, damage_multiplier, is_secondary_target)
+         local total_damage = stonehearth.combat:calculate_damage(attacker, each_target, attack_info,
+               is_secondary_target and secondary_damage or base_damage, damage_multiplier)
          local battery_context = BatteryContext(attacker, each_target, total_damage)
          stonehearth.combat:inflict_debuffs(attacker, each_target, attack_info)
          stonehearth.combat:battery(battery_context)

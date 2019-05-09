@@ -26,18 +26,11 @@ function TDCombatService:start_cooldown(entity, action_info)
    end
 end
 
-function TDCombatService:calculate_damage(attacker, target, attack_info, damage_multiplier, secondary_target)
+function TDCombatService:calculate_damage(attacker, target, attack_info, damage_multiplier, base_damage)
    if damage_multiplier == 0 then
       return 0
    end
    
-   local base_damage
-   if secondary_target and attack_info.aoe then
-      base_damage = attack_info.aoe.secondary_damage or attack_info.base_damage
-   else
-      base_damage = attack_info.base_damage
-   end
-
    if type(base_damage) == 'table' then
       base_damage = rng:get_real(base_damage[1], base_damage[2])
    end
@@ -62,6 +55,10 @@ end
 function TDCombatService:get_adjusted_damage_value(attacker, target, damage, damage_type, attack_damage_multiplier, attack_armor_multiplier)
    damage_type = damage_type or DMG_TYPES.PHYSICAL
    local total_damage = damage
+   if attack_damage_multiplier then
+      total_damage = total_damage * attack_damage_multiplier
+   end
+   
    local attributes_component = attacker and attacker:get_component('stonehearth:attributes')
    
    local additive_dmg_modifier = attributes_component and attributes_component:get_attribute('additive_dmg_modifier')
@@ -73,11 +70,6 @@ function TDCombatService:get_adjusted_damage_value(attacker, target, damage, dam
    end
    if additive_dmg_modifier then
       total_damage = total_damage + additive_dmg_modifier
-   end
-
-   --Get damage from weapons
-   if attack_damage_multiplier then
-      total_damage = total_damage * attack_damage_multiplier
    end
 
    if damage_type == DMG_TYPES.PHYSICAL then

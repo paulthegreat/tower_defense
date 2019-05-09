@@ -46,7 +46,7 @@
                "range": 3,
                "num_attacks": 9,
                "max_attacks_per_target": 9,
-               "damage_multiplier": 1.2
+               "damage_multiplier": 1.5
             },
             "attack_times": [
                500

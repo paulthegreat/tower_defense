@@ -23,6 +23,10 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "poison": {
+               "uri": "tower_defense:buffs:monster:poison:minor",
+               "chance": 1
+            },
+            "poison2": {
                "uri": "tower_defense:buffs:monster:poison:normal",
                "chance": 1
             },
@@ -36,7 +40,7 @@
          {
             "name": "boygrove",
             "effect": "tower_defense:effects:plant_particles",
-            "base_damage": 30,
+            "base_damage": 50,
             "projectile": {
                "speed": 25,
                "uri": "stonehearth:weapons:turnip_bullet",

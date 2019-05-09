@@ -36,7 +36,7 @@
             "base_damage": 50,
             "damage_type": "magical",
             "aoe": {
-               "range": 2,
+               "range": 2.5,
                "base_damage": 0,
                "hits_ground_and_air": true
             },

@@ -40,12 +40,16 @@
                "start_offset": { "x": 0, "y": 0.6, "z": 0 },
                "end_offset": { "x": 0, "y": 1, "z": 0 }
             },
-            "base_damage": 20,
+            "base_damage": 25,
             "damage_type": "magical",
             "secondary_attack": {
-               "range": 3,
+               "range": 4,
                "num_attacks": 9,
                "max_attacks_per_target": 9
+            },
+            "aoe": {
+               "range": 1,
+               "damage_multiplier": 0
             },
             "attack_times": [
                500
