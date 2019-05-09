@@ -1,11 +1,15 @@
 {
    "type": "effect",
    "tracks": {
-      "cubemitter": {
+      "dirt": {
          "type": "cubemitter",
-         "cubemitter": "particles/summon_stone_radiate/summon_stone_radiate.cubemitter.json",
-         "end_time" : 20, 
-         "transforms": { "x": 0, "y": 0, "z": 0,
+         "start_time": 50,
+         "end_time": 300,
+         "cubemitter": "particles/dirt_poof/dirt_poof.cubemitter.json",
+         "transforms": {
+            "x": 0,
+            "y": 0.7,
+            "z": 0,
             "rx": 90,
             "ry": 0,
             "rz": 0

@@ -5,7 +5,7 @@
          "type": "cubemitter",
          "cubemitter": "particles/spawn/spawn_glow.cubemitter.json",
          "start_time" : 0,
-         "end_time" : 20,
+         "end_time" : 200,
          "transforms": {
             "x":0,
             "y":0,
