@@ -27,29 +27,12 @@ function MonsterGetPath:start_thinking(ai, entity, args)
 	self._log = log
 	-- This is a hotspot, and creating loggers here is expensive, so only enable this for debugging.
 	-- self._log = ai:get_log()
-	self._entity = entity
-	self._location = ai.CURRENT.location
 	self._ai:set_debug_progress('starting thinking')
 
-	local path_points,spawn=tower_defense.game:get_path_for_monster(entity)
-	local offset=spawn-Point3(unpack(path_points[1]))
-	local pathsegments={}
-	local prev_point=ai.CURRENT.location
-	for _,point in pairs(path_points) do
-		point=Point3(unpack(point))+offset
-		if prev_point ~= point then
-			local path = _radiant.sim.create_direct_path_finder(self._entity)
-											:set_start_location(prev_point)
-											:set_end_location(point)
-											:set_allow_incomplete_path(false)
-											:set_reversible_path(false)
-											:get_path()
-			table.insert(pathsegments, path)
-		end
-		prev_point=point
-	end
-	local full_path =  _radiant.sim.combine_paths(pathsegments)
-	ai:set_think_output({ path = full_path })
+	local path = tower_defense.game:get_path_for_monster(entity)
+   if path then
+      ai:set_think_output({ path = path })
+   end
 end
 
 function MonsterGetPath:stop_thinking(ai, entity, args)

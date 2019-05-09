@@ -10,8 +10,8 @@ function MonsterComponent:initialize()
    self._sv.default_material = self._json.render_material or MAT_NORMAL
    self._sv.invis_material = self._json.invis_render_material or MAT_MOST_INVIS
    self._sv.seen_invis_material = self._json.seen_invis_render_material or MAT_SOME_INVIS
-   self._sv.path_length = 999999
-   self._sv.path_traveled = 0
+   self._sv._path_length = 999999
+   self._sv._path_traveled = 0
 end
 
 function MonsterComponent:activate()
@@ -20,20 +20,30 @@ function MonsterComponent:activate()
       self.__saved_variables:mark_changed()
    end
 
-   self._location_trace = radiant.entities.trace_grid_location(self._entity, 'monster moved')
+   local prev_location, prev_grid_location
+   local get_xz_distance = function(p1, p2)
+      return math.abs(p1.x - p2.x) + math.abs(p1.z - p2.z)
+   end
+
+   local mob = self._entity:get_component('mob')
+   self._location_trace = radiant.entities.trace_location(self._entity, 'monster moved')
       :on_changed(function()
-         local location = radiant.entities.get_world_grid_location(self._entity)
-         if self._location and location ~= self._location then
-            -- TODO: reconsider how this is calculated if knockback or path deviations are involved
-            -- for now just ignore y-only changes (flying unit temporarily/permanently gaining/losing grounded status)
-            if self._location.x ~= location.x or self._location.z ~= location.z then
-               self._sv.path_traveled=self._sv.path_traveled+1
-               self:set_path_length(self._sv.path_length - 1)
-            end
+         local location = mob:get_world_location()
+         local grid_location = mob:get_world_grid_location()
+
+         if prev_location then
+            local distance = get_xz_distance(location, prev_location)
+            self._sv._path_length = self._sv._path_length - distance
+            self._sv._path_traveled = self._sv._path_traveled + distance
+            self.__saved_variables:mark_changed()
          end
-         self._location = location
-         self:_update_seen()
-         tower_defense.game:monster_moved_to(location)
+         prev_location = location
+
+         if prev_grid_location ~= grid_location then
+            prev_grid_location = grid_location
+            self:_update_seen()
+            tower_defense.game:monster_moved_to(location)
+         end
       end)
       :push_object_state()
 end
@@ -94,15 +104,20 @@ function MonsterComponent:_update_render_material()
 end
 
 function MonsterComponent:get_path_length()
-   return self._sv.path_length
+   return self._sv._path_length
 end
 
 function MonsterComponent:get_path_traveled()
-   return self._sv.path_traveled
+   return self._sv._path_traveled
 end
 
-function MonsterComponent:set_path_length(length)
-   self._sv.path_length = length
+function MonsterComponent:get_path()
+   return self._sv.path
+end
+
+function MonsterComponent:set_path(path)
+   self._sv.path = path
+   self._sv._path_length = path:get_path_length()
    self.__saved_variables:mark_changed()
 end
 
