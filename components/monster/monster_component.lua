@@ -20,7 +20,7 @@ function MonsterComponent:activate()
       self.__saved_variables:mark_changed()
    end
 
-   local prev_location, prev_grid_location
+   local prev_location, prev_grid_location, next_path_point
    local get_xz_distance = function(p1, p2)
       return math.abs(p1.x - p2.x) + math.abs(p1.z - p2.z)
    end
@@ -41,6 +41,16 @@ function MonsterComponent:activate()
 
          if prev_grid_location ~= grid_location then
             prev_grid_location = grid_location
+
+            if not next_path_point then
+               next_path_point = self._sv._path_points and self._sv._path_points[1]
+            end
+            if grid_location == next_path_point then
+               table.remove(self._sv._path_points, 1)
+               next_path_point = self._sv._path_points[1]
+               self.__saved_variables:mark_changed()
+            end
+
             self:_update_seen()
             tower_defense.game:monster_moved_to(location)
          end
@@ -111,12 +121,14 @@ function MonsterComponent:get_path_traveled()
    return self._sv._path_traveled
 end
 
-function MonsterComponent:get_path()
-   return self._sv.path
+function MonsterComponent:get_path_points()
+   return self._sv._path_points
 end
 
 function MonsterComponent:set_path(path)
-   self._sv.path = path
+   local points = radiant.shallow_copy(path:get_pruned_points())
+   table.remove(points, 1)
+   self._sv._path_points = points
    self._sv._path_length = path:get_path_length()
    self.__saved_variables:mark_changed()
 end

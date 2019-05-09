@@ -1,6 +1,8 @@
 local Point3 = _radiant.csg.Point3
 local catalog_lib = require 'stonehearth.lib.catalog.catalog_lib'
 
+local log = radiant.log.create_logger('game_service')
+
 GameService = class()
 
 local COMMON_PLAYER = 'common_player'
@@ -141,46 +143,52 @@ function GameService:get_path_end_point_for_monster(monster)
 end
 
 function GameService:get_path_for_monster(monster)
-   -- first check if the monster already has a path object
+   -- first check if the monster already has path points
    local monster_comp = monster:add_component('tower_defense:monster')
-   local path = monster_comp:get_path()
-   if path then
-      return path
-   end
+   local path_points = monster_comp:get_path_points()
 
-   local path_points
-   local spawn
-   if monster:get_player_id() == 'monster_air' then
-      path_points = self._sv.map_data.air_path.points
-      spawn = self._sv.map_data.air_spawn_location
-   else
-      path_points = self._sv.map_data.path.points
-      spawn = self._sv.map_data.spawn_location
+   if not path_points then
+      if monster:get_player_id() == 'monster_air' then
+         path_points = self:_get_translated_points(self._sv.map_data.air_path.points, self._sv.map_data.air_spawn_location)
+      else
+         path_points = self:_get_translated_points(self._sv.map_data.path.points, self._sv.map_data.spawn_location)
+      end
    end
 
    if path_points and #path_points > 0 then
-      local offset = spawn - Point3(unpack(path_points[1]))
       local pathsegments = {}
       local prev_point = radiant.entities.get_world_location(monster)
 
       for _, point in pairs(path_points) do
-         local trans_point = Point3(unpack(point)) + offset
-         if prev_point ~= trans_point then
+         if prev_point ~= point then
             local path = _radiant.sim.create_direct_path_finder(monster)
                                     :set_start_location(prev_point)
-                                    :set_end_location(trans_point)
+                                    :set_end_location(point)
                                     :set_allow_incomplete_path(false)
                                     :set_reversible_path(false)
                                     :get_path()
             table.insert(pathsegments, path)
          end
-         prev_point = trans_point
+         prev_point = point
       end
 
       local full_path = _radiant.sim.combine_paths(pathsegments)
       monster_comp:set_path(full_path)
 
       return full_path
+   end
+end
+
+function GameService:_get_translated_points(points, spawn)
+   if points and #points > 0 then
+      local trans_points = {}
+
+      local offset = spawn - Point3(unpack(points[1]))
+      for _, point in ipairs(points) do
+         table.insert(trans_points, Point3(unpack(point)) + offset)
+      end
+
+      return trans_points
    end
 end
 
