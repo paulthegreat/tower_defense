@@ -23,8 +23,10 @@ function SpawnOnDeathScript:on_buff_added(entity, buff)
 
          table.insert(monsters, monster)
       end
-      
-      tower_defense.game:spawn_monsters(monsters, entity_id)
+
+      stonehearth.calendar:set_timer("spawn monsters after killed", 1, function()
+         tower_defense.game:spawn_monsters(monsters, entity_id)
+      end)
    end)
 end
 

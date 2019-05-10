@@ -74,12 +74,16 @@ function GameService:_create_wave_listeners()
 end
 
 function GameService:_on_wave_monster_escaped(damage)
-   self:remove_health(damage)
+   if damage then
+      self:remove_health(damage)
+   end
 end
 
 function GameService:_on_wave_monster_killed(bounty)
-   for resource, amount in pairs(bounty) do
-      self:_give_all_players_resource(resource, amount)
+   if bounty then
+      for resource, amount in pairs(bounty) do
+         self:_give_all_players_resource(resource, amount)
+      end
    end
 end
 
