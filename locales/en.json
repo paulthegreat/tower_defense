@@ -246,6 +246,12 @@
          "mortal_wound": {
             "display_name": "Mortal Wound",
             "description": "Reduces healing by 100%"
+         },
+         "spawn_on_death": {
+            "ants": {
+               "display_name": "Spawn Ants",
+               "description": "Spawns Ants when it dies"
+            }
          }
       },
       "population": {
@@ -371,6 +377,9 @@
          },
          "ground_100": {
             "display_name": "Ground Critters"
+         },
+         "mixed_20": {
+            "display_name": "Ground & Air"
          }
       },
       "weather": {

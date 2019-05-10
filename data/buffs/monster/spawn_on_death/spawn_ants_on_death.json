@@ -1,0 +1,24 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "category": "poison",
+   "display_name": "i18n(tower_defense:data.buffs.spawn_ants_on_death.display_name)",
+   "description": "i18n(tower_defense:data.buffs.spawn_ants_on_death.description)",
+   "repeat_add_action": "stack_and_refresh",
+   "icon": "file(spawn_ants_on_death.png)",
+   "max_stacks": 99,
+   "script": "tower_defense:buff_scripts:spawn_on_death",
+   "script_info": {
+      "monsters": [
+         {
+            "population": "monster_ground",
+            "info": {
+               "from_population": {
+                  "role": "bitsy_ant"
+               }
+            },
+            "damage": 1
+         }
+      ]
+   }
+}

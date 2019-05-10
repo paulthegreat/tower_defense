@@ -12,6 +12,7 @@ function MonsterComponent:initialize()
    self._sv.seen_invis_material = self._json.seen_invis_render_material or MAT_SOME_INVIS
    self._sv._path_length = 999999
    self._sv._path_traveled = 0
+   self._sv._path_traveled_points = {}
 end
 
 function MonsterComponent:activate()
@@ -46,7 +47,7 @@ function MonsterComponent:activate()
                next_path_point = self._sv._path_points and self._sv._path_points[1]
             end
             if grid_location == next_path_point then
-               table.remove(self._sv._path_points, 1)
+               table.insert(self._sv._path_traveled_points, table.remove(self._sv._path_points, 1))
                next_path_point = self._sv._path_points[1]
                self.__saved_variables:mark_changed()
             end
@@ -125,11 +126,33 @@ function MonsterComponent:get_path_points()
    return self._sv._path_points
 end
 
+function MonsterComponent:get_path_traveled_points()
+   return self._sv._path_traveled_points
+end
+
 function MonsterComponent:set_path(path)
    local points = radiant.shallow_copy(path:get_pruned_points())
    table.remove(points, 1)
    self._sv._path_points = points
    self._sv._path_length = path:get_path_length()
+   self.__saved_variables:mark_changed()
+end
+
+function MonsterComponent:get_path_data()
+   return {
+      location = radiant.entities.get_world_location(self._entity),
+      path_points = radiant.shallow_copy(self._sv._path_points),
+      path_traveled = self._sv._path_traveled,
+      path_length = self._sv._path_length
+   }
+end
+
+-- this is used when a new monster is spawned somewhere along the path
+-- (it will behave like a monster at that location being loaded from save)
+function MonsterComponent:inherit_path_data(monster_data)
+   self._sv._path_points = radiant.shallow_copy(monster_data.path_points)
+   self._sv._path_traveled = monster_data.path_traveled
+   self._sv._path_length = monster_data.path_length
    self.__saved_variables:mark_changed()
 end
 

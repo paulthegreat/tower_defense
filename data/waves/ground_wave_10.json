@@ -14,6 +14,10 @@
                      "max": 1
                   }
                },
+               "buffs": [
+                  "tower_defense:buffs:monster:spawn_on_death:ants",
+                  "tower_defense:buffs:monster:spawn_on_death:ants"
+               ],
                "damage": 2,
                "bounty": {
                   "gold": 2

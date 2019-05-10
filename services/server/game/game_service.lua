@@ -197,6 +197,13 @@ function GameService:get_last_monster_location(monster_id)
    return wave_controller and wave_controller:get_last_monster_location(monster_id)
 end
 
+function GameService:spawn_monsters(monsters, at_monster_id)
+   local wave_controller = self._sv.wave_controller
+   if wave_controller then
+      return wave_controller:spawn_monsters(monsters, at_monster_id)
+   end
+end
+
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
    if map_data.starting_health then

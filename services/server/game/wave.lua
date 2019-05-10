@@ -13,7 +13,7 @@ function Wave:initialize()
    self._sv._unspawned_monsters = {}
    self._sv._spawned_monsters = {}
    self._sv.remaining_monsters = 0
-   self._sv._last_monster_location = {}
+   self._sv._last_monster_data = {}
 end
 
 function Wave:create(wave_data, map_data)
@@ -108,7 +108,8 @@ function Wave:start()
 end
 
 function Wave:get_last_monster_location(monster_id)
-   return self._sv._last_monster_location[monster_id]
+   local data = self._sv._last_monster_data[monster_id]
+   return data and data.location
 end
 
 function Wave:_create_next_spawn_timer(time)
@@ -128,59 +129,84 @@ end
 function Wave:_spawn_next_monster()
    local monster_info = table.remove(self._sv._unspawned_monsters, 1)
    if monster_info then
-      local multiplayer_health_multiplier = tower_defense.game:get_num_players()
-      local did_spawn = false
-      for _, monster in ipairs(monster_info.monsters) do
-         local pop = stonehearth.population:get_population(monster.population)
-         if pop then
-            local location = self._sv._map_data.spawn_location
-            if monster.population == 'monster_air' then
-               location = self._sv._map_data.air_spawn_location
-            end
-
-            local bounty = radiant.shallow_copy(monster.bounty or {})
-            if bounty.gold and self._multipliers.gold_bounty then
-               bounty.gold = bounty.gold * self._multipliers.gold_bounty
-            end
-
-            local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
-            for _, new_monster in ipairs(new_monsters) do
-               radiant.terrain.place_entity_at_exact_location(new_monster, location)
-               local attrib_component = new_monster:add_component('stonehearth:attributes')
-               -- multiply monster health by number of players
-               if multiplayer_health_multiplier ~= 1 then
-                  attrib_component:set_attribute('max_health', attrib_component:get_attribute('max_health') * multiplayer_health_multiplier)
-               end
-               -- apply any other wave-based attribute multipliers
-               for attribute, multiplier in pairs(self._multipliers.attributes or {}) do
-                  attrib_component:set_attribute(attribute, attrib_component:get_attribute(attribute) * multiplier)
-               end
-               
-               self:_apply_buffs(new_monster, self._buffs)
-               if monster.buffs then
-                  self:_apply_buffs(new_monster, monster.buffs)
-               end
-
-               radiant.events.trigger(radiant, 'tower_defense:monster_created', new_monster)
-
-               local this_monster = {
-                  monster = new_monster,
-                  damage = monster.damage,
-                  bounty = monster.bounty
-               }
-               self._sv._spawned_monsters[new_monster:get_id()] = this_monster
-               self:_activate_monster(this_monster)
-
-               did_spawn = true
-            end
-            self.__saved_variables:mark_changed()
-         end
-      end
-
-      if did_spawn then
+      if self:spawn_monsters(monster_info.monsters) then
          self:_create_next_spawn_timer(monster_info.time_to_next_monster)
       end
    end
+end
+
+function Wave:spawn_monsters(monsters, at_monster_id)
+   local multiplayer_health_multiplier = tower_defense.game:get_num_players()
+   local did_spawn = false
+   
+   local at_monster_data
+   if at_monster_id then
+      local at_monster = radiant.entities.get_entity(at_monster_id)
+      if at_monster then
+         at_monster_data = at_monster:add_component('tower_defense:monster'):get_path_data()
+      else
+         at_monster_data = self._sv._last_monster_data[at_monster_id]
+      end
+      if not at_monster_data then
+         return false
+      end
+   end
+
+   for _, monster in ipairs(monsters) do
+      local pop = stonehearth.population:get_population(monster.population)
+      if pop then
+         local location = at_monster_data and at_monster_data.location
+         if not location then
+            location = self._sv._map_data.spawn_location
+            if monster.population == 'monster_air' then
+               location = self._sv._map_data.air_spawn_location
+            end
+         end
+
+         local bounty = radiant.shallow_copy(monster.bounty or {})
+         if bounty.gold and self._multipliers.gold_bounty then
+            bounty.gold = bounty.gold * self._multipliers.gold_bounty
+         end
+
+         local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
+         for _, new_monster in ipairs(new_monsters) do
+            if at_monster_data then
+               new_monster:add_component('tower_defense:monster'):inherit_path_data(at_monster_data)
+            end
+            radiant.terrain.place_entity_at_exact_location(new_monster, location)
+            local attrib_component = new_monster:add_component('stonehearth:attributes')
+            -- multiply monster health by number of players
+            if multiplayer_health_multiplier ~= 1 then
+               attrib_component:set_attribute('max_health', attrib_component:get_attribute('max_health') * multiplayer_health_multiplier)
+            end
+            -- apply any other wave-based attribute multipliers
+            for attribute, multiplier in pairs(self._multipliers.attributes or {}) do
+               attrib_component:set_attribute(attribute, attrib_component:get_attribute(attribute) * multiplier)
+            end
+            
+            self:_apply_buffs(new_monster, self._buffs)
+            if monster.buffs then
+               self:_apply_buffs(new_monster, monster.buffs)
+            end
+
+            radiant.events.trigger(radiant, 'tower_defense:monster_created', new_monster)
+
+            local this_monster = {
+               monster = new_monster,
+               damage = monster.damage,
+               bounty = monster.bounty,
+               counts_as_remaining = at_monster_id == nil
+            }
+            self._sv._spawned_monsters[new_monster:get_id()] = this_monster
+            self:_activate_monster(this_monster)
+
+            did_spawn = true
+         end
+         self.__saved_variables:mark_changed()
+      end
+   end
+
+   return did_spawn
 end
 
 function Wave:_apply_buffs(monster, buffs)
@@ -220,10 +246,12 @@ function Wave:_remove_monster(id)
          monster_info.escape_listener = nil
       end
 
-      self._sv._last_monster_location[id] = radiant.entities.get_world_location(monster_info.monster)
+      self._sv._last_monster_data[id] = monster_info.monster:add_component('tower_defense:monster'):get_path_data()
 
       self._sv._spawned_monsters[id] = nil
-      self._sv.remaining_monsters = math.max(0, self._sv.remaining_monsters - 1)
+      if monster_info.counts_as_remaining then
+         self._sv.remaining_monsters = math.max(0, self._sv.remaining_monsters - 1)
+      end
       self.__saved_variables:mark_changed()
       self:_check_wave_end()
    end

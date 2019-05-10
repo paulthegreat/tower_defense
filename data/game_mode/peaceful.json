@@ -10,7 +10,7 @@
       "gold": 15
    },
    "tower_gold_cost_multiplier": 0.8,
-   "final_wave": 20,
+   "final_wave": 40,
    "weather": {
       "starting_weather": [
          {
