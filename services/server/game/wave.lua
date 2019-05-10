@@ -14,6 +14,7 @@ function Wave:initialize()
    self._sv._spawned_monsters = {}
    self._sv.remaining_monsters = 0
    self._sv._last_monster_data = {}
+   self._sv._queued_spawn_monsters = {}
 end
 
 function Wave:create(wave_data, map_data)
@@ -41,6 +42,7 @@ function Wave:activate()
    for _, spawned_monster in pairs(self._sv._spawned_monsters) do
       self:_activate_monster(spawned_monster)
    end
+   self:_start_queued_spawn_monsters_timer()
 end
 
 function Wave:destroy()
@@ -129,13 +131,33 @@ end
 function Wave:_spawn_next_monster()
    local monster_info = table.remove(self._sv._unspawned_monsters, 1)
    if monster_info then
-      if self:spawn_monsters(monster_info.monsters) then
+      if self:_spawn_monsters(monster_info.monsters) then
          self:_create_next_spawn_timer(monster_info.time_to_next_monster)
       end
    end
 end
 
-function Wave:spawn_monsters(monsters, at_monster_id)
+function Wave:queue_spawn_monsters(monsters, at_monster_id)
+   table.insert(self._sv._queued_spawn_monsters, {monsters = monsters, at_monster_id = at_monster_id})
+   self.__saved_variables:mark_changed()
+
+   self:_start_queued_spawn_monsters_timer()
+end
+
+function Wave:_start_queued_spawn_monsters_timer()
+   if #self._sv._queued_spawn_monsters > 0 and not self._queued_spawn_monsters_timer then
+      self._queued_spawn_monsters_timer = stonehearth.calendar:set_timer("queued monster spawning", 1, function()
+         self._queued_spawn_monsters_timer = nil
+         while #self._sv._queued_spawn_monsters > 0 do
+            local queued = table.remove(self._sv._queued_spawn_monsters, 1)
+            self:_spawn_monsters(queued.monsters, queued.at_monster_id)
+         end
+         self.__saved_variables:mark_changed()
+      end)
+   end
+end
+
+function Wave:_spawn_monsters(monsters, at_monster_id)
    local multiplayer_health_multiplier = tower_defense.game:get_num_players()
    local did_spawn = false
    
@@ -258,7 +280,7 @@ function Wave:_remove_monster(id)
 end
 
 function Wave:_check_wave_end()
-   if #self._sv._unspawned_monsters < 1 and not next(self._sv._spawned_monsters) then
+   if #self._sv._unspawned_monsters < 1 and not next(self._sv._spawned_monsters) and #self._sv._queued_spawn_monsters < 1 then
       -- just make sure we're properly reporting all monsters gone
       self._sv.remaining_monsters = 0
       self.__saved_variables:mark_changed()

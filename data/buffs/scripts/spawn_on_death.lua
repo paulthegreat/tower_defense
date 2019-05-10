@@ -14,19 +14,17 @@ function SpawnOnDeathScript:on_buff_added(entity, buff)
       local stacks = buff and buff:get_stacks() or 1
       local monsters = {}
       for _, monster in ipairs(tuning.monsters) do
-         monster = radiant.shallow_copy(monster)
-         monster.info = radiant.shallow_copy(monster.info)
+         local new_monster = radiant.shallow_copy(monster)
+         new_monster.info = radiant.shallow_copy(monster.info)
          local from_population = radiant.shallow_copy(monster.info.from_population)
          from_population.min = stacks * (from_population.min or 1)
          from_population.max = math.max(from_population.min, stacks * (from_population.max or 1))
-         monster.info.from_population = from_population
+         new_monster.info.from_population = from_population
 
-         table.insert(monsters, monster)
+         table.insert(monsters, new_monster)
       end
 
-      stonehearth.calendar:set_timer("spawn monsters after killed", 1, function()
-         tower_defense.game:spawn_monsters(monsters, entity_id)
-      end)
+      tower_defense.game:queue_spawn_monsters(monsters, entity_id)
    end)
 end
 

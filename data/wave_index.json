@@ -2,7 +2,7 @@
    "waves": [
       {
          "wavenumber": 1,
-         "uri": "tower_defense:data:waves:ground:10",
+         "uri": "tower_defense:data:waves:ground:20",
          "multipliers": {
             "attributes": {
                "speed": 1,

@@ -201,10 +201,10 @@ function GameService:get_last_monster_location(monster_id)
    return wave_controller and wave_controller:get_last_monster_location(monster_id)
 end
 
-function GameService:spawn_monsters(monsters, at_monster_id)
+function GameService:queue_spawn_monsters(monsters, at_monster_id)
    local wave_controller = self._sv.wave_controller
    if wave_controller then
-      return wave_controller:spawn_monsters(monsters, at_monster_id)
+      return wave_controller:queue_spawn_monsters(monsters, at_monster_id)
    end
 end
 
