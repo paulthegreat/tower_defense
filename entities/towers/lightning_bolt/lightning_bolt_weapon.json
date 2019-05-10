@@ -32,7 +32,7 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "lightning_bolt",
-            "effect": "tower_defense:effects:fire_particles",
+            "effect": "tower_defense:effects:lightning_cast",
             "ground_effect": "tower_defense:effects:lightning_bolt",
             "base_damage": 120,
             "damage_type": "magical",
