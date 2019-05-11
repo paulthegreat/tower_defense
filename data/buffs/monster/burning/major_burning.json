@@ -8,6 +8,7 @@
    "max_stacks": 5,
    "repeat_add_action": "stack_and_refresh",
    "icon": "file(major_burning.png)",
+   "effect": "stonehearth:effects:debuff_added:fire_debuff",
    "script": "tower_defense:buff_scripts:periodic_health_modification",
    "script_info": {
       "damage": 100,
