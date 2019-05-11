@@ -14,6 +14,16 @@ function TDCombatService:set_interval(reason, duration, fn)
    return stonehearth.calendar:set_interval(reason, game_seconds, fn)
 end
 
+function TDCombatService:set_persistent_interval(reason, duration, fn)
+   local game_seconds = stonehearth.calendar:realtime_to_game_seconds(duration, true)
+   return stonehearth.calendar:set_persistent_interval(reason, game_seconds, fn)
+end
+
+function TDCombatService:set_persistent_timer(reason, duration, fn)
+   local game_seconds = stonehearth.calendar:realtime_to_game_seconds(duration, true)
+   return stonehearth.calendar:set_persistent_timer(reason, game_seconds, fn)
+end
+
 function TDCombatService:start_cooldown(entity, action_info)
    local combat_state = self:get_combat_state(entity)
    if not combat_state then
@@ -21,9 +31,32 @@ function TDCombatService:start_cooldown(entity, action_info)
    end
    if action_info.cooldown then
       local attributes_component = entity:get_component('stonehearth:attributes')
-      local cooldown_modifier = attributes_component and attributes_component:get_attribute('multiplicative_cooldown_modifier') or 1
+      local cooldown_modifier = attributes_component and attributes_component:get_attribute('multiplicative_cooldown_modifier', 1) or 1
       combat_state:start_cooldown(action_info.name, action_info.cooldown * cooldown_modifier)
    end
+end
+
+function TDCombatService:get_shortest_cooldown(entity, attack_types)
+   local combat_state = entity:add_component('stonehearth:combat_state')
+   if not combat_state then
+      return 0
+   end
+   
+   local shortest_cd
+   local now = radiant.gamestate.now()
+
+   for _, action_info in ipairs(attack_types) do
+      local cd = combat_state:get_cooldown_end_time(action_info.name)
+      cd = cd and (cd - now) or 0
+      if not shortest_cd or cd < shortest_cd then
+         shortest_cd = cd
+         if cd <= 0 then
+            break
+         end
+      end
+   end
+
+   return shortest_cd or 0
 end
 
 function TDCombatService:calculate_damage(attacker, target, attack_info, damage_multiplier, base_damage)
@@ -58,7 +91,7 @@ function TDCombatService:get_adjusted_damage_value(attacker, target, damage, dam
    if attack_damage_multiplier then
       total_damage = total_damage * attack_damage_multiplier
    end
-   
+
    local attributes_component = attacker and attacker:get_component('stonehearth:attributes')
    
    local additive_dmg_modifier = attributes_component and attributes_component:get_attribute('additive_dmg_modifier')

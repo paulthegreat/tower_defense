@@ -28,6 +28,7 @@ function Wave:activate()
    self._wave_data = radiant.resources.load_json(self._sv._wave_data.uri)
    self._multipliers = self._sv._wave_data.multipliers or {}
    self._buffs = self._sv._wave_data.buffs or {}
+   self._role_overrides = self._sv._wave_data.role_overrides or {}
    
    if self._sv._next_spawn_timer then
       self._sv._next_spawn_timer:bind(function()
@@ -79,15 +80,21 @@ function Wave:_load_unspawned_monsters()
       for i = 1, monster_data.count or 1 do
          local monsters = {}
          for _, monster in ipairs(monster_data.each_spawn) do
-            table.insert(monsters, monster)
-            self._sv.remaining_monsters = self._sv.remaining_monsters + (monster.info.from_population.max or 1)
+            local new_monster = radiant.shallow_copy(monster)
+            new_monster.info = radiant.shallow_copy(monster.info)
+            local from_population = radiant.shallow_copy(monster.info.from_population)
+            from_population.role = self._role_overrides[from_population.role] or from_population.role
+            new_monster.info.from_population = from_population
+
+            table.insert(monsters, new_monster)
+            self._sv.remaining_monsters = self._sv.remaining_monsters + (new_monster.info.from_population.max or 1)
             
             -- if an individual monster specifies a time to next monster, break it up
             -- this allows us to easily specify repeating sequences of monsters
-            if monster.time_to_next_monster then
+            if new_monster.time_to_next_monster then
                table.insert(self._sv._unspawned_monsters, {
                   monsters = monsters,
-                  time_to_next_monster = monster.time_to_next_monster
+                  time_to_next_monster = new_monster.time_to_next_monster
                })
                monsters = {}
             end
@@ -122,7 +129,7 @@ function Wave:_create_next_spawn_timer(time)
    end
 
    if time and #self._sv._unspawned_monsters > 0 then
-      self._sv._next_spawn_timer = stonehearth.calendar:set_persistent_timer('spawn next monster', time, function()
+      self._sv._next_spawn_timer = stonehearth.combat:set_persistent_timer('spawn next monster', time, function()
          self:_spawn_next_monster()
       end)
    end
@@ -195,7 +202,28 @@ function Wave:_spawn_monsters(monsters, at_monster_id)
             if at_monster_data then
                new_monster:add_component('tower_defense:monster'):inherit_path_data(at_monster_data)
             end
+            
             radiant.terrain.place_entity_at_exact_location(new_monster, location)
+            
+            -- TODO: add entity and ground effects for spawning
+            if monster.spawn_effect then
+
+            end
+            if monster.spawn_ground_effect then
+
+            end
+
+            -- for any abilities that should start on cooldown, do that
+            local abilities = radiant.entities.get_entity_data(new_monster, 'stonehearth:combat:ranged_attacks')
+            if abilities then
+               local combat_state = new_monster:add_component('stonehearth:combat_state')
+               for _, ability in ipairs(abilities) do
+                  if ability.created_cooldown then
+                     combat_state:start_cooldown(ability.name, ability.created_cooldown)
+                  end
+               end
+            end
+
             local attrib_component = new_monster:add_component('stonehearth:attributes')
             -- multiply monster health by number of players
             if multiplayer_health_multiplier ~= 1 then

@@ -9,8 +9,9 @@
    "starting_resources": {
       "gold": 15
    },
+   "starting_health": 20,
    "tower_gold_cost_multiplier": 1.2,
-   "final_wave": 40,
+   "final_wave": 80,
    "weather": {
       "starting_weather": [
          {

@@ -95,8 +95,8 @@ function GamePlayer:get_resource(resource)
 end
 
 function GamePlayer:add_resource(resource, amount)
-   if amount and amount > 0 then
-      self._sv[resource] = self._sv[resource] + amount
+   if amount and amount >= 1 then
+      self._sv[resource] = self._sv[resource] + math.floor(amount)
       self.__saved_variables:mark_changed()
    end
 end

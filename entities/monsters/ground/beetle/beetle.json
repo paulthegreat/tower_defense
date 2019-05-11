@@ -19,6 +19,11 @@
             "value": 40
          }
       },
+      "stonehearth:buffs": {
+         "buffs": {
+            "tower_defense:buffs:monster:spawn_on_death:ants": {"stacks": 2}
+         }
+      },
       "render_info": {
          "animation_table": "file(/data/rigs/entities/monsters/ground/beetle)",
          "color_map": "stonehearth:color_map:mob",

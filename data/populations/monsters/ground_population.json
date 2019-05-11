@@ -80,6 +80,44 @@
             "Leghorn"
          ]
       },
+      "entling": {
+         "male": {
+            "uri": [
+               "tower_defense:monsters:ground:entling"
+            ],
+            "given_names": [
+               "Bawky",
+               "Clucky",
+               "Chicken",
+               "Foghorn"
+            ]
+         },
+         "surnames": [
+            "McBawkerson",
+            "Cluckington",
+            "Little",
+            "Leghorn"
+         ]
+      },
+      "entling_mage": {
+         "male": {
+            "uri": [
+               "tower_defense:monsters:ground:entling_mage"
+            ],
+            "given_names": [
+               "Bawky",
+               "Clucky",
+               "Chicken",
+               "Foghorn"
+            ]
+         },
+         "surnames": [
+            "McBawkerson",
+            "Cluckington",
+            "Little",
+            "Leghorn"
+         ]
+      },
       "zilla": {
          "male": {
             "uri": [

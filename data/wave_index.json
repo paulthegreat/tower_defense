@@ -271,7 +271,7 @@
                "speed": 1.2,
                "max_health": 50
             },
-            "gold_bounty": 2
+            "gold_bounty": 10
          }
       },
       {
@@ -485,7 +485,7 @@
       },
       {
          "wavenumber": 37,
-         "uri": "tower_defense:data:waves:air:20",
+         "uri": "tower_defense:data:waves:air:4",
          "multipliers": {
             "attributes": {
                "speed": 1.5,

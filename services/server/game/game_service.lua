@@ -23,12 +23,12 @@ function GameService:initialize()
       self._sv.wave = 0
    end
 
-   if not self._sv.health then
-      self._sv.health = 100
-   end
-
    if self._sv.game_options then
       self._game_options = radiant.resources.load_json(self._sv.game_options.game_mode)
+   end
+
+   if not self._sv.health then
+      self._sv.health = self._game_options.starting_health or 100
    end
 
    if not self._sv.wave_controller and self._sv.started then
@@ -126,6 +126,9 @@ end
 function GameService:set_game_options(options)
    self._game_options = radiant.resources.load_json(options.game_mode)
    self._sv.game_options = options
+   if options.starting_health then
+      self._sv.health = options.starting_health
+   end
    self.__saved_variables:mark_changed()
    stonehearth.weather:start(options.game_mode)
 end
@@ -210,9 +213,6 @@ end
 
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
-   if map_data.starting_health then
-      self._sv.health = map_data.starting_health
-   end
    self.__saved_variables:mark_changed()
 end
 

@@ -87,20 +87,29 @@ function TowerRenderer:_update()
       return
    end
 
-   local EDGE_COLOR_ALPHA = 24
-   local FACE_COLOR_ALPHA = 8
+   local EDGE_COLOR_ALPHA = 128
+   local FACE_COLOR_ALPHA = 0
    local color = { x = 255, y = 192, z = 32 }
    if stonehearth.presence_client:is_multiplayer() then
       color = stonehearth.presence_client:get_player_color(self._player_id)
    end
    local edge_color = color
+
+   local height = 0.1
+   if self._is_selected or data.is_client_entity then
+      height = 0.2
+      EDGE_COLOR_ALPHA = 192
+      FACE_COLOR_ALPHA = 64
+   end
+
    if data.reveals_invis then
       edge_color = { x = 255, y = 0, z = 24}
-      EDGE_COLOR_ALPHA = 48
+      EDGE_COLOR_ALPHA = 255
    end
 
    -- have it float slightly above the ground to avoid z-fighting
-   region = region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.4, 0))
+   local squish_amount = (height - 1) / 2
+   region = region:inflated(Point3(0, squish_amount, 0)):translated(Point3(0, squish_amount + 0.01, 0))
 
    local render_node = self._entity_node
 
@@ -111,7 +120,7 @@ function TowerRenderer:_update()
    end
 
    self._outline_node = _radiant.client.create_region_outline_node(render_node, region,
-         radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA * 5), radiant.util.to_color4(color, 0),
+         radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA), radiant.util.to_color4(color, FACE_COLOR_ALPHA),
          '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)
       :set_casts_shadows(false)
       :set_can_query(false)

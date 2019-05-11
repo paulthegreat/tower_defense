@@ -40,6 +40,8 @@ function TowerComponent:create()
       self._sv.sm = radiant.create_controller('radiant:state_machine')
       self._sv.sm:set_log_entity(self._entity)
       self._sv.stats = radiant.create_controller('tower_defense:tower_stats')
+   else
+      self._sv.is_client_entity = true
    end
    self._sv.original_facing = 0
 end
@@ -618,23 +620,6 @@ function TowerComponent:_set_idle()
    end
 end
 
-function TowerComponent:_get_shortest_cooldown(attack_types)
-   local shortest_cd
-   local now = radiant.gamestate.now()
-   for _, action_info in ipairs(attack_types) do
-      local cd = self._combat_state:get_cooldown_end_time(action_info.name)
-      cd = cd and (cd - now) or 0
-      if not shortest_cd or cd < shortest_cd then
-         shortest_cd = cd
-         if cd <= 0 then
-            break
-         end
-      end
-   end
-
-   return shortest_cd
-end
-
 function TowerComponent:_get_aoe_targets(aoe_attack_info, location)
    local cube = self:_get_attack_cube(aoe_attack_info, location)
    return cube and radiant.terrain.get_entities_in_cube(cube, _ignore_target_invis_filter_fn)
@@ -1169,7 +1154,7 @@ function TowerComponent:_declare_state_transitions(sm)
       end, true)
 
    sm:on_state_enter(STATES.WAITING_FOR_COOLDOWN, function(restoring)
-         local cd = math.max(0, self:_get_shortest_cooldown(self._attack_types))
+         local cd = math.max(0, stonehearth.combat:get_shortest_cooldown(self._entity, self._attack_types))
          self._cooldown_listener = stonehearth.combat:set_timer('wait for attack cooldown', cd, function()
             self:_find_target_and_engage(sm)
          end)

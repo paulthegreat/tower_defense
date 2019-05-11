@@ -1,6 +1,6 @@
 {
    "display_name": "i18n(tower_defense:data.waves.air_4.display_name)",
-   "time_to_next_monster": "12m",
+   "time_to_next_monster": 8000,
    "monsters": [
       {
          "count": 4,

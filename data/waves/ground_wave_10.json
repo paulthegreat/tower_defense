@@ -1,6 +1,6 @@
 {
    "display_name": "i18n(tower_defense:data.waves.ground_10.display_name)",
-   "time_to_next_monster": "5m",
+   "time_to_next_monster": 4000,
    "monsters": [
       {
          "count": 10,
@@ -14,10 +14,6 @@
                      "max": 1
                   }
                },
-               "buffs": [
-                  "tower_defense:buffs:monster:spawn_on_death:ants",
-                  "tower_defense:buffs:monster:spawn_on_death:ants"
-               ],
                "damage": 2,
                "bounty": {
                   "gold": 2
