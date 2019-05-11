@@ -21,7 +21,21 @@
          "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
       },
       "tower_defense:tower": {
-         "default_weapon": "tower_defense:towers:heart_of_ice:weapon"
+         "default_weapon": "tower_defense:towers:heart_of_ice:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:heart_of_ice:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:heart_of_ice:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
       }
    },
    "entity_data": {

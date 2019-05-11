@@ -75,6 +75,7 @@
       {
          "wavenumber": 7,
          "uri": "tower_defense:data:waves:air:20",
+         "category": "air",
          "multipliers": {
             "attributes": {
                "speed": 1,
@@ -114,6 +115,7 @@
       {
          "wavenumber": 10,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "invisible",
          "multipliers": {
             "attributes": {
                "speed": 1,
@@ -128,6 +130,7 @@
       {
          "wavenumber": 11,
          "uri": "tower_defense:data:waves:ground:1",
+         "category": "boss",
          "multipliers": {
             "attributes": {
                "speed": 1,
@@ -139,6 +142,7 @@
       {
          "wavenumber": 12,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "healing",
          "multipliers": {
             "attributes": {
                "speed": 1,
@@ -153,6 +157,7 @@
       {
          "wavenumber": 13,
          "uri": "tower_defense:data:waves:air:20",
+         "category": "air",
          "multipliers": {
             "attributes": {
                "speed": 1,
@@ -209,6 +214,7 @@
       {
          "wavenumber": 17,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "healing",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -237,6 +243,7 @@
       {
          "wavenumber": 19,
          "uri": "tower_defense:data:waves:air:20",
+         "category": "air",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -251,6 +258,7 @@
       {
          "wavenumber": 20,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "invisible",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -266,6 +274,7 @@
       {
          "wavenumber": 21,
          "uri": "tower_defense:data:waves:ground:100",
+         "category": "critters",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -277,6 +286,7 @@
       {
          "wavenumber": 22,
          "uri": "tower_defense:data:waves:ground:4",
+         "category": "boss",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -316,6 +326,7 @@
       {
          "wavenumber": 25,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "healing",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -344,6 +355,7 @@
       {
          "wavenumber": 27,
          "uri": "tower_defense:data:waves:air:20",
+         "category": "air",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -386,6 +398,7 @@
       {
          "wavenumber": 30,
          "uri": "tower_defense:data:waves:air:20",
+         "category": "invisible",
          "multipliers": {
             "attributes": {
                "speed": 1.5,
@@ -443,6 +456,7 @@
       {
          "wavenumber": 34,
          "uri": "tower_defense:data:waves:air:20",
+         "category": "healing",
          "multipliers": {
             "attributes": {
                "speed": 1.5,
@@ -471,6 +485,7 @@
       {
          "wavenumber": 36,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "healing",
          "multipliers": {
             "attributes": {
                "speed": 1.5,
@@ -486,6 +501,7 @@
       {
          "wavenumber": 37,
          "uri": "tower_defense:data:waves:air:4",
+         "category": "boss",
          "multipliers": {
             "attributes": {
                "speed": 1.5,
@@ -522,6 +538,7 @@
       {
          "wavenumber": 40,
          "uri": "tower_defense:data:waves:ground:4",
+         "category": "boss",
          "multipliers": {
             "attributes": {
                "speed": 1.5,

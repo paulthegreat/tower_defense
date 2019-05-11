@@ -159,7 +159,7 @@ var tower_defense = {
       var wasText = false;
       buffs.forEach(buff => {
          if (buff.icon) {
-            s += ` <img class='inlineImg' src="${buff.icon}">`;
+            s += ` <img class='inlineImg buff' src="${buff.icon}">`;
             wasText = false;
          }
          else {

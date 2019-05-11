@@ -38,6 +38,11 @@
    margin-top: -8px;
 }
 
+.inlineImg.buff {
+   height: 30px;
+   margin-top: -12px;
+}
+
 .inlineImg.gold {
    content: url(/tower_defense/ui/game/start_menu/images/gold_10.png);
 }
@@ -58,6 +63,13 @@
 
 .weaponDetails {
    padding-top: 10px;
+   border-spacing: 0 8px;
+
+   tr {
+      .inlineImg.buff {
+         margin-bottom: -8px;
+      }
+   }
 }
 
 .entryTitle {
@@ -67,11 +79,11 @@
 }
 
 .entryTitle.indented {
-   padding-left: 20px;
+   padding-left: 18px;
 }
 
 .entryValue {
-   padding-left: 20px;
+   padding-left: 18px;
    color: whitesmoke;
 }
 

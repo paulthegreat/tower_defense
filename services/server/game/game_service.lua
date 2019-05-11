@@ -28,7 +28,7 @@ function GameService:initialize()
    end
 
    if not self._sv.health then
-      self._sv.health = self._game_options.starting_health or 100
+      self._sv.health = self._game_options and self._game_options.starting_health or 100
    end
 
    if not self._sv.wave_controller and self._sv.started then
@@ -100,7 +100,8 @@ function GameService:get_wave_index_command(session, response)
    for _, wave in ipairs(self._waves) do
       local wave_detail = radiant.resources.load_json(wave.uri) or {}
       local wave_data = {
-         display_name = wave_detail.display_name
+         display_name = wave_detail.display_name,
+         category = wave.category
       }
       if wave.buffs then
          wave_data.buffs = catalog_lib.get_buffs(wave.buffs)

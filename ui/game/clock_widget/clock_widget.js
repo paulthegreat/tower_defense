@@ -1,4 +1,4 @@
-// override because we're modifying content in the didInsertElement function
+// override because we're modifying content in the init and didInsertElement functions
 App.StonehearthCalendarView = App.View.extend({
    templateName: 'stonehearthCalendar',
 
@@ -139,7 +139,7 @@ App.StonehearthCalendarView = App.View.extend({
                         var el = $(this);
                         App.tooltipHelper.createDynamicTooltip(el, function() {
                            var dayData = days[parseInt(el.attr('data-index'))];
-                           var title = dayData.wave > 0 ? i18n.t('tower_defense:data.waves.wave_title', dayData) : i18n.t('tower_defense:data.waves.no_wave_title');
+                           var title = dayData && dayData.wave > 0 ? i18n.t('tower_defense:data.waves.wave_title', dayData) : i18n.t('tower_defense:data.waves.no_wave_title');
                            return $(App.tooltipHelper.createTooltip(title, dayData.description));
                         }, { position: 'bottom' });
                      });
@@ -157,7 +157,8 @@ App.StonehearthCalendarView = App.View.extend({
          title: wave && i18n.t(wave.display_name),
          name: dayData.weather.display_name,
          description: self._getFullDescription(dayData.weather, wave),
-         icon: dayData.weather.icon
+         icon: dayData.weather.icon,
+         category: 'weatherDay' + (wave && wave.category ? ' category ' + wave.category : '')
       }
    },
 

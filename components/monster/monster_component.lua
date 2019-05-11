@@ -52,7 +52,7 @@ function MonsterComponent:activate()
                self.__saved_variables:mark_changed()
             end
 
-            self:_update_seen()
+            self:_update_seen(grid_location)
             tower_defense.game:monster_moved_to(location)
          end
       end)
@@ -75,8 +75,8 @@ function MonsterComponent:set_invisible(invisibility)
    end
 end
 
-function MonsterComponent:_update_seen()
-   self:set_seen(self._location and tower_defense.tower:can_see_invis(self._location) or false)
+function MonsterComponent:_update_seen(location)
+   self:set_seen(location and tower_defense.tower:can_see_invis(location) or false)
 end
 
 function MonsterComponent:is_visible()
