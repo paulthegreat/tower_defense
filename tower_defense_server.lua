@@ -13,7 +13,10 @@ local monkey_patches = {
    ace_buffs_component = 'stonehearth.components.buffs.buffs_component',
    ace_buff = 'stonehearth.components.buffs.buff',
    population_faction = 'stonehearth.services.server.population.population_faction',
-   projectile_component = 'stonehearth.components.projectile.projectile_component'
+   projectile_component = 'stonehearth.components.projectile.projectile_component',
+   --ai_service = 'stonehearth.services.server.ai.ai_service',
+   --destroy_entity_action = 'stonehearth.ai.actions.destroy_entity_action',
+   --kill_entity = 'stonehearth.ai.actions.kill_entity'
 }
 
 local function monkey_patching()

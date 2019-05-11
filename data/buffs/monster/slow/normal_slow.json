@@ -6,7 +6,7 @@
    "description": "i18n(tower_defense:data.buffs.normal_slow.description)",
    "icon": "file(normal_slow.png)",
    "repeat_add_action": "renew_duration",
-   "duration": "10m",
+   "duration": 6000,
    "modifiers": {
       "speed": {
          "multiply": 0.5

@@ -38,7 +38,7 @@
             "damage_type": "magical",
             "aoe": {
                "range": 2,
-               "secondary_damage": 0
+               "base_damage": 0
             },
             "attack_times": [
                200

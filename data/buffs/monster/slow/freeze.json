@@ -6,7 +6,7 @@
    "description": "i18n(tower_defense:data.buffs.freeze.description)",
    "icon": "file(freeze.png)",
    "repeat_add_action": "renew_duration",
-   "duration": "5m",
+   "duration": 2000,
    "effect": "tower_defense:effects:ice_cube",
    "modifiers": {
       "speed": {

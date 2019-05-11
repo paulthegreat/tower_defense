@@ -4,7 +4,7 @@
    "category": "burning",
    "display_name": "i18n(tower_defense:data.buffs.normal_burning.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_burning.description)",
-   "duration": "6m",
+   "duration": 3000,
    "max_stacks": 4,
    "repeat_add_action": "stack_and_refresh",
    "icon": "file(normal_burning.png)",
@@ -13,7 +13,7 @@
    "script_info": {
       "damage": 10,
       "damage_type": "magical",
-      "pulse": "2m",
+      "pulse": 1000,
       "pulse_immediately": true,
       "pulse_on_destroy": false
    }

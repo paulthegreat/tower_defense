@@ -27,8 +27,8 @@ end
 function PeriodicHealthModificationBuff:_create_pulse_listener(buff)
    self:_destroy_pulse_listener()
    
-   local interval = self._tuning.pulse or "1m"
-   self._pulse_listener = stonehearth.calendar:set_interval("Aura Buff "..buff:get_uri().." pulse", interval, 
+   local interval = self._tuning.pulse or 1000
+   self._pulse_listener = stonehearth.combat:set_interval("Aura Buff "..buff:get_uri().." pulse", interval, 
          function()
             self:_on_pulse(buff)
          end)

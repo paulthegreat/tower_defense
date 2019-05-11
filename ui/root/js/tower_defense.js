@@ -57,7 +57,7 @@ var tower_defense = {
          s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.aoe_range_title'),
             i18n.t('tower_defense:ui.game.tooltips.tower_weapons.range_square', aoe) +
             tower_defense._getAttackTypes(t.attacks_ground || aoe.hits_ground_and_air, t.attacks_air || aoe.hits_ground_and_air));
-         var secondary_damage = aoe.secondary_damage != null ? aoe.secondary_damage : a.base_damage;
+         var secondary_damage = aoe.base_damage != null ? aoe.base_damage : a.base_damage;
          if (secondary_damage != null) {
             aoe.damage_type = aoe.damage_type || 'physical';
             s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.aoe_damage_title'),

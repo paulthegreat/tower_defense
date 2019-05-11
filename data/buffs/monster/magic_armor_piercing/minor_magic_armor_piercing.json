@@ -5,7 +5,7 @@
    "description": "i18n(tower_defense:data.buffs.minor_magic_armor_piercing.description)",
    "icon": "file(minor_magic_armor_piercing.png)",
    "repeat_add_action": "renew_duration",
-   "duration": "10m",
+   "duration": 6000,
    "modifiers": {
       "multiplicative_magical_dmg_taken": {
          "add": 0.25

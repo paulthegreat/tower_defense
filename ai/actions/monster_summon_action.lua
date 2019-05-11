@@ -24,7 +24,16 @@ function MonsterSummon:run(ai, entity, args)
    self._ai = ai
 
    if ability.effect then
-      self._effect = radiant.effects.run_effect(entity, ability.effect)
+      local run_effect
+      run_effect = function()
+         self._effect = radiant.effects.run_effect(entity, ability.effect)
+         self._effect:set_cleanup_on_finish(false)
+         self._effect:set_finished_cb(function()
+            self:_stop_effect()
+            run_effect()
+         end)
+      end
+      run_effect()
    end
 
    if ability.initial_delay then

@@ -32,7 +32,7 @@
          {
             "name": "cactus_plant",
             "effect": "tower_defense:effects:plant_particles",
-            "base_damage": 2,
+            "base_damage": 5,
             "projectile": {
                "speed": 20,
                "uri": "stonehearth:weapons:turnip_bullet",

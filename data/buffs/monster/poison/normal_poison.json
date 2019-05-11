@@ -4,7 +4,7 @@
    "category": "poison",
    "display_name": "i18n(tower_defense:data.buffs.normal_poison.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_poison.description)",
-   "duration": "15m",
+   "duration": 10000,
    "repeat_add_action": "renew_duration",
    "icon": "file(normal_poison.png)",
    "modifiers": {
@@ -19,7 +19,7 @@
    "script_info": {
       "damage": 5,
       "damage_type": "magical",
-      "pulse": "3m",
+      "pulse": 2000,
       "cannot_kill": true,
       "pulse_immediately": false,
       "pulse_on_destroy": false

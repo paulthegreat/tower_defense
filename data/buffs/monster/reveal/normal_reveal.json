@@ -5,7 +5,7 @@
    "description": "i18n(tower_defense:data.buffs.normal_reveal.description)",
    "icon": "file(normal_reveal.png)",
    "repeat_add_action": "renew_duration",
-   "duration": "12m",
+   "duration": 8000,
    "modifiers": {
       "reveal": {
          "add": 1

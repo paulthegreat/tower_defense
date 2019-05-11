@@ -486,7 +486,7 @@ function TowerComponent:_verify_debuff_cache(debuff_cache, attack_info)
          for name, debuff in pairs(debuff_data) do
             local exp_debuff = radiant.resources.load_json(debuff.uri)
             local priority = exp_debuff.priority or 1
-            local duration = (exp_debuff.duration and stonehearth.calendar:parse_duration(exp_debuff.duration) or 999) * priority
+            local duration = self:_parse_duration(exp_debuff.duration) * priority
             
             exp_debuffs[debuff.uri] = {
                data = exp_debuff,
@@ -499,6 +499,16 @@ function TowerComponent:_verify_debuff_cache(debuff_cache, attack_info)
 
       debuff_cache.debuffs = exp_debuffs
       debuff_cache.total_duration = total_duration
+   end
+end
+
+function TowerComponent:_parse_duration(duration)
+   if type(duration) == 'number' then
+      return stonehearth.calendar:realtime_to_game_seconds(duration, true)
+   elseif type(duration) == 'string' then
+      return stonehearth.calendar:parse_duration(duration)
+   else
+      return 99999
    end
 end
 
@@ -993,7 +1003,7 @@ function TowerComponent:_inflict_attack(targets, primary_target, attack_info, da
    local attacker = self._entity
    local aoe_attack = attack_info.aoe
    local base_damage = attack_info.base_damage
-   local secondary_damage = aoe_attack and aoe_attack.secondary_damage
+   local secondary_damage = aoe_attack and aoe_attack.base_damage
 
    if attack_info.is_percentage then
       local resources = primary_target and primary_target:get_component('stonehearth:expendable_resources')

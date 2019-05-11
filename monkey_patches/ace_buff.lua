@@ -11,13 +11,33 @@ function AceBuff:create(entity, uri, json, options)
    self._options = options
 end
 
-AceBuff._ace_old_activate = Buff.activate
+--AceBuff._ace_old_activate = Buff.activate
 function AceBuff:activate()
-   self:_ace_old_activate()
-   if not self._json.max_stacks then
-      self._sv.max_stacks = 1
-      self.__saved_variables:mark_changed()
+   if self._should_be_destroyed then
+      self:destroy()
+      return
    end
+
+   local json = rawget(self, '_json')
+   self._cooldown_buff = json.cooldown_buff
+   if json.duration then
+      if type(json.duration) == 'number' then
+         self._default_duration = stonehearth.calendar:realtime_to_game_seconds(json.duration, true)
+      else
+         self._default_duration = stonehearth.calendar:parse_duration(json.duration)
+      end
+   end
+
+   -- serialize to the client for display
+   local sv = rawget(self, '_sv')
+   rawset(sv, 'axis', json.axis)
+   rawset(sv, 'icon', json.icon)
+   rawset(sv, 'display_name', json.display_name)
+   rawset(sv, 'description', json.description)
+   rawset(sv, 'modifiers', json.modifiers)
+   rawset(sv, 'invisible_to_player', json.invisible_to_player)
+   rawset(sv, 'max_stacks', json.max_stacks or 1)
+   self.__saved_variables:mark_changed()
 end
 
 AceBuff._ace_old_destroy = Buff.destroy

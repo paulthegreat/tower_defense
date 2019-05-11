@@ -5,7 +5,7 @@
    "description": "i18n(tower_defense:data.buffs.tower.major_cooldown_decrease.description)",
    "icon": "file(major_cooldown_decrease.png)",
    "repeat_add_action": "renew_duration",
-   "duration": "10m",
+   "duration": 6000,
    "modifiers": {
       "multiplicative_cooldown_modifier": {
          "add": -0.25

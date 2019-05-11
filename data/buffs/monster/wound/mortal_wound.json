@@ -5,7 +5,7 @@
    "description": "i18n(tower_defense:data.buffs.mortal_wound.description)",
    "icon": "file(mortal_wound.png)",
    "repeat_add_action": "renew_duration",
-   "duration": "4m",
+   "duration": 2000,
    "modifiers": {
       "multiplicative_healing_modifier": {
          "multiply": 0
