@@ -1,0 +1,21 @@
+{
+   "type" : "effect",
+   "tracks": {
+      "Trail_main": {
+         "type": "cubemitter",
+         "cubemitter": "/tower_defense/data/effects/lightning_strike_cast.cubemitter.json",
+         "loop": false,
+         "start_time": 0,
+         "end_time": 400,
+         "transforms": {
+            "x":0,
+            "y":0.85,
+            "z":0,
+            "rx":0,
+            "ry":0,
+            "rz":0
+         },
+         "bone": "mainHand"
+      }
+   }
+}      
