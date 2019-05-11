@@ -34,6 +34,7 @@
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
             "base_damage": 3,
+            "num_targets": 2,
             "damage_type": "magical",
             "attack_times": [
                500,

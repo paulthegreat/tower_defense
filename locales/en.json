@@ -252,6 +252,10 @@
                "display_name": "Spawn Ants",
                "description": "Spawns Ants when it dies"
             }
+         },
+         "spawn_ants_on_death": {
+            "display_name": "Deathly Surprise",
+            "description": "Spawns Ants when killed"
          }
       },
       "population": {
@@ -449,32 +453,42 @@
          },
          "cactus_plant": {
             "display_name": "Cactus",
-            "description": "Simple plinking poison attack"
+            "description": "Simple plinking poison attack",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Simple plinking poison attack"
+            }
          },
          "earthbud_plant": {
             "display_name": "Earthbud",
             "description": "Moderate damage and inflicts normal wound in small AOE",
             "weapon": {
-               "description": "Wounds in AOE"
+               "description": "Wounds in AOE",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies normal poison"
+               "description": "Also applies normal poison",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also targets Air"
+               "description": "Also targets Air",
+               "display_name": "Utility Upgrade"
             }
          },
          "foxlily_plant": {
             "display_name": "Foxlily",
             "description": "Inflicts normal poison, targets ground and air",
             "weapon": {
-               "description": "Well-rounded poison tower"
+               "description": "Well-rounded poison tower",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Shorter cooldown, attacks 3 times"
+               "description": "Shorter cooldown, attacks 3 times",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Longer cooldown, lower damage, but attacks 3 targets"
+               "description": "Longer cooldown, lower damage, but attacks 3 targets",
+               "display_name": "Utility Upgrade"
             }
          },
          "gold_mine": {
@@ -483,19 +497,26 @@
          },
          "sugarbell_plant": {
             "display_name": "Sugarbell",
-            "description": "Moderate damage, a quick attack, inflicts minor poison"
+            "description": "Moderate damage, a quick attack, inflicts minor poison",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Moderate damage, a quick attack, inflicts minor poison"
+            }
          },
          "sunflower_plant": {
             "display_name": "Sunflower",
             "description": "Spits its seed at up to 5 targets at once, inflicting major poison",
             "weapon": {
-               "description": "Multi-target, major poison"
+               "description": "Multi-target, major poison",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Triples damage, increases cooldown by 50%"
+               "description": "Triples damage, increases cooldown by 50%",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also targets Air"
+               "description": "Also targets Air",
+               "display_name": "Utility Upgrade"
             }
          },
          "small_turret": {
@@ -512,155 +533,218 @@
          },
          "water_101": {
             "display_name": "Water 101",
-            "description": "Low damage, but cheap, fast attack, inflicts minor slow."
+            "description": "Low damage, but cheap, fast attack, inflicts minor slow.",
+            "weapon": {
+               "description": "Low damage, but applies minor slow",
+               "display_name": "Base Tower"
+            }
          },
          "water_102": {
             "display_name": "Water 102",
-            "description": "Moderate damage, targets ground and air."
+            "description": "Moderate damage, targets ground and air.",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Decent damage, attacks ground and air, but doesn't slow"
+            }
          },
          "water_103": {
             "display_name": "Water 103",
-            "description": "Attacks two targets and inflicts minor slow."
+            "description": "Attacks two targets and inflicts minor slow.",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Good damage, attacks 2 targets, applies minor slow"
+            }
          },
          "chain_frost": {
             "display_name": "Chain Frost",
             "description": "Like the Dota 2 ability",
             "weapon": {
-               "description": "Long cooldown, essentially same ability as Dota"
+               "description": "Long cooldown, essentially same ability as Dota",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Damage increases by 50% per bounce"
+               "description": "Damage increases by 50% per bounce",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Shorter cooldown, faster travel time, longer bounce range, lower damage, slows in range 1 AOE"
+               "description": "Shorter cooldown, faster travel time, longer bounce range, lower damage, slows in range 1 AOE",
+               "display_name": "Utility Upgrade"
             }
          },
          "frost_blast": {
             "display_name": "Frost Blast",
             "description": "Like the Dota 2 ability",
             "weapon": {
-               "description": "Single target damage, aoe slow"
+               "description": "Single target damage, aoe slow",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Does full damage in AOE but with slightly smaller AOE range"
+               "description": "Does full damage in AOE but with slightly smaller AOE range",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "AOE affects ground and air and slightly larger AOE range"
+               "description": "AOE affects ground and air and slightly larger AOE range",
+               "display_name": "Utility Upgrade"
             }
          },
          "heart_of_ice": {
             "display_name": "Heart of Ice",
             "description": "Fast attack that applies major slow and a chance of freezing",
             "weapon": {
-               "description": "Fast attack with moderate damage that applies major slow and has a 50% chance of freezing"
+               "description": "Fast attack with moderate damage that applies major slow and has a 50% chance of freezing",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies mortal wound"
+               "description": "Also applies mortal wound",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "AOE slow and freeze range 1"
+               "description": "AOE slow and freeze range 1",
+               "display_name": "Utility Upgrade"
             }
          },
          "air_101": {
             "display_name": "Li'l Plinker",
-            "description": "Fast moderate attacks on air"
+            "description": "Fast moderate attacks on air",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "High damage but only attacks air"
+            }
          },
          "air_102": {
             "display_name": "Ol' Plonker",
-            "description": "Slow, moderate attacks on air and ground"
+            "description": "Slow, moderate attacks on air and ground",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Moderate damage, attacks ground and air"
+            }
          },
          "air_103": {
             "display_name": "Buffer",
-            "description": "Reduces cooldown times of all nearby towers"
+            "description": "Reduces cooldown times of all nearby towers",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Doesn't attack but buffs nearby towers"
+            }
          },
          "duster": {
             "display_name": "Duster",
             "description": "Passively reveals invisible monsters in full attack region",
             "weapon": {
-               "description": "Passively reveals invisible monsters in full attack region"
+               "description": "Passively reveals invisible monsters in full attack region",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies minor armor piercing in passive aoe"
+               "description": "Also applies minor armor piercing in passive aoe",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+2 range"
+               "description": "+2 range",
+               "display_name": "Utility Upgrade"
             }
          },
          "bone_piercer": {
             "display_name": "Bone Piercer",
             "description": "Fast pure damage attack",
             "weapon": {
-               "description": "Pure damage that attacks both air and ground"
+               "description": "Pure damage that attacks both air and ground",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Performs 2 attacks per cooldown"
+               "description": "Performs 2 attacks per cooldown",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies major armor piercing"
+               "description": "Also applies major armor piercing",
+               "display_name": "Utility Upgrade"
             }
          },
          "refreshing_wind": {
             "display_name": "Refreshing Wind",
             "description": "Major cooldown reduction aura tower",
             "weapon": {
-               "description": "Major cooldown reduction aura tower"
+               "description": "Doesn't attack but buffs nearby towers",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also grants normal damage increase"
+               "description": "Also grants normal damage increase",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+1 range"
+               "description": "+1 range",
+               "display_name": "Utility Upgrade"
             }
          },
          "flame": {
             "display_name": "Flame",
-            "description": "Applies low level burning debuff"
+            "description": "Applies low level burning debuff",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Applies low level burning debuff"
+            }
          },
          "flare": {
             "display_name": "Flare",
-            "description": "Very low damage, applies medium duration reveal debuff to targets"
+            "description": "Very low damage, applies medium duration reveal debuff to targets",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Very low damage, applies medium duration reveal debuff to targets"
+            }
          },
          "fire_103": {
             "display_name": "Fire 103",
-            "description": "Very quickly applies 3 stacks of minor burning to the target"
+            "description": "Very quickly applies 3 stacks of minor burning to 2 targets",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Very quickly applies 3 stacks of minor burning to 2 targets"
+            }
          },
          "sunburst": {
             "display_name": "Sunburst",
             "description": "Passively reveals in full range and permanently reveals attacked targets",
             "weapon": {
-               "description": "Passively reveals in full range and permanently reveals attacked targets"
+               "description": "Passively reveals in full range and permanently reveals attacked targets",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies normal burning"
+               "description": "Also applies normal burning",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also targets Air"
+               "description": "Also targets Air",
+               "display_name": "Utility Upgrade"
             }
          },
          "fire_plume": {
             "display_name": "Fire Plume",
             "description": "Narrow aoe attack that applies normal burning",
             "weapon": {
-               "description": "Narrow aoe attack that applies normal burning"
+               "description": "Narrow aoe attack that applies normal burning",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "+1 splash range"
+               "description": "+1 splash range",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies normal armor piercing"
+               "description": "Also applies normal armor piercing",
+               "display_name": "Utility Upgrade"
             }
          },
          "laserbeam": {
             "display_name": "Laserbeam",
             "description": "Fires a beam that periodically deals damage and inflicts major burning.",
             "weapon": {
-               "description": "Fires a long-range laserbeam that quickly burns a target"
+               "description": "Fires a long-range laserbeam that quickly burns a target",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also hits all targets in the beam's path"
+               "description": "Also hits all targets in the beam's path",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also targets Air and attacks 2 targets"
+               "description": "Also targets Air and attacks 2 targets",
+               "display_name": "Utility Upgrade"
             }
          },
          "template_turret": {
@@ -669,179 +753,226 @@
          },
          "earth_pounder": {
             "display_name": "Earth Pounder",
-            "description": "Cheap and hard-hitting, Earth's bread and butter"
+            "description": "Cheap and hard-hitting, Earth's bread and butter",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Cheap and hard-hitting, Earth's bread and butter"
+            }
          },
          "scattershot": {
             "display_name": "Scattershot",
-            "description": "Shoots up to 3 targets at once for moderate damage"
+            "description": "Shoots up to 3 targets at once for moderate damage",
+            "weapon": {
+               "display_name": "Base Tower",
+               "description": "Shoots up to 3 targets at once for moderate damage"
+            }
          },
          "crusher": {
             "display_name": "Crusher",
             "description": "Slow attack, good single-target damage, wounds",
             "weapon": {
-               "description": "Slow attack, good single-target damage, wounds"
+               "description": "Slow attack, good single-target damage, wounds",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Hits in small aoe"
+               "description": "Hits in small aoe",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies normal magic armor piercing"
+               "description": "Also applies normal magic armor piercing",
+               "display_name": "Utility Upgrade"
             }
          },
          "cannonball_gun": {
             "display_name": "Cannonball Gun",
             "description": "Shoots a cannonball that hits every target it moves through",
             "weapon": {
-               "description": "Shoots a cannonball that hits every target it moves through"
+               "description": "Shoots a cannonball that hits every target it moves through",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Improves attack and projectile speeds"
+               "description": "Improves attack and projectile speeds",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies minor magic armor piercing and minor slow"
+               "description": "Also applies minor magic armor piercing and minor slow",
+               "display_name": "Utility Upgrade"
             }
          },
          "seismic_slammer": {
             "display_name": "Seismic Slammer",
             "description": "Echo Slam: the tower",
             "weapon": {
-               "description": "Deals percentage-based AOE damage to all targets in range"
+               "description": "Deals percentage-based AOE damage to all targets in range",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Doubles splash range."
+               "description": "Doubles splash range.",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies normal slow."
+               "description": "Also applies normal slow.",
+               "display_name": "Utility Upgrade"
             }
          },
          "anaconda_vine": {
             "display_name": "Anaconda Vine",
             "description": "Moderate damage, wounds and slows",
             "weapon": {
-               "description": "Moderate damage, wounds and slows"
+               "description": "Moderate damage, wounds and slows",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "More than doubles damage"
+               "description": "More than doubles damage",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Only 2 attacks, but a shorter cooldown, and also applies normal poison"
+               "description": "Only 2 attacks, but a shorter cooldown, and also applies normal poison",
+               "display_name": "Utility Upgrade"
             }
          },
          "fog_machine": {
             "display_name": "Fog Machine",
             "description": "Low damage, inflicts minor armor piercing, passively reveals in full range",
             "weapon": {
-               "description": "Low damage, passively reveals in full range"
+               "description": "Low damage, passively reveals in full range",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Applies normal armor piercing instead"
+               "description": "Applies normal armor piercing instead",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies minor slow"
+               "description": "Also applies minor slow",
+               "display_name": "Utility Upgrade"
             }
          },
          "blizzard": {
             "display_name": "Blizzard",
             "description": "Moderate damage, applies heavy slow debuff in narrow AOE",
             "weapon": {
-               "description": "Moderate damage, applies heavy slow debuff"
+               "description": "Moderate damage, applies heavy slow debuff",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Significantly increases damage"
+               "description": "Significantly increases damage",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Reduces damage, but increases splash range"
+               "description": "Reduces damage, but increases splash range",
+               "display_name": "Utility Upgrade"
             }
          },
          "lightning_bolt": {
             "display_name": "Lightning Bolt",
             "description": "Like Dota 2 Zeus ability, high single-target damage, reveals target and nearby enemies",
             "weapon": {
-               "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals target and nearby enemies for a couple seconds"
+               "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals target and nearby enemies for a couple seconds",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also does damage in AOE"
+               "description": "Also does damage in AOE",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Applies normal reveal instead"
+               "description": "Applies normal reveal instead",
+               "display_name": "Utility Upgrade"
             }
          },
          "arc_lightning": {
             "display_name": "Arc Lightning",
             "description": "Chain lightning, like Dota 2 Zeus ability, bounces reduced damage to successive targets",
             "weapon": {
-               "description": "Chain lightning, like Dota 2 Zeus ability, hits a target in a short range, then bounces to a new target in a short range X times"
+               "description": "Chain lightning, like Dota 2 Zeus ability, hits a target in a short range, then bounces to a new target in a short range X times",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Increases secondary targeting range and number of bounces"
+               "description": "Increases secondary targeting range and number of bounces",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies minor reveal"
+               "description": "Also applies minor reveal",
+               "display_name": "Utility Upgrade"
             }
          },
          "fire_grenade": {
             "display_name": "Fire Grenade",
             "description": "Launches a burning projectile that causes a mass secondary attack with lower damage",
             "weapon": {
-               "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, but all apply burning"
+               "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, but all apply burning",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Increases base damage, blast range, number of secondary targets hit, and secondary damage multiplier"
+               "description": "Increases base damage, blast range, number of secondary targets hit, and secondary damage multiplier",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies normal magic armor piercing"
+               "description": "Also applies normal magic armor piercing",
+               "display_name": "Utility Upgrade"
             }
          },
          "magma_pools": {
             "display_name": "Magma",
             "description": "Creates a pool of magma that inflicts burning on any enemies entering it",
             "weapon": {
-               "description": "Its attack creates a pool of magma on the ground that lasts for a few seconds, causing burning to any enemies in it"
+               "description": "Its attack creates a pool of magma on the ground that lasts for a few seconds, causing burning to any enemies in it",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Magma pools apply effects every second instead of just when a monster first enters it"
+               "description": "Magma pools apply effects every second instead of just when a monster first enters it",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies major magic armor piercing"
+               "description": "Also applies major magic armor piercing",
+               "display_name": "Utility Upgrade"
             }
          },
          "stone_vine": {
             "display_name": "Stone Vine",
             "description": "Slow attack, high damage plus debuffs",
             "weapon": {
-               "description": "Slow attack, high damage plus debuffs"
+               "description": "Slow attack, high damage plus debuffs",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Pure damage"
+               "description": "Pure damage",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Slightly lower damage, but +2 range and lower cooldown"
+               "description": "Slightly lower damage, but +2 range and lower cooldown",
+               "display_name": "Utility Upgrade"
             }
          },
          "boygrove": {
             "display_name": "Boygrove",
             "description": "Hoping to grow up to be a real mangrove",
             "weapon": {
-               "description": "Inflicts minor poison and minor slow, targets ground and air"
+               "description": "Inflicts minor poison and minor slow, targets ground and air",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Additionally applies normal poison and hits harder"
+               "description": "Additionally applies normal poison and hits harder",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Additionally applies normal slow and attacks 2 targets"
+               "description": "Additionally applies normal slow and attacks 2 targets",
+               "display_name": "Utility Upgrade"
             }
          },
          "mangrove": {
             "display_name": "Mangrove",
             "description": "Grows long-lasting roots that damage and slow all monsters entering them",
             "weapon": {
-               "description": "Each attack grows roots in that place that last for a while; only does damage (and large slows) through the roots"
+               "description": "Each attack grows roots in that place that last for a while; only does damage (and large slows) through the roots",
+               "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies major poison"
+               "description": "Also applies major poison",
+               "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+2 range, roots last longer"
+               "description": "+2 range, roots last longer",
+               "display_name": "Utility Upgrade"
             }
          }
       },

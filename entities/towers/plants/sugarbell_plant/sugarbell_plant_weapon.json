@@ -32,7 +32,7 @@
          {
             "name": "sugarbell_plant",
             "effect": "tower_defense:effects:plant_particles",
-            "base_damage": 5,
+            "base_damage": 15,
             "projectile": {
                "speed": 20,
                "uri": "stonehearth:weapons:turnip_bullet",
