@@ -41,7 +41,6 @@
             "effect": "stonehearth:effects:wet_stone_weep",
             "hit_effect": "tower_defense:effects:water_particles",
             "base_damage": 80,
-            "num_targets": 3,
             "damage_type": "magical",
             "attack_times": [
                500
