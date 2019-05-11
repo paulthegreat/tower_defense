@@ -7,6 +7,7 @@
    "icon": "file(freeze.png)",
    "repeat_add_action": "renew_duration",
    "duration": "5m",
+   "effect": "tower_defense:effects:ice_cube",
    "modifiers": {
       "speed": {
          "multiply": 0

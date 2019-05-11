@@ -138,6 +138,7 @@
       "effects:water_particles": "file(data/effects/water_particles.json)",
       "effects:lightning_bolt": "file(data/effects/lightning_bolt.json)",
       "effects:lightning_cast": "file(data/effects/lightning_cast.json)",
+      "effects:ice_cube": "file(data/effects/ice_cube_effect.json)",
       "end_portal:firepit_titan": "file(entities/end_portal/firepit_titan/firepit_titan.json)",
       "ground_presence:magma_pool": "file(entities/ground_presence/magma_pool/magma_pool.json)",
       "ground_presence:mangrove_roots": "file(entities/ground_presence/mangrove_roots/mangrove_roots.json)",

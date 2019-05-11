@@ -1,0 +1,60 @@
+{
+   "name": "ice cube",
+   "duration": 2200,
+   "material": "materials/cubemitter_bloom.material.json",
+   "loops": false,
+   "emission": {
+      "rate": {
+         "kind": "BURST",
+         "values": [
+            [0, 4, 5],
+            [60, 4, 5]
+         ]
+      },
+      "angle": {
+         "kind": "CONSTANT",
+         "values": [0]
+      },
+      "origin": {
+         "surface": "CUBOID",
+         "values": [0.5, 0.5, 0.5, 0, 0, 0]
+      }
+   },
+   "particle": {
+      "lifetime": {
+         "start": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [1200, 2200]
+         }
+      },
+      "speed": {
+         "start": {
+            "kind": "CONSTANT",
+            "values": [0]
+         }
+      },
+      "scale": {
+         "start": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [-3.1, 4.1]
+         }
+      },
+      "color": {
+         "start": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [
+               [0.45, 0.70, 0.95, 1],
+               [0.62, 0.80, 0.98, 0.9]
+            ]
+         },
+         "over_lifetime_a": {
+            "kind": "CURVE",
+            "values": [
+               [0, 0.04],
+               [0.85, 0.04],
+               [1, 0]
+            ]
+         }
+      }
+   }
+}
