@@ -1,0 +1,45 @@
+{
+   "type" : "effect",
+   "tracks": {
+      "cubemitter": {
+         "type": "cubemitter",
+         "cubemitter": "/tower_defense/data/effects/minor_fire.cubemitter.json",
+         "loop": true,
+         "transforms": {
+            "x":0,
+            "y":0,
+            "z":0,
+            "rx":90,
+            "ry":0,
+            "rz":0
+         }
+      },
+      "ignite_sound": {
+         "type": "sound_effect",
+         "start_time": 0,
+         "min_distance": 15,
+         "falloff" : 10,
+         "volume": 50,
+         "track" : "stonehearth:sounds:firearrow_hit"
+      },
+      "crackle_sound": {
+         "type" : "sound_effect",
+         "loop" : true,
+         "start_time": 300,
+         "min_distance": 20,
+         "falloff" : 8,
+         "volume": 30,
+         "track" : "stonehearth:sounds:firearrow_burn"        
+      },
+     "light": {
+         "type": "light",
+         "light": "animatedlights/lamp/lamp.animatedlight.json",
+         "transforms": {
+            "x":0,
+            "y":1.0,
+            "z":0
+        },
+        "shadows": false
+     }
+   }
+}

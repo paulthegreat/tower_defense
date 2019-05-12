@@ -8,7 +8,7 @@
    "max_stacks": 3,
    "repeat_add_action": "stack_and_refresh",
    "icon": "file(minor_burning.png)",
-   "effect": "stonehearth:effects:debuff_added:fire_debuff",
+   "effect": "tower_defense:effects:small_fire_debuff",
    "script": "tower_defense:buff_scripts:periodic_health_modification",
    "script_info": {
       "damage": 2,
