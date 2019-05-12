@@ -3,13 +3,12 @@
 	"tracks": {
 		"beam_particles": {
 			"type": "cubemitter",
-			"cubemitter": "/tower_defense/data/effects/beamtest.cubemitter.json",
-			"start_time": 0,
-			"end_time": 600,
+			"cubemitter": "/tower_defense/data/effects/poison_drip_major.cubemitter.json",
+         "loop": true,
 			"transforms": {
 				"x": 0,
-				"y": 0,
-				"z": -3,
+				"y": 0.5,
+				"z": 0,
 				"rx": 0,
 				"ry": 0,
 				"rz": 0

@@ -67,7 +67,7 @@ function BeamRenderer:_update_shape(target, target_offset, beam_color)
 
       local emission_data = self._cubemitter:get_emission_data()
       emission_data:set_origin():as_rectangle(0.25, length)--width, height
-      emission_data:set_rate():as_constant(50+30*length)
+      emission_data:set_rate():as_constant(50 + 50 * length)
       self._cubemitter:set_transform(midpoint.x, midpoint.y, midpoint.z, math.deg(rot.x)+90, math.deg(rot.y), math.deg(rot.z), 1, 1, 1)
       --emission_data:set_rotation(0,0,0)
    end

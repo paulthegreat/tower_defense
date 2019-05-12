@@ -5,7 +5,7 @@
    "display_name": "i18n(tower_defense:data.buffs.major_poison.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_poison.description)",
    "duration": 10000,
-   "effect": "tower_defense:effects:poison",
+   "effect": "tower_defense:effects:poison:major",
    "repeat_add_action": "renew_duration",
    "icon": "file(major_poison.png)",
    "modifiers": {

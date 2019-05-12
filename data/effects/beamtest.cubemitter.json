@@ -43,7 +43,7 @@
       "scale": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [0.25, 0.6]
+            "values": [0.2, 0.4]
          },
          "over_lifetime": {
             "kind": "CURVE",
@@ -60,15 +60,6 @@
          "start": {
             "kind": "CONSTANT",
             "values": [0.224, 0.58, 0.349, 1]
-         },
-         "over_lifetime_a": {
-            "kind": "CURVE",
-            "values": [
-               [0, 0],
-               [0.1, 1],
-               [0.75, 1],
-               [1, 1]
-            ]
          }
       }
    }
