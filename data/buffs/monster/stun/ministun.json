@@ -6,7 +6,7 @@
    "description": "i18n(tower_defense:data.buffs.ministun.description)",
    "icon": "file(ministun.png)",
    "repeat_add_action": "renew_duration",
-   "duration": 200,
+   "duration": 400,
    "modifiers": {
       "stunned": {
          "add": 1

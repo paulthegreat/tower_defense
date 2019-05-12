@@ -550,6 +550,609 @@
             "tower_defense:buffs:monster:healing:major",
             "tower_defense:buffs:monster:invisible"
          ]
+      },
+      {
+         "wavenumber": 41,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 800
+            },
+            "gold_bounty": 35
+         }
+      },
+      {
+         "wavenumber": 42,
+         "uri": "tower_defense:data:waves:air:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 800
+            },
+            "gold_bounty": 35
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:minor",
+            "tower_defense:buffs:monster:immunity:slow"
+         ]
+      },
+      {
+         "wavenumber": 43,
+         "uri": "tower_defense:data:waves:ground:10",
+         "category": "summon",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 800
+            },
+            "gold_bounty": 35
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:magic_armor:normal"
+         ],
+         "role_overrides": {
+            "beetle": "entling_mage"
+         }
+      },
+      {
+         "wavenumber": 44,
+         "uri": "tower_defense:data:waves:mixed:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 800
+            },
+            "gold_bounty": 35
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:magic_armor:minor",
+            "tower_defense:buffs:monster:immunity:burning"
+         ]
+      },
+      {
+         "wavenumber": 45,
+         "uri": "tower_defense:data:waves:ground:10",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 1200
+            },
+            "gold_bounty": 40
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:healing:normal"
+         ]
+      },
+      {
+         "wavenumber": 46,
+         "uri": "tower_defense:data:waves:air:20",
+         "category": "invisible",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 1200
+            },
+            "gold_bounty": 40
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:immunity:poison",
+            "tower_defense:buffs:monster:invisible"
+         ]
+      },
+      {
+         "wavenumber": 47,
+         "uri": "tower_defense:data:waves:air:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 1200
+            },
+            "gold_bounty": 40
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:immunity:slow"
+         ]
+      },
+      {
+         "wavenumber": 48,
+         "uri": "tower_defense:data:waves:ground:1",
+         "category": "boss",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 1200
+            },
+            "gold_bounty": 40
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:major",
+            "tower_defense:buffs:monster:healing:minor"
+         ]
+      },
+      {
+         "wavenumber": 49,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 2000
+            },
+            "gold_bounty": 45
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:normal"
+         ]
+      },
+      {
+         "wavenumber": 50,
+         "uri": "tower_defense:data:waves:ground:100",
+         "category": "invisible",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 2000
+            },
+            "gold_bounty": 45
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:invisible",
+            "tower_defense:buffs:monster:magic_armor:major"
+         ]
+      },
+      {
+         "wavenumber": 51,
+         "uri": "tower_defense:data:waves:mixed:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 2000
+            },
+            "gold_bounty": 45
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:major"
+         ]
+      },
+      {
+         "wavenumber": 52,
+         "uri": "tower_defense:data:waves:air:20",
+         "category": "air",
+         "multipliers": {
+            "attributes": {
+               "speed": 1.9,
+               "max_health": 2000
+            },
+            "gold_bounty": 45
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:healing:major"
+         ]
+      },
+      {
+         "wavenumber": 53,
+         "uri": "tower_defense:data:waves:ground:10",
+         "category": "summon",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 3000
+            },
+            "gold_bounty": 50
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:normal",
+            "tower_defense:buffs:monster:immunity:burning"
+         ],
+         "role_overrides": {
+            "beetle": "entling_mage"
+         }
+      },
+      {
+         "wavenumber": 54,
+         "uri": "tower_defense:data:waves:ground:20",
+         "category": "invisible",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 3000
+            },
+            "gold_bounty": 50
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:invisible",
+            "tower_defense:buffs:monster:healing:normal"
+         ]
+      },
+      {
+         "wavenumber": 55,
+         "uri": "tower_defense:data:waves:ground:4",
+         "category": "boss",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 3000
+            },
+            "gold_bounty": 50
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:immunity:poison",
+            "tower_defense:buffs:monster:armor:major"
+         ]
+      },
+      {
+         "wavenumber": 56,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 3000
+            },
+            "gold_bounty": 50
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:major",
+            "tower_defense:buffs:monster:magic_armor:major"
+         ]
+      },
+      {
+         "wavenumber": 57,
+         "uri": "tower_defense:data:waves:air:20",
+         "category": "air",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 5000
+            },
+            "gold_bounty": 55
+         }
+      },
+      {
+         "wavenumber": 58,
+         "uri": "tower_defense:data:waves:ground:10",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 5000
+            },
+            "gold_bounty": 55
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:minor",
+            "tower_defense:buffs:monster:healing:normal"
+         ]
+      },
+      {
+         "wavenumber": 59,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 5000
+            },
+            "gold_bounty": 55
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:immunity:slow",
+            "tower_defense:buffs:monster:healing:minor"
+         ]
+      },
+      {
+         "wavenumber": 60,
+         "uri": "tower_defense:data:waves:air:4",
+         "category": "boss",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 5000
+            },
+            "gold_bounty": 55
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:healing:major",
+            "tower_defense:buffs:monster:armor:normal",
+            "tower_defense:buffs:monster:magic_armor:normal"
+         ]
+      },
+      {
+         "wavenumber": 61,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 8000
+            },
+            "gold_bounty": 60
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:immunity:poison"
+         ]
+      },
+      {
+         "wavenumber": 62,
+         "uri": "tower_defense:data:waves:ground:20",
+         "category": "purge",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 8000
+            },
+            "gold_bounty": 60
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:random_purge"
+         ]
+      },
+      {
+         "wavenumber": 63,
+         "uri": "tower_defense:data:waves:ground:20",
+         "category": "invisible",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 8000
+            },
+            "gold_bounty": 60
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:invisible",
+            "tower_defense:buffs:monster:magic_armor:major"
+         ]
+      },
+      {
+         "wavenumber": 64,
+         "uri": "tower_defense:data:waves:ground:100",
+         "category": "critters",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 8000
+            },
+            "gold_bounty": 60
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:immunity:slow",
+            "tower_defense:buffs:monster:immunity:burning"
+         ]
+      },
+      {
+         "wavenumber": 65,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 12000
+            },
+            "gold_bounty": 65
+         }
+      },
+      {
+         "wavenumber": 66,
+         "uri": "tower_defense:data:waves:ground:4",
+         "category": "boss",
+         "multipliers": {
+            "attributes": {
+               "speed": 2.5,
+               "max_health": 12000
+            },
+            "gold_bounty": 65
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:major",
+            "tower_defense:buffs:monster:healing:minor"
+         ]
+      },
+      {
+         "wavenumber": 67,
+         "uri": "tower_defense:data:waves:air:20",
+         "category": "purge",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 12000
+            },
+            "gold_bounty": 65
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:random_purge"
+         ]
+      },
+      {
+         "wavenumber": 68,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 12000
+            },
+            "gold_bounty": 65
+         }
+      },
+      {
+         "wavenumber": 69,
+         "uri": "tower_defense:data:waves:air:10",
+         "category": "air",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 20000
+            },
+            "gold_bounty": 70
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:major",
+            "tower_defense:buffs:monster:immunity:poison"
+         ]
+      },
+      {
+         "wavenumber": 70,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 20000
+            },
+            "gold_bounty": 70
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:magic_armor:major",
+            "tower_defense:buffs:monster:immunity:burning"
+         ]
+      },
+      {
+         "wavenumber": 71,
+         "uri": "tower_defense:data:waves:mixed:4",
+         "category": "boss",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 20000
+            },
+            "gold_bounty": 70
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:random_purge"
+         ]
+      },
+      {
+         "wavenumber": 72,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 20000
+            },
+            "gold_bounty": 70
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:healing:normal",
+            "tower_defense:buffs:monster:armor:normal",
+            "tower_defense:buffs:monster:magic_armor:normal"
+         ]
+      },
+      {
+         "wavenumber": 73,
+         "uri": "tower_defense:data:waves:ground:10",
+         "category": "purge",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 30000
+            },
+            "gold_bounty": 75
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:normal",
+            "tower_defense:buffs:monster:full_purge"
+         ],
+         "role_overrides": {
+            "beetle": "entling_mage"
+         }
+      },
+      {
+         "wavenumber": 74,
+         "uri": "tower_defense:data:waves:air:20",
+         "category": "air",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 30000
+            },
+            "gold_bounty": 75
+         }
+      },
+      {
+         "wavenumber": 75,
+         "uri": "tower_defense:data:waves:ground:1",
+         "category": "boss",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 30000
+            },
+            "gold_bounty": 75
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:healing:major",
+            "tower_defense:buffs:monster:full_purge"
+         ]
+      },
+      {
+         "wavenumber": 76,
+         "uri": "tower_defense:data:waves:mixed:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 30000
+            },
+            "gold_bounty": 75
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:magic_armor:major",
+            "tower_defense:buffs:monster:immunity:poison"
+         ]
+      },
+      {
+         "wavenumber": 77,
+         "uri": "tower_defense:data:waves:ground:20",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 50000
+            },
+            "gold_bounty": 80
+         }
+      },
+      {
+         "wavenumber": 78,
+         "uri": "tower_defense:data:waves:mixed:20",
+         "category": "purge",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 50000
+            },
+            "gold_bounty": 80
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:immunity:burning",
+            "tower_defense:buffs:monster:armor:major",
+            "tower_defense:buffs:monster:random_purge"
+         ]
+      },
+      {
+         "wavenumber": 79,
+         "uri": "tower_defense:data:waves:air:20",
+         "category": "invisible",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 50000
+            },
+            "gold_bounty": 80
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:invisible",
+            "tower_defense:buffs:monster:armor:major",
+            "tower_defense:buffs:monster:magic_armor:major"
+         ]
+      },
+      {
+         "wavenumber": 80,
+         "uri": "tower_defense:data:waves:mixed:4",
+         "category": "boss",
+         "multipliers": {
+            "attributes": {
+               "speed": 3,
+               "max_health": 50000
+            },
+            "gold_bounty": 30
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:healing:major",
+            "tower_defense:buffs:monster:aoe_purge",
+            "tower_defense:buffs:monster:immunity:slow"
+         ]
       }
    ]
 }
