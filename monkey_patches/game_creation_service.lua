@@ -2,6 +2,7 @@ local Point2 = _radiant.csg.Point2
 local Point3 = _radiant.csg.Point3
 local Cube3 = _radiant.csg.Cube3
 local Region3 = _radiant.csg.Region3
+local rng = _radiant.math.get_default_rng()
 local csg_lib = require 'stonehearth.lib.csg.csg_lib'
 
 local validator = radiant.validator
@@ -87,7 +88,11 @@ function GameCreationService:_generate_world(session, response, map_info)
          for _, entity_data in ipairs(entity_list) do
             local entity = radiant.entities.create_entity(uri, { owner = '' })
             radiant.terrain.place_entity_at_exact_location(entity, Point3(unpack(entity_data.location)) + offset, { force_iconic = false })
-            radiant.entities.turn_to(entity, entity_data.facing or 0)
+            local facing = entity_data.facing or 0
+            if facing == 'random' then
+               facing = rng:get_int(0, 3) * 90
+            end
+            radiant.entities.turn_to(entity, facing)
          end
       end
 

@@ -5,6 +5,7 @@
    "display_name": "i18n(tower_defense:data.buffs.minor_poison.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_poison.description)",
    "duration": 10000,
+   "effect": "tower_defense:effects:poison",
    "repeat_add_action": "renew_duration",
    "icon": "file(minor_poison.png)",
    "modifiers": {

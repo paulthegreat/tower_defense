@@ -8,6 +8,7 @@
    "repeat_add_action": "renew_duration",
    "duration": 2000,
    "effect": "tower_defense:effects:ice_cube",
+   "reapply_effect": true,
    "modifiers": {
       "stunned": {
          "add": 1

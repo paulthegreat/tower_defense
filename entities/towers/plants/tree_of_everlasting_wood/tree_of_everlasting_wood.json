@@ -51,6 +51,18 @@
                   ]
                }
             ]
+         },
+         "5_stacks": {
+            "models": [
+               {
+                  "type": "one_of",
+                  "items": [
+                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
+                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb"
+                  ]
+               }
+            ]
          }
       },
       "mob": {
@@ -75,7 +87,11 @@
          "level": 1,
          "ordinal": 102,
          "cost": {
-            "wood": 1
+            "wood": 2
+         },
+         "placement": {
+            "type": "replace_entity",
+            "entity_category": "fertile_dirt"
          }
       }
    }

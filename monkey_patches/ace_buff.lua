@@ -188,6 +188,12 @@ end
 function AceBuff:on_repeat_add(options)
    local success = false
    local repeat_add_action = self._json.repeat_add_action
+
+   if self._json.effect and self._json.reapply_effect then
+      self:_destroy_effect()
+      self:_create_effect(self._json.effect)
+   end
+
    if repeat_add_action == 'renew_duration' then
       self:_destroy_timer()
       self:_create_timer()
