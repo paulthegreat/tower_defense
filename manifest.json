@@ -164,6 +164,8 @@
       "monsters:ground:entling": "file(entities/monsters/ground/entling/entling.json)",
       "monsters:ground:entling_mage": "file(entities/monsters/ground/entling_mage/entling_mage.json)",
       "monsters:ground:zilla": "file(entities/monsters/ground/zilla/zilla.json)",
+      "obstacles:abundant_ore": "file(entities/obstacles/ore/abundant_ore.json)",
+      "obstacles:fertile_dirt": "file(entities/obstacles/dirt/fertile_dirt.json)",
       "path": "file(entities/path/path.json)",
       "path_neighbor": "file(entities/path/path_neighbor.json)",
       "sounds:coins": "file(data/sounds/coins.ogg)",

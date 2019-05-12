@@ -5,6 +5,8 @@ local log = radiant.log.create_logger('tower_call_handler')
 
 function TowerCallHandler:create_and_place_entity(session, response, uri)
    local entity = radiant.entities.create_entity(uri)
+   local tower_data = radiant.entities.get_entity_data(entity, 'tower_defense:tower_data')
+   local placement = tower_data and tower_data.placement
 
    stonehearth.selection:deactivate_all_tools()
    
@@ -31,7 +33,25 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
                if kind == nil then
                   return stonehearth.selection.FILTER_IGNORE
                elseif kind == 'grass' then
-                  return next(radiant.terrain.get_entities_at_point(brick)) == nil
+                  local entities_at_point = radiant.terrain.get_entities_at_point(brick)
+                  if placement then
+                     if placement.type == 'replace_entity' then
+                        local found_match = false
+                        for _, e in pairs(entities_at_point) do
+                           local catalog_data = stonehearth.catalog_client:get_catalog_data(e:get_uri())
+                           if not catalog_data or catalog_data.category ~= placement.entity_category then
+                              return false
+                           else
+                              found_match = true
+                           end
+                        end
+                        return found_match
+                     else
+                        return next(entities_at_point) == nil
+                     end
+                  else
+                     return next(entities_at_point) == nil
+                  end
                else
                   return false
                end
@@ -102,7 +122,18 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
          player:spend_resource(resource, amount)
       end
 
+      location = radiant.util.to_point3(location)
       local entity = radiant.entities.create_entity(uri, { owner = player_id })
+      local tower_data = radiant.entities.get_entity_data(entity, 'tower_defense:tower_data')
+      local placement = tower_data and tower_data.placement
+      if placement.type == 'replace_entity' then
+         local entities_at_point = radiant.terrain.get_entities_at_point(location)
+         for _, e in pairs(entities_at_point) do
+            if radiant.entities.get_category(e) == placement.entity_category then
+               radiant.entities.destroy_entity(e)
+            end
+         end
+      end
 
       radiant.terrain.place_entity(entity, location, { force_iconic = false })
       radiant.entities.turn_to(entity, rotation)

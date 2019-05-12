@@ -38,6 +38,10 @@
          "ordinal": 103,
          "cost": {
             "gold": 50
+         },
+         "placement": {
+            "type": "replace_entity",
+            "entity_category": "abundant_ore"
          }
       }
    }

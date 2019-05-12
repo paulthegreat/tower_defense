@@ -5,7 +5,8 @@ local service_creation_order = {
 }
 
 local monkey_patches = {
-   catalog_lib = 'stonehearth.lib.catalog.catalog_lib'
+   catalog_lib = 'stonehearth.lib.catalog.catalog_lib',
+   catalog_client_service = 'stonehearth.services.client.catalog_client.catalog_client_service'
 }
 
 local function monkey_patching()

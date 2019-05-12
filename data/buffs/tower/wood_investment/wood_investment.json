@@ -27,10 +27,20 @@
             "model": "4_stacks",
             "scale": 0.1,
             "wood": 3
+         },
+         "5": {
+            "model": "5_stacks",
+            "scale": 0.1,
+            "wood": 4
+         },
+         "6": {
+            "model": "5_stacks",
+            "scale": 0.1,
+            "wood": 5
          }
       }
    },
    "repeat_add_action": "stack_and_refresh",
-   "max_stacks": 4,
+   "max_stacks": 6,
    "persistent": true
 }
