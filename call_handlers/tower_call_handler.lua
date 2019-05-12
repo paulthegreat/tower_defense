@@ -126,7 +126,7 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
       local entity = radiant.entities.create_entity(uri, { owner = player_id })
       local tower_data = radiant.entities.get_entity_data(entity, 'tower_defense:tower_data')
       local placement = tower_data and tower_data.placement
-      if placement.type == 'replace_entity' then
+      if placement and placement.type == 'replace_entity' then
          local entities_at_point = radiant.terrain.get_entities_at_point(location)
          for _, e in pairs(entities_at_point) do
             if radiant.entities.get_category(e) == placement.entity_category then

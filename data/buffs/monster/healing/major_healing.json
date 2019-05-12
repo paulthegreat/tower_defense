@@ -7,7 +7,7 @@
    "script": "tower_defense:buff_scripts:periodic_health_modification",
    "script_info": {
       "health_change": 10,
-      "pulse": "2m",
+      "pulse": 1000,
       "is_percentage": true,
       "pulse_immediately": false,
       "pulse_on_destroy": false

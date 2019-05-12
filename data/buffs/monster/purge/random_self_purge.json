@@ -8,6 +8,6 @@
    "persistent": true,
    "script_data": {
       "type": "random",
-      "pulse": "5m"
+      "pulse": 3000
    }
 }

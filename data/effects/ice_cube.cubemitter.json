@@ -24,7 +24,7 @@
       "lifetime": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [1200, 2200]
+            "values": [2000, 2200]
          }
       },
       "speed": {

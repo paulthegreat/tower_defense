@@ -7,6 +7,6 @@
    "script": "tower_defense:buff_scripts:monster:periodic_purge",
    "persistent": true,
    "script_data": {
-      "pulse": "5m"
+      "pulse": 3000
    }
 }

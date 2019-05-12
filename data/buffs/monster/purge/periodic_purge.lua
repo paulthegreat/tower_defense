@@ -14,8 +14,8 @@ end
 function PeriodicPurgeMonsterBuff:_create_pulse_listener(buff)
    self:_destroy_pulse_listener()
    
-   local interval = self._tuning.pulse or "5m"
-   self._pulse_listener = stonehearth.calendar:set_interval("periodic purge "..buff:get_uri().." pulse", interval, 
+   local interval = self._tuning.pulse or 3000
+   self._pulse_listener = stonehearth.combat:set_interval("periodic purge "..buff:get_uri().." pulse", interval, 
          function()
             self:_on_pulse(buff)
          end)
