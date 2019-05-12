@@ -3,7 +3,7 @@
    "tracks": {
       "cubemitter": {
          "type": "cubemitter",
-         "cubemitter": "/tower_defense/data/effects/fire.cubemitter.json",
+         "cubemitter": "/tower_defense/data/effects/normal_fire.cubemitter.json",
          "loop": true,
          "transforms": {
             "x":0,

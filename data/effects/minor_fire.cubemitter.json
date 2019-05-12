@@ -6,7 +6,7 @@
    "emission": {
       "rate": {
          "kind": "CONSTANT",
-         "values": [12]
+         "values": [7]
       },
       "angle": {
          "kind": "CONSTANT",
