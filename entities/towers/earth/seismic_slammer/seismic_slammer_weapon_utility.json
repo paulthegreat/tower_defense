@@ -22,8 +22,8 @@
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "slow": {
-               "uri": "tower_defense:buffs:monster:slow:normal",
+            "ministun": {
+               "uri": "tower_defense:buffs:monster:stun:ministun",
                "chance": 1
             }
          }

@@ -8,7 +8,8 @@
       "tower_defense:actions:monster_follow_path",
       "tower_defense:actions:monster_get_path",
       "tower_defense:actions:monster_special_ability",
-      "tower_defense:actions:monster_summon"
+      "tower_defense:actions:monster_summon",
+      "tower_defense:actions:monster_stunned"
    ],
    "ai_packs" : [
       "stonehearth:ai_pack:core",

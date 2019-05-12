@@ -241,7 +241,11 @@
          },
          "freeze": {
             "display_name": "Frozen",
-            "description": "Completely stops movement for a short period"
+            "description": "Stunned for a short period"
+         },
+         "ministun": {
+            "display_name": "Ministun",
+            "description": "Very briefly stunned"
          },
          "mortal_wound": {
             "display_name": "Mortal Wound",

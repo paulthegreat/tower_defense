@@ -1,7 +1,7 @@
 {
    "type": "buff",
    "axis": "debuff",
-   "category": "freeze",
+   "category": "stun",
    "display_name": "i18n(tower_defense:data.buffs.freeze.display_name)",
    "description": "i18n(tower_defense:data.buffs.freeze.description)",
    "icon": "file(freeze.png)",
@@ -9,8 +9,8 @@
    "duration": 2000,
    "effect": "tower_defense:effects:ice_cube",
    "modifiers": {
-      "speed": {
-         "multiply": 0
+      "stunned": {
+         "add": 1
       }
    }
 }

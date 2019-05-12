@@ -22,7 +22,7 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "freeze": {
-               "uri": "tower_defense:buffs:monster:freeze",
+               "uri": "tower_defense:buffs:monster:stun:freeze",
                "chance": 0.5
             },
             "slow": {
@@ -43,7 +43,7 @@
                "base_damage": 0
             },
             "attack_times": [
-               500
+               400
             ],
             "cooldown": 1000,
             "priority": 0

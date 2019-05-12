@@ -1,0 +1,15 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "category": "stun",
+   "display_name": "i18n(tower_defense:data.buffs.ministun.display_name)",
+   "description": "i18n(tower_defense:data.buffs.ministun.description)",
+   "icon": "file(ministun.png)",
+   "repeat_add_action": "renew_duration",
+   "duration": 200,
+   "modifiers": {
+      "stunned": {
+         "add": 1
+      }
+   }
+}
