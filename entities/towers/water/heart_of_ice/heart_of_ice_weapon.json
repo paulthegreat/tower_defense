@@ -23,7 +23,7 @@
          "inflictable_debuffs": {
             "freeze": {
                "uri": "tower_defense:buffs:monster:stun:freeze",
-               "chance": 0.5
+               "chance": 0.2
             },
             "slow": {
                "uri": "tower_defense:buffs:monster:slow:major",

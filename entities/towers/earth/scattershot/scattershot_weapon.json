@@ -23,7 +23,7 @@
          {
             "name": "scattershot",
             "effect": "tower_defense:effects:earth_particles",
-            "base_damage": 3,
+            "base_damage": 5,
             "num_targets": 3,
             "projectile": {
                "speed": 15,

@@ -11,7 +11,7 @@
    },
    "starting_health": 50,
    "tower_gold_cost_multiplier": 1,
-   "final_wave": 60,
+   "final_wave": 50,
    "weather": {
       "starting_weather": [
          {

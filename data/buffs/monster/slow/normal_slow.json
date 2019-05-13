@@ -9,7 +9,7 @@
    "duration": 6000,
    "modifiers": {
       "speed": {
-         "multiply": 0.5
+         "multiply": 0.65
       }
    }
 }

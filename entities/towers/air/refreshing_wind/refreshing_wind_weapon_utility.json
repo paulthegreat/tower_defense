@@ -2,27 +2,25 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "components": {
-      "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.refreshing_wind.weapon_utility.display_name)",
-         "description": "i18n(tower_defense:entities.towers.refreshing_wind.weapon_utility.description)"
-      },
       "stonehearth:equipment_piece": {
          "injected_buffs": [
-            "tower_defense:buffs:tower:cooldown_decrease:major_aura"
+            "tower_defense:buffs:tower:cooldown_decrease:major_aura",
+            "tower_defense:buffs:tower:damage_increase:normal_aura"
          ]
       }
    },
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.refreshing_wind.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.refreshing_wind.weapon_utility.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 4,
+            "radius": 3,
             "attacks_ground": false,
             "attacks_air": false,
-            "target_filters": [
-               "lowest_health",
-               "closest_to_end"
-            ],
+            "target_filters": [],
             "reveals_invis": false
          }
       }

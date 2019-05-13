@@ -42,13 +42,14 @@ function PeriodicPurgeMonsterBuff:_on_pulse(buff)
 
       for _, entity in pairs(entities) do
          if entity:get_component('tower_defense:monster') then
-            local buffs = entity:add_component('stonehearth:buffs'):get_debuffs()
+            local buffs_comp = entity:add_component('stonehearth:buffs')
+            local buffs = buffs_comp:get_debuffs()
             if #buffs > 0 then
                if self._tuning.type == 'random' then
-                  buffs:remove_buff(buffs[rng:get_int(1, #buffs)], true)
+                  buffs_comp:remove_buff(buffs[rng:get_int(1, #buffs)], true)
                else
                   for _, buff in ipairs(buffs) do
-                     buffs:remove_buff(buff, true)
+                     buffs_comp:remove_buff(buff, true)
                   end
                end
             end

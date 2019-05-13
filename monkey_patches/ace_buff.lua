@@ -27,6 +27,13 @@ function AceBuff:activate()
          self._default_duration = stonehearth.calendar:parse_duration(json.duration)
       end
    end
+   if json.extend_duration then
+      if type(json.extend_duration) == 'number' then
+         self._extend_duration = stonehearth.calendar:realtime_to_game_seconds(json.extend_duration, true)
+      else
+         self._extend_duration = stonehearth.calendar:parse_duration(json.extend_duration)
+      end
+   end
 
    -- serialize to the client for display
    local sv = rawget(self, '_sv')
@@ -37,6 +44,7 @@ function AceBuff:activate()
    rawset(sv, 'modifiers', json.modifiers)
    rawset(sv, 'invisible_to_player', json.invisible_to_player)
    rawset(sv, 'max_stacks', json.max_stacks or 1)
+   rawset(sv, 'default_duration', self._default_duration)
    self.__saved_variables:mark_changed()
 end
 
@@ -203,7 +211,7 @@ function AceBuff:on_repeat_add(options)
    if not success and repeat_add_action == 'extend_duration' then
       -- assert(self._timer, string.format("Attempting to extend duration when buff %s doesn't have a duration", self._sv.uri))
       if self._sv.expire_time then
-         self._sv.expire_time = self._sv.expire_time + self._default_duration
+         self._sv.expire_time = self._sv.expire_time + (self._extend_duration or self._default_duration)
       end
       self:_create_timer()
       success = true

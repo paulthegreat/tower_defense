@@ -33,7 +33,7 @@
             "name": "flame",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 2,
+            "base_damage": 1,
             "damage_type": "magical",
             "attack_times": [
                500

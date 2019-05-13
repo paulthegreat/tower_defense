@@ -23,7 +23,7 @@
          "inflictable_debuffs": {
             "freeze": {
                "uri": "tower_defense:buffs:monster:stun:freeze",
-               "chance": 0.5
+               "chance": 0.9
             },
             "slow": {
                "uri": "tower_defense:buffs:monster:slow:major",
@@ -38,10 +38,6 @@
             "hit_effect": "tower_defense:effects:water_particles",
             "base_damage": 80,
             "damage_type": "magical",
-            "aoe": {
-               "range": 1,
-               "base_damage": 0
-            },
             "attack_times": [
                400
             ],

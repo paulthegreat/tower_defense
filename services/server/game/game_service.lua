@@ -127,8 +127,8 @@ end
 function GameService:set_game_options(options)
    self._game_options = radiant.resources.load_json(options.game_mode)
    self._sv.game_options = options
-   if options.starting_health then
-      self._sv.health = options.starting_health
+   if self._game_options.starting_health then
+      self._sv.health = self._game_options.starting_health
    end
    self.__saved_variables:mark_changed()
    stonehearth.weather:start(options.game_mode)

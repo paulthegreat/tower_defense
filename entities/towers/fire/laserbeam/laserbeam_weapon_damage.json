@@ -10,8 +10,8 @@
          "targeting": {
             "type": "rectangle",
             "region": {
-               "min": { "x": -1, "y": 0, "z": -21 },
-               "max": { "x": 2, "y": 1, "z": 0 }
+               "min": { "x": -2, "y": 0, "z": -21 },
+               "max": { "x": 3, "y": 1, "z": 0 }
             },
             "attacks_ground": true,
             "attacks_air": false,

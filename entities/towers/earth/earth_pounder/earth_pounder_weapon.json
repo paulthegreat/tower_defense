@@ -23,7 +23,7 @@
          {
             "name": "earth_pounder",
             "effect": "tower_defense:effects:earth_particles",
-            "base_damage": 5,
+            "base_damage": 10,
             "projectile": {
                "speed": 15,
                "uri": "stonehearth:weapons:bullet",

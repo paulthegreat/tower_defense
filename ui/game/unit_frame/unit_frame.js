@@ -110,7 +110,7 @@ App.StonehearthUnitFrameView = App.View.extend({
       }
    }.observes('moodData', 'model.uri'),
 
-   _updateBuffs: function() {
+   _updateBuffs: $.throttle(250, function() {
       var self = this;
       self._buffs = [];
       var attributeMap = self.get('model.stonehearth:buffs.buffs');
@@ -132,26 +132,23 @@ App.StonehearthUnitFrameView = App.View.extend({
          });
       }
 
-      var calendarView = App.gameView.getView(App.StonehearthCalendarView);
-      var currentTime = calendarView && calendarView.getCurrentTime().elapsed_time;
-      if (currentTime == null) {
-         self._buffs.forEach(b => {
-            if (b.expire_time != null && (currentTime == null || b.expire_time < currentTime)) {
-               currentTime = b.expire_time;
-            }
-         });
-      }
-      if (currentTime == null) {
-         currentTime = 0;
-      }
       self._buffs.sort(function(a, b){
-         var aDur = a.expire_time != null ? a.expire_time - currentTime : 999999;
-         var bDur = b.expire_time != null ? b.expire_time - currentTime : 999999;
-         return bDur - aDur;
+         var aDur = a.default_duration || 999999;
+         var bDur = b.expire_time || 999999;
+         var durDiff = bDur - aDur;
+         if (durDiff != 0) {
+            return durDiff;
+         }
+         if (a.ordinal != null && b.ordinal != null) {
+            return a.ordinal - b.ordinal;
+         }
+         var aUri = a.uri;
+         var bUri = b.uri;
+         return (aUri && bUri) ? aUri.localeCompare(bUri) : -1;
       });
 
       self.set('buffs', self._buffs);
-   }.observes('model.stonehearth:buffs'),
+   }).observes('model.stonehearth:buffs'),
 
    didInsertElement: function() {
       var self = this;

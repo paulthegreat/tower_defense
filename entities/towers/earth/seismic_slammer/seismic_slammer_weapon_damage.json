@@ -30,7 +30,7 @@
             "num_targets": 999,
             "damage_multiplier_per_attack": 0.5,
             "aoe": {
-               "range": 4
+               "range": 2
             },
             "attack_times": [
                0,

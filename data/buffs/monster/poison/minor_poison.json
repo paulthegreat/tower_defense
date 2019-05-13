@@ -4,9 +4,9 @@
    "category": "poison",
    "display_name": "i18n(tower_defense:data.buffs.minor_poison.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_poison.description)",
-   "duration": 10000,
+   "duration": 3000,
    "effect": "tower_defense:effects:poison:minor",
-   "repeat_add_action": "renew_duration",
+   "repeat_add_action": "extend_duration",
    "icon": "file(minor_poison.png)",
    "modifiers": {
       "speed": {
@@ -18,11 +18,11 @@
    },
    "script": "tower_defense:buff_scripts:periodic_health_modification",
    "script_info": {
-      "damage": 1,
+      "damage": 4,
       "damage_type": "magical",
-      "pulse": 2000,
+      "pulse": 3000,
       "cannot_kill": true,
       "pulse_immediately": false,
-      "pulse_on_destroy": false
+      "pulse_on_destroy": true
    }
 }

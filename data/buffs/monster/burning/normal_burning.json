@@ -5,7 +5,7 @@
    "display_name": "i18n(tower_defense:data.buffs.normal_burning.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_burning.description)",
    "duration": 3000,
-   "max_stacks": 4,
+   "max_stacks": 999,
    "repeat_add_action": "stack_and_refresh",
    "icon": "file(normal_burning.png)",
    "effect": "tower_defense:effects:fire:normal",

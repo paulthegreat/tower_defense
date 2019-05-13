@@ -4,9 +4,9 @@
    "category": "poison",
    "display_name": "i18n(tower_defense:data.buffs.normal_poison.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_poison.description)",
-   "duration": 10000,
+   "duration": 3000,
    "effect": "tower_defense:effects:poison:normal",
-   "repeat_add_action": "renew_duration",
+   "repeat_add_action": "extend_duration",
    "icon": "file(normal_poison.png)",
    "modifiers": {
       "speed": {
@@ -18,11 +18,11 @@
    },
    "script": "tower_defense:buff_scripts:periodic_health_modification",
    "script_info": {
-      "damage": 5,
+      "damage": 20,
       "damage_type": "magical",
-      "pulse": 2000,
+      "pulse": 3000,
       "cannot_kill": true,
       "pulse_immediately": false,
-      "pulse_on_destroy": false
+      "pulse_on_destroy": true
    }
 }

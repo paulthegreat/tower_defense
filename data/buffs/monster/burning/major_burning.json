@@ -5,7 +5,7 @@
    "display_name": "i18n(tower_defense:data.buffs.major_burning.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_burning.description)",
    "duration": 3000,
-   "max_stacks": 5,
+   "max_stacks": 999,
    "repeat_add_action": "stack_and_refresh",
    "icon": "file(major_burning.png)",
    "effect": "tower_defense:effects:fire:major",
