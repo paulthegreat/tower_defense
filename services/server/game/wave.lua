@@ -244,7 +244,7 @@ function Wave:_spawn_monsters(monsters, at_monster_id)
             local this_monster = {
                monster = new_monster,
                damage = monster.damage,
-               bounty = monster.bounty,
+               bounty = bounty,
                counts_as_remaining = at_monster_id == nil
             }
             self._sv._spawned_monsters[new_monster:get_id()] = this_monster
