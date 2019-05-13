@@ -72,6 +72,54 @@
          {
             "location": [16,0,49],
             "facing": "random"
+         },
+         {
+            "location": [12,0,12],
+            "facing": "random"
+         },
+         {
+            "location": [18,0,18],
+            "facing": "random"
+         },
+         {
+            "location": [14,0,16],
+            "facing": "random"
+         },
+         {
+            "location": [16,0,14],
+            "facing": "random"
+         },
+         {
+            "location": [51,0,51],
+            "facing": "random"
+         },
+         {
+            "location": [45,0,45],
+            "facing": "random"
+         },
+         {
+            "location": [49,0,47],
+            "facing": "random"
+         },
+         {
+            "location": [47,0,49],
+            "facing": "random"
+         },
+         {
+            "location": [51,0,12],
+            "facing": "random"
+         },
+         {
+            "location": [45,0,18],
+            "facing": "random"
+         },
+         {
+            "location": [47,0,14],
+            "facing": "random"
+         },
+         {
+            "location": [49,0,16],
+            "facing": "random"
          }
       ],
       "tower_defense:obstacles:fertile_dirt": [
@@ -89,6 +137,54 @@
          },
          {
             "location": [16,0,47],
+            "facing": "random"
+         },
+         {
+            "location": [18,0,12],
+            "facing": "random"
+         },
+         {
+            "location": [12,0,18],
+            "facing": "random"
+         },
+         {
+            "location": [14,0,14],
+            "facing": "random"
+         },
+         {
+            "location": [16,0,16],
+            "facing": "random"
+         },
+         {
+            "location": [45,0,51],
+            "facing": "random"
+         },
+         {
+            "location": [51,0,45],
+            "facing": "random"
+         },
+         {
+            "location": [49,0,49],
+            "facing": "random"
+         },
+         {
+            "location": [47,0,47],
+            "facing": "random"
+         },
+         {
+            "location": [51,0,18],
+            "facing": "random"
+         },
+         {
+            "location": [45,0,12],
+            "facing": "random"
+         },
+         {
+            "location": [49,0,14],
+            "facing": "random"
+         },
+         {
+            "location": [47,0,16],
             "facing": "random"
          }
       ]

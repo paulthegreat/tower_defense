@@ -1,0 +1,206 @@
+.monstersManager {
+   position: absolute;
+   margin: auto;
+   z-index: 10;
+
+   .window {
+      position: relative;
+      top: 40px;
+      left: 284px;
+      width: 720px;
+      height: 820px;
+      max-height: 900px;
+   }
+
+   .title {
+      .handCursor
+   }
+   
+   .list {
+      height: 450px;
+   }
+
+   .hidden {
+      display: none;
+   }
+
+   #monstersList {
+      margin-top: 25px;
+      h2 {
+         font-size: 20px;
+      }
+
+      width: 700px;
+      display: inline-block;
+
+      .monstersListTableContainer {
+         height: 610px;
+         overflow-y: scroll;
+      }
+
+      ::-webkit-scrollbar-track {
+         background-color: rgba(0,0,0,0.0);
+      }
+
+      .listTitle{
+         display: inline-block;
+         text-align: center;
+         cursor: pointer;
+      }
+
+      .hidden {
+         display: none;
+      }
+
+      .statTitle:first-child {
+         padding-left: 23px;
+      }
+      #monstersTitleName {
+         width: 200px;
+         margin-right: 10px;
+         text-align: left;
+      }
+
+      #monstersTitleHealth {
+         text-align: left;
+         width: 200px;
+         margin-right: 10px;
+      }
+
+      #monstersTitleBuffs {
+         text-align: left;
+         width: 300px;
+         margin-right: 10px;
+      }
+   }
+
+   #groupsWorkersList {
+      .listTitle{
+         display: inline-block;
+         width: 350px;
+         text-align: center;
+      }
+      #groupsTitleName {
+         width: 210px;
+         text-align: left;
+      }
+   }
+
+   table {
+      width: 100%;
+      table-layout: fixed;
+
+      tr:nth-child(even) {
+         background: rgba(0,0,0,0.1);
+      }
+
+      td {
+         vertical-align: middle;
+         text-align: center;
+         padding-top: 4px;
+         padding-left: 10px;
+      }
+
+      td.red {
+         background: rgba(255,0.5,0,0.1);
+      }
+
+      tr {
+         .handCursor;
+         &:hover {
+            background-color: rgba(143, 120, 70, 0.3);
+         }
+      }
+
+      tr.selected {
+         background-color: rgba(143, 120, 70, 1.0);
+      }
+
+      .nameColumn {
+         width: 200px;
+         text-align: left;
+         vertical-align: middle;
+
+         .controlFont;
+         font-size: 20px;
+
+         text-overflow: ellipsis;
+         white-space: nowrap;
+         overflow: hidden;
+         .monsterName {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+         }
+
+         .activity {
+            .nobr;
+            color: #93ef26;
+            display: inline-block;
+            font-size: 12px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 2px;
+            max-width: 220px;
+         }
+      }
+
+      .healthColumn {
+         width: 200px;
+         height: 20px;
+         background: transparent;
+         border-width: 5px 5px 5px 5px;
+         border-image: url(/stonehearth/ui/game/unit_frame/images/frame.png) 4 4 3 4;
+         border-style: solid;
+         text-align: center;
+         font-size: 16px;
+   
+         .healthbarFill {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: #9850b5;
+            width: 95%;
+            border-radius: 2px;
+            box-shadow: inset 0 0 10px #000000;
+         }
+   
+         .healthbarDamageIndicator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: #FFF17A;
+            width: 95%;
+            border-radius: 2px;
+            box-shadow: inset 0 0 10px #000000;
+         }
+      }
+
+      .buffsColumn {
+         display: inline-block;
+   
+         .item {
+            width: 30px;
+            height: 30px;
+            margin-right: 4px;
+   
+            img {
+               width: 30px;
+               height: 30px;
+            }
+   
+            .stacks {
+               position: absolute;
+               left: 1px;
+               bottom: 1px;
+               font-family: "groboldregular";
+               color: #ebebeb;
+               .outlinedThin;
+            }
+         }
+      }
+   }
+}

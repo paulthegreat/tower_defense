@@ -1,0 +1,65 @@
+<script type="text/x-handlebars" data-template-name="monsters">
+<div id="monstersManagement" class="gui monstersManager">
+   <div class="window">
+      <div class="title">{{i18n tower_defense:ui.game.monsters.title}}<div class="closeButton"></div></div>
+
+      <div id="monstersList">
+         <div id="listTitles">
+            <div class="listTitle" id="monstersTitleName" data-sort-key="name">
+               <h2>{{i18n tower_defense:ui.game.monsters.list_headers.name}}</h2>
+            </div>
+
+            <div class="listTitle" id="monstersTitleHealth" data-sort-key="health">
+               <h2>{{i18n tower_defense:ui.game.monsters.list_headers.health}}</h2>
+            </div>
+
+            <div class="listTitle" id="monstersTitleBuffs">
+               <h2>{{i18n tower_defense:ui.game.monsters.list_headers.buffs}}</h2>
+            </div>
+         </div>
+
+         <div class="downSection monstersListTableContainer">
+            <table id="monstersTable">
+               {{ view "stonehearthMonsterContainer" containerParentView=view}}
+            </table>
+         </div>
+      </div>
+
+   </div>
+</div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="monsterRow">
+   {{#if view.monsterId}}
+   <td class="nameColumn">
+      <div class="monsterName">
+         <img class="classIcon" {{bind-attr src=view.icon}}/>
+         {{i18n_key view.model.stonehearth:unit_info.display_name self=view.model}}
+      </div>
+      <div class="activity">
+         {{i18n_key view.model.stonehearth:ai.status_text_key data=view.model.stonehearth:ai.status_text_data}}
+      </div>
+   </td>
+
+   <td class="healthColumn">
+      <div class="healthbar">
+         <span class="healthValue">{{view.currentHealth}} / {{view.maxHealth}}</span>
+         <div class="healthbarDamageIndicator"></div>
+         <div class="healthbarFill"></div>
+      </div>
+   </td>
+
+   <div class="buffsColumn">
+      {{#each view.buffs itemView="stonehearthBuffItem"}}
+         <div class="item" {{bind-attr uri=this.uri}}>
+            <img {{bind-attr src=this.icon}} />
+            {{#if this.hasStacks}}
+            <div class="stacks">{{this.stacks}}</div>
+            {{/if}}
+         </div>
+      {{/each}}
+   </div>
+
+   {{/if}}
+</script>
+

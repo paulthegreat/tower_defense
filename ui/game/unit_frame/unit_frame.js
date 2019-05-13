@@ -132,10 +132,22 @@ App.StonehearthUnitFrameView = App.View.extend({
          });
       }
 
+      var calendarView = App.gameView.getView(App.StonehearthCalendarView);
+      var currentTime = calendarView && calendarView.getCurrentTime().elapsed_time;
+      if (currentTime == null) {
+         self._buffs.forEach(b => {
+            if (b.expire_time != null && (currentTime == null || b.expire_time < currentTime)) {
+               currentTime = b.expire_time;
+            }
+         });
+      }
+      if (currentTime == null) {
+         currentTime = 0;
+      }
       self._buffs.sort(function(a, b){
-         var aUri = a.uri;
-         var bUri = b.uri;
-         return (aUri && bUri) ? aUri.localeCompare(bUri) : -1;
+         var aDur = a.expire_time != null ? a.expire_time - currentTime : 999999;
+         var bDur = b.expire_time != null ? b.expire_time - currentTime : 999999;
+         return bDur - aDur;
       });
 
       self.set('buffs', self._buffs);

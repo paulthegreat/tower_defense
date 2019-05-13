@@ -698,7 +698,10 @@
          "buffs": [
             "tower_defense:buffs:monster:invisible",
             "tower_defense:buffs:monster:magic_armor:major"
-         ]
+         ],
+         "role_overrides": {
+            "bitsy_ant": "entling"
+         }
       },
       {
          "wavenumber": 51,
@@ -959,18 +962,23 @@
       },
       {
          "wavenumber": 68,
-         "uri": "tower_defense:data:waves:ground:20",
+         "uri": "tower_defense:data:waves:ground:10",
          "multipliers": {
             "attributes": {
                "speed": 3,
                "max_health": 12000
             },
             "gold_bounty": 65
-         }
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:armor:minor",
+            "tower_defense:buffs:monster:armor:normal",
+            "tower_defense:buffs:monster:armor:major"
+         ]
       },
       {
          "wavenumber": 69,
-         "uri": "tower_defense:data:waves:air:10",
+         "uri": "tower_defense:data:waves:air:20",
          "category": "air",
          "multipliers": {
             "attributes": {
@@ -1101,7 +1109,12 @@
                "max_health": 50000
             },
             "gold_bounty": 80
-         }
+         },
+         "buffs": [
+            "tower_defense:buffs:monster:magic_armor:minor",
+            "tower_defense:buffs:monster:magic_armor:normal",
+            "tower_defense:buffs:monster:magic_armor:major"
+         ]
       },
       {
          "wavenumber": 78,
