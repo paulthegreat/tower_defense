@@ -1,6 +1,6 @@
 {
    "name": "fire",
-   "duration": 5000,
+   "duration": 2000,
    "material": "materials/cubemitter_bloom.material.json",
    "loops": true,
    "emission": {
@@ -21,7 +21,7 @@
       "lifetime": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [1200, 2400]
+            "values": [600, 1200]
          }
       },
       "speed": {
@@ -93,7 +93,7 @@
       "scale": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [0.1, 0.3]
+            "values": [0.06, 0.18]
          },
          "over_lifetime": {
             "kind": "RANDOM_BETWEEN_CURVES",

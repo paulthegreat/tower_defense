@@ -30,16 +30,6 @@
          "falloff" : 8,
          "volume": 30,
          "track" : "stonehearth:sounds:firearrow_burn"        
-      },
-     "light": {
-         "type": "light",
-         "light": "animatedlights/lamp/lamp.animatedlight.json",
-         "transforms": {
-            "x":0,
-            "y":1.0,
-            "z":0
-        },
-        "shadows": false
-     }
+      }
    }
 }

@@ -14,14 +14,14 @@
       },
       "origin": {
          "surface": "RECTANGLE",
-         "values": [1.5, 1.5, 0, 0]
+         "values": [1.2, 1.2, 0, 0]
       }
    },
    "particle": {
       "lifetime": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [1000, 1300]
+            "values": [800, 1100]
          }
       },
       "speed": {
@@ -93,7 +93,7 @@
       "scale": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [0.1, 0.3]
+            "values": [0.07, 0.21]
          },
          "over_lifetime": {
             "kind": "RANDOM_BETWEEN_CURVES",

@@ -93,7 +93,7 @@
       "scale": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [0.1, 0.3]
+            "values": [0.08, 0.24]
          },
          "over_lifetime": {
             "kind": "RANDOM_BETWEEN_CURVES",
