@@ -34,7 +34,7 @@
             "effect": "tower_defense:effects:water_particles",
             "hit_effect": "tower_defense:effects:water_particles",
             "projectile": {
-               "speed": 15,
+               "speed": 7,
                "uri": "stonehearth:weapons:turnip_bullet",
                "scale_mult": 2,
                "start_offset": { "x": 0, "y": 0.6, "z": 0 },
@@ -50,7 +50,7 @@
             "attack_times": [
                500
             ],
-            "cooldown": 8000,
+            "cooldown": 5000,
             "priority": 0
          }
       ]

@@ -26,6 +26,14 @@
             "reveal": {
                "uri": "tower_defense:buffs:monster:reveal:minor",
                "chance": 1
+            },
+            "burning": {
+               "uri": "tower_defense:buffs:monster:burning:minor",
+               "chance": 1
+            },
+            "burning2": {
+               "uri": "tower_defense:buffs:monster:burning:minor",
+               "chance": 1
             }
          }
       },
@@ -37,7 +45,8 @@
             "base_damage": 120,
             "damage_type": "magical",
             "aoe": {
-               "range": 2
+               "range": 2,
+               "base_damage": 0
             },
             "attack_times": [
                200

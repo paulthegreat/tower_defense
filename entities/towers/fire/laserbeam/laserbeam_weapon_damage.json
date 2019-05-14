@@ -35,7 +35,7 @@
             "name": "laserbeam",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 50,
+            "base_damage": 100,
             "damage_type": "magical",
             "beam": {
                "passthrough_attack": true,

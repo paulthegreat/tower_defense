@@ -12,10 +12,10 @@
    "effect": "tower_defense:effects:fire:major",
    "script": "tower_defense:buff_scripts:periodic_health_modification",
    "script_info": {
-      "damage": 100,
+      "damage": 25,
       "damage_type": "magical",
       "pulse": 1000,
       "pulse_immediately": true,
-      "pulse_on_destroy": false
+      "pulse_on_destroy": true
    }
 }

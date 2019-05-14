@@ -36,7 +36,7 @@
             "attack_times": [
                500
             ],
-            "cooldown": 4000,
+            "cooldown": 1000,
             "priority": 0
          }
       ]

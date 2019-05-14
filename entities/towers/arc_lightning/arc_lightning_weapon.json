@@ -22,7 +22,7 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "burning": {
-               "uri": "tower_defense:buffs:monster:burning:minor",
+               "uri": "tower_defense:buffs:monster:burning:normal",
                "chance": 1
             }
          }

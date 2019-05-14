@@ -23,11 +23,11 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "burning": {
-               "uri": "tower_defense:buffs:monster:burning:minor",
+               "uri": "tower_defense:buffs:monster:burning:normal",
                "chance": 1
             },
-            "reveal": {
-               "uri": "tower_defense:buffs:monster:reveal:minor",
+            "magic_armor_piercing": {
+               "uri": "tower_defense:buffs:monster:magic_armor_piercing:major",
                "chance": 1
             }
          }

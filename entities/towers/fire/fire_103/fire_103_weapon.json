@@ -33,7 +33,7 @@
             "name": "fire_103",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 3,
+            "base_damage": 7,
             "num_targets": 2,
             "damage_type": "magical",
             "attack_times": [
