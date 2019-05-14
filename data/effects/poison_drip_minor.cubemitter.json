@@ -5,15 +5,8 @@
    "loops": true,
    "emission": {
       "rate": {
-         "kind": "CURVE",
-         "values": [
-            [0, 0],
-            [0.247, 0],
-            [0.248, 10],
-            [0.557, 10],
-            [0.56, 0],
-            [1, 0]
-         ]
+         "kind": "CONSTANT",
+         "values": [8]
       },
       "angle": {
          "kind": "CONSTANT",
@@ -21,7 +14,7 @@
       },
       "origin": {
          "surface": "CUBOID",
-         "values": [0.5, 0.5, 0.5, 0, 0, 0]
+         "values": [1.0, 0.5, 1.0, 0, 0, 0]
       }
    },
    "particle": {
@@ -40,17 +33,21 @@
       "acceleration": {
          "over_lifetime_y": {
             "kind": "CONSTANT",
-            "values": [-0.01]
+            "values": [-9.8]
          }
       },
       "velocity": {
          "over_lifetime_x": {
-            "kind": "CONSTANT",
-            "values": [0]
+            "kind": "RANDOM_BETWEEN",
+            "values": [-0.5, 0.5]
          },
          "over_lifetime_y": {
-            "kind": "CONSTANT",
-            "values": [0]
+            "kind": "RANDOM_BETWEEN",
+            "values": [-0.5, 0.5]
+         },
+         "over_lifetime_z": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [-0.5, 0.5]
          }
       },
       "rotation": {
@@ -79,15 +76,15 @@
       "scale": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [0.05, 0.1]
+            "values": [0.03, 0.06]
          }
       },
       "color": {
          "start": {
             "kind": "RANDOM_BETWEEN",
             "values": [
-               [0.675, 0.545, 0.149, 1],
-               [0.592, 0.474, 0.11, 1]
+               [0.16, 0.26, 0.00, 1],
+               [0.59, 0.47, 0.11, 0.8]
             ]
          },
          "over_lifetime_a": {
