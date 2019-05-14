@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "magic_armor_piercing",
+   "ordinal": 3,
    "display_name": "i18n(tower_defense:data.buffs.minor_magic_armor_piercing.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_magic_armor_piercing.description)",
    "icon": "file(minor_magic_armor_piercing.png)",

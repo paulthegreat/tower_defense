@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "debuff",
+   "category": "wound",
+   "ordinal": 1,
    "display_name": "i18n(tower_defense:data.buffs.mortal_wound.display_name)",
    "description": "i18n(tower_defense:data.buffs.mortal_wound.description)",
    "icon": "file(mortal_wound.png)",

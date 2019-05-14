@@ -2,6 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "stun",
+   "ordinal": 1,
    "display_name": "i18n(tower_defense:data.buffs.freeze.display_name)",
    "description": "i18n(tower_defense:data.buffs.freeze.description)",
    "icon": "file(freeze.png)",

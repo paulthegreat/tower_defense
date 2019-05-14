@@ -44,6 +44,8 @@ function AceBuff:activate()
    rawset(sv, 'modifiers', json.modifiers)
    rawset(sv, 'invisible_to_player', json.invisible_to_player)
    rawset(sv, 'max_stacks', json.max_stacks or 1)
+   rawset(sv, 'category', json.category)
+   rawset(sv, 'ordinal', json.ordinal or 999)
    rawset(sv, 'default_duration', self._default_duration)
    self.__saved_variables:mark_changed()
 end

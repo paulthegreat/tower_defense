@@ -739,6 +739,8 @@ function TowerComponent:_engage_current_target(sm)
 
    local damage_multiplier = attack_info.damage_multiplier_per_attack or 1
    local this_damage_multiplier = 1
+   local buffs = stonehearth.combat:get_inflictable_debuffs(self._entity, attack_info)
+
    for i, time in ipairs(attack_info.attack_times) do
       local shoot_timer
       shoot_timer = stonehearth.combat:set_timer('tower attack shoot', time, function()
@@ -748,7 +750,7 @@ function TowerComponent:_engage_current_target(sm)
             -- only need to shoot if the target is still valid
             local target_id = target:is_valid() and target:get_id()
             if target_id then
-               self:_shoot(target, attack_info, dmg_mult, 0, {[target_id] = 1})
+               self:_shoot(target, attack_info, buffs, dmg_mult, 0, {[target_id] = 1})
             end
          end
          if i == #attack_info.attack_times and tower_defense.game:has_active_wave() then
@@ -809,7 +811,7 @@ local get_offsets = function(data)
    return attacker_offset, target_offset
 end
 
-function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attacks, attacked_targets, source_target_id)
+function TowerComponent:_shoot(target, attack_info, buffs, damage_multiplier, num_attacks, attacked_targets, source_target_id)
    local attacker = self._entity
    local assault_context
    local impact_time = radiant.gamestate.now()
@@ -847,7 +849,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
                local aoe_attack = attack_info.aoe
                local targets = aoe_attack and self:_get_aoe_targets(aoe_attack, location) or {target}
 
-               self:_inflict_attack(targets, target, attack_info, damage_multiplier)
+               self:_inflict_attack(targets, target, attack_info, buffs, damage_multiplier)
 
                local secondary_attack = attack_info.secondary_attack
                if secondary_attack and num_attacks < (secondary_attack.num_attacks or 1) then
@@ -860,7 +862,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
                         for _, secondary_target in ipairs(secondary_targets) do
                            local secondary_target_id = secondary_target:get_id()
                            attacked_targets[secondary_target_id] = (attacked_targets[secondary_target_id] or 0) + 1
-                           self:_shoot(secondary_target, attack_info, damage_multiplier, num_attacks, attacked_targets, target_id)
+                           self:_shoot(secondary_target, attack_info, buffs, damage_multiplier, num_attacks, attacked_targets, target_id)
                         end
                      end
                   end
@@ -890,7 +892,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
       local projectile_component = projectile:add_component('stonehearth:projectile')
       if attack_info.projectile.passthrough_attack then
          projectile_component:set_passthrough_attack_cb(function(targets)
-               self:_inflict_attack(targets, target, attack_info, damage_multiplier)
+               self:_inflict_attack(targets, target, attack_info, buffs, damage_multiplier)
             end, _ignore_target_invis_filter_fn)
       end
       projectile_component:start()
@@ -926,7 +928,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
                self._shoot_timers[shoot_timer] = nil
                if target:is_valid() and beam:is_valid() then
                   local targets = attack_info.beam.passthrough_attack and beam_component:get_intersection_targets(_ignore_target_invis_filter_fn) or {target}
-                  self:_inflict_attack(targets, target, attack_info, damage_multiplier)
+                  self:_inflict_attack(targets, target, attack_info, buffs, damage_multiplier)
                end
             end)
             self._shoot_timers[shoot_timer] = true
@@ -957,7 +959,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
       local ground_presence = self:_create_ground_presence(attacker, target, attack_info.ground_presence)
       local ground_presence_component = ground_presence:add_component('tower_defense:ground_presence')
       ground_presence_component:set_attack_cb(function(target, attack_info)
-            self:_inflict_attack({target}, target, attack_info, damage_multiplier)
+            self:_inflict_attack({target}, target, attack_info, buffs, damage_multiplier)
          end, _ignore_target_invis_filter_fn)
       ground_presence_component:start()
 
@@ -999,7 +1001,7 @@ function TowerComponent:_shoot(target, attack_info, damage_multiplier, num_attac
    end
 end
 
-function TowerComponent:_inflict_attack(targets, primary_target, attack_info, damage_multiplier)
+function TowerComponent:_inflict_attack(targets, primary_target, attack_info, buffs, damage_multiplier)
    local attacker = self._entity
    local aoe_attack = attack_info.aoe
    local base_damage = attack_info.base_damage
@@ -1020,9 +1022,14 @@ function TowerComponent:_inflict_attack(targets, primary_target, attack_info, da
 
          local total_damage = stonehearth.combat:calculate_damage(attacker, each_target, attack_info,
                is_secondary_target and secondary_damage or base_damage, damage_multiplier)
-         local battery_context = BatteryContext(attacker, each_target, total_damage)
-         stonehearth.combat:inflict_debuffs(attacker, each_target, attack_info)
-         stonehearth.combat:battery(battery_context)
+         
+         if not is_secondary_target or not aoe_attack or not attack_info.apply_buffs_to_primary_target_only then
+            stonehearth.combat:try_inflict_debuffs(each_target, buffs)
+         end
+         if total_damage > 0 then
+            local battery_context = BatteryContext(attacker, each_target, total_damage)
+            stonehearth.combat:battery(battery_context)
+         end
       end
    end
 end

@@ -60,7 +60,7 @@
                "damage_multiplier": 0.8
             },
             "attack_times": [
-               500
+               200
             ],
             "cooldown": 2000,
             "priority": 0

@@ -30,7 +30,8 @@
             "num_targets": 999,
             "damage_multiplier_per_attack": 0.5,
             "aoe": {
-               "range": 2
+               "range": 2,
+               "apply_buffs_to_primary_target_only": true
             },
             "attack_times": [
                0,

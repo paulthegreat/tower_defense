@@ -132,16 +132,30 @@ App.StonehearthUnitFrameView = App.View.extend({
          });
       }
 
+      // most significant are the buffs with no duration
+      // then organize by category, and within category, by ordinal
       self._buffs.sort(function(a, b){
-         var aDur = a.default_duration || 999999;
-         var bDur = b.expire_time || 999999;
-         var durDiff = bDur - aDur;
-         if (durDiff != 0) {
-            return durDiff;
+         if (!a.default_duration && b.default_duration) {
+            return -1;
          }
+         else if (a.default_duration && !b.default_duration) {
+            return 1;
+         }
+
+         if (a.category && !b.category) {
+            return -1;
+         }
+         else if (!a.category && b.category) {
+            return 1;
+         }
+         else if (a.category != b.category) {
+            return a.category.localeCompare(b.category);
+         }
+
          if (a.ordinal != null && b.ordinal != null) {
             return a.ordinal - b.ordinal;
          }
+         
          var aUri = a.uri;
          var bUri = b.uri;
          return (aUri && bUri) ? aUri.localeCompare(bUri) : -1;

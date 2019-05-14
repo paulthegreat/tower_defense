@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "debuff",
+   "category": "wound",
+   "ordinal": 2,
    "display_name": "i18n(tower_defense:data.buffs.major_wound.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_wound.description)",
    "icon": "file(major_wound.png)",

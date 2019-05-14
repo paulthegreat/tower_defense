@@ -2,6 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "slow",
+   "ordinal": 2,
    "display_name": "i18n(tower_defense:data.buffs.normal_slow.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_slow.description)",
    "icon": "file(normal_slow.png)",
