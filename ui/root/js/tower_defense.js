@@ -12,13 +12,14 @@ var tower_defense = {
       return cost;
    },
 
-   getTowerWeaponTooltipContent: function(weapon, addTitle) {
+   getTowerWeaponTooltipContent: function(weapon, upgradeCost) {
       var weaponData = App.catalog.getCatalogData(weapon);
       var passthroughAttack = false;
 
       var s = '';
-      if (addTitle) {
-         s += (weaponData.display_name ? `<h3>${i18n.t(weaponData.display_name)}</h3>` : '')
+      if (weaponData.display_name && upgradeCost) {
+         s += `<div class="weaponUpgrade"><h3>${i18n.t(weaponData.display_name)}</h3>` +
+               `<div class="weaponUpgradeCost">${tower_defense.getCostString(upgradeCost)}</div></div>`;
       }
       s += (weaponData.description ? `<div class="weaponDescription">${i18n.t(weaponData.description)}</div>` : '') + '<table class="weaponDetails">';
 

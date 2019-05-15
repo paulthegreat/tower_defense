@@ -124,7 +124,7 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
             var upgrades = node.towerData.weapons.upgrades;
             if (upgrades) {
                radiant.each(upgrades, function(k, v) {
-                  description += tower_defense.getTowerWeaponTooltipContent(v.uri, true);
+                  description += tower_defense.getTowerWeaponTooltipContent(v.uri, v.cost);
                });
             }
          }
