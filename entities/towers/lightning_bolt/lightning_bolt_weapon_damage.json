@@ -12,13 +12,9 @@
             "radius": 6,
             "attacks_ground": true,
             "attacks_air": true,
-            "target_filters": [
-               "shortest_debuff_time",
-               "highest_health",
-               "closest_to_start"
-            ],
             "reveals_invis": false,
-            "sees_invis": true
+            "sees_invis": true,
+            "defaults": "max_aoe_debuff_stack"
          }
       },
       "stonehearth:buffs": {
@@ -42,7 +38,7 @@
             "name": "lightning_bolt",
             "effect": "tower_defense:effects:fire_particles",
             "ground_effect": "tower_defense:effects:lightning_bolt",
-            "base_damage": 120,
+            "base_damage": 75,
             "damage_type": "magical",
             "aoe": {
                "range": 2,

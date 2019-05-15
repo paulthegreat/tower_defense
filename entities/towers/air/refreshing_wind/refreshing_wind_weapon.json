@@ -19,10 +19,6 @@
             "radius": 3,
             "attacks_ground": false,
             "attacks_air": false,
-            "target_filters": [
-               "lowest_health",
-               "closest_to_end"
-            ],
             "reveals_invis": false
          }
       }

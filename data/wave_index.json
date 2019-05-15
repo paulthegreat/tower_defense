@@ -39,7 +39,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1,
-               "max_health": 3
+               "max_health": 5
             },
             "gold_bounty": 1
          },
@@ -53,7 +53,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1,
-               "max_health": 3
+               "max_health": 6
             },
             "gold_bounty": 1
          },
@@ -68,7 +68,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1,
-               "max_health": 3
+               "max_health": 7
             },
             "gold_bounty": 1
          }
@@ -79,9 +79,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1,
-               "max_health": 4
+               "max_health": 8
             },
-            "gold_bounty": 2
+            "gold_bounty": 1
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -95,9 +95,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1,
-               "max_health": 4
+               "max_health": 10
             },
-            "gold_bounty": 2
+            "gold_bounty": 1
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible"
@@ -110,7 +110,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1,
-               "max_health": 5
+               "max_health": 12
             },
             "gold_bounty": 2
          }
@@ -122,9 +122,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 5
+               "max_health": 15
             },
-            "gold_bounty": 3
+            "gold_bounty": 2
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:minor"
@@ -137,9 +137,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 6
+               "max_health": 18
             },
-            "gold_bounty": 3
+            "gold_bounty": 2
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor"
@@ -151,9 +151,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 6
+               "max_health": 21
             },
-            "gold_bounty": 4
+            "gold_bounty": 2
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:poison"
@@ -165,9 +165,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 7
+               "max_health": 24
             },
-            "gold_bounty": 4
+            "gold_bounty": 2
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:normal"
@@ -179,9 +179,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 7
+               "max_health": 27
             },
-            "gold_bounty": 4
+            "gold_bounty": 2
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:normal"
@@ -194,9 +194,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 8
+               "max_health": 30
             },
-            "gold_bounty": 5
+            "gold_bounty": 3
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:minor"
@@ -208,9 +208,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 8
+               "max_health": 34
             },
-            "gold_bounty": 5
+            "gold_bounty": 3
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:burning",
@@ -224,9 +224,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 10
+               "max_health": 38
             },
-            "gold_bounty": 5
+            "gold_bounty": 3
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:normal"
@@ -239,9 +239,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 10
+               "max_health": 42
             },
-            "gold_bounty": 6
+            "gold_bounty": 3
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:slow"
@@ -254,9 +254,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 12
+               "max_health": 46
             },
-            "gold_bounty": 6
+            "gold_bounty": 5
          }
       },
       {
@@ -266,7 +266,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1.1,
-               "max_health": 12
+               "max_health": 50
             },
             "gold_bounty": 6
          },
@@ -281,7 +281,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 14
+               "max_health": 55
             },
             "gold_bounty": 7
          },
@@ -296,7 +296,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 14
+               "max_health": 60
             },
             "gold_bounty": 7
          },
@@ -310,7 +310,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 16
+               "max_health": 65
             },
             "gold_bounty": 7
          },
@@ -324,7 +324,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 16
+               "max_health": 70
             },
             "gold_bounty": 8
          },
@@ -339,7 +339,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 18
+               "max_health": 75
             },
             "gold_bounty": 8
          },
@@ -353,7 +353,7 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 18
+               "max_health": 80
             },
             "gold_bounty": 8
          },
@@ -368,9 +368,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 20
+               "max_health": 85
             },
-            "gold_bounty": 10
+            "gold_bounty": 9
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:major"
@@ -383,9 +383,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 20
+               "max_health": 90
             },
-            "gold_bounty": 10
+            "gold_bounty": 9
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:normal"
@@ -398,9 +398,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 24
+               "max_health": 95
             },
-            "gold_bounty": 10
+            "gold_bounty": 9
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:normal",
@@ -414,9 +414,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.2,
-               "max_health": 24
+               "max_health": 100
             },
-            "gold_bounty": 12
+            "gold_bounty": 10
          }
       },
       {
@@ -425,9 +425,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 28
+               "max_health": 110
             },
-            "gold_bounty": 12
+            "gold_bounty": 10
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -441,9 +441,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 28
+               "max_health": 120
             },
-            "gold_bounty": 12
+            "gold_bounty": 10
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:major",
@@ -456,9 +456,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 32
+               "max_health": 130
             },
-            "gold_bounty": 15
+            "gold_bounty": 11
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -472,9 +472,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 32
+               "max_health": 140
             },
-            "gold_bounty": 15
+            "gold_bounty": 11
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:normal"
@@ -489,9 +489,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 36
+               "max_health": 150
             },
-            "gold_bounty": 15
+            "gold_bounty": 11
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:minor",
@@ -504,9 +504,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 36
+               "max_health": 160
             },
-            "gold_bounty": 18
+            "gold_bounty": 12
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:normal"
@@ -519,9 +519,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 40
+               "max_health": 170
             },
-            "gold_bounty": 18
+            "gold_bounty": 12
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:poison",
@@ -535,9 +535,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 40
+               "max_health": 180
             },
-            "gold_bounty": 18
+            "gold_bounty": 12
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -553,9 +553,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 45
+               "max_health": 190
             },
-            "gold_bounty": 20
+            "gold_bounty": 13
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major"
@@ -568,9 +568,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.3,
-               "max_health": 45
+               "max_health": 200
             },
-            "gold_bounty": 20
+            "gold_bounty": 13
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major",
@@ -584,9 +584,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 50
+               "max_health": 220
             },
-            "gold_bounty": 20
+            "gold_bounty": 13
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:major"
@@ -599,9 +599,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 50
+               "max_health": 240
             },
-            "gold_bounty": 24
+            "gold_bounty": 14
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:normal",
@@ -618,9 +618,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 55
+               "max_health": 260
             },
-            "gold_bounty": 24
+            "gold_bounty": 14
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -634,9 +634,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 55
+               "max_health": 280
             },
-            "gold_bounty": 24
+            "gold_bounty": 14
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:poison",
@@ -649,9 +649,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 60
+               "max_health": 300
             },
-            "gold_bounty": 28
+            "gold_bounty": 15
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major",
@@ -664,9 +664,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 60
+               "max_health": 320
             },
-            "gold_bounty": 28
+            "gold_bounty": 15
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:slow",
@@ -680,9 +680,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 65
+               "max_health": 340
             },
-            "gold_bounty": 28
+            "gold_bounty": 15
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:normal",
@@ -697,9 +697,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 65
+               "max_health": 360
             },
-            "gold_bounty": 32
+            "gold_bounty": 16
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:poison",
@@ -713,9 +713,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 70
+               "max_health": 380
             },
-            "gold_bounty": 32
+            "gold_bounty": 16
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -729,9 +729,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.4,
-               "max_health": 70
+               "max_health": 400
             },
-            "gold_bounty": 32
+            "gold_bounty": 16
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major",
@@ -745,9 +745,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 75
+               "max_health": 440
             },
-            "gold_bounty": 36
+            "gold_bounty": 17
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:slow",
@@ -761,9 +761,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 75
+               "max_health": 480
             },
-            "gold_bounty": 36
+            "gold_bounty": 17
          },
          "buffs": [
             "tower_defense:buffs:monster:random_purge"
@@ -775,9 +775,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 80
+               "max_health": 520
             },
-            "gold_bounty": 36
+            "gold_bounty": 17
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -792,9 +792,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 80
+               "max_health": 560
             },
-            "gold_bounty": 40
+            "gold_bounty": 18
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:minor",
@@ -809,9 +809,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 90
+               "max_health": 600
             },
-            "gold_bounty": 40
+            "gold_bounty": 18
          },
          "buffs": [
             "tower_defense:buffs:monster:random_purge"
@@ -824,9 +824,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 90
+               "max_health": 640
             },
-            "gold_bounty": 40
+            "gold_bounty": 18
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:normal",
@@ -843,9 +843,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 100
+               "max_health": 680
             },
-            "gold_bounty": 45
+            "gold_bounty": 19
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:major",
@@ -858,9 +858,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 100
+               "max_health": 720
             },
-            "gold_bounty": 45
+            "gold_bounty": 19
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:major",
@@ -875,9 +875,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 100
+               "max_health": 760
             },
-            "gold_bounty": 50
+            "gold_bounty": 20
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -892,9 +892,9 @@
          "multipliers": {
             "attributes": {
                "speed": 1.5,
-               "max_health": 100
+               "max_health": 800
             },
-            "gold_bounty": 12
+            "gold_bounty": 10
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:major",

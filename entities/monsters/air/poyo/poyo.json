@@ -19,7 +19,7 @@
       "stonehearth:attributes": {
          "max_health": {
             "type": "basic",
-            "value": 5
+            "value": 10
          },
          "speed": {
             "type": "basic",

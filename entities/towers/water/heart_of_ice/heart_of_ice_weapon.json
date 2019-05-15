@@ -12,11 +12,8 @@
             "radius": 5,
             "attacks_ground": true,
             "attacks_air": true,
-            "target_filters": [
-               "closest_to_end",
-               "shortest_debuff_time"
-            ],
-            "reveals_invis": false
+            "reveals_invis": false,
+            "defaults": "debuff_spread"
          }
       },
       "stonehearth:buffs": {

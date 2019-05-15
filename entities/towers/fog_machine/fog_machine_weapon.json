@@ -12,7 +12,6 @@
             "radius": 4,
             "attacks_ground": true,
             "attacks_air": false,
-            "target_filters": [],
             "reveals_invis": true,
             "sees_invis": true
          }

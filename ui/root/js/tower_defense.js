@@ -12,10 +12,15 @@ var tower_defense = {
       return cost;
    },
 
-   getTowerWeaponTooltipContent: function(weapon, cost) {
+   getTowerWeaponTooltipContent: function(weapon, addTitle) {
       var weaponData = App.catalog.getCatalogData(weapon);
       var passthroughAttack = false;
-      var s = (weaponData.description ? `<div class="weaponDescription">${i18n.t(weaponData.description)}</div>` : '') + '<table class="weaponDetails">';
+
+      var s = '';
+      if (addTitle) {
+         s += (weaponData.display_name ? `<h3>${i18n.t(weaponData.display_name)}</h3>` : '')
+      }
+      s += (weaponData.description ? `<div class="weaponDescription">${i18n.t(weaponData.description)}</div>` : '') + '<table class="weaponDetails">';
 
       var t = weaponData.tower_weapon_targeting;
       if (t) {
@@ -86,6 +91,11 @@ var tower_defense = {
          }
       }
 
+      var proj = a && a.projectile;
+      if (proj) {
+         passthroughAttack = passthroughAttack || proj.passthrough_attack;
+      }
+
       var gp = a && a.ground_presence;
       if (gp) {
          passthroughAttack = passthroughAttack || gp.passthrough_attack;
@@ -116,10 +126,6 @@ var tower_defense = {
 
       if (passthroughAttack) {
          s += `<div class='passthroughAttack'>${i18n.t('tower_defense:ui.game.tooltips.tower_weapons.passthrough_attack')}</div>`;
-      }
-
-      if (cost) {
-         s += cost;
       }
 
       return s;

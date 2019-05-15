@@ -17,7 +17,7 @@
       "buffs": {
          "plant_growth": {
             "display_name": "Growth",
-            "description": "The tower grows by 10% in size and damage."
+            "description": "The tower grows by 20% in size and 10% in damage for each stack."
          },
          "invisible": {
             "display_name": "Invisible",
@@ -61,15 +61,15 @@
          },
          "major_burning": {
             "display_name": "Major Burning",
-            "description": "Burns for 200 magical per stack every 2 seconds for 6 seconds. Stacks to 3."
+            "description": "Burns for 25 magical per stack every second for 3 seconds. Stacks to 999."
          },
          "minor_burning": {
             "display_name": "Minor Burning",
-            "description": "Burns for 2 magical per stack every 2 seconds for 6 seconds. Stacks to 3."
+            "description": "Burns for 1 magical per stack every second for 3 seconds. Stacks to 999."
          },
          "normal_burning": {
             "display_name": "Burning",
-            "description": "Burns for 20 magical per stack every 2 seconds for 6 seconds. Stacks to 3."
+            "description": "Burns for 5 magical per stack every second for 3 seconds. Stacks to 999."
          },
          "major_healing": {
             "display_name": "Major Healing",
@@ -109,23 +109,23 @@
          },
          "minor_poison": {
             "display_name": "Minor Poison",
-            "description": "Slows by 5%, increases physical damage taken by 10%, and causes 1 non-lethal magical damage every 3 seconds for 15 seconds."
+            "description": "Slows by 5%, increases physical damage taken by 10%, and causes 4 non-lethal magical damage every 3 seconds. Reapplication adds duration."
          },
          "normal_poison": {
             "display_name": "Poison",
-            "description": "Slows by 10%, increases physical damage taken by 15%, and causes 10 non-lethal magical damage every 3 seconds for 15 seconds."
+            "description": "Slows by 10%, increases physical damage taken by 15%, and causes 20 non-lethal magical damage every 3 seconds. Reapplication adds duration."
          },
          "major_poison": {
             "display_name": "Major Poison",
-            "description": "Slows by 15%, increases physical damage taken by 20%, and causes 100 non-lethal magical damage every 3 seconds for 15 seconds."
+            "description": "Slows by 15%, increases physical damage taken by 20%, and causes 100 non-lethal magical damage every 3 seconds. Reapplication adds duration."
          },
          "minor_reveal": {
             "display_name": "Minor Reveal",
-            "description": "Reveals invisibility for a few seconds"
+            "description": "Reveals invisibility for 3 seconds"
          },
          "normal_reveal": {
             "display_name": "Reveal",
-            "description": "Reveals invisibility for a short while"
+            "description": "Reveals invisibility for 8 seconds"
          },
          "major_reveal": {
             "display_name": "Major Reveal",
@@ -241,7 +241,7 @@
          },
          "freeze": {
             "display_name": "Frozen",
-            "description": "Stunned for a short period"
+            "description": "Stunned for 2 seconds"
          },
          "ministun": {
             "display_name": "Ministun",
@@ -310,7 +310,7 @@
          },
          "harvest_wood_investment": {
             "display_name": "Harvest",
-            "description": "Yields wood as shown in the Wood Investment buff and resets growth to 0."
+            "description": "Destroys the tree, yielding wood as shown in the Wood Investment buff."
          },
          "upgrade_tower_damage": {
             "display_name": "Upgrade Damage",
@@ -467,7 +467,7 @@
             "display_name": "Earthbud",
             "description": "Moderate damage and inflicts normal wound in small AOE",
             "weapon": {
-               "description": "Wounds in AOE",
+               "description": "Moderate AOE damage that also applies normal wound",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -515,7 +515,7 @@
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Triples damage, increases cooldown by 50%",
+               "description": "Triples damage and reduces cooldown by 25%",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
@@ -595,15 +595,15 @@
             "display_name": "Heart of Ice",
             "description": "Fast attack that applies major slow and a chance of freezing",
             "weapon": {
-               "description": "Fast attack with moderate damage that applies major slow and has a 50% chance of freezing",
+               "description": "Fast attack with moderate damage that applies major slow and has a 20% chance of freezing",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies mortal wound",
+               "description": "Also applies mortal wound, but only has a 10% chance of freezing",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "AOE slow and freeze range 1",
+               "description": "Increases chance of freezing to 90%",
                "display_name": "Utility Upgrade"
             }
          },
@@ -628,7 +628,7 @@
             "description": "Reduces cooldown times of all nearby towers",
             "weapon": {
                "display_name": "Base Tower",
-               "description": "Doesn't attack but buffs nearby towers"
+               "description": "Doesn't attack but reduces the cooldowns of nearby towers by 10%"
             }
          },
          "duster": {
@@ -667,15 +667,15 @@
             "display_name": "Refreshing Wind",
             "description": "Major cooldown reduction aura tower",
             "weapon": {
-               "description": "Doesn't attack but buffs nearby towers",
+               "description": "Doesn't attack but reduces the cooldowns of nearby towers by 25%",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also grants normal damage increase",
+               "description": "Increases range and deals percentage-based damage to air targets",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+1 range",
+               "description": "Also increases damage of nearby towers by 10%",
                "display_name": "Utility Upgrade"
             }
          },
@@ -692,7 +692,7 @@
             "description": "Very low damage, applies medium duration reveal debuff to targets",
             "weapon": {
                "display_name": "Base Tower",
-               "description": "Very low damage, applies medium duration reveal debuff to targets"
+               "description": "Moderate damage, applies short duration reveal debuff to targets"
             }
          },
          "fire_103": {
@@ -711,7 +711,7 @@
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies normal burning",
+               "description": "Also applies major burning",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
@@ -723,7 +723,7 @@
             "display_name": "Fire Plume",
             "description": "Narrow aoe attack that applies normal burning",
             "weapon": {
-               "description": "Narrow aoe attack that applies normal burning",
+               "description": "Narrow AOE attack that applies normal burning",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -815,7 +815,7 @@
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies normal slow.",
+               "description": "Also ministuns all targets",
                "display_name": "Utility Upgrade"
             }
          },
@@ -839,7 +839,7 @@
             "display_name": "Fog Machine",
             "description": "Low damage, inflicts minor armor piercing, passively reveals in full range",
             "weapon": {
-               "description": "Low damage, passively reveals in full range",
+               "description": "Low AOE damage that applies minor armor piercing, passively reveals in full range",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -855,7 +855,7 @@
             "display_name": "Blizzard",
             "description": "Moderate damage, applies heavy slow debuff in narrow AOE",
             "weapon": {
-               "description": "Moderate damage, applies heavy slow debuff",
+               "description": "Moderate AOE damage, applies major slow debuff",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -871,11 +871,11 @@
             "display_name": "Lightning Bolt",
             "description": "Like Dota 2 Zeus ability, high single-target damage, reveals target and nearby enemies",
             "weapon": {
-               "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals target and nearby enemies for a couple seconds",
+               "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals the target and nearby enemies for a couple seconds",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also does damage in AOE",
+               "description": "Also applies 2 stacks of minor burning in AOE",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
@@ -887,15 +887,15 @@
             "display_name": "Arc Lightning",
             "description": "Chain lightning, like Dota 2 Zeus ability, bounces reduced damage to successive targets",
             "weapon": {
-               "description": "Chain lightning, like Dota 2 Zeus ability, hits a target in a short range, then bounces to a new target in a short range X times",
+               "description": "Hits a target in a short range, then bounces to a new target in a short range 4 times, applying normal burning and dealing less damage each bounce",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Increases secondary targeting range and number of bounces",
+               "description": "Increases secondary targeting range and number of bounces, and reduces damage reduction for successive hits",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies minor reveal",
+               "description": "Also applies major magic armor piercing",
                "display_name": "Utility Upgrade"
             }
          },
@@ -903,7 +903,7 @@
             "display_name": "Fire Grenade",
             "description": "Launches a burning projectile that causes a mass secondary attack with lower damage",
             "weapon": {
-               "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, but all apply burning",
+               "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, and all apply burning",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -911,7 +911,7 @@
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies normal magic armor piercing",
+               "description": "Also ministuns all targets",
                "display_name": "Utility Upgrade"
             }
          },
@@ -919,7 +919,7 @@
             "display_name": "Magma",
             "description": "Creates a pool of magma that inflicts burning on any enemies entering it",
             "weapon": {
-               "description": "Its attack creates a pool of magma on the ground that lasts for a few seconds, causing burning to any enemies in it",
+               "description": "Its attack creates a pool of magma on the ground that lasts for 4 seconds, causing major burning to any enemies that walk through it",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -935,11 +935,11 @@
             "display_name": "Stone Vine",
             "description": "Slow attack, high damage plus debuffs",
             "weapon": {
-               "description": "Slow attack, high damage plus debuffs",
+               "description": "Slow attack, high damage, applies major wound and normal slow",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Pure damage",
+               "description": "Significantly higher and pure damage",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
@@ -967,15 +967,15 @@
             "display_name": "Mangrove",
             "description": "Grows long-lasting roots that damage and slow all monsters entering them",
             "weapon": {
-               "description": "Each attack grows roots in that place that last for a while; only does damage (and large slows) through the roots",
+               "description": "Each attack grows roots in that place that last for a while; only does damage and inflicts major slow and minor poison through the roots",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies major poison",
+               "description": "Roots also apply major poison",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+2 range, roots last longer",
+               "description": "+2 range, roots last significantly longer",
                "display_name": "Utility Upgrade"
             }
          }
@@ -988,6 +988,16 @@
          "mangrove_roots": {
             "display_name": "Mangrove Roots",
             "description": "Inflicts physical damage and greatly slows monsters that walk through it."
+         }
+      },
+      "obstacles": {
+         "abundant_ore": {
+            "display_name": "Abundant Ore",
+            "description": "The Earth Kingdom can build Gold Mines here."
+         },
+         "fertile_dirt": {
+            "display_name": "Fertile Dirt",
+            "description": "The Plant Kingdom can build Trees of Everlasting Wood here."
          }
       }
    },

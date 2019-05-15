@@ -155,7 +155,7 @@ App.StonehearthUnitFrameView = App.View.extend({
          if (a.ordinal != null && b.ordinal != null) {
             return a.ordinal - b.ordinal;
          }
-         
+
          var aUri = a.uri;
          var bUri = b.uri;
          return (aUri && bUri) ? aUri.localeCompare(bUri) : -1;
@@ -671,7 +671,7 @@ App.StonehearthCommandButtonView = App.View.extend({
       if (argValue == 'damage' || argValue == 'utility') {
          var towerWeapons = catalogData.tower && catalogData.tower.weapons && catalogData.tower.weapons.upgrades;
          var cost = tower_defense.getCostString(towerWeapons[argValue].cost);
-         description = tower_defense.getTowerWeaponTooltipContent(towerWeapons[argValue].uri, `<div class='towerCost'>${cost}</div>`);
+         description = tower_defense.getTowerWeaponTooltipContent(towerWeapons[argValue].uri) + `<div class='towerCost'>${cost}</div>`;
       }
       else if (typeof argValue == 'number') {
          // assume this is the gold multiplier value for selling

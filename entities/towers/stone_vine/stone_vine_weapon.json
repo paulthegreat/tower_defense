@@ -9,15 +9,11 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 5,
+            "radius": 4,
             "attacks_ground": true,
             "attacks_air": false,
-            "target_filters": [
-               "shortest_debuff_time",
-               "highest_health",
-               "closest_to_end"
-            ],
-            "reveals_invis": false
+            "reveals_invis": false,
+            "defaults": "debuff_spread"
          }
       },
       "stonehearth:buffs": {
@@ -36,7 +32,7 @@
          {
             "name": "stone_vine",
             "effect": "tower_defense:effects:plant_particles",
-            "base_damage": 750,
+            "base_damage": 400,
             "hit_effect": "stonehearth:effects:abilities:snare_trap",
             "attack_times": [
                1000

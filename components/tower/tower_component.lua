@@ -18,6 +18,8 @@ local STATES = {
 }
 
 local MAX_PATH_HEIGHT_DIFFERENTIAL = 5 -- used for creating target regions for aoe attacks that can hit both ground and air
+local TARGET_DEFAULTS
+local TARGET_DEFAULTS_BY_KEY
 local FILTER_TYPES
 
 local _target_filter_fn = function(entity)
@@ -56,7 +58,16 @@ function TowerComponent:activate()
    self._target_hit_trace = radiant.events.listen(self._entity, 'stonehearth:combat:target_hit', self, self._on_target_hit)
 
    if radiant.is_server then
-      FILTER_TYPES = stonehearth.constants.tower_defense.tower.target_filters
+      if not TARGET_DEFAULTS then
+         TARGET_DEFAULTS = stonehearth.constants.tower_defense.tower.target_defaults
+         TARGET_DEFAULTS_BY_KEY = {}
+         for _, defaults in pairs(TARGET_DEFAULTS) do
+            TARGET_DEFAULTS_BY_KEY[defaults.key] = defaults
+         end
+      end
+      if not FILTER_TYPES then
+         FILTER_TYPES = stonehearth.constants.tower_defense.tower.target_filters
+      end
       self._shoot_timers = {}
       self._facing_targets = {}
 
@@ -164,17 +175,26 @@ function TowerComponent:_initialize(equipment_changed)
    if radiant.is_server then
       -- these settings should be loaded the first time any weapon is equipped
       -- because upgrade weapons may have different behavior with different default targeting
-      local targeting = self._weapon_data and self._weapon_data.targeting or {}
-      if equipment_changed or self._sv.sticky_targeting == nil then
-         self:set_sticky_targeting(targeting.sticky_targeting)
+      local target_defaults = self._weapon_data and self._weapon_data.targeting and self._weapon_data.targeting.defaults
+      local targeting = target_defaults and TARGET_DEFAULTS_BY_KEY[target_defaults]
+
+      if targeting then
+         if targeting.sticky_targeting ~= nil then
+            self:set_sticky_targeting(targeting.sticky_targeting)
+         end
+         if targeting.filters then
+            self:set_target_filters(targeting.filters)
+         end
+         if targeting.preferred_types then
+            self:set_preferred_target_types(targeting.preferred_types)
+         end
       end
 
-      if equipment_changed or not self._sv.target_filters then
-         self:set_target_filters(targeting.target_filters)
+      if not self._sv.target_filters then
+         self:set_target_filters({})
       end
-
-      if equipment_changed or not self._sv.preferred_target_types then
-         self:set_preferred_target_types(targeting.preferred_target_types)
+      if not self._sv.preferred_target_types then
+         self:set_preferred_target_types({})
       end
 
       self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
@@ -280,7 +300,7 @@ function TowerComponent:set_sticky_targeting(sticky)
 end
 
 function TowerComponent:set_target_filters(target_filters)
-   self._sv.target_filters = target_filters
+   self._sv.target_filters = target_filters or {}
    self.__saved_variables:mark_changed()
 end
 
@@ -781,11 +801,13 @@ end
 local get_secondary_world_location = function(point, entity_id)
    local entity = radiant.entities.get_entity(entity_id)
    local location = entity and entity:is_valid() and radiant.entities.get_world_location(entity) or tower_defense.game:get_last_monster_location(entity_id)
-   local facing = entity and radiant.entities.get_facing(entity) or 0
+   if location then
+      local facing = entity and radiant.entities.get_facing(entity) or 0
 
-   local offset = radiant.math.rotate_about_y_axis(point, facing)
-   local world_location = location + offset
-   return world_location
+      local offset = radiant.math.rotate_about_y_axis(point, facing)
+      local world_location = location + offset
+      return world_location
+   end
 end
 
 local get_offsets = function(data)

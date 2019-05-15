@@ -120,7 +120,13 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
       var description = i18n.t(node.description, data);
       if (node.towerData) {
          if (node.towerData.weapons && node.towerData.weapons.default_weapon) {
-            description += tower_defense.getTowerWeaponTooltipContent(node.towerData.weapons.default_weapon);
+            description = tower_defense.getTowerWeaponTooltipContent(node.towerData.weapons.default_weapon);
+            var upgrades = node.towerData.weapons.upgrades;
+            if (upgrades) {
+               radiant.each(upgrades, function(k, v) {
+                  description += tower_defense.getTowerWeaponTooltipContent(v.uri, true);
+               });
+            }
          }
          if (node.towerData.cost) {
             description += `<div class='towerCost'>${node.towerData.cost}</div>`;

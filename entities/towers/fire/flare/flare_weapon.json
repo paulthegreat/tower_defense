@@ -12,13 +12,9 @@
             "radius": 6,
             "attacks_ground": true,
             "attacks_air": true,
-            "target_filters": [
-               "shortest_debuff_time",
-               "highest_health",
-               "closest_to_start"
-            ],
             "reveals_invis": false,
-            "sees_invis": true
+            "sees_invis": true,
+            "defaults": "debuff_spread"
          }
       },
       "stonehearth:buffs": {
@@ -34,7 +30,7 @@
             "name": "flare",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 2,
+            "base_damage": 7,
             "damage_type": "magical",
             "attack_times": [
                500

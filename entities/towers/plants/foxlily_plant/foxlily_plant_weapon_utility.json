@@ -12,12 +12,8 @@
             "radius": 6,
             "attacks_ground": true,
             "attacks_air": true,
-            "target_filters": [
-               "shortest_debuff_time",
-               "highest_health",
-               "closest_to_start"
-            ],
-            "reveals_invis": false
+            "reveals_invis": false,
+            "defaults": "debuff_spread"
          }
       },
       "stonehearth:buffs": {
@@ -44,7 +40,7 @@
             "attack_times": [
                500
             ],
-            "cooldown": 1200,
+            "cooldown": 1500,
             "priority": 0
          }
       ]

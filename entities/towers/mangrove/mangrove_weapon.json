@@ -12,11 +12,8 @@
             "radius": 3,
             "attacks_ground": true,
             "attacks_air": false,
-            "target_filters": [
-               "shortest_debuff_time",
-               "closest_to_end"
-            ],
-            "reveals_invis": false
+            "reveals_invis": false,
+            "defaults": "focus_end"
          }
       },
       "stonehearth:combat:ranged_attacks": [
@@ -27,8 +24,8 @@
                "uri": "tower_defense:ground_presence:mangrove_roots",
                "facing": "random_cardinal",
                "range": 0.6,
-               "duration": 20000,
-               "period": 100,
+               "duration": 8000,
+               "period": 500,
                "destroy_on_wave_end": true,
                "do_on_duration_finished": false,
                "first_time": {
@@ -38,6 +35,11 @@
                   },
                   "buffs": [
                      "tower_defense:buffs:monster:slow:major"
+                  ]
+               },
+               "every_time": {
+                  "buffs": [
+                     "tower_defense:buffs:monster:poison:minor"
                   ]
                }
             },

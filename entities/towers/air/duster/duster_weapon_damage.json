@@ -2,10 +2,6 @@
    "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
    "type": "entity",
    "components": {
-      "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.duster.weapon_damage.display_name)",
-         "description": "i18n(tower_defense:entities.towers.duster.weapon_damage.description)"
-      },
       "stonehearth:equipment_piece": {
          "injected_buffs": [
             "tower_defense:buffs:tower:aura_monster:armor_piercing:minor"
@@ -13,15 +9,32 @@
       }
    },
    "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.duster.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.duster.weapon_damage.description)"
+      },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
             "radius": 4,
             "attacks_ground": true,
             "attacks_air": true,
-            "target_filters": [],
-            "reveals_invis": true
+            "reveals_invis": true,
+            "sees_invis": true
          }
-      }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "fog_machine",
+            "effect": "tower_defense:effects:air_particles",
+            "hit_effect": "tower_defense:effects:air_particles",
+            "num_targets": 999,
+            "attack_times": [
+               500
+            ],
+            "cooldown": 1000,
+            "priority": 0
+         }
+      ]
    }
 }

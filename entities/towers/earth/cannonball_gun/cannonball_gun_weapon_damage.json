@@ -15,11 +15,8 @@
             },
             "attacks_ground": true,
             "attacks_air": false,
-            "target_filters": [
-               "closest_to_start",
-               "highest_health"
-            ],
-            "reveals_invis": false
+            "reveals_invis": false,
+            "defaults": "high_end"
          }
       },
       "stonehearth:combat:ranged_attacks": [

@@ -9,6 +9,54 @@
             "WOOD": "wood"
          },
          "tower": {
+            "target_defaults": {
+               "DEBUFF_SPREAD": {
+                  "key": "debuff_spread",
+                  "filters": [
+                     "shortest_debuff_time",
+                     "closest_to_end"
+                  ]
+               },
+               "DEBUFF_STACK": {
+                  "key": "debuff_stack",
+                  "filters": [
+                     "highest_debuff_stack",
+                     "shortest_debuff_time",
+                     "closest_to_end"
+                  ]
+               },
+               "FOCUS_END": {
+                  "key": "focus_end",
+                  "filters": [
+                     "closest_to_end"
+                  ],
+                  "sticky_targeting": true
+               },
+               "HIGH_END": {
+                  "key": "high_end",
+                  "filters": [
+                     "highest_health",
+                     "closest_to_end"
+                  ]
+               },
+               "MAX_AOE_DEBUFF_SPREAD": {
+                  "key": "max_aoe_debuff_spread",
+                  "filters": [
+                     "most_targets",
+                     "shortest_debuff_time",
+                     "closest_to_end"
+                  ]
+               },
+               "MAX_AOE_DEBUFF_STACK": {
+                  "key": "max_aoe_debuff_stack",
+                  "filters": [
+                     "most_targets",
+                     "highest_debuff_stack",
+                     "shortest_debuff_time",
+                     "closest_to_end"
+                  ]
+               }
+            },
             "target_filters": {
                "FILTER_HP_LOW": {
                   "key": "lowest_health",

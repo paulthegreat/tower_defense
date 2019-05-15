@@ -12,7 +12,7 @@
       "stonehearth:attributes": {
          "max_health": {
             "type": "basic",
-            "value": 35
+            "value": 45
          },
          "speed": {
             "type": "basic",
@@ -42,7 +42,7 @@
             "priority": 0,
             "monsters": [
                {
-                  "count": 4,
+                  "count": 3,
                   "each_spawn": [
                      {
                         "population": "monster_ground",

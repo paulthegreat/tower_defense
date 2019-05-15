@@ -19,11 +19,8 @@
             "radius": 4,
             "attacks_ground": false,
             "attacks_air": true,
-            "target_filters": [
-               "lowest_health",
-               "closest_to_end"
-            ],
-            "reveals_invis": false
+            "reveals_invis": false,
+            "defaults": "high_end"
          }
       },
       "stonehearth:combat:ranged_attacks": [
