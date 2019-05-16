@@ -2,3 +2,4 @@
 * text eol=crlf
 *.png binary
 *.qb binary
+*.ogg binary
