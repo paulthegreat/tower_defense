@@ -440,13 +440,11 @@
    },
    "ui": {
       "html": [
-         "file(ui/game/resource_display/resource_display.html)",
-         "file(ui/game/game_state_window/game_state_window.html)"
+         "file(ui/game/resource_display/resource_display.html)"
       ],
       "js": [
          "file(ui/game/game.js)",
          "file(ui/game/resource_display/resource_display.js)",
-         "file(ui/game/game_state_window/game_state_window.js)",
          "file(ui/game/start_menu/stonehearth_menu.js)",
          "file(ui/game/traces/catalog.js)",
          "file(ui/shell/select_game_story/select_game_story.js)",
@@ -455,7 +453,6 @@
       ],
       "less": [
          "file(ui/game/resource_display/resource_display.less)",
-         "file(ui/game/game_state_window/game_state_window.less)",
          "file(ui/game/start_menu/stonehearth_menu.less)",
          "file(ui/game/clock_widget/clock_widget.less)"
       ]

@@ -109,7 +109,7 @@ function GameService:get_wave_index_command(session, response)
       table.insert(waves, wave_data)
    end
    
-   response:resolve({waves = waves})
+   response:resolve({waves = waves, last_wave = self._game_options.final_wave})
 end
 
 function GameService:get_tower_gold_cost_multiplier_command(session, response)

@@ -36,18 +36,47 @@ App.StonehearthCalendarView = App.View.extend({
             self.seasons_trace = radiant.trace(o.result)
                .progress(function (o2) {
                   self.set('season', o2.current_season);
-               })
+               });
          });
 
       radiant.call_obj('tower_defense.game', 'get_wave_index_command')
          .done(function (o) {
             self._waves = o.waves;
+            self._lastWave = o.last_wave;
+            self.set('lastWave', self._lastWave);
+         });
+
+      radiant.call('tower_defense:get_service','game')
+         .done(function (o) {
+            self.game_trace = radiant.trace(o.result)
+               .progress(function (o2) {
+                  self.set('playerHealth', o2.health);
+                  var oldWaveController = self._waveController;
+                  self._waveController = o2.wave_controller;
+                  
+                  if (oldWaveController != self._waveController) {
+                     if (oldWaveController) {
+                        self.wave_trace.destroy();
+                        self.wave_trace = null;
+                     }
+                     if (self._waveController) {
+                        self.wave_trace = radiant.trace(self._waveController)
+                           .progress(function (o3) {
+                              self.set('remainingMonsters', o3.remaining_monsters || 0);
+                           });
+                     }
+                     else {
+                        self.set('remainingMonsters', 0);
+                     }
+                  }
+               });
          });
    },
 
    willDestroyElement: function() {
       this.$().find('.tooltipstered').tooltipster('destroy');
       this.$().off('click', '#clock');
+      this.$().off('click', '#remainingMonsters');
       this._super();
    },
 
@@ -60,6 +89,14 @@ App.StonehearthCalendarView = App.View.extend({
       if (this.seasons_trace) {
          this.seasons_trace.destroy();
          this.seasons_trace = null;
+      }
+      if (this.game_trace) {
+         this.game_trace.destroy();
+         this.game_trace = null;
+      }
+      if (this.wave_trace) {
+         this.wave_trace.destroy();
+         this.wave_trace = null;
       }
    },
 
@@ -106,6 +143,17 @@ App.StonehearthCalendarView = App.View.extend({
          App.gameView.addView(App.StonehearthEscMenuView);
       });
 
+      $('#remainingMonsters').click(function() {
+         var monsterWindow = App.gameView.getView(App.TowerDefenseMonsterView);
+         if (monsterWindow) {
+            monsterWindow.destroy();
+         }
+         else {
+            var uri = self.get('waveController');
+            //App.gameView.addView(App.TowerDefenseMonsterView, { uri: uri });
+         }
+      });
+
       radiant.call('stonehearth:get_service', 'weather')
          .done(function (response) {
             self._weatherServiceUri = response.result;
@@ -133,6 +181,7 @@ App.StonehearthCalendarView = App.View.extend({
                   }
 
                   self.set('weatherForecast', days);
+                  self.set('currentWave', weatherService.current_weather_state.wave);
 
                   Ember.run.scheduleOnce('afterRender', this, function () {
                      self.$('.weatherDay').each(function () {
@@ -154,6 +203,7 @@ App.StonehearthCalendarView = App.View.extend({
       return {
          index: index,
          wave: dayData.wave,
+         waveIndexWithinGame: dayData.wave <= self._lastWave,
          title: wave && i18n.t(wave.display_name),
          name: dayData.weather.display_name,
          description: self._getFullDescription(dayData.weather, wave),
@@ -164,7 +214,7 @@ App.StonehearthCalendarView = App.View.extend({
 
    _getFullDescription: function(weather, wave) {
       var self = this;
-      return `${self._getWaveDescription(wave)}<div class='weatherTitle'>${i18n.t(weather.display_name)}</div><div class='weatherDescription'>${i18n.t(weather.description)}</div>`;
+      return `${self._getWaveDescription(wave)}<h3>${i18n.t(weather.display_name)}</h3><div class='weatherDescription'>${i18n.t(weather.description)}</div>`;
    },
 
    _getWaveDescription: function(waveData) {
@@ -176,6 +226,19 @@ App.StonehearthCalendarView = App.View.extend({
       }
       return s;
    },
+
+   _updateWaveClass: function() {
+      var self = this;
+      var currentWave = self.get('currentWave');
+      var lastWave = self.get('lastWave');
+
+      if (currentWave != null && lastWave != null) {
+         self.set('waveClass', currentWave <= 0 ? 'gameNotStarted' : (currentWave <= lastWave ? 'gameInProgress' : 'gameEnded'));
+      }
+      else {
+         self.set('waveClass', null);
+      }
+   }.observes('lastWave', 'currentWave'),
 
    getCalendarConstants: function() {
       return this._constants

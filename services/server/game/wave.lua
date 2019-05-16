@@ -11,7 +11,7 @@ local Wave = class()
 
 function Wave:initialize()
    self._sv._unspawned_monsters = {}
-   self._sv._spawned_monsters = {}
+   self._sv.spawned_monsters = {}
    self._sv.remaining_monsters = 0
    self._sv._last_monster_data = {}
    self._sv._queued_spawn_monsters = {}
@@ -40,7 +40,7 @@ function Wave:activate()
       self:_load_unspawned_monsters()
    end
 
-   for _, spawned_monster in pairs(self._sv._spawned_monsters) do
+   for _, spawned_monster in pairs(self._sv.spawned_monsters) do
       self:_activate_monster(spawned_monster)
    end
    self:_start_queued_spawn_monsters_timer()
@@ -60,7 +60,7 @@ function Wave:_destroy_next_spawn_timer()
 end
 
 function Wave:_destroy_monsters()
-   for _, monster_info in pairs(self._sv._spawned_monsters) do
+   for _, monster_info in pairs(self._sv.spawned_monsters) do
       if monster_info.kill_listener then
          monster_info.kill_listener:destroy()
       end
@@ -69,7 +69,7 @@ function Wave:_destroy_monsters()
       end
       radiant.entities.destroy_entity(monster_info.monster)
    end
-   self._sv._spawned_monsters = {}
+   self._sv.spawned_monsters = {}
    self.__saved_variables:mark_changed()
 end
 
@@ -247,7 +247,7 @@ function Wave:_spawn_monsters(monsters, at_monster_id)
                bounty = bounty,
                counts_as_remaining = at_monster_id == nil
             }
-            self._sv._spawned_monsters[new_monster:get_id()] = this_monster
+            self._sv.spawned_monsters[new_monster:get_id()] = this_monster
             self:_activate_monster(this_monster)
 
             did_spawn = true
@@ -285,7 +285,7 @@ function Wave:_activate_monster(monster)
 end
 
 function Wave:_remove_monster(id)
-   local monster_info = self._sv._spawned_monsters[id]
+   local monster_info = self._sv.spawned_monsters[id]
    if monster_info then
       if monster_info.kill_listener then
          monster_info.kill_listener:destroy()
@@ -298,7 +298,7 @@ function Wave:_remove_monster(id)
 
       self._sv._last_monster_data[id] = monster_info.monster:add_component('tower_defense:monster'):get_path_data()
 
-      self._sv._spawned_monsters[id] = nil
+      self._sv.spawned_monsters[id] = nil
       if monster_info.counts_as_remaining then
          self._sv.remaining_monsters = math.max(0, self._sv.remaining_monsters - 1)
       end
@@ -308,7 +308,7 @@ function Wave:_remove_monster(id)
 end
 
 function Wave:_check_wave_end()
-   if #self._sv._unspawned_monsters < 1 and not next(self._sv._spawned_monsters) and #self._sv._queued_spawn_monsters < 1 then
+   if #self._sv._unspawned_monsters < 1 and not next(self._sv.spawned_monsters) and #self._sv._queued_spawn_monsters < 1 then
       -- just make sure we're properly reporting all monsters gone
       self._sv.remaining_monsters = 0
       self.__saved_variables:mark_changed()

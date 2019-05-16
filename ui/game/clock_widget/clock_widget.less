@@ -30,3 +30,33 @@
       border-color: rgb(224, 102, 32);
    }
 }
+
+#gameState {
+   position: absolute;
+   top: 200px;
+   right: 5px;
+   width: 140px;
+
+   .flexContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 140px;
+      padding-bottom: 4px;
+      .outlined;
+      font-family: @baseFontFamily;
+      font-size: 15px;
+      color: #fff;
+
+      .gameNotStarted {
+         color: #ddbb44;
+      }
+      .gameInProgress {
+         color: #3baf37;
+      }
+      .gameEnded {
+         color: #922723;
+      }
+   }
+}

@@ -1,59 +1,31 @@
-var citizensLastSortKey = 'job';
-var citizensLastSortDirection = 1;
+var monstersLastSortKey = 'name';
+var monstersLastSortDirection = 1;
 
-App.StonehearthCitizensView = App.View.extend({
-   templateName: 'citizens',
+App.TowerDefenseMonsterView = App.View.extend({
+   templateName: 'monsters',
    uriProperty: 'model',
    classNames: ['flex', 'exclusive'],
-   closeOnEsc: true,
    skipInvisibleUpdates: true,
    hideOnCreate: false,
    components: {
-      "citizens" : {
+      "spawned_monsters" : {
          "*": {
-            "stonehearth:unit_info": {},
-            "stonehearth:commands": {},
-            "stonehearth:ai": {
-               "status_text_data": {}
-            },
-            "stonehearth:job": {
-               'curr_job_controller' : {}
-            },
-            "stonehearth:crafter": {
-               "workshop": {}
-            },
-            "stonehearth:attributes": {},
-            "stonehearth:work_order": {},
-            "stonehearth:happiness": {},
-            'stonehearth:traits' : {
-               'traits': {
-                  '*' : {}
-               }
+            "monster": {
+               "stonehearth:unit_info": {},
+               "stonehearth:ai": {
+                  "status_text_data": {}
+               },
+               "stonehearth:attributes": {},
+               "stonehearth:expendable_resources": {},
+               "stonehearth:buffs": {}
             }
          }
-      },
-      "work_orders": {}
+      }
    },
-
-   stats: [
-      'mind',
-      'body',
-      'spirit'
-   ],
 
    init: function() {
       var self = this;
-      this._super();
-
-      radiant.call('stonehearth:get_population')
-         .done(function(response) {
-            if (self.isDestroying || self.isDestroyed) {
-               return;
-            }
-
-            self._populationUri = response.population;
-            self.set('uri', self._populationUri);
-         });
+      self._super();
    },
 
    willDestroyElement: function() {
@@ -62,35 +34,7 @@ App.StonehearthCitizensView = App.View.extend({
 
       self.$().off('click');
 
-      App.presenceClient.removeChangeCallback('citizens_menu');
-
-      if (self._playerPickerView) {
-         self._playerPickerView.destroy();
-         self._playerPickerView = null;
-      }
-
       this._super();
-   },
-
-   dismiss: function () {
-      this.hide();
-   },
-
-   hide: function () {
-      var self = this;
-
-      if (!self.$()) return;
-
-      var index = App.stonehearth.modalStack.indexOf(self)
-      if (index > -1) {
-         App.stonehearth.modalStack.splice(index, 1);
-      }
-      this._super();
-   },
-
-   show: function () {
-      this._super();
-      App.stonehearth.modalStack.push(this);
    },
 
    didInsertElement: function() {
@@ -99,38 +43,7 @@ App.StonehearthCitizensView = App.View.extend({
 
       this.$().draggable({ handle: '.title' });
 
-      var changeCallback = function(presenceData, isMultiplayer) {
-         if (self.isDestroying || self.isDestroyed) {
-            return;
-         }
-
-         self.set('isMultiplayer', isMultiplayer);
-      }
-
-      App.presenceClient.addChangeCallback('citizens_menu', changeCallback, true);
-
-      radiant.each(self.stats, function (i, stat) {
-         App.tooltipHelper.createDynamicTooltip(self.$('.' + stat), function () {
-            return $(App.tooltipHelper.getTooltip(stat));
-         });
-      });
-
-      App.tooltipHelper.createDynamicTooltip($('#expStat .bar'));
-      App.tooltipHelper.createDynamicTooltip($('.suspendButton'));
       App.tooltipHelper.createDynamicTooltip($('.listTitle'));
-      App.tooltipHelper.createDynamicTooltip($('#changeAllWorkingFor'));
-
-      self.$().on('click', ':checkbox[workOrder]', function() {
-         var checked = $(this).is(':checked');
-         var workOrder = $(this).attr('workOrder');
-         var citizenId = $(this).attr('citizenId');
-         radiant.call_obj(self._populationUri, 'change_work_order_command', workOrder, parseInt(citizenId), checked);
-         radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:action_click' });
-      });
-
-      self.$().on('click', '.moodIcon', function() {
-         self._moodIconClicked = true;
-      });
 
       self.$().on('click', '.listTitle', function() {
          var newSortKey = $(this).attr('data-sort-key');
@@ -142,48 +55,44 @@ App.StonehearthCitizensView = App.View.extend({
                self.set('sortDirection', 1);
             }
 
-            citizensLastSortKey = newSortKey;
-            citizensLastSortDirection = self.get('sortDirection');
+            monstersLastSortKey = newSortKey;
+            monstersLastSortDirection = self.get('sortDirection');
          }
       });
-
-      if (self.hideOnCreate) {
-         self.hide();
-      }
    },
 
-   citizenChanged: function (citizen, citizenId) {
+   monsterChanged: function (monster, monsterId) {
       var self = this;
       var existingSelected = self.get('selected');
-      if (existingSelected && citizen && existingSelected.__self == citizen.__self) {
-         self.setSelectedCitizen(citizen, citizenId, false);
+      if (existingSelected && monster && existingSelected.__self == monster.__self) {
+         self.setSelectedCitizen(monster, monsterId, false);
       }
    },
 
-   _updateCitizensArray: function() {
+   _updateMonstersArray: function() {
       var self = this;
-      var citizensMap = self.get('model.citizens');
-      delete citizensMap.size;
+      var monstersMap = self.get('model.spawned_monsters');
+      delete monstersMap.size;
       if (self._containerView) {
-         // Construct and manage citizen row views manually
-         self._containerView.updateRows(citizensMap);
+         // Construct and manage monster row views manually
+         self._containerView.updateRows(monstersMap);
       }
-   }.observes('model.citizens'),
+   }.observes('model.spawned_monsters'),
 
    _onSortChanged: function() {
       var self = this;
-      var citizensMap = self.get('model.citizens');
-      delete citizensMap.size;
+      var monstersMap = self.get('model.spawned_monsters');
+      delete monstersMap.size;
       if (self._containerView) {
-         self._containerView.updateRows(citizensMap, true);
+         self._containerView.updateRows(monstersMap, true);
       }
    }.observes('sortKey', 'sortDirection'),
 
-   setSelectedCitizen: function(citizen, citizenId, userClicked) {
+   setSelectedCitizen: function(monster, monsterId, userClicked) {
       var self = this;
       var existingSelected = self.get('selected');
-      if (citizen) {
-         var uri = citizen.__self;
+      if (monster) {
+         var uri = monster.__self;
          var portrait_url = '/r/get_portrait/?type=headshot&animation=idle_breathe.json&entity=' + uri + '&cache_buster=' + Math.random();
          self.$('#selectedPortrait').css('background-image', 'url(' + portrait_url + ')');
 
@@ -200,134 +109,28 @@ App.StonehearthCitizensView = App.View.extend({
          self.$('#selectedPortrait').css('background-image', 'url()');
       }
 
-      self.set('selected', citizen);
+      self.set('selected', monster);
    },
 
    setCitizenRowContainerView: function(containerView) {
       this._containerView = containerView;
-   },
-
-   _updateAttributes: function() {
-      var self = this;
-      var existingSelected = self.get('selected');
-
-      if (existingSelected) {
-         var expData = radiant.getExpPercentAndLabel(self.get('selected.stonehearth:job'));
-         var expPercent = expData.percent;
-         var expLabel = expData.label;
-
-         self.set('exp_bar_style', 'width: ' + expPercent + '%');
-         self.set('exp_bar_label', expLabel);
-      }
-   }.observes('selected.stonehearth:job.curr_job_controller'),
-
-   _buildTraitsArray: function() {
-      var self = this;
-      var traits = [];
-      var traitMap = self.get('selected.stonehearth:traits.traits');
-
-      if (traitMap) {
-         traits = radiant.map_to_array(traitMap);
-         traits.sort(function(a, b){
-            var aUri = a.uri;
-            var bUri = b.uri;
-            var n = aUri.localeCompare(bUri);
-            return n;
-         });
-      }
-
-      self.set('traits', traits);
-   }.observes('selected.stonehearth:traits'),
-
-   openPlayerPickerView: function(citizenData) {
-      var self =  this;
-      if (self._playerPickerView) {
-         self._playerPickerView.destroy();
-      }
-
-      self._playerPickerView = App.gameView.addView(App.StonehearthPlayerPickerView, {
-         selectedPlayerId: citizenData ? citizenData.get('stonehearth:work_order.working_for') : null,
-         selectedCb: function(playerId) {
-            if (radiant.isNonEmptyString(playerId)) {
-               if (!citizenData) {
-                  // Set working for for all citizens if an individual citizen was not passed as an argument
-                  var currentCitizensArray = self.get('citizensArray');
-                  for(var i = 0; i < currentCitizensArray.length; ++i) {
-                     radiant.call('stonehearth:set_working_for_player_id', currentCitizensArray[i].__self, playerId);
-                  }
-               } else {
-                  radiant.call('stonehearth:set_working_for_player_id', citizenData.__self, playerId);
-               }
-            }
-            self._playerPickerView = null;
-         }
-      });
-   },
-
-   selected_commands: function() {
-      var commands = radiant.map_to_array(this.get('selected.stonehearth:commands.commands'));
-      commands.sort(function(a, b){
-         var aName = a.ordinal ? a.ordinal : 0;
-         var bName = b.ordinal ? b.ordinal : 0;
-         var n = bName - aName;
-         return n;
-      });
-      return commands;
-   }.property('selected.stonehearth:commands.commands'),
-
-   actions: {
-      doCommand: function(command, citizen_data) {
-         var citizen_id = citizen_data.__self;
-         var player_id = citizen_data.player_id;
-         App.stonehearthClient.doCommand(citizen_id, player_id, command);
-      },
-      showPromotionTree: function(citizen_id) {
-         App.stonehearthClient.showPromotionTree(citizen_id);
-      },
-      changeWorkingFor: function(citizenData) {
-         this.openPlayerPickerView(citizenData);
-      },
-      changeAllWorkingFor: function(citizenData) {
-         this.openPlayerPickerView();
-      },
-      suspendToggle: function(workOrder) {
-         var self = this;
-         var suspendedWorkOrders = self.get('model.suspended_work_orders');
-         if (!suspendedWorkOrders) {
-            return;
-         }
-         var isSuspended = !suspendedWorkOrders[workOrder];
-         radiant.call_obj(self._populationUri, 'set_work_order_suspend_command', workOrder, isSuspended);
-      }
    }
 });
 
 App.StonehearthCitizenTasksRowView = App.View.extend({
    tagName: 'tr',
    classNames: ['row'],
-   templateName: 'citizenTasksRow',
+   templateName: 'monsterTasksRow',
    uriProperty: 'model',
 
    components: {
       "stonehearth:unit_info": {},
-      "stonehearth:commands": {},
       "stonehearth:ai": {
          "status_text_data": {}
-
-      },
-      "stonehearth:job": {
-         'curr_job_controller' : {}
-      },
-      "stonehearth:crafter": {
-         "workshop": {}
       },
       "stonehearth:attributes": {},
-      "stonehearth:work_order": {},
-      'stonehearth:traits' : {
-         'traits': {
-            '*' : {}
-         }
-      }
+      "stonehearth:expendable_resources": {},
+      "stonehearth:buffs": {}
    },
 
    didInsertElement: function() {
@@ -341,7 +144,7 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
          });
       });
 
-      self.$()[0].setAttribute('data-citizen-id', self.get('citizenId'));
+      self.$()[0].setAttribute('data-monster-id', self.get('monsterId'));
 
       App.tooltipHelper.createDynamicTooltip($('#changeWorkingFor'));
 
@@ -356,11 +159,6 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
       var self = this;
 
       self.$().find('.tooltipstered').tooltipster('destroy');
-
-      if (self._playerPickerView) {
-         self._playerPickerView.destroy();
-         self._playerPickerView = null;
-      }
 
       if (self._moodTrace) {
          self._moodTrace.destroy();
@@ -400,14 +198,14 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
          self.$().addClass('selected');
       }
 
-      self.taskView.setSelectedCitizen(self.get('model'), self.get('citizenId'), userClicked);
+      self.taskView.setSelectedCitizen(self.get('model'), self.get('monsterId'), userClicked);
    },
 
    _update: function() {
       var self = this;
-      var citizenData = self.get('model');
-      if (self.$() && citizenData) {
-         var uri = citizenData.__self;
+      var monsterData = self.get('model');
+      if (self.$() && monsterData) {
+         var uri = monsterData.__self;
          if (uri && uri != self._uri) {
             self._uri = uri;
             radiant.call('stonehearth:get_mood_datastore', uri)
@@ -432,7 +230,7 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
          if (!self.$().hasClass('selected')) {
             var existingSelected = self.taskView.get('selected');
             if (!existingSelected) {
-               // If no selected, select ourself if our Hearthling is selected in the world or first in the citizens manager
+               // If no selected, select ourself if our Hearthling is selected in the world or first in the monsters manager
                radiant.call_obj('stonehearth.selection', 'get_selected_command')
                   .done(function(o) {
                         var selected = o.selected_entity;
@@ -449,7 +247,7 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
             }
          }
       }
-      self.taskView.citizenChanged(self.get('model'), self.get('citizenId'));
+      self.taskView.monsterChanged(self.get('model'), self.get('monsterId'));
    }.observes('model'),
 
    isMultiplayer: function() {
@@ -461,7 +259,7 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
       var workingForPlayerId = self.get('model.stonehearth:work_order.working_for');
       var playerName;
       if (App.stonehearthClient.getPlayerId() == workingForPlayerId) {
-         playerName = i18n.t('stonehearth:ui.game.citizens.working_for.myself');
+         playerName = i18n.t('stonehearth:ui.game.monsters.working_for.myself');
       } else {
          playerName = App.presenceClient.getSteamName(workingForPlayerId) ||
             App.presenceClient.getPlayerDisplayName(workingForPlayerId);
@@ -490,8 +288,8 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
       if (self._currentMood != currentMood) {
          self._currentMood = currentMood;
          Ember.run.scheduleOnce('afterRender', self, function() {
-            var citizenData = self.get('model');
-            if (citizenData) {
+            var monsterData = self.get('model');
+            if (monsterData) {
                App.tooltipHelper.createDynamicTooltip(self.$('.moodColumn'), function () {
                   if (!moodData || !moodData.current_mood_buff) {
                      return;
@@ -509,11 +307,11 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
    _updateDescriptionTooltip: function() {
       var self = this;
       Ember.run.scheduleOnce('afterRender', self, function() {
-         var citizenData = self.get('model');
-         if (citizenData) {
+         var monsterData = self.get('model');
+         if (monsterData) {
             App.tooltipHelper.createDynamicTooltip(self.$('.nameColumn'), function () {
-               if (citizenData['stonehearth:unit_info']) {
-                  return i18n.t(citizenData['stonehearth:unit_info'].description, { self: citizenData });
+               if (monsterData['stonehearth:unit_info']) {
+                  return i18n.t(monsterData['stonehearth:unit_info'].description, { self: monsterData });
                }
             });
          }
@@ -526,121 +324,43 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
          var rowEls = tableEl.children();
          if (rowEls.length > 0) {
             var viewEl = rowEls[0];
-            return viewEl.getAttribute('data-citizen-id') == this.get('citizenId');
+            return viewEl.getAttribute('data-monster-id') == this.get('monsterId');
          }
       }
 
       return false;
-   },
-
-   workOrderChecked : function(workOrder) {
-      var self = this;
-
-      var workOrders = self.get('model.stonehearth:work_order.work_order_statuses');
-      var workOrderRefs = self.get('model.stonehearth:work_order.work_order_refs');
-      if (!workOrders || !workOrderRefs) {
-         return false;
-      }
-      return workOrderRefs[workOrder] && workOrders[workOrder] != 'disabled';
-   },
-
-   workOrderLocked : function(workOrder) {
-      var self = this;
-
-      var workOrderRefs = self.get('model.stonehearth:work_order.work_order_refs');
-      if (!workOrderRefs) {
-         return false;
-      }
-      return !workOrderRefs[workOrder];
-   },
-
-   // Checked properties used to control whether or not the checkbox is checked
-   haulChecked: function() {
-      return this.workOrderChecked('haul');
-   }.property('citizenId', 'model.stonehearth:work_order'),
-
-   buildChecked: function() {
-      return this.workOrderChecked('build');
-   }.property('citizenId', 'model.stonehearth:work_order'),
-
-   mineChecked: function() {
-      return this.workOrderChecked('mine');
-   }.property('citizenId', 'model.stonehearth:work_order'),
-
-   jobChecked: function() {
-      return this.workOrderChecked('job');
-   }.property('citizenId', 'model.stonehearth:work_order'),
-
-   // Locked properties used to control whether or not the checkbox is disabled
-   haulLocked: function() {
-      return this.workOrderLocked('haul');
-   }.property('citizenId', 'model.stonehearth:work_order'),
-
-   buildLocked: function() {
-      return this.workOrderLocked('build');
-   }.property('citizenId', 'model.stonehearth:work_order'),
-
-   mineLocked: function() {
-      return this.workOrderLocked('mine');
-   }.property('citizenId', 'model.stonehearth:work_order'),
-
-   jobLocked: function() {
-      // Lock job if we are working for another player and we are not a combat class
-      if (this.get('model.stonehearth:work_order.working_for') != this.get('model.player_id')
-         && !this.get('model.stonehearth:job.curr_job_controller.is_combat_class')) {
-         return true;
-      }
-
-      return this.workOrderLocked('job');
-   }.property('citizenId', 'model.stonehearth:work_order', 'model.stonehearth:job.curr_job_controller'),
-
-   // Id properties for identifying checkboxes
-   haulId: function() {
-      return "haul_" + this.get('citizenId');
-   }.property('citizenId'),
-
-   buildId: function() {
-      return "build_" + this.get('citizenId');
-   }.property('citizenId'),
-
-   mineId: function() {
-      return "mine_" + this.get('citizenId');
-   }.property('citizenId'),
-
-   jobId: function() {
-      return "job_" + this.get('citizenId');
-   }.property('citizenId'),
+   }
 });
 
 // Manually manage child views using this container view for performance reasons
 // Reduces DOM and view reconstruction
 App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerView.extend({
    tagName: 'tbody',
-   templateName: 'citizenTasksContainer',
+   templateName: 'monsterTasksContainer',
    elementId: 'tasksListTableBody',
    containerParentView: null,
-   currentCitizensMap: {},
+   currentMonstersMap: {},
    rowCtor: App.StonehearthCitizenTasksRowView,
 
-   constructRowViewArgs: function(citizenId, entry) {
+   constructRowViewArgs: function(monsterId, entry) {
       return {
          taskView: this.containerParentView,
          uri:entry.__self,
-         citizenId: citizenId
+         monsterId: monsterId
       };
    },
 
-   updateRows: function(citizensMap, sortRequested) {
+   updateRows: function(monstersMap, sortRequested) {
       var self = this;
-      var rowChanges = self.getRowChanges(citizensMap);
-      self._super(citizensMap);
+      var rowChanges = self.getRowChanges(monstersMap);
+      self._super(monstersMap);
 
       if (rowChanges.numRowsChanged == 1 && self._domModified) {
          // Refresh all rows if added/removed a single row, but dom was modified manually
          self.resetChildren(rowChanges);
       } else if (sortRequested) {
          // If no rows have changed but we need to sort
-         self._sortCitizensDom(citizensMap);
+         self._sortMonstersDom(monstersMap);
       }
    },
 
@@ -648,10 +368,10 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
    insertInSortedOrder: function(rowToInsert) {
       var self = this;
       var addIndex = self.get('length') || 0;
-      var sortFn = self._getCitizenRowsSortFn(self.currentCitizensMap);
+      var sortFn = self._getCitizenRowsSortFn(self.currentMonstersMap);
       for (var i = 0; i < self.get('length'); i++) {
          var rowView = self.objectAt(i);
-         var sortValue = sortFn(rowToInsert.citizenId, rowView.citizenId);
+         var sortValue = sortFn(rowToInsert.monsterId, rowView.monsterId);
          if (sortValue < 0) {
             addIndex = i;
             break;
@@ -666,10 +386,10 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
       var self = this;
       var sortFn = self._getCitizenRowsSortFn();
       var sorted = self.toArray().sort(function(a, b) {
-         var aCitizenId = a.citizenId;
-         var bCitizenId = b.citizenId;
+         var aMonsterId = a.monsterId;
+         var bMonsterId = b.monsterId;
 
-         return sortFn(aCitizenId, bCitizenId);
+         return sortFn(aMonsterId, bMonsterId);
       });
 
       self.setObjects(sorted);
@@ -682,70 +402,43 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
       self._domModified = false;
    },
 
-   removeRow: function(citizenId) {
+   removeRow: function(monsterId) {
       // Select the first row if the row we are removing is selected
       var selected = this.containerParentView.$('.selected');
       if (selected && selected[0]) {
-         var selectedCitizenId = selected[0].getAttribute('data-citizen-id');
-         if (citizenId == selectedCitizenId && this.get('length') > 1) {
+         var selectedCitizenId = selected[0].getAttribute('data-monster-id');
+         if (monsterId == selectedCitizenId && this.get('length') > 1) {
             this.objectAt(0)._selectRow();
          }
       }
 
-      this._super(citizenId);
+      this._super(monsterId);
    },
 
-   _getCitizenRowsSortFn: function(citizensMap) {
+   _getCitizenRowsSortFn: function(monstersMap) {
       var self = this;
       // Sort based on the sorting property selected by player
-      var sortDirection = self.containerParentView.get('sortDirection') || citizensLastSortDirection;
-      var sortKey = self.containerParentView.get('sortKey') || citizensLastSortKey;
+      var sortDirection = self.containerParentView.get('sortDirection') || monstersLastSortDirection;
+      var sortKey = self.containerParentView.get('sortKey') || monstersLastSortKey;
       var keyExtractors = {
-         'job': function(x) {
-            return x['stonehearth:job'] && i18n.t(x['stonehearth:job'].curr_job_name);
-         },
          'name': function(x) {
-            return x['stonehearth:unit_info'] && i18n.t(x['stonehearth:unit_info'].custom_name, {self: x});
+            // don't actually sort on name; just sort on entity id, which should correspond to creation order
+            //return x['stonehearth:unit_info'] && i18n.t(x['stonehearth:unit_info'].custom_name, {self: x});
+            return x.id;
          },
-         'activity': function(x) {
-            return x['stonehearth:ai'] && i18n.t(x['stonehearth:ai'].status_text_key, {self: x});
-         },
-         'body': function(x) {
-            return x['stonehearth:attributes'] && x['stonehearth:attributes'].attributes.body.user_visible_value;
-         },
-         'mind': function(x) {
-            return x['stonehearth:attributes'] && x['stonehearth:attributes'].attributes.mind.user_visible_value;
-         },
-         'spirit': function(x) {
-            return x['stonehearth:attributes'] && x['stonehearth:attributes'].attributes.spirit.user_visible_value;
-         },
-         'happiness': function(x) {
-            return x['stonehearth:happiness'] && x['stonehearth:happiness'].current_happiness;
-         },
-         'working-for': function(x) {
-            return x['stonehearth:work_order'] && i18n.t(x['stonehearth:work_order'].working_for);
-         },
-         'haul-enabled': function(x) {
-            return x['stonehearth:work_order'] && (x['stonehearth:work_order'].work_order_refs.haul && x['stonehearth:work_order'].work_order_statuses.haul != 'disabled') ? 1 : 0;
-         },
-         'build-enabled': function(x) {
-            return x['stonehearth:work_order'] && (x['stonehearth:work_order'].work_order_refs.build && x['stonehearth:work_order'].work_order_statuses.build != 'disabled') ? 1 : 0;
-         },
-         'mine-enabled': function(x) {
-            return x['stonehearth:work_order'] && (x['stonehearth:work_order'].work_order_refs.mine && x['stonehearth:work_order'].work_order_statuses.mine != 'disabled') ? 1 : 0;
-         },
-         'job-enabled': function(x) {
-            return x['stonehearth:work_order'] && (x['stonehearth:work_order'].work_order_refs.job && x['stonehearth:work_order'].work_order_statuses.job != 'disabled') ? 1 : 0;
-         },
+         'health': function(x) {
+            var resources = x['stonehearth:expendable_resources'] && x['stonehearth:expendable_resources'].resources;
+            return resources && resources.health || 0;
+         }
       };
 
-      return function(aCitizenId, bCitizenId) {
-         if (!aCitizenId || !bCitizenId) {
+      return function(aMonsterId, bMonsterId) {
+         if (!aMonsterId || !bMonsterId) {
             return 0;
          }
 
-         var aModel = self.currentCitizensMap[aCitizenId];
-         var bModel = self.currentCitizensMap[bCitizenId];
+         var aModel = self.currentMonstersMap[aMonsterId];
+         var bModel = self.currentMonstersMap[bMonsterId];
 
          if (!aModel || !bModel) {
             return 0;
@@ -768,14 +461,14 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
    // child order array will not reflect the changes and thus be in an invalid state. This
    // fine if the the array isn't mutated, but if we need to add or remove a row, we must reset
    // the array using `setObjects` otherwise Ember will render the container view incorrectly.
-   _sortCitizensDom: function() {
+   _sortMonstersDom: function() {
       var self = this;
       var sortFn = self._getCitizenRowsSortFn();
       var sorted = $('#tasksListTableBody').children().sort(function(a, b) {
-         var aCitizenId = a.getAttribute('data-citizen-id');
-         var bCitizenId = b.getAttribute('data-citizen-id');
+         var aMonsterId = a.getAttribute('data-monster-id');
+         var bMonsterId = b.getAttribute('data-monster-id');
 
-         return sortFn(aCitizenId, bCitizenId);
+         return sortFn(aMonsterId, bMonsterId);
       });
 
       $('#tasksListTableBody').append(sorted);

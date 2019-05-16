@@ -1028,9 +1028,9 @@
          },
          "gameStateWindow": {
             "title": "Game State",
-            "remaining_monsters": "Remaining enemies",
-            "wave_number": "Wave number",
-            "player_health": "Health"
+            "remaining_monsters": "Enemies:",
+            "wave_number": "Wave:",
+            "player_health": "Health:"
          },
          "towerTargetingWindow": {
             "title": "Tower Targeting",
