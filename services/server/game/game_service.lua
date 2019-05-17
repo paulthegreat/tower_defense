@@ -31,6 +31,8 @@ function GameService:initialize()
       self._sv.health = self._game_options and self._game_options.starting_health or 100
    end
 
+   self._waves = radiant.resources.load_json('tower_defense:data:waves').waves
+
    if not self._sv.wave_controller and self._sv.started then
       self:_create_countdown_timer(true)
    end
@@ -38,7 +40,6 @@ function GameService:initialize()
    self._wave_listeners = {}
    self:_create_wave_listeners()
 
-   self._waves = radiant.resources.load_json('tower_defense:data:waves').waves
    self._waiting_for_target_cbs = {}
 end
 
@@ -257,15 +258,15 @@ function GameService:_end_of_round()
       return
    end
 
-   if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave > self._game_options.final_wave) then
-      -- no more waves! you won!
-      return
-   end
-
    self:_create_countdown_timer()
 end
 
 function GameService:_create_countdown_timer(second)
+   if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave >= self._game_options.final_wave) then
+      -- no more waves! you won!
+      return
+   end
+
    local countdown = radiant.util.get_config('round_countdown', '5m')
    self._countdown_timer = stonehearth.calendar:set_timer('next wave countdown', countdown, function()
       if second then

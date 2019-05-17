@@ -21,7 +21,8 @@ var tower_defense = {
          s += `<div class="weaponUpgrade"><h3>${i18n.t(weaponData.display_name)}</h3>` +
                `<div class="weaponUpgradeCost">${tower_defense.getCostString(upgradeCost)}</div></div>`;
       }
-      s += (weaponData.description ? `<div class="weaponDescription">${i18n.t(weaponData.description)}</div>` : '') + '<table class="weaponDetails">';
+      s += (weaponData.description ? `<div class="weaponDescription">${i18n.t(weaponData.description)}</div>` : '') +
+         '<table class="weaponDetails"><col class="titleCol"><col class="valueCol">';
 
       var t = weaponData.tower_weapon_targeting;
       if (t) {
@@ -45,11 +46,13 @@ var tower_defense = {
          if (a.base_damage) {
             a.damage_type = a.damage_type || 'physical';
             s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage_title'),
-               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', a) +
+               i18n.t(a.is_percentage ? 'tower_defense:ui.game.tooltips.tower_weapons.percentage_damage' :
+                  'tower_defense:ui.game.tooltips.tower_weapons.damage', a) +
                tower_defense._getAttacks(a.attack_times && a.attack_times.length || 1, a.num_targets || 1));
          }
          if (a.cooldown) {
-            s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.cooldown_title'), a.cooldown * 0.001);
+            s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.cooldown_title'),
+               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.cooldown', {cooldown: a.cooldown * 0.001}));
          }
       }
 
@@ -104,10 +107,11 @@ var tower_defense = {
          s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.ground_presence_title'), i18n.t(gp_entity_data.display_name));
          s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.range_title'),
             i18n.t('tower_defense:ui.game.tooltips.tower_weapons.range_square', gp), true);
-         s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.gp_duration_title'), gp.duration * 0.001, true);
-         if (gp.other_times || gp.every_time) {
-            s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.gp_period_title'), (gp.period || 1000) * 0.001, true);
-         }
+         
+         var i18n_data = {duration: gp.duration * 0.001, period: (gp.period || 1000) * 0.001};
+         s += tower_defense._getLine(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.gp_duration_title'),
+            i18n.t(gp.other_times || gp.every_time ? 'tower_defense:ui.game.tooltips.tower_weapons.gp_duration_and_period' :
+            'tower_defense:ui.game.tooltips.tower_weapons.gp_duration', i18n_data), true);
 
          ['first_time', 'other_times', 'every_time'].forEach(instance => {
             if (gp[instance]) {

@@ -28,7 +28,7 @@
             "name": "refreshing_wind",
             "effect": "tower_defense:effects:air_particles",
             "hit_effect": "/stonehearth/data/effects/hit_sparks/dust_poof.json",
-            "base_damage": 1.5,
+            "base_damage": 6,
             "is_percentage": true,
             "damage_type": "magical",
             "attack_times": [
