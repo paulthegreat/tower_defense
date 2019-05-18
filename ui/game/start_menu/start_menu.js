@@ -33,6 +33,21 @@ App.StonehearthStartMenuView = App.View.extend({
             radiant.call('tower_defense:give_wood_cheat_command', data.wood_amount);
          }
       },
+      td_reference_menu: function() {
+         return;  // TODO: actually make the reference view
+         var referenceWindow = App.gameView.getView(App.TowerDefenseReferenceView);
+         if (referenceWindow) {
+            if (referenceWindow.isVisible) {
+               referenceWindow.hide();
+            }
+            else {
+               referenceWindow.show();
+            }
+         }
+         else {
+            App.gameView.addView(App.TowerDefenseReferenceView);
+         }
+      },
       bulletin_manager: function() {
          App.bulletinBoard.toggleListView();
       },

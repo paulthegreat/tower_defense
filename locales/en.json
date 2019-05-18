@@ -1029,6 +1029,10 @@
                "display_name": "Give Wood",
                "give_gold_10": "Give Wood (10)",
                "10_description": "Give yourself 10 wood, you cheater."
+            },
+            "reference_menu": {
+               "display_name": "Show Reference Window",
+               "description": "Open a window with reference information for all the icons, buffs, etc. in the game."
             }
          },
          "resourceDisplay": {

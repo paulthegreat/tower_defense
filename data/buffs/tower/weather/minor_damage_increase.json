@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "weather",
    "display_name": "i18n(tower_defense:data.buffs.tower.minor_damage_increase.display_name)",
    "description": "i18n(tower_defense:data.buffs.tower.minor_damage_increase.description)",
    "icon": "file(minor_damage_increase.png)",

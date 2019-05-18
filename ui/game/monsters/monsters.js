@@ -277,9 +277,14 @@ App.TowerDefenseMonsterRowView = App.View.extend({
       var fillEl = self.$('.healthbarFill');
 
       if (fillEl) {
-         if (!self._previousHealth || currentHealth > self._previousHealth) {
+         if (!self._previousHealth) {
             fillEl.css('width', widthString);
             self.$('.healthbarDamageIndicator').css('width', widthString);
+         }
+         else if (currentHealth > self._previousHealth) {
+            fillEl.css('width', widthString);
+            self.$('.healthbarDamageIndicator').css('width', widthString);
+            fillEl.animate({'backgroundColor': '#33BB33'}, 200).animate({'backgroundColor': '#DD9922'}, 200);
          } else {
             // when dealing damage, shrink the purple part of the bar instantly, exposing the yellow bar behind it
             fillEl.css('width', widthString);

@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "debuff",
+   "category": "weather",
    "display_name": "i18n(tower_defense:data.buffs.tower.minor_speed_decrease.display_name)",
    "description": "i18n(tower_defense:data.buffs.tower.minor_speed_decrease.description)",
    "icon": "file(minor_speed_decrease.png)",

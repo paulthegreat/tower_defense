@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "debuff",
+   "category": "weather",
    "display_name": "i18n(tower_defense:data.buffs.tower.minor_cooldown_increase.display_name)",
    "description": "i18n(tower_defense:data.buffs.tower.minor_cooldown_increase.description)",
    "icon": "file(minor_cooldown_increase.png)",

@@ -382,12 +382,8 @@
          "controller": "file(call_handlers/game_call_handler.lua)",
          "endpoint": "server"
       },
-      "create_and_place_entity": {
-         "controller": "file(call_handlers/tower_call_handler.lua)",
-         "endpoint": "client"
-      },
-      "create_entity": {
-         "controller": "file(call_handlers/tower_call_handler.lua)",
+      "get_all_buffs": {
+         "controller": "file(call_handlers/game_call_handler.lua)",
          "endpoint": "server"
       },
       "give_gold_cheat_command": {
@@ -404,6 +400,14 @@
       },
       "unlock_kingdom_command": {
          "controller": "file(call_handlers/player_call_handler.lua)",
+         "endpoint": "server"
+      },
+      "create_and_place_entity": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
+         "endpoint": "client"
+      },
+      "create_entity": {
+         "controller": "file(call_handlers/tower_call_handler.lua)",
          "endpoint": "server"
       },
       "sell_full": {

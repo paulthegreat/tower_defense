@@ -29,7 +29,7 @@
             "name": "water_101",
             "effect": "tower_defense:effects:water_particles",
             "hit_effect": "tower_defense:effects:water_particles",
-            "base_damage": 2,
+            "base_damage": 3,
             "num_targets": 1,
             "damage_type": "magical",
             "attack_times": [
