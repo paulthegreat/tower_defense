@@ -6,18 +6,13 @@ App.TowerDefenseMonsterView = App.View.extend({
    uriProperty: 'model',
    classNames: ['flex', 'exclusive'],
    skipInvisibleUpdates: true,
-   hideOnCreate: false,
    components: {
       "spawned_monsters" : {
          "*": {
             "monster": {
                "stonehearth:unit_info": {},
-               "stonehearth:ai": {
-                  "status_text_data": {}
-               },
                "stonehearth:attributes": {},
-               "stonehearth:expendable_resources": {},
-               "stonehearth:buffs": {}
+               "stonehearth:expendable_resources": {}
             }
          }
       }
@@ -26,6 +21,10 @@ App.TowerDefenseMonsterView = App.View.extend({
    init: function() {
       var self = this;
       self._super();
+   },
+
+   dismiss: function () {
+      this.hide();
    },
 
    willDestroyElement: function() {
@@ -65,14 +64,13 @@ App.TowerDefenseMonsterView = App.View.extend({
       var self = this;
       var existingSelected = self.get('selected');
       if (existingSelected && monster && existingSelected.__self == monster.__self) {
-         self.setSelectedCitizen(monster, monsterId, false);
+         self.setSelectedMonster(monster, monsterId, false);
       }
    },
 
    _updateMonstersArray: function() {
       var self = this;
       var monstersMap = self.get('model.spawned_monsters');
-      delete monstersMap.size;
       if (self._containerView) {
          // Construct and manage monster row views manually
          self._containerView.updateRows(monstersMap);
@@ -88,7 +86,7 @@ App.TowerDefenseMonsterView = App.View.extend({
       }
    }.observes('sortKey', 'sortDirection'),
 
-   setSelectedCitizen: function(monster, monsterId, userClicked) {
+   setSelectedMonster: function(monster, monsterId, userClicked) {
       var self = this;
       var existingSelected = self.get('selected');
       if (monster) {
@@ -112,15 +110,17 @@ App.TowerDefenseMonsterView = App.View.extend({
       self.set('selected', monster);
    },
 
-   setCitizenRowContainerView: function(containerView) {
-      this._containerView = containerView;
+   setMonsterRowContainerView: function(containerView) {
+      var self = this;
+      self._containerView = containerView;
+      self._updateMonstersArray();
    }
 });
 
-App.StonehearthCitizenTasksRowView = App.View.extend({
+App.TowerDefenseMonsterRowView = App.View.extend({
    tagName: 'tr',
    classNames: ['row'],
-   templateName: 'monsterTasksRow',
+   templateName: 'monsterRow',
    uriProperty: 'model',
 
    components: {
@@ -130,8 +130,27 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
       },
       "stonehearth:attributes": {},
       "stonehearth:expendable_resources": {},
-      "stonehearth:buffs": {}
+      "stonehearth:buffs": {
+         "buffs" : {
+            "*" : {}
+         }
+      }
    },
+
+   NUMBER_ABBREVIATIONS: [
+      {
+         pow10: 1000000000,
+         string: 'B'
+      },
+      {
+         pow10: 1000000,
+         string: 'M'
+      },
+      {
+         pow10: 1000,
+         string: 'K'
+      }
+   ],
 
    didInsertElement: function() {
       this._super();
@@ -146,13 +165,8 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
 
       self.$()[0].setAttribute('data-monster-id', self.get('monsterId'));
 
-      App.tooltipHelper.createDynamicTooltip($('#changeWorkingFor'));
-
       self._update();
-      self._onWorkingForChanged();
-      self._updateMoodTooltip();
       self._updateDescriptionTooltip();
-      self._onJobChanged();
    },
 
    willDestroyElement: function() {
@@ -180,12 +194,6 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
       }
    },
 
-   actions: {
-      changeWorkingFor: function() {
-         this.taskView.openPlayerPickerView(this.get('model'));
-      }
-   },
-
    _selectRow: function(userClicked) {
       var self = this;
       if (!self.$() || !self.get('model')) {
@@ -198,34 +206,13 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
          self.$().addClass('selected');
       }
 
-      self.taskView.setSelectedCitizen(self.get('model'), self.get('monsterId'), userClicked);
+      self.taskView.setSelectedMonster(self.get('model'), self.get('monsterId'), userClicked);
    },
 
    _update: function() {
       var self = this;
       var monsterData = self.get('model');
       if (self.$() && monsterData) {
-         var uri = monsterData.__self;
-         if (uri && uri != self._uri) {
-            self._uri = uri;
-            radiant.call('stonehearth:get_mood_datastore', uri)
-               .done(function (response) {
-                  if (self.isDestroying || self.isDestroyed) {
-                     return;
-                  }
-                  if (self._moodTrace) {
-                     self._moodTrace.destroy();
-                  }
-                  self._moodTrace = new RadiantTrace(response.mood_datastore, { current_mood_buff: {} })
-                     .progress(function (data) {
-                        if (self.isDestroying || self.isDestroyed) {
-                           return;
-                        }
-                        self.set('moodData', data);
-                     })
-               });
-         }
-
          // fixup row selection
          if (!self.$().hasClass('selected')) {
             var existingSelected = self.taskView.get('selected');
@@ -250,60 +237,6 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
       self.taskView.monsterChanged(self.get('model'), self.get('monsterId'));
    }.observes('model'),
 
-   isMultiplayer: function() {
-      return this.taskView.get('isMultiplayer');
-   }.property('taskView.isMultiplayer'),
-
-   _onWorkingForChanged: function() {
-      var self = this;
-      var workingForPlayerId = self.get('model.stonehearth:work_order.working_for');
-      var playerName;
-      if (App.stonehearthClient.getPlayerId() == workingForPlayerId) {
-         playerName = i18n.t('stonehearth:ui.game.monsters.working_for.myself');
-      } else {
-         playerName = App.presenceClient.getSteamName(workingForPlayerId) ||
-            App.presenceClient.getPlayerDisplayName(workingForPlayerId);
-      }
-
-      self.set('workingForPlayerName', playerName);
-      var color = App.presenceClient.getPlayerColor(workingForPlayerId);
-      if (color) {
-         self.set('colorStyle', 'color: rgba(' + color.x + ',' + color.y + ',' + color.z + ', 1)');
-      }
-   }.observes('model.stonehearth:work_order.working_for'),
-
-   _onJobChanged: function() {
-      var self = this;
-      var newDisplayName = self.get('model.stonehearth:job.curr_job_name');
-      self._jobDisplayName = newDisplayName;
-   }.observes('model.stonehearth:job.curr_job_name'),
-
-   _updateMoodTooltip: function() {
-      var self = this;
-      var moodData = self.get('moodData');
-      if (!moodData || !moodData.current_mood_buff) {
-         return;
-      }
-      var currentMood = moodData.mood;
-      if (self._currentMood != currentMood) {
-         self._currentMood = currentMood;
-         Ember.run.scheduleOnce('afterRender', self, function() {
-            var monsterData = self.get('model');
-            if (monsterData) {
-               App.tooltipHelper.createDynamicTooltip(self.$('.moodColumn'), function () {
-                  if (!moodData || !moodData.current_mood_buff) {
-                     return;
-                  }
-                  var moodString = App.tooltipHelper.createTooltip(
-                     i18n.t(moodData.current_mood_buff.display_name),
-                     i18n.t(moodData.current_mood_buff.description));
-                  return $(moodString);
-               });
-            }
-         });
-      };
-   }.observes('moodData'),
-
    _updateDescriptionTooltip: function() {
       var self = this;
       Ember.run.scheduleOnce('afterRender', self, function() {
@@ -319,7 +252,7 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
    }.observes('model.stonehearth:unit_info'),
 
    _isFirstRow: function() {
-      var tableEl = $('#tasksListTableBody');
+      var tableEl = $('#monstersTable>tbody');
       if (tableEl) {
          var rowEls = tableEl.children();
          if (rowEls.length > 0) {
@@ -329,38 +262,142 @@ App.StonehearthCitizenTasksRowView = App.View.extend({
       }
 
       return false;
-   }
+   },
+
+   _updateHealth: function() {
+      var self = this;
+      var currentHealth = self.get('model.stonehearth:expendable_resources.resources.health');
+      self.set('currentHealth', self._abbrevNumber(currentHealth, Math.floor));
+
+      var maxHealth = self.get('model.stonehearth:attributes.attributes.max_health.user_visible_value');
+      self.set('maxHealth', self._abbrevNumber(maxHealth, Math.ceil));
+
+      var widthString =  (100 * currentHealth / maxHealth) + '%';
+
+      var fillEl = self.$('.healthbarFill');
+
+      if (fillEl) {
+         if (!self._previousHealth || currentHealth > self._previousHealth) {
+            fillEl.css('width', widthString);
+            self.$('.healthbarDamageIndicator').css('width', widthString);
+         } else {
+            // when dealing damage, shrink the purple part of the bar instantly, exposing the yellow bar behind it
+            fillEl.css('width', widthString);
+            // then, after a delay, shrink the yellow bar slowly to match the purple one
+            setTimeout(function() {
+               if (self.isDestroying || self.isDestroyed) {
+                  return;
+               }
+               self.$('.healthbarDamageIndicator').animate({'width': widthString}, 100, "linear");
+            }, 250);
+         }
+      }
+      self._previousHealth = currentHealth;
+   }.observes('model.stonehearth:expendable_resources', 'model.stonehearth:attributes.attributes.max_health'),
+
+   _abbrevNumber: function(number, roundFn) {
+      var self = this;
+      for (var i = 0; i < self.NUMBER_ABBREVIATIONS.length; i++) {
+         var abbrev = self.NUMBER_ABBREVIATIONS[i];
+         if (abbrev.pow10 < number) {
+            return (roundFn(number / abbrev.pow10 * 10) / 10) + abbrev.string;
+         }
+      }
+      return roundFn(number);
+   },
+
+   _updateBuffs: $.throttle(250, function() {
+      var self = this;
+      if (self.isDestroying || self.isDestroyed) {
+         return;
+      }
+
+      self._buffs = [];
+      var attributeMap = self.get('model.stonehearth:buffs.buffs');
+
+      if (attributeMap) {
+         radiant.each(attributeMap, function(name, buff) {
+            //only push public buffs (buffs who have an is_private unset or false)
+            if (buff.invisible_to_player == undefined || !buff.invisible_to_player) {
+               var this_buff = radiant.shallow_copy(buff);
+               if (this_buff.max_stacks > 1) {
+                  this_buff.hasStacks = true;
+                  if (this_buff.stacks_vis != null) {
+                     this_buff.stacks = this_buff.stacks_vis;
+                  }
+               }
+               self._buffs.push(this_buff);
+            }
+         });
+      }
+
+      // most significant are the buffs with no duration
+      // then organize by category, and within category, by ordinal
+      self._buffs.sort(function(a, b){
+         if (!a.default_duration && b.default_duration) {
+            return -1;
+         }
+         else if (a.default_duration && !b.default_duration) {
+            return 1;
+         }
+
+         if (a.category && !b.category) {
+            return -1;
+         }
+         else if (!a.category && b.category) {
+            return 1;
+         }
+         else if (a.category != b.category) {
+            return a.category.localeCompare(b.category);
+         }
+
+         if (a.ordinal != null && b.ordinal != null) {
+            return a.ordinal - b.ordinal;
+         }
+
+         var aUri = a.uri;
+         var bUri = b.uri;
+         return (aUri && bUri) ? aUri.localeCompare(bUri) : -1;
+      });
+
+      self.set('buffs', self._buffs);
+   }).observes('model.stonehearth:buffs')
 });
 
 // Manually manage child views using this container view for performance reasons
 // Reduces DOM and view reconstruction
-App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerView.extend({
+App.TowerDefenseMonsterContainerView = App.TowerDefenseMonsterRowContainerView.extend({
    tagName: 'tbody',
-   templateName: 'monsterTasksContainer',
-   elementId: 'tasksListTableBody',
+   templateName: 'monsterContainer',
+   elementId: 'monstersTable',
    containerParentView: null,
    currentMonstersMap: {},
-   rowCtor: App.StonehearthCitizenTasksRowView,
+   rowCtor: App.TowerDefenseMonsterRowView,
 
    constructRowViewArgs: function(monsterId, entry) {
       return {
          taskView: this.containerParentView,
-         uri:entry.__self,
+         uri: entry.__self,
          monsterId: monsterId
       };
    },
 
    updateRows: function(monstersMap, sortRequested) {
       var self = this;
-      var rowChanges = self.getRowChanges(monstersMap);
-      self._super(monstersMap);
+      // monster entities are a level deep in the array objects
+      var actualMonsters = {};
+      radiant.each(monstersMap, function (id, monster) {
+         actualMonsters[id] = monster.monster;
+      });
+      var rowChanges = self.getRowChanges(actualMonsters);
+      self._super(actualMonsters);
 
       if (rowChanges.numRowsChanged == 1 && self._domModified) {
          // Refresh all rows if added/removed a single row, but dom was modified manually
          self.resetChildren(rowChanges);
       } else if (sortRequested) {
          // If no rows have changed but we need to sort
-         self._sortMonstersDom(monstersMap);
+         self._sortMonstersDom(actualMonsters);
       }
    },
 
@@ -368,7 +405,7 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
    insertInSortedOrder: function(rowToInsert) {
       var self = this;
       var addIndex = self.get('length') || 0;
-      var sortFn = self._getCitizenRowsSortFn(self.currentMonstersMap);
+      var sortFn = self._getMonsterRowsSortFn(self.currentMonstersMap);
       for (var i = 0; i < self.get('length'); i++) {
          var rowView = self.objectAt(i);
          var sortValue = sortFn(rowToInsert.monsterId, rowView.monsterId);
@@ -384,7 +421,7 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
    // Re-set container view internal array in sorted order
    resetChildren: function() {
       var self = this;
-      var sortFn = self._getCitizenRowsSortFn();
+      var sortFn = self._getMonsterRowsSortFn();
       var sorted = self.toArray().sort(function(a, b) {
          var aMonsterId = a.monsterId;
          var bMonsterId = b.monsterId;
@@ -406,8 +443,8 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
       // Select the first row if the row we are removing is selected
       var selected = this.containerParentView.$('.selected');
       if (selected && selected[0]) {
-         var selectedCitizenId = selected[0].getAttribute('data-monster-id');
-         if (monsterId == selectedCitizenId && this.get('length') > 1) {
+         var selectedMonsterId = selected[0].getAttribute('data-monster-id');
+         if (monsterId == selectedMonsterId && this.get('length') > 1) {
             this.objectAt(0)._selectRow();
          }
       }
@@ -415,7 +452,7 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
       this._super(monsterId);
    },
 
-   _getCitizenRowsSortFn: function(monstersMap) {
+   _getMonsterRowsSortFn: function(monstersMap) {
       var self = this;
       // Sort based on the sorting property selected by player
       var sortDirection = self.containerParentView.get('sortDirection') || monstersLastSortDirection;
@@ -424,7 +461,11 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
          'name': function(x) {
             // don't actually sort on name; just sort on entity id, which should correspond to creation order
             //return x['stonehearth:unit_info'] && i18n.t(x['stonehearth:unit_info'].custom_name, {self: x});
-            return x.id;
+            var match = x.__self.match(/\/(\d+)$/)
+            if (!match) {
+               return undefined;
+            }
+            return parseInt(match[1]);
          },
          'health': function(x) {
             var resources = x['stonehearth:expendable_resources'] && x['stonehearth:expendable_resources'].resources;
@@ -463,15 +504,15 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
    // the array using `setObjects` otherwise Ember will render the container view incorrectly.
    _sortMonstersDom: function() {
       var self = this;
-      var sortFn = self._getCitizenRowsSortFn();
-      var sorted = $('#tasksListTableBody').children().sort(function(a, b) {
+      var sortFn = self._getMonsterRowsSortFn();
+      var sorted = $('#monstersTable>tbody').children().sort(function(a, b) {
          var aMonsterId = a.getAttribute('data-monster-id');
          var bMonsterId = b.getAttribute('data-monster-id');
 
          return sortFn(aMonsterId, bMonsterId);
       });
 
-      $('#tasksListTableBody').append(sorted);
+      $('#monstersTable>tbody').append(sorted);
       self._domModified = true;
    },
 });

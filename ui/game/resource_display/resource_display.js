@@ -1,12 +1,14 @@
 $(document).ready(function () {
-	radiant.call('tower_defense:get_service', 'game')
-		.done(function (e) {
-			App.gameView.addView(App.TowerDefenseResourceDisplay, { uri: e.result })
-		})
-		.fail(function (e) {
-			console.log('error getting game service')
-			console.dir(e)
-		});
+   App.waitForGameLoad().then(() => {
+      radiant.call('tower_defense:get_service', 'game')
+         .done(function (e) {
+            App.gameView.addView(App.TowerDefenseResourceDisplay, { uri: e.result })
+         })
+         .fail(function (e) {
+            console.log('error getting game service')
+            console.dir(e)
+         });
+   });
 });
 
 App.TowerDefenseResourceDisplay = App.View.extend({

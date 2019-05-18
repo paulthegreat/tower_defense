@@ -1,7 +1,7 @@
 // Inherit from this to manually manage child views for performance reasons
 // For views that display rows of citizens.
 // Reduces DOM and view reconstruction for views that often simply remove/add a row
-App.TDMonsterRowContainerView = App.ContainerView.extend({
+App.TowerDefenseMonsterRowContainerView = App.ContainerView.extend({
    tagName: 'tbody',
    templateName: null,
    containerParentView: null,

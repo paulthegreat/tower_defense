@@ -440,7 +440,8 @@
    },
    "ui": {
       "html": [
-         "file(ui/game/resource_display/resource_display.html)"
+         "file(ui/game/resource_display/resource_display.html)",
+         "file(ui/game/monsters/monsters.html)"
       ],
       "js": [
          "file(ui/game/game.js)",
@@ -449,12 +450,15 @@
          "file(ui/game/traces/catalog.js)",
          "file(ui/shell/select_game_story/select_game_story.js)",
          "file(ui/root/js/stonehearth/stonehearth_client.js)",
-         "file(ui/root/js/tower_defense.js)"
+         "file(ui/root/js/tower_defense.js)",
+         "file(ui/game/monsters/monster_row.js)",
+         "file(ui/game/monsters/monsters.js)"
       ],
       "less": [
          "file(ui/game/resource_display/resource_display.less)",
          "file(ui/game/start_menu/stonehearth_menu.less)",
-         "file(ui/game/clock_widget/clock_widget.less)"
+         "file(ui/game/clock_widget/clock_widget.less)",
+         "file(ui/game/monsters/monsters.less)"
       ]
    }
 }

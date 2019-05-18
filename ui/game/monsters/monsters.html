@@ -20,7 +20,7 @@
 
          <div class="downSection monstersListTableContainer">
             <table id="monstersTable">
-               {{ view "stonehearthMonsterContainer" containerParentView=view}}
+               {{ view "towerDefenseMonsterContainer" containerParentView=view}}
             </table>
          </div>
       </div>
@@ -43,9 +43,9 @@
 
    <td class="healthColumn">
       <div class="healthbar">
-         <span class="healthValue">{{view.currentHealth}} / {{view.maxHealth}}</span>
          <div class="healthbarDamageIndicator"></div>
          <div class="healthbarFill"></div>
+         <span class="healthValue">{{view.currentHealth}} / {{view.maxHealth}}</span>
       </div>
    </td>
 

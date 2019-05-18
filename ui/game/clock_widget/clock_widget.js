@@ -53,6 +53,11 @@ App.StonehearthCalendarView = App.View.extend({
                   self.set('playerHealth', o2.health);
                   var oldWaveController = self._waveController;
                   self._waveController = o2.wave_controller;
+
+                  var monsterWindow = App.gameView.getView(App.TowerDefenseMonsterView);
+                  if (monsterWindow) {
+                     monsterWindow.set('uri', self._waveController);
+                  }
                   
                   if (oldWaveController != self._waveController) {
                      if (oldWaveController) {
@@ -146,11 +151,16 @@ App.StonehearthCalendarView = App.View.extend({
       $('#remainingMonsters').click(function() {
          var monsterWindow = App.gameView.getView(App.TowerDefenseMonsterView);
          if (monsterWindow) {
-            monsterWindow.destroy();
+            if (monsterWindow.isVisible) {
+               monsterWindow.hide();
+            }
+            else {
+               monsterWindow.set('uri', self._waveController);
+               monsterWindow.show();
+            }
          }
          else {
-            var uri = self.get('waveController');
-            //App.gameView.addView(App.TowerDefenseMonsterView, { uri: uri });
+            App.gameView.addView(App.TowerDefenseMonsterView, { uri: self._waveController });
          }
       });
 

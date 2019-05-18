@@ -5,11 +5,11 @@
 
    .window {
       position: relative;
-      top: 40px;
-      left: 284px;
-      width: 720px;
-      height: 820px;
-      max-height: 900px;
+      top: 278px;
+      left: 1242px;
+      width: 640px;
+      height: 670px;
+      max-height: 750px;
    }
 
    .title {
@@ -25,16 +25,15 @@
    }
 
    #monstersList {
-      margin-top: 25px;
       h2 {
          font-size: 20px;
       }
 
-      width: 700px;
+      width: 640px;
       display: inline-block;
 
       .monstersListTableContainer {
-         height: 610px;
+         height: 542px;
          overflow-y: scroll;
       }
 
@@ -52,9 +51,6 @@
          display: none;
       }
 
-      .statTitle:first-child {
-         padding-left: 23px;
-      }
       #monstersTitleName {
          width: 200px;
          margin-right: 10px;
@@ -64,25 +60,12 @@
       #monstersTitleHealth {
          text-align: left;
          width: 200px;
-         margin-right: 10px;
       }
 
       #monstersTitleBuffs {
          text-align: left;
-         width: 300px;
-         margin-right: 10px;
-      }
-   }
-
-   #groupsWorkersList {
-      .listTitle{
-         display: inline-block;
-         width: 350px;
-         text-align: center;
-      }
-      #groupsTitleName {
-         width: 210px;
-         text-align: left;
+         //width: 200px;
+         //margin-right: 10px;
       }
    }
 
@@ -97,8 +80,7 @@
       td {
          vertical-align: middle;
          text-align: center;
-         padding-top: 4px;
-         padding-left: 10px;
+         padding: 2px;
       }
 
       td.red {
@@ -121,12 +103,12 @@
          text-align: left;
          vertical-align: middle;
 
-         .controlFont;
-         font-size: 20px;
+         font-size: 16px;
 
          text-overflow: ellipsis;
          white-space: nowrap;
          overflow: hidden;
+
          .monsterName {
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -134,6 +116,7 @@
          }
 
          .activity {
+            display: none;
             .nobr;
             color: #93ef26;
             display: inline-block;
@@ -148,34 +131,44 @@
 
       .healthColumn {
          width: 200px;
-         height: 20px;
-         background: transparent;
-         border-width: 5px 5px 5px 5px;
-         border-image: url(/stonehearth/ui/game/unit_frame/images/frame.png) 4 4 3 4;
-         border-style: solid;
-         text-align: center;
-         font-size: 16px;
+         height: 24px;
+
+         .healthbar {
+            position: relative;
+            height: 24px;
+            width: 186px;
+            background: transparent;
+            border-width: 5px 5px 5px 5px;
+            border-image: url(/stonehearth/ui/game/unit_frame/images/frame.png) 4 4 3 4;
+            border-style: solid;
+            text-align: center;
+            font-size: 16px;
+
+            .healthValue {
+               position: relative;
+            }
    
-         .healthbarFill {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            background: #9850b5;
-            width: 95%;
-            border-radius: 2px;
-            box-shadow: inset 0 0 10px #000000;
-         }
-   
-         .healthbarDamageIndicator {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
-            background: #FFF17A;
-            width: 95%;
-            border-radius: 2px;
-            box-shadow: inset 0 0 10px #000000;
+            .healthbarFill {
+               position: absolute;
+               top: 0;
+               left: 0;
+               height: 100%;
+               background: #9850b5;
+               width: 100%;
+               border-radius: 2px;
+               box-shadow: inset 0 0 10px #000000;
+            }
+      
+            .healthbarDamageIndicator {
+               position: absolute;
+               top: 0;
+               left: 0;
+               height: 100%;
+               background: #FFF17A;
+               width: 100%;
+               border-radius: 2px;
+               box-shadow: inset 0 0 10px #000000;
+            }
          }
       }
 
@@ -183,6 +176,7 @@
          display: inline-block;
    
          .item {
+            position: relative;
             width: 30px;
             height: 30px;
             margin-right: 4px;

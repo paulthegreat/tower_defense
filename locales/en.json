@@ -1046,6 +1046,14 @@
                "display_name": "Filter"
             }
          },
+         "monsters": {
+            "title": "Spawned Monsters",
+            "list_headers": {
+               "name": "Monster",
+               "health": "Health",
+               "buffs": "Buffs"
+            }
+         },
          "tooltips": {
             "tower_weapons": {
                "range_title": "Range:",
