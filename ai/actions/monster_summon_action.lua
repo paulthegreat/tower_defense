@@ -3,7 +3,7 @@ local Entity = _radiant.om.Entity
 
 local MonsterSummon = radiant.class()
 
-MonsterSummon.name = 'monster get path'
+MonsterSummon.name = 'monster summon'
 MonsterSummon.does = 'tower_defense:monster_summon'
 MonsterSummon.args = {
    ability = 'table'
@@ -19,6 +19,7 @@ function MonsterSummon:stop(ai, entity, args)
 end
 
 function MonsterSummon:run(ai, entity, args)
+   ai:set_status_text_key('tower_defense:ai.actions.status_text.monster_summon')
    local ability = args.ability
    local entity_id = entity:get_id()
    self._ai = ai

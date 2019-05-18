@@ -1,4 +1,13 @@
 {
+   "ai": {
+      "actions": {
+         "status_text": {
+            "monster_follow_path": "running...",
+            "monster_stunned": "stunned",
+            "monster_summon": "summoning more monsters!"
+         }
+      }
+   },
    "data": {
       "biome": {
          "arctic": {
@@ -61,15 +70,15 @@
          },
          "major_burning": {
             "display_name": "Major Burning",
-            "description": "Burns for 25 magical per stack every second for 3 seconds. Stacks to 999."
+            "description": "Burns for 25 magical damage per stack every second for 3 seconds. Stacks to 999."
          },
          "minor_burning": {
             "display_name": "Minor Burning",
-            "description": "Burns for 1 magical per stack every second for 3 seconds. Stacks to 999."
+            "description": "Burns for 1 magical damage per stack every second for 3 seconds. Stacks to 999."
          },
          "normal_burning": {
             "display_name": "Burning",
-            "description": "Burns for 5 magical per stack every second for 3 seconds. Stacks to 999."
+            "description": "Burns for 5 magical damage per stack every second for 3 seconds. Stacks to 999."
          },
          "major_healing": {
             "display_name": "Major Healing",

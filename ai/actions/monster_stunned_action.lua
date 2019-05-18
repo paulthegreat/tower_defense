@@ -22,6 +22,7 @@ function MonsterStunned:stop(ai, entity, args)
 end
 
 function MonsterStunned:run(ai, entity, args)
+   ai:set_status_text_key('tower_defense:ai.actions.status_text.monster_stunned')
    self._running = true
 
    -- TODO: have an effect listed somewhere (but it's probably based on the attack that applied the stun)

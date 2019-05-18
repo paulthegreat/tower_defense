@@ -13,6 +13,10 @@ function MonsterFollowPath:start_thinking(ai, entity, args)
    end
 end
 
+function MonsterFollowPath:start(ai, entity, args)
+   ai:set_status_text_key('tower_defense:ai.actions.status_text.monster_follow_path')
+end
+
 local ai = stonehearth.ai
 return ai:create_compound_action(MonsterFollowPath)
          :execute('tower_defense:monster_get_path')
