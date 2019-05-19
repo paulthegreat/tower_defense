@@ -9,7 +9,7 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 5,
+            "radius": 6,
             "attacks_ground": true,
             "attacks_air": false,
             "reveals_invis": true,

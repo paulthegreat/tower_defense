@@ -9,7 +9,7 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 4,
+            "radius": 6,
             "attacks_ground": true,
             "attacks_air": false,
             "reveals_invis": true,
@@ -33,7 +33,7 @@
             "name": "fog_machine",
             "effect": "tower_defense:effects:air_particles",
             "hit_effect": "tower_defense:effects:water_particles",
-            "base_damage": 5,
+            "base_damage": 1,
             "damage_type": "magical",
             "num_targets": 999,
             "attack_times": [
