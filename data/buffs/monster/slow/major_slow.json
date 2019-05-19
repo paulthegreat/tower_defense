@@ -8,6 +8,7 @@
    "icon": "file(major_slow.png)",
    "repeat_add_action": "renew_duration",
    "duration": 6000,
+   "effect": "tower_defense:effects:slow:major",
    "modifiers": {
       "speed": {
          "multiply": 0.5
