@@ -58,15 +58,15 @@
          },
          "minor_armor_piercing": {
             "display_name": "Minor Armor Pierced",
-            "description": "Counterracts 25% of physical damage reduction"
+            "description": "Counterracts 25% of physical damage reduction for 6 seconds"
          },
          "normal_armor_piercing": {
             "display_name": "Armor Pierced",
-            "description": "Counterracts 50% of physical damage reduction"
+            "description": "Counterracts 50% of physical damage reduction for 6 seconds"
          },
          "major_armor_piercing": {
             "display_name": "Major Armor Pierced",
-            "description": "Counterracts 75% of physical damage reduction"
+            "description": "Counterracts 75% of physical damage reduction for 6 seconds"
          },
          "major_burning": {
             "display_name": "Major Burning",
@@ -106,27 +106,27 @@
          },
          "minor_magic_armor_piercing": {
             "display_name": "Minor Magic Armor Pierced",
-            "description": "Counterracts 25% of magical damage reduction"
+            "description": "Counterracts 25% of magical damage reduction for 6 seconds"
          },
          "normal_magic_armor_piercing": {
             "display_name": "Magic Armor Pierced",
-            "description": "Counterracts 50% of magical damage reduction"
+            "description": "Counterracts 50% of magical damage reduction for 6 seconds"
          },
          "major_magic_armor_piercing": {
             "display_name": "Major Magic Armor Pierced",
-            "description": "Counterracts 75% of magical damage reduction"
+            "description": "Counterracts 75% of magical damage reduction for 6 seconds"
          },
          "minor_poison": {
             "display_name": "Minor Poison",
-            "description": "Slows by 5%, increases physical damage taken by 10%, and causes 4 non-lethal magical damage every 3 seconds. Reapplication adds duration."
+            "description": "Slows by 5%, increases physical damage taken by 10%, and causes 4 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "normal_poison": {
             "display_name": "Poison",
-            "description": "Slows by 10%, increases physical damage taken by 15%, and causes 20 non-lethal magical damage every 3 seconds. Reapplication adds duration."
+            "description": "Slows by 10%, increases physical damage taken by 15%, and causes 20 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "major_poison": {
             "display_name": "Major Poison",
-            "description": "Slows by 15%, increases physical damage taken by 20%, and causes 100 non-lethal magical damage every 3 seconds. Reapplication adds duration."
+            "description": "Slows by 15%, increases physical damage taken by 20%, and causes 100 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "minor_reveal": {
             "display_name": "Minor Reveal",
@@ -142,27 +142,27 @@
          },
          "minor_slow": {
             "display_name": "Minor Slow",
-            "description": "Slows movement by 25%"
+            "description": "Slows movement by 20% for 6 seconds"
          },
          "normal_slow": {
             "display_name": "Slow",
-            "description": "Slows movement by 50%"
+            "description": "Slows movement by 35% for 6 seconds"
          },
          "major_slow": {
             "display_name": "Major Slow",
-            "description": "Slows movement by 75%"
+            "description": "Slows movement by 50% for 6 seconds"
          },
          "minor_wound": {
             "display_name": "Minor Wound",
-            "description": "Reduces healing by 25%"
+            "description": "Reduces healing by 25% for 6 seconds"
          },
          "normal_wound": {
             "display_name": "Wound",
-            "description": "Reduces healing by 50%"
+            "description": "Reduces healing by 50% for 6 seconds"
          },
          "major_wound": {
             "display_name": "Major Wound",
-            "description": "Reduces healing by 75%"
+            "description": "Reduces healing by 75% for 6 seconds"
          },
          "tower": {
             "minor_avoidance_decrease": {
@@ -1038,6 +1038,33 @@
          "resourceDisplay": {
             "title": "Resources",
             "common": "Common"
+         },
+         "referenceWindow": {
+            "title": "Reference",
+            "buffs": {
+               "title": "Buffs",
+               "description": "All relevant buffs in the game, organized by category. Hover over them to see more information.",
+               "categories": {
+                  "armor": "Armor",
+                  "magic_armor": "Magic Armor",
+                  "armor_piercing": "Armor Piercing",
+                  "magic_armor_piercing": "Magic Armor Piercing",
+                  "invisible": "Invisible",
+                  "reveal": "Reveal",
+                  "purge": "Purge",
+                  "healing": "Healing",
+                  "wound": "Wound",
+                  "burning": "Burning",
+                  "poison": "Poison",
+                  "slow": "Slow",
+                  "stun": "Stun",
+                  "immunity": "Specific Immunity",
+                  "spawn": "Spawn More Monsters",
+                  "weather": "Weather",
+                  "tower": "Tower",
+                  "tower_weather": "Tower Weather"
+               }
+            }
          },
          "gameStateWindow": {
             "title": "Game State",

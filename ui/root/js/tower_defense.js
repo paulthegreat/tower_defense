@@ -189,13 +189,42 @@ var tower_defense = {
          callbackFn(this._all_buffs);
       }
       else {
-         radiant.call('tower_defense', 'get_all_buffs')
+         radiant.call('tower_defense:get_all_buffs')
             .done(function(o) {
                if (!this._all_buffs) {
                   this._all_buffs = o.buffs;
                }
-               return this._all_buffs;
+               callbackFn(this._all_buffs);
             });
       }
+   },
+
+   buffSorter: function(a, b) {
+      // most significant are the buffs with no duration
+      // then organize by category, and within category, by ordinal
+      if (!a.default_duration && b.default_duration) {
+         return -1;
+      }
+      else if (a.default_duration && !b.default_duration) {
+         return 1;
+      }
+
+      if (a.category && !b.category) {
+         return -1;
+      }
+      else if (!a.category && b.category) {
+         return 1;
+      }
+      else if (a.category != b.category) {
+         return a.category.localeCompare(b.category);
+      }
+
+      if (a.ordinal != null && b.ordinal != null) {
+         return a.ordinal - b.ordinal;
+      }
+
+      var aUri = a.uri;
+      var bUri = b.uri;
+      return (aUri && bUri) ? aUri.localeCompare(bUri) : -1;
    }
 };

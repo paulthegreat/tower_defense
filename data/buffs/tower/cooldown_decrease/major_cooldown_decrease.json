@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "tower",
    "display_name": "i18n(tower_defense:data.buffs.tower.major_cooldown_decrease.display_name)",
    "description": "i18n(tower_defense:data.buffs.tower.major_cooldown_decrease.description)",
    "icon": "file(major_cooldown_decrease.png)",

@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "armor",
+   "ordinal": 2,
    "display_name": "i18n(tower_defense:data.buffs.normal_armor.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_armor.description)",
    "icon": "file(normal_armor.png)",

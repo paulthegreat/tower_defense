@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "purge",
+   "ordinal": 1,
    "display_name": "i18n(tower_defense:data.buffs.aoe_purge.display_name)",
    "description": "i18n(tower_defense:data.buffs.aoe_purge.description)",
    "icon": "file(aoe_purge.png)",

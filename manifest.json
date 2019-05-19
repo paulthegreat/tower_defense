@@ -351,7 +351,8 @@
       "/stonehearth/data/game_mode/normal/normal.json": "file(data/game_mode/normal.json)",
       "/stonehearth/data/game_mode/hard/hard.json": "file(data/game_mode/hard.json)",
       "/stonehearth/services/server/weather/weather_service.lua": "file(services/server/weather/weather_service.lua)",
-      "/stonehearth/services/server/weather/weather_state.lua": "file(services/server/weather/weather_state.lua)"
+      "/stonehearth/services/server/weather/weather_state.lua": "file(services/server/weather/weather_state.lua)",
+      "/stonehearth/lib/catalog/catalog_lib.lua": "file(lib/catalog/catalog_lib.lua)"
    },
    "components": {
       "ai": "file(components/ai/ai_component.lua)",
@@ -445,7 +446,8 @@
    "ui": {
       "html": [
          "file(ui/game/resource_display/resource_display.html)",
-         "file(ui/game/monsters/monsters.html)"
+         "file(ui/game/monsters/monsters.html)",
+         "file(ui/game/reference_window/reference_window.html)"
       ],
       "js": [
          "file(ui/game/game.js)",
@@ -456,13 +458,15 @@
          "file(ui/root/js/stonehearth/stonehearth_client.js)",
          "file(ui/root/js/tower_defense.js)",
          "file(ui/game/monsters/monster_row.js)",
-         "file(ui/game/monsters/monsters.js)"
+         "file(ui/game/monsters/monsters.js)",
+         "file(ui/game/reference_window/reference_window.js)"
       ],
       "less": [
          "file(ui/game/resource_display/resource_display.less)",
          "file(ui/game/start_menu/stonehearth_menu.less)",
          "file(ui/game/clock_widget/clock_widget.less)",
-         "file(ui/game/monsters/monsters.less)"
+         "file(ui/game/monsters/monsters.less)",
+         "file(ui/game/reference_window/reference_window.less)"
       ]
    }
 }

@@ -5,7 +5,6 @@ local service_creation_order = {
 }
 
 local monkey_patches = {
-   catalog_lib = 'stonehearth.lib.catalog.catalog_lib',
    catalog_client_service = 'stonehearth.services.client.catalog_client.catalog_client_service'
 }
 
@@ -89,11 +88,6 @@ end
 
 function tower_defense:_on_required_loaded()
    monkey_patching()
-
-   local catalog = stonehearth and stonehearth.catalog_client and stonehearth.catalog_client._sv and stonehearth.catalog_client._sv.catalog
-   if catalog then
-      require('stonehearth.lib.catalog.catalog_lib').update_catalog(catalog)
-   end
 
    radiant.events.trigger_async(radiant, 'tower_defense:client:required_loaded')
 end

@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "purge",
+   "ordinal": 2,
    "display_name": "i18n(tower_defense:data.buffs.full_self_purge.display_name)",
    "description": "i18n(tower_defense:data.buffs.full_self_purge.description)",
    "icon": "file(full_self_purge.png)",

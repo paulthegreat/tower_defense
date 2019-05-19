@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "healing",
+   "ordinal": 3,
    "display_name": "i18n(tower_defense:data.buffs.minor_healing.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_healing.description)",
    "icon": "file(minor_healing.png)",

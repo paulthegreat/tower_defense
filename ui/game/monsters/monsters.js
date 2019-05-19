@@ -336,34 +336,7 @@ App.TowerDefenseMonsterRowView = App.View.extend({
          });
       }
 
-      // most significant are the buffs with no duration
-      // then organize by category, and within category, by ordinal
-      self._buffs.sort(function(a, b){
-         if (!a.default_duration && b.default_duration) {
-            return -1;
-         }
-         else if (a.default_duration && !b.default_duration) {
-            return 1;
-         }
-
-         if (a.category && !b.category) {
-            return -1;
-         }
-         else if (!a.category && b.category) {
-            return 1;
-         }
-         else if (a.category != b.category) {
-            return a.category.localeCompare(b.category);
-         }
-
-         if (a.ordinal != null && b.ordinal != null) {
-            return a.ordinal - b.ordinal;
-         }
-
-         var aUri = a.uri;
-         var bUri = b.uri;
-         return (aUri && bUri) ? aUri.localeCompare(bUri) : -1;
-      });
+      self._buffs.sort(tower_defense.buffSorter);
 
       self.set('buffs', self._buffs);
    }).observes('model.stonehearth:buffs')

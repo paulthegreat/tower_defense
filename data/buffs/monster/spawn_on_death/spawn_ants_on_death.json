@@ -1,7 +1,7 @@
 {
    "type": "buff",
    "axis": "debuff",
-   "category": "poison",
+   "category": "spawn",
    "display_name": "i18n(tower_defense:data.buffs.spawn_ants_on_death.display_name)",
    "description": "i18n(tower_defense:data.buffs.spawn_ants_on_death.description)",
    "repeat_add_action": "stack_and_refresh",

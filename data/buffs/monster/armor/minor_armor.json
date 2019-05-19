@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "armor",
+   "ordinal": 3,
    "display_name": "i18n(tower_defense:data.buffs.minor_armor.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_armor.description)",
    "icon": "file(minor_armor.png)",

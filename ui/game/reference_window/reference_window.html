@@ -1,0 +1,41 @@
+<script type="text/x-handlebars" data-template-name="referenceWindow">
+   <div id="referenceWindow" class="gui">
+      <div class="window">
+         <div class="title">
+            {{i18n tower_defense:ui.game.referenceWindow.title}}
+            <div class="closeButton"></div>
+         </div>
+         
+         {{partial '_buffsTab'}}
+         {{partial '_contentsTab'}}
+         
+      </div>
+      <div id="tabs">
+         <div class="tab" tabPage="buffsTab">{{i18n tower_defense:ui.game.referenceWindow.buffs.title}}</div>
+      </div>
+   </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="_buffsTab">
+   <div id="buffsTab" class="tabPage">
+      <p>{{i18n tower_defense:ui.game.referenceWindow.buffs.description}}</p>
+      <div class="downSection">
+         <table id="buffGrid" cellspacing="0" cellpadding="0">
+            {{#each category in view.buffsByCategory}}
+               <tr class="row">
+                  <td class="categoryLabel">
+                     <span>{{i18n_key category.categoryName}}</span>
+                  </td>
+                  <td class="categoryBuffs">
+                     {{#each buff in category.buffs}}
+                        <span class="buff" {{bind-attr category=category.category uri=buff.uri}}>
+                           <img class="buffImage" {{bind-attr src=buff.icon}}>
+                        </span>
+                     {{/each}}
+                  </td>
+               </tr>
+            {{/each}}
+         </table>
+      </div>
+   </div>
+</script>

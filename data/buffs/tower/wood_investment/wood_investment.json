@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "tower",
    "display_name": "i18n(tower_defense:data.buffs.wood_investment.display_name)",
    "description": "i18n(tower_defense:data.buffs.wood_investment.description)",
    "icon": "file(wood_investment.png)",

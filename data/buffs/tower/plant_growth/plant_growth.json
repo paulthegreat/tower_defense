@@ -1,6 +1,7 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "tower",
    "display_name": "i18n(tower_defense:data.buffs.plant_growth.display_name)",
    "description": "i18n(tower_defense:data.buffs.plant_growth.description)",
    "icon": "file(plant_growth.png)",

@@ -1,6 +1,8 @@
 {
    "type": "buff",
    "axis": "buff",
+   "category": "magic_armor",
+   "ordinal": 2,
    "display_name": "i18n(tower_defense:data.buffs.normal_magic_armor.display_name)",
    "description": "i18n(tower_defense:data.buffs.normal_magic_armor.description)",
    "icon": "file(normal_magic_armor.png)",

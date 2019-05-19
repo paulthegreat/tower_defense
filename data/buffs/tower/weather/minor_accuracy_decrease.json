@@ -1,7 +1,7 @@
 {
    "type": "buff",
    "axis": "buff",
-   "category": "weather",
+   "category": "tower_weather",
    "display_name": "i18n(tower_defense:data.buffs.tower.minor_accuracy_decrease.display_name)",
    "description": "i18n(tower_defense:data.buffs.tower.minor_accuracy_decrease.description)",
    "icon": "file(minor_accuracy_decrease.png)",

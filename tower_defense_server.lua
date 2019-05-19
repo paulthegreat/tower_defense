@@ -9,7 +9,6 @@ local monkey_patches = {
    combat_service = 'stonehearth.services.server.combat.combat_service',
    game_creation_service = 'stonehearth.services.server.game_creation.game_creation_service',
    combat_state_component = 'stonehearth.components.combat_state.combat_state_component',
-   catalog_lib = 'stonehearth.lib.catalog.catalog_lib',
    ace_buffs_component = 'stonehearth.components.buffs.buffs_component',
    ace_buff = 'stonehearth.components.buffs.buff',
    population_faction = 'stonehearth.services.server.population.population_faction',
@@ -59,11 +58,6 @@ end
 function tower_defense:_on_required_loaded()
    monkey_patching()
 
-   local catalog = stonehearth and stonehearth.catalog and stonehearth.catalog:get_catalog()
-   if catalog then
-      require('stonehearth.lib.catalog.catalog_lib').update_catalog(catalog)
-   end
-   
    radiant.events.trigger_async(radiant, 'tower_defense:server:required_loaded')
 end
 
