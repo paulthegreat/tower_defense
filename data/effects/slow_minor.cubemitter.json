@@ -1,0 +1,127 @@
+{
+   "name": "earwax drip",
+   "duration": 1200,
+   "material": "materials/cubemitter.material.json",
+   "loops": true,
+   "mesh": {
+      "file": "stonehearth/data/models/vfx/ice/snowflake.qb",
+      "matrix": "",
+      "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+      }
+   },
+   "emission": {
+      "rate": {
+         "kind": "CONSTANT",
+         "values": [8]
+      },
+      "angle": {
+         "kind": "CONSTANT",
+         "values": [0]
+      },
+      "origin": {
+         "surface": "CUBOID",
+         "values": [1.0, 0.5, 1.0, 0, 0, 0]
+      }
+   },
+   "particle": {
+      "lifetime": {
+         "start": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [600, 1200]
+         }
+      },
+      "speed": {
+         "start": {
+            "kind": "CONSTANT",
+            "values": [0]
+         }
+      },
+      "acceleration": {
+         "over_lifetime_y": {
+            "kind": "CONSTANT",
+            "values": [-1]
+         }
+      },
+      "velocity": {
+         "over_lifetime_x": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [-0.1, 0.1]
+         },
+         "over_lifetime_y": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [-0.1, 0.1]
+         },
+         "over_lifetime_z": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [-0.1, 0.1]
+         }
+      },
+      "rotation": {
+         "over_lifetime_x": {
+            "kind": "RANDOM_BETWEEN_CURVES",
+            "values": [
+               [
+                  [0, 0],
+                  [1, 90]
+               ],
+               [
+                  [0, 30],
+                  [1, 120]
+               ]
+            ]
+         },
+         "over_lifetime_y": {
+            "kind": "RANDOM_BETWEEN_CURVES",
+            "values": [
+               [
+                  [0, 0],
+                  [1, 90]
+               ],
+               [
+                  [0, 30],
+                  [1, 120]
+               ]
+            ]
+         },
+         "over_lifetime_z": {
+            "kind": "RANDOM_BETWEEN_CURVES",
+            "values": [
+               [
+                  [0, 0],
+                  [1, 90]
+               ],
+               [
+                  [0, 30],
+                  [1, 120]
+               ]
+            ]
+         }
+      },
+      "scale": {
+         "start": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [0.003, 0.006]
+         }
+      },
+      "color": {
+         "start": {
+            "kind": "RANDOM_BETWEEN",
+            "values": [
+               [0.65, 0.80, 0.95, 0.9],
+               [0.72, 0.85, 0.98, 1]
+            ]
+         },
+         "over_lifetime_a": {
+            "kind": "CURVE",
+            "values": [
+               [0, 1],
+               [0.85, 1],
+               [1, 0]
+            ]
+         }
+      }
+   }
+}
