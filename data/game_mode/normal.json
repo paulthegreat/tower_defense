@@ -7,7 +7,8 @@
    "post_selection_text": "i18n(tower_defense:ui.shell.select_game_story.game_modes.normal.post_selection_text)",
    "image": "/stonehearth/data/game_mode/normal/normal.png",
    "starting_resources": {
-      "gold": 15
+      "gold": 20,
+      "wood": 1
    },
    "starting_health": 50,
    "tower_gold_cost_multiplier": 1,

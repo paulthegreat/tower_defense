@@ -7,7 +7,8 @@
    "post_selection_text": "i18n(tower_defense:ui.shell.select_game_story.game_modes.peaceful.post_selection_text)",
    "image": "/stonehearth/data/game_mode/peaceful/peaceful.png",
    "starting_resources": {
-      "gold": 15
+      "gold": 25,
+      "wood": 2
    },
    "starting_health": 100,
    "tower_gold_cost_multiplier": 0.8,
