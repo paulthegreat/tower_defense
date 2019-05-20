@@ -20,7 +20,7 @@
          {
             "name": "air_102",
             "effect": "tower_defense:effects:air_particles",
-            "base_damage": 6,
+            "base_damage": 7,
             "projectile": {
                "speed": 20,
                "uri": "stonehearth:weapons:bullet",
