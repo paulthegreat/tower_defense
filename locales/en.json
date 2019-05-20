@@ -724,7 +724,7 @@
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also targets Air",
+               "description": "Significantly reduces cooldown",
                "display_name": "Utility Upgrade"
             }
          },

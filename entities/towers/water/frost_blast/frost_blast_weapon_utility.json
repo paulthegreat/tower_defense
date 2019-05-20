@@ -12,8 +12,7 @@
             "radius": 6,
             "attacks_ground": true,
             "attacks_air": true,
-            "reveals_invis": false,
-            "defaults": "max_aoe_debuff_spread"
+            "reveals_invis": false
          }
       },
       "stonehearth:buffs": {

@@ -15,8 +15,7 @@
             },
             "attacks_ground": true,
             "attacks_air": false,
-            "reveals_invis": false,
-            "defaults": "high_end"
+            "reveals_invis": false
          }
       },
       "stonehearth:combat:ranged_attacks": [
