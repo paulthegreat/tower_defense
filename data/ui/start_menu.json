@@ -27,16 +27,6 @@
       "menuHideSound": "stonehearth:sounds:ui:start_menu:jobs_close",
       "menuShowSound": "stonehearth:sounds:ui:start_menu:jobs_open"
    },
-   "bulletin_manager": {
-      "name": "i18n(stonehearth:ui.game.menu.bulletin_manager.display_name)",
-      "description": "i18n(stonehearth:ui.game.menu.bulletin_manager.description)",
-      "class": "dock",
-      "icon": "/stonehearth/ui/game/start_menu/images/manage_bulletins.png",
-      "hotkey_action": "bulletin:manager",
-      "game_mode": "normal",
-      "menuHideSound": "stonehearth:sounds:ui:start_menu:jobs_close",
-      "menuShowSound": "stonehearth:sounds:ui:start_menu:jobs_open"
-   },
    "reference_menu": {
       "name": "i18n(tower_defense:ui.game.menu.reference_menu.display_name)",
       "description": "i18n(tower_defense:ui.game.menu.reference_menu.description)",

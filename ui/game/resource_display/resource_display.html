@@ -1,32 +1,32 @@
 <script type="text/x-handlebars" data-template-name="resourceDisplay">
    <div class="gui">
-      <div class="window" id="resourceDisplay">
-         <div class="title">
-            {{i18n tower_defense:ui.game.resourceDisplay.title}}
-         </div>
-
-         <div id="body">
-            <table>
-               <tr>
-                  <td>Player</td>
-                  <td>Gold</td>
-                  <td>Wood</td>
-               </tr>
-					{{#each player in view.player_array}}
-               <tr class="player" {{bind-attr player_id=player.player_id}}>
-                  <td {{bind-attr style=player.colorStyle}}>{{player.playerName}}</td>
-                  <td class="number gold">{{player.gold}}</td>
-                  <td class="number wood">{{player.wood}}</td>
-               </tr>
-					{{/each}}
-               <tr class="player">
-                  <td>{{i18n tower_defense:ui.game.resourceDisplay.common}}</td>
-                  <td class="number gold">{{view.model.common_player.gold}}</td>
-                  <td class="number wood">{{view.model.common_player.wood}}</td>
-               </tr>
-            </table>
-         </div>
-
+      <div id="resourceDisplay" class="downSection">
+         <table>
+            <tr>
+               <td><span class="header">{{i18n tower_defense:ui.game.resourceDisplay.player.title}}</span></td>
+               <td class="center"><img class='inlineImg wood'></td>
+               <td class="center"><img class='inlineImg gold'></td>
+               <td></td>
+            </tr>
+            {{#each player in view.player_array}}
+            <tr class="player" {{bind-attr player_id=player.player_id}}>
+               <td {{bind-attr style=player.colorStyle}}>{{player.playerName}}</td>
+               <td class="center wood">{{player.wood}}</td>
+               <td class="center gold">{{player.gold}}</td>
+               {{#if player.donate}}
+               <td class="button"><div class="donate">{{{player.donate}}}</div></td>
+               {{else}}
+               <td></td>
+               {{/if}}
+            </tr>
+            {{/each}}
+            <tr class="player">
+               <td>{{i18n tower_defense:ui.game.resourceDisplay.common}}</td>
+               <td class="center wood">{{view.model.common_player.wood}}</td>
+               <td class="center gold">{{view.model.common_player.gold}}</td>
+               <td></td>
+            </tr>
+         </table>
       </div>
 
    </div>

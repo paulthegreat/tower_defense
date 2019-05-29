@@ -1,26 +1,41 @@
 #resourceDisplay {
    position: absolute;
-   top: 10px;
-   left: 10px;
-   width: 250px;
-   height: 200px;
-   z-index: 3;
+   top: 0px;
+   left: 0px;
+   width: 420px;
+   font-family: @baseFontFamily;
+   color: #fff;
 
-   #body {
-      .outlined;
-      position: absolute;
-      top: 68px;
-      left: 10px;
-      width: 230px;
-      font-family: @baseFontFamily;
-      color: #fff;
-
-      .number {
-         text-align: right;
-      }
-
+   tr {
       td {
-         padding: 3px;
+         padding: 5px 10px;
+         width: auto;
       }
+
+      td:first-child, td:last-child {
+         width: 1%;
+         white-space: nowrap;
+      }
+
+      img {
+         height: 30px;
+      }
+   }
+
+   .header {
+      font-family: 'groboldregular';
+      font-weight: normal;
+      font-size: 20px;
+      color: #ffdd56;
+   }
+
+   .center {
+      text-align: center;
+   }
+
+   .donate {
+      background-color: @builderBlue;
+      padding: 8px 3px 0px 6px;
+      border: 2px solid #3d7492;
    }
 }

@@ -23,33 +23,32 @@ App.TowerDefenseResourceDisplay = App.View.extend({
 	didInsertElement: function () {
       var self = this;
       
+      self.donateAmount = 0;
+
       self.radiantTrace = new RadiantTrace();
       self.set('players', {});
 
 		self.$('#resourceDisplay')
          .draggable();
       
-      radiant.call_obj('stonehearth.session', 'get_player_id_command')
-         .done(function(e) {
-            self.$().on('contextmenu', `.player[player_id="${e.id}"] .gold`, function(e) {
-               radiant.call('tower_defense:donate_gold_command', 10)
-                  .done(function(result) {
-                     // only play the sound if we successfully donated
-                     radiant.call('radiant:play_sound', {
-                        track: 'tower_defense:sounds:coins',
-                        volume: 40
-                     });
-                  });
-               return false;
+      self.$().on('click', `.player .donate`, function(e) {
+         radiant.call('tower_defense:donate_gold_command', self.donateAmount)
+            .done(function(result) {
+               // only play the sound if we successfully donated
+               radiant.call('radiant:play_sound', {
+                  track: 'tower_defense:sounds:coins',
+                  volume: 40
+               });
             });
-         });
+         return false;
+      });
 	},
 
 	willDestroyElement: function () {
 		var self = this;
 
       self.radiantTrace.destroy();
-      self.$('.gold').off('contextmenu');
+      self.$('.donate').off('click');
 
 		self._super();
 	},
@@ -78,6 +77,10 @@ App.TowerDefenseResourceDisplay = App.View.extend({
          Ember.set(player, 'playerName', steamName && steamName != '' ? steamName : player.player_id);
          var color = App.presenceClient.getPlayerColor(player.player_id)
          Ember.set(player, 'colorStyle', `color: rgba(${color.x}, ${color.y}, ${color.z}, 1)`);
+         if (App.stonehearthClient.getPlayerId() == player.player_id) {
+            self.donateAmount = Math.ceil(player.gold / 5);
+            Ember.set(player, 'donate', i18n.t('tower_defense:ui.game.resourceDisplay.donate', {amount: self.donateAmount}));
+         }
       });
 
 		self.set('player_array', playerArr);

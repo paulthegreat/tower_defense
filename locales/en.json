@@ -1037,6 +1037,10 @@
          },
          "resourceDisplay": {
             "title": "Resources",
+            "player": {
+               "title": "Player"
+            },
+            "donate": "Donate [str(amount)] <img class='inlineImg gold'>",
             "common": "Common"
          },
          "referenceWindow": {

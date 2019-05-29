@@ -30,7 +30,7 @@ App.TowerDefenseReferenceView = App.View.extend({
       this._super();
       var self = this;
 
-      this.$().draggable({ handle: '.title' });
+      this.$('#referenceWindow').draggable({ handle: '.title' });
 
       this.buffGrid = this.$('#buffGrid');
 
