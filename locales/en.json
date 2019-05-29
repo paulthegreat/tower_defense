@@ -1064,6 +1064,28 @@
                   "tower": "Tower",
                   "tower_weather": "Tower Weather"
                }
+            },
+            "icons": {
+               "title": "Other Icons",
+               "description": "Other icons used by the game, along with their descriptions.",
+               "range": {
+                  "circle": "A circular region centered on the tower, extending out the specified number of voxels from the 1x1 region of the tower.",
+                  "rectangle": "A rectangular region, usually positioned at the edge of the tower, with the specified width and length.",
+                  "square": "A square region centered on the location of an attack, with the specified width/length."
+               },
+               "targets": {
+                  "ground": "Attacks ground monsters.",
+                  "air": "Attacks air monsters."
+               },
+               "damage": {
+                  "physical": "Physical damage, mitigated by armor and increased by poison debuffs.",
+                  "magical": "Magical damage, mitigated by magic armor.",
+                  "pure": "Pure damage, does not get mitigated."
+               },
+               "invis": {
+                  "sees": "This tower can see and attack invisible monsters.",
+                  "reveals": "This tower reveals all invisible monsters while they are in its range."
+               }
             }
          },
          "gameStateWindow": {

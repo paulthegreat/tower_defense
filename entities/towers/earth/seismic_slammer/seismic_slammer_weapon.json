@@ -23,6 +23,7 @@
             "hit_effect": "tower_defense:effects:earth_particles",
             "base_damage": 4,
             "is_percentage": true,
+            "minimum_damage": 50,
             "num_targets": 999,
             "damage_multiplier_per_attack": 0.5,
             "aoe": {

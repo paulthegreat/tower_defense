@@ -78,4 +78,53 @@
          }
       }
    }
+
+   #iconsTab {
+      p {
+         margin-top: 0;
+      }
+      
+      .downSection {
+         overflow-y: auto;
+         overflow-x: hidden;
+         height: 360px;
+      }
+
+      #iconGrid {
+         padding-top: 10px;
+         padding-bottom: 20px;
+         width: 100%;
+
+         .row {
+            td:first-child {
+               padding: 5px 10px;
+            }
+         }
+
+         .row:nth-child(odd) {
+            background: rgba(0,0,0,0.2);
+         }
+
+         .iconCell {
+            width: 1%;
+            white-space: nowrap;
+            //line-height: 36px;
+
+            img {
+               height: 20px;
+            }
+         }
+
+         .descriptionCell {
+            padding: 5px;
+
+            .iconDescription {
+               text-align: left;
+               //font-family: @baseFontFamily;
+               //font-size: 14px;
+               //color: #dddddd;
+            }
+         }
+      }
+   }
 }

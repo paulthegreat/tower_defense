@@ -103,6 +103,8 @@ function TowerRenderer:_update()
    end
 
    if data.reveals_invis then
+      -- make revealing tower regions stick out a little more
+      height = math.max(height, 0.15)
       edge_color = { x = 255, y = 0, z = 24}
       EDGE_COLOR_ALPHA = 255
    end

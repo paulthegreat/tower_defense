@@ -41,7 +41,7 @@ function TowerComponent:create()
 
       self._sv.sm = radiant.create_controller('radiant:state_machine')
       self._sv.sm:set_log_entity(self._entity)
-      self._sv.stats = radiant.create_controller('tower_defense:tower_stats')
+      self._sv.stats = radiant.create_controller('tower_defense:tower_stats', wave)
    else
       self._sv.is_client_entity = true
    end

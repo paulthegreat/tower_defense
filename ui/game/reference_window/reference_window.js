@@ -74,6 +74,51 @@ App.TowerDefenseReferenceView = App.View.extend({
          Ember.run.scheduleOnce('afterRender', self, '_updateTabs');
          Ember.run.scheduleOnce('afterRender', self, '_updateTooltips');
       });
+
+      var otherIcons = [
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/target_circle.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.range.circle)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/target_rect.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.range.rectangle)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/target_square.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.range.square)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/ground.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.targets.ground)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/air.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.targets.air)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/damageTypePhysical.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.damage.physical)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/damageTypeMagical.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.damage.magical)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/damageTypePure.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.damage.pure)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/sees_invis.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.invis.sees)'
+         },
+         {
+            icon: '/tower_defense/ui/game/start_menu/images/reveals_invis.png',
+            description: 'i18n(tower_defense:ui.game.referenceWindow.icons.invis.reveals)'
+         }
+      ];
+
+      self.set('otherIcons', otherIcons);
    },
 
    _updateTooltips: function() {

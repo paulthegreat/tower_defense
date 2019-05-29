@@ -223,7 +223,7 @@ function catalog_lib._add_catalog_description(catalog, full_alias, json, base_da
       end
    end
 
-   catalog_data.uri = uri
+   catalog_data.uri = full_alias
    if json and json.components and json.components['stonehearth:equipment_piece'] then
       catalog_data.injected_buffs = catalog_lib.get_buffs(json.components['stonehearth:equipment_piece'].injected_buffs)
    end

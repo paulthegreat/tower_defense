@@ -5,6 +5,11 @@ function TowerStats:initialize()
    self._sv.kills = 0
 end
 
+function TowerStats:create(wave_created)
+   self._sv.wave_created = wave_created
+   self.__saved_variables:mark_changed()
+end
+
 function TowerStats:increment_damage(amount)
    self._sv.damage = self._sv.damage + (amount or 1)
    self.__saved_variables:mark_changed()

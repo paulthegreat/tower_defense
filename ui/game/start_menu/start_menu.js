@@ -218,7 +218,7 @@ App.StonehearthStartMenuView = App.View.extend({
                name: t.display_name,
                description: t.tower.detailed_description,
                icon: t.icon,
-               ordinal: (t.tower.ordinal || t.tower.level || 0) + t.name,
+               ordinal: (t.tower.ordinal || t.tower.level || 0) + (t.name || ''),
                class: 'button',
                sticky: 'true',
                menu_action: 'td_create_tower',

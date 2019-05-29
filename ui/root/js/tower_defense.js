@@ -1,5 +1,11 @@
 // helper functions that may be used in multiple places, e.g., start menu and unit frame
 
+// spiegg's solution here: https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
+function interpretPropertyString(s, obj) {
+   var properties = Array.isArray(s) ? s : s.split('.')
+   return properties.reduce((prev, curr) => prev && prev[curr], obj)
+}
+
 var tower_defense = {
    _all_buffs: null,
 
@@ -14,7 +20,7 @@ var tower_defense = {
       return cost;
    },
 
-   getTowerWeaponTooltipContent: function(weapon, upgradeCost) {
+   getTowerWeaponTooltipContent: function(weapon, original, upgradeCost) {
       var weaponData = App.catalog.getCatalogData(weapon);
       var passthroughAttack = false;
 
@@ -142,6 +148,22 @@ var tower_defense = {
       return `<tr><td class='entryTitle${indent ? ' indented' : ''}'>${title}</td><td class='entryValue'>${content}</td></tr>`;
    },
 
+   _compareAndGetDifferenceSpan: function(content, current, original, propertyPath) {
+      if (propertyPath) {
+         return this._getDifferenceSpan(content, interpretPropertyString(propertyPath, current) != interpretPropertyString(propertyPath, original));
+      }
+      else {
+         return this._getDifferenceSpan(content, current != original);
+      }
+   },
+
+   _getDifferenceSpan: function(content, isDifferent) {
+      if (isDifferent) {
+         return `<span class="weaponModified">${content}</span>`;
+      }
+      return content;
+   },
+
    _getAttackTypes: function(attacks_ground, attacks_air) {
       return (attacks_ground ? i18n.t('tower_defense:ui.game.tooltips.tower_weapons.attacks_ground') : '') +
             (attacks_air ? i18n.t('tower_defense:ui.game.tooltips.tower_weapons.attacks_air') : '');
@@ -170,6 +192,7 @@ var tower_defense = {
       var s = '';
 
       var wasText = false;
+      buffs.sort(this.buffSorter);
       buffs.forEach(buff => {
          if (buff.icon) {
             s += ` <img class='inlineImg buff' src="${buff.icon}">`;
