@@ -11,8 +11,8 @@
    "data": {
       "biome": {
          "arctic": {
-            "display_name": "Terrible Placeholder",
-            "description": "It's really bad, don't play this one."
+            "display_name": "Squares",
+            "description": "Looping similar to Burbenog for Ground monsters, with larger loops (and thus a longer-than-normal path) for Air."
          },
          "desert": {
             "display_name": "Burbenog",
