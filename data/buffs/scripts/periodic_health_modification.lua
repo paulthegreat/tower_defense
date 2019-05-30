@@ -77,6 +77,28 @@ function PeriodicHealthModificationBuff:_on_pulse(buff)
       health_change = math.max(health_change, -(current_health - 1))
    end
 
+   if self._tuning.damage and health_change < 0 and self._entity:get_component('tower_defense:monster') then
+      local inflicters = buff:get_inflicters()
+      if inflicters then
+         local valid_inflicters = {}
+         local total = 0
+         for inflicter, count in pairs(inflicters) do
+            local tower_comp = inflicter:is_valid() and inflicter:get_component('tower_defense:tower')
+            if tower_comp then
+               total = total + count
+               table.insert(valid_inflicters, tower_comp)
+            end
+         end
+
+         if total > 0 then
+            local damage = math.floor(-health_change / total)
+            for _, tower_comp in ipairs(valid_inflicters) do
+               tower_comp:get_stats():increment_damage(damage, self._tuning.damage_type)
+            end
+         end
+      end
+   end
+
    radiant.entities.modify_health(self._entity, health_change)
 end
 

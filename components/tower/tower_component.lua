@@ -139,6 +139,10 @@ function TowerComponent:_destroy_listeners()
    self:_destroy_cooldown_listener()
 end
 
+function TowerComponent:get_stats()
+   return self._sv.stats
+end
+
 function TowerComponent:_initialize(equipment_changed)
    if radiant.is_server then
       self:_unregister()
@@ -211,7 +215,8 @@ function TowerComponent:_on_target_hit(context)
    end
 
    local damage = context.damage
-   self._sv.stats:increment_damage(damage)
+   -- just abusing the BatteryContext's last argument and using it as damage_type, rather than overriding/patching that file
+   self._sv.stats:increment_damage(damage, context.aggro_override)
 
    --probably a better way to get kills but the 'stonehearth:kill_event' seems to be for when this thing is killed
    local health = radiant.entities.get_health(target)
@@ -645,7 +650,8 @@ function TowerComponent:_set_idle()
    if self._entity and self._entity:is_valid() then
       self._entity:add_component('tower_defense:ai'):set_status_text_key('stonehearth:ai.actions.status_text.idle')
       self._facing_targets = {}
-      radiant.entities.turn_to(self._entity, self._sv.original_facing)
+      -- TODO: reconsider breaking up towers into multiple models and have the base stationary while the "weapon" part rotates
+      --radiant.entities.turn_to(self._entity, self._sv.original_facing)
       self:_stop_current_effect()
    end
 end
@@ -691,7 +697,7 @@ function TowerComponent:_try_lock_facing_target(target)
          if not current_target or not current_target:is_valid() then
             self:_unlock_facing_target()
          else
-            radiant.entities.turn_to_face(self._entity, current_target)
+            --radiant.entities.turn_to_face(self._entity, current_target)
          end
       end)
    end
@@ -1046,10 +1052,10 @@ function TowerComponent:_inflict_attack(targets, primary_target, attack_info, bu
                is_secondary_target and secondary_damage or base_damage, damage_multiplier)
          
          if not is_secondary_target or not aoe_attack or not attack_info.apply_buffs_to_primary_target_only then
-            stonehearth.combat:try_inflict_debuffs(each_target, buffs)
+            stonehearth.combat:try_inflict_debuffs(attacker, each_target, buffs)
          end
          if total_damage > 0 then
-            local battery_context = BatteryContext(attacker, each_target, total_damage)
+            local battery_context = BatteryContext(attacker, each_target, total_damage, attack_info.damage_type or 'physical')
             stonehearth.combat:battery(battery_context)
          end
       end

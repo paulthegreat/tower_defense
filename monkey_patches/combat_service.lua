@@ -9,6 +9,19 @@ local DMG_TYPES = {
    PURE = 'pure'
 }
 
+function TDCombatService:try_inflict_debuffs(inflicter, target, debuff_list)
+   for i, debuff_data in ipairs(debuff_list) do
+      for name, debuff in pairs(debuff_data) do
+         local infliction_chance = debuff.chance or 1
+         local n = 100 * infliction_chance
+         local i = rng:get_int(1,100)
+         if i <= n then
+            target:add_component('stonehearth:buffs'):add_buff(debuff.uri, {inflicter = inflicter})
+         end
+      end
+   end
+end
+
 function TDCombatService:set_interval(reason, duration, fn)
    local game_seconds = stonehearth.calendar:realtime_to_game_seconds(duration, true)
    return stonehearth.calendar:set_interval(reason, game_seconds, fn)

@@ -9,6 +9,7 @@ AceBuff._ace_old_create = Buff.create
 function AceBuff:create(entity, uri, json, options)
    self:_ace_old_create(entity, uri, json)
    self._options = options
+   self._sv._inflicters = {}
 end
 
 --AceBuff._ace_old_activate = Buff.activate
@@ -75,11 +76,24 @@ function AceBuff:_create_buff()
 
    -- now do any post-create options
    if self._options then
-      if self._options.stacks and self._options.stacks > 1 then
-         self._options.stacks = self._options.stacks - 1
+      local stacks = self._options.stacks and self._options.stacks or 1
+      self:_update_inflicters(self._options.inflicter)
+      if stacks > 1 then
+         self._options.stacks = stacks - 1
          self:on_repeat_add(self._options)
       end
    end
+end
+
+function AceBuff:_update_inflicters(inflicter, stacks)
+   if inflicter then
+      self._sv._inflicters[inflicter] = (self._sv._inflicters[inflicter] or 0) + (stacks or 1)
+      self.__saved_variables:mark_changed()
+   end
+end
+
+function AceBuff:get_inflicters()
+   return self._sv._inflicters
 end
 
 function AceBuff:_create_modifiers(modifiers)
@@ -198,6 +212,8 @@ end
 function AceBuff:on_repeat_add(options)
    local success = false
    local repeat_add_action = self._json.repeat_add_action
+
+   self:_update_inflicters(options.inflicter, options.stacks)
 
    if self._json.effect and self._json.reapply_effect then
       self:_destroy_effect()
