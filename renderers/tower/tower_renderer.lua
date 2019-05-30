@@ -53,6 +53,10 @@ function TowerRenderer:destroy()
       self._datastore_trace:destroy()
       self._datastore_trace = nil
    end
+   if self._location_trace then
+      self._location_trace:destroy()
+      self._location_trace = nil
+   end
    if self._ui_mode_listener then
       self._ui_mode_listener:destroy()
       self._ui_mode_listener = nil

@@ -1113,6 +1113,7 @@ function TowerComponent:_create_ground_presence(owner, target, ground_presence_d
    local ground_presence = radiant.entities.create_entity(uri, { owner = owner })
    
    local ground_presence_component = ground_presence:add_component('tower_defense:ground_presence')
+   ground_presence_component:set_tower(owner)
    ground_presence_component:set_settings(ground_presence_data)
 
    local origin = radiant.entities.get_world_location(target)

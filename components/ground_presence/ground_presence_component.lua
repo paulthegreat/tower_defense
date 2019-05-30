@@ -23,6 +23,10 @@ function GroundPresenceComponent:destroy()
    end
 end
 
+function GroundPresenceComponent:set_tower(tower)
+   self._tower = tower
+end
+
 function GroundPresenceComponent:set_settings(settings)
    self._settings = settings
 end
@@ -101,7 +105,7 @@ function GroundPresenceComponent:_do_things(entity, things)
 
    if things.buffs then
       for _, uri in ipairs(things.buffs) do
-         radiant.entities.add_buff(entity, uri)
+         radiant.entities.add_buff(entity, uri, {inflicter = self._tower})
       end
    end
 end
