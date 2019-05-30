@@ -25,8 +25,26 @@ function TowerRenderer:initialize(render_entity, datastore)
                self:_update()
             end)
          :push_object_state()
+   end
+
+   local data
+   if self._datastore.get_data then
+      data = self._datastore:get_data()
    else
-      self:_update()
+      data = self._datastore._sv
+   end
+
+   if data.is_client_entity then
+      local location = radiant.entities.get_location_aligned(self._entity)
+      self._location_trace = radiant.entities.trace_location(self._entity, 'tower placement location changed')
+         :on_changed(function()
+               local new_location = radiant.entities.get_location_aligned(self._entity)
+               if new_location ~= location then
+                  log:debug('tower %s location changed to %s', self._entity, new_location)
+                  location = new_location
+                  self:_update()
+               end
+            end)
    end
 end
 
@@ -87,6 +105,17 @@ function TowerRenderer:_update()
       return
    end
 
+   -- we render it this way so that we don't have to undo the rotation of a tower turning to face an enemy it's attacking
+   local render_node = RenderRootNode  --self._entity_node
+
+   local location = radiant.entities.get_world_grid_location(self._entity) or radiant.entities.get_location_aligned(self._entity)
+   if location then
+      --render_node = RenderRootNode
+      region = region:translated(location)
+   else
+      return
+   end
+
    local EDGE_COLOR_ALPHA = 128
    local FACE_COLOR_ALPHA = 0
    local color = { x = 255, y = 192, z = 32 }
@@ -112,14 +141,6 @@ function TowerRenderer:_update()
    -- have it float slightly above the ground to avoid z-fighting
    local squish_amount = (height - 1) / 2
    region = region:inflated(Point3(0, squish_amount, 0)):translated(Point3(0, squish_amount + 0.01, 0))
-
-   local render_node = self._entity_node
-
-   local location = radiant.entities.get_world_grid_location(self._entity)
-   if location then
-      render_node = RenderRootNode
-      region = region:translated(location)
-   end
 
    self._outline_node = _radiant.client.create_region_outline_node(render_node, region,
          radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA), radiant.util.to_color4(color, FACE_COLOR_ALPHA),
