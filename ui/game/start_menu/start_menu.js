@@ -94,48 +94,48 @@ App.StonehearthStartMenuView = App.View.extend({
             radiant.call_obj('tower_defense.game', 'get_tower_gold_cost_multiplier_command')
                .done(function(response) {
                   self._towerGoldCostMultiplier = response.multiplier || 1;
-                  $.get('/stonehearth/data/ui/start_menu.json')
-                     .done(function(json) {
-                        self._buildMenu(json);
-                        self._addHotkeys();
-                        self._tracePlayers();
 
-                        // Add badges for notifications
-                        App.bulletinBoard.getTrace()
-                           .progress(function(result) {
-                              var bulletins = result.bulletins;
-                              var alerts = result.alerts;
-                              var numBulletins = bulletins ? Object.keys(bulletins).length : 0;
-                              var numAlerts = alerts ? Object.keys(alerts).length : 0;
+                  self._getBaseStartMenu(function(json) {
+                     self._buildMenu(json);
+                     self._addHotkeys();
+                     self._tracePlayers();
 
-                              if (numBulletins > 0 || numAlerts > 0) {
-                                 //self.$('#bulletin_manager').pulse();
-                                 self.$('#bulletin_manager').addClass('active');
-                              } else {
-                                 self.$('#bulletin_manager').removeClass('active');
-                              }
-                              self._updateBulletinCount(numBulletins + numAlerts);
-                           });
+                     // Add badges for notifications
+                     App.bulletinBoard.getTrace()
+                        .progress(function(result) {
+                           var bulletins = result.bulletins;
+                           var alerts = result.alerts;
+                           var numBulletins = bulletins ? Object.keys(bulletins).length : 0;
+                           var numAlerts = alerts ? Object.keys(alerts).length : 0;
 
-                        // Add badges for number of players connected
-                        var presenceCallback = function(presenceData) {
-                           var numConnected = 0;
-                           radiant.each(presenceData, function(playerId, data) {
-                              var connectionStates = App.constants.multiplayer.connection_state;
-                              if (data.connection_state == connectionStates.CONNECTED || data.connection_state == connectionStates.CONNECTING) {
-                                 numConnected++;
-                              }
-                           });
+                           if (numBulletins > 0 || numAlerts > 0) {
+                              //self.$('#bulletin_manager').pulse();
+                              self.$('#bulletin_manager').addClass('active');
+                           } else {
+                              self.$('#bulletin_manager').removeClass('active');
+                           }
+                           self._updateBulletinCount(numBulletins + numAlerts);
+                        });
 
-                           self._updateConnectedPlayerCount(numConnected);
-                        };
+                     // Add badges for number of players connected
+                     var presenceCallback = function(presenceData) {
+                        var numConnected = 0;
+                        radiant.each(presenceData, function(playerId, data) {
+                           var connectionStates = App.constants.multiplayer.connection_state;
+                           if (data.connection_state == connectionStates.CONNECTED || data.connection_state == connectionStates.CONNECTING) {
+                              numConnected++;
+                           }
+                        });
 
-                        App.presenceClient.addChangeCallback(self.CHANGE_CALLBACK_NAME, presenceCallback, true);
-                        self._presenceCallbackName = self.CHANGE_CALLBACK_NAME;
+                        self._updateConnectedPlayerCount(numConnected);
+                     };
 
-                        App.resolveStartMenuLoad();
-                     });
-               });
+                     App.presenceClient.addChangeCallback(self.CHANGE_CALLBACK_NAME, presenceCallback, true);
+                     self._presenceCallbackName = self.CHANGE_CALLBACK_NAME;
+
+                     App.resolveStartMenuLoad();
+                  });
+            });
          });
    },
 
@@ -150,6 +150,28 @@ App.StonehearthStartMenuView = App.View.extend({
       }
 
       this._super();
+   },
+
+   _getBaseStartMenu: function(cb) {
+      $.get('/stonehearth/data/ui/start_menu.json')
+         .done(function(json) {
+            radiant.call('radiant:get_config', 'mods.tower_defense.cheats_enabled')
+               .done(function(response) {
+                  var cheatsEnabled = response['mods.tower_defense.cheats_enabled'];
+                  if (cheatsEnabled) {
+                     $.get('/tower_defense/data/ui/start_menu_cheats.json')
+                        .done(function(cheats_json) {
+                           radiant.each(cheats_json, function(k, v) {
+                              json[k] = v;
+                           });
+                           cb(json);
+                        });
+                  }
+                  else {
+                     cb(json);
+                  }
+               });
+            });
    },
 
    _buildMenu : function(data) {

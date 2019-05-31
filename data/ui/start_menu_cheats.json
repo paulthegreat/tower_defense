@@ -1,0 +1,20 @@
+{
+   "give_gold_100": {
+      "name": "i18n(tower_defense:ui.game.menu.give_gold.display_name)",
+      "description": "i18n(tower_defense:ui.game.menu.give_gold.100_description)",
+      "class": "button",
+      "icon": "/tower_defense/ui/game/start_menu/images/gold_1000.png",
+      "hotkey_action": "td:give_gold_100",
+      "menu_action": "td_give_gold",
+      "gold_amount": 100
+   },
+   "give_wood_10": {
+      "name": "i18n(tower_defense:ui.game.menu.give_wood.display_name)",
+      "description": "i18n(tower_defense:ui.game.menu.give_wood.10_description)",
+      "class": "button",
+      "icon": "/tower_defense/ui/game/start_menu/images/wood.png",
+      "hotkey_action": "td:give_wood_100",
+      "menu_action": "td_give_wood",
+      "wood_amount": 10
+   }
+}
