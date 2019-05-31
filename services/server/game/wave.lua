@@ -9,6 +9,8 @@ local log = radiant.log.create_logger('wave')
 
 local Wave = class()
 
+local TIME_TO_FIRST_SPAWN = 3000
+
 function Wave:initialize()
    self._sv._unspawned_monsters = {}
    self._sv.spawned_monsters = {}
@@ -113,12 +115,16 @@ function Wave:_load_unspawned_monsters()
 end
 
 function Wave:start()
-   self:_spawn_next_monster()
+   self:_create_next_spawn_timer(self._wave_data.time_to_first_spawn or TIME_TO_FIRST_SPAWN)
 end
 
 function Wave:get_last_monster_location(monster_id)
    local data = self._sv._last_monster_data[monster_id]
    return data and data.location
+end
+
+function Wave:get_num_escaped()
+   return self._sv.num_escaped
 end
 
 function Wave:_create_next_spawn_timer(time)
@@ -277,6 +283,7 @@ function Wave:_activate_monster(monster)
    
    monster.escape_listener = radiant.events.listen_once(monster.monster, 'tower_defense:escape_event', function()
          log:debug('monster %s escaped!', monster.monster)
+         self._sv.num_escaped = (self._sv.num_escaped or 0) + 1
          radiant.events.trigger(self, 'tower_defense:wave:monster_escaped', monster.damage or 1)
 
          self:_remove_monster(id)

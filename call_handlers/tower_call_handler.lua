@@ -102,7 +102,7 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
    if not cost or not uri or not player then
       -- everything has a cost... if we can get it
       result.reject = true
-      result.message = 'i18n(tower_defense:alerts.build.unavailable)'
+      result.message = 'i18n(tower_defense:alerts.towers.build.unavailable)'
    else
       for resource, amount in pairs(cost) do
          local missing = player:can_spend_resource(resource, amount)
@@ -114,7 +114,7 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
 
    if not result.reject and next(result) then
       result.reject = true
-      result.message = 'i18n(tower_defense:alerts.build.missing_resources)'
+      result.message = 'i18n(tower_defense:alerts.towers.build.missing_resources)'
    end
    
    if not result.reject then
@@ -144,7 +144,7 @@ function TowerCallHandler:create_entity(session, response, uri, location, rotati
       end
 
       result.resolve = true
-      result.message = 'i18n(tower_defense:alerts.upgrade_tower.success)'
+      result.message = 'i18n(tower_defense:alerts.towers.build.success)'
    end
 
    if result.resolve then

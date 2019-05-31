@@ -74,14 +74,28 @@ App.StonehearthCalendarView = App.View.extend({
                         self.set('remainingMonsters', 0);
                      }
                   }
+
+                  if (o2.game_alert != self.gameAlert) {
+                     self.gameAlert = o2.game_alert;
+                     if (self.gameAlert) {
+                        self.showAlert(self.$('#gameAlert'), i18n.t(o2.game_alert, o2.game_alert_data), o2.game_alert_is_important);
+                     }
+                  }
                });
          });
+      
+      $(document).on('td_player_alert.clock_widget', function(e, args) {
+         if (args.message) {
+            self.showAlert(self.$('#playerAlert'), args.message, args.isImportant);
+         }
+      });
    },
 
    willDestroyElement: function() {
       this.$().find('.tooltipstered').tooltipster('destroy');
       this.$().off('click', '#clock');
       this.$().off('click', '#remainingMonsters');
+      $(document).off('td_player_alert.clock_widget');
       this._super();
    },
 
@@ -205,6 +219,11 @@ App.StonehearthCalendarView = App.View.extend({
                   });
                });
          });
+   },
+
+   showAlert: function(elem, message, isImportant) {
+      elem.html(message);
+      elem.stop(true).fadeIn(0).animate({opacity: 1}, isImportant ? 5000 : 2000).fadeOut(2000);
    },
 
    _getWeatherObject: function(dayData, index) {

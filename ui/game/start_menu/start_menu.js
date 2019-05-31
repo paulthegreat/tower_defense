@@ -16,7 +16,9 @@ App.StonehearthStartMenuView = App.View.extend({
                })
                .fail(function(response) {
                   if (response.message) {
-                     alert(i18n.t(response.message, response.i18n_data));
+                     $(document).trigger('td_player_alert', {
+                        message: i18n.t(response.message, response.i18n_data)
+                     });
                   }
                });
          }

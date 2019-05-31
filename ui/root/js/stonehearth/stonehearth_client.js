@@ -55,7 +55,9 @@ $(document).ready(function(){
                })
                .fail(function(response) {
                   if (response.message) {
-                     alert(i18n.t(response.message, response));
+                     $(document).trigger('td_player_alert', {
+                        message: i18n.t(response.message, response)
+                     });
                   }
                });
          }

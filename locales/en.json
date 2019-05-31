@@ -1213,6 +1213,12 @@
             "missing_resources": "Missing resources to build this tower",
             "success": "Successfully built tower!"
          }
+      },
+      "game": {
+         "wave_starting": "Wave [str(wave)] starting!",
+         "wave_ended": "Wave [str(wave)] finished! [str(num_escaped)] monsters escaped.",
+         "game_lost": "You lost! Try again!",
+         "game_won": "You won the game! Congratulations!"
       }
    }
 }

@@ -61,8 +61,10 @@ function GameService:_destroy_wave_controller()
    end
    self._wave_listeners = {}
    if self._sv.wave_controller then
+      local num_escaped = self._sv.wave_controller:get_num_escaped()
       self._sv.wave_controller:destroy()
       self._sv.wave_controller = nil
+      return num_escaped
    end
 end
 
@@ -246,8 +248,15 @@ function GameService:has_active_wave()
    return self._sv.wave_controller ~= nil
 end
 
+function GameService:_set_game_alert(message, data, is_important)
+   self._sv.game_alert = message
+   self._sv.game_alert_data = data
+   self._sv.game_alert_is_important = is_important
+   self.__saved_variables:mark_changed()
+end
+
 function GameService:_end_of_round()
-   self:_destroy_wave_controller()
+   local num_escaped = self:_destroy_wave_controller()
    self:_destroy_countdown_timer()
 
    self._waiting_for_target_cbs = {}
@@ -255,8 +264,11 @@ function GameService:_end_of_round()
    
    if self._sv.health < 1 then
       -- no more health! you lost!
+      self:_set_game_alert('i18n(tower_defense:alerts.game.game_lost)', nil, true)
       return
    end
+
+   self:_set_game_alert('i18n(tower_defense:alerts.game.wave_ended)', {wave = self._sv.wave, num_escaped = num_escaped or 0})
 
    self:_create_countdown_timer()
 end
@@ -284,6 +296,7 @@ function GameService:_start_round()
    self:_destroy_countdown_timer()
 
    self._sv.wave = self._sv.wave + 1
+   self:_set_game_alert('i18n(tower_defense:alerts.game.wave_starting)', {wave = self._sv.wave})
 
    -- load the wave data, create the controller, and start it up
    local next_wave = self._waves[self._sv.wave]
@@ -297,6 +310,7 @@ function GameService:_start_round()
       wave_controller:start()
    else
       -- no more waves! you won!
+      self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
    end
 
    self.__saved_variables:mark_changed()
