@@ -13,7 +13,6 @@
             "attacks_ground": true,
             "attacks_air": true,
             "reveals_invis": false,
-            "sees_invis": true,
             "defaults": "debuff_spread"
          }
       },
