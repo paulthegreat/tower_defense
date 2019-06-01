@@ -41,10 +41,9 @@
             "projectile": {
                "speed": 10,
                "passthrough_attack": true,
-               "uri": "stonehearth:weapons:bullet",
-               "scale_mult": 3,
-               "start_offset": { "x": 0, "y": 0.6, "z": 0 },
-               "end_offset": { "x": 0, "y": 1, "z": 0 }
+               "uri": "tower_defense:projectiles:artillery_shell",
+               "start_offset": { "x": 0.2, "y": 0.6, "z": -0.2 },
+               "end_offset": { "x": 0, "y": 0.5, "z": 0 }
             },
             "attack_times": [
                500

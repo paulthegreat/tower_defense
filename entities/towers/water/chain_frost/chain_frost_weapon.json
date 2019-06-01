@@ -31,8 +31,7 @@
             "hit_effect": "tower_defense:effects:water_particles",
             "projectile": {
                "speed": 7,
-               "uri": "stonehearth:weapons:turnip_bullet",
-               "scale_mult": 2,
+               "uri": "tower_defense:projectiles:water_ball",
                "start_offset": { "x": 0, "y": 0.6, "z": 0 },
                "end_offset": { "x": 0, "y": 1, "z": 0 }
             },

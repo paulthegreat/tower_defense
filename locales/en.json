@@ -459,6 +459,20 @@
       }
    },
    "entities": {
+      "projectiles": {
+         "artillery_shell": {
+            "display_name": "Artillery Shell",
+            "description": "It goes out like a cannonball."
+         },
+         "turnip_bullet": {
+            "display_name": "Turnip Bullet",
+            "description": "For some reason, all plants shoot turnips."
+         },
+         "water_ball": {
+            "display_name": "Water Sphere",
+            "description": "H2Oh no, you're reading this description!"
+         }
+      },
       "towers": {
          "generic": {
             "detailed_description": "[str(i18n_data.description)]",

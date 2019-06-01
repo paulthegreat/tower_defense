@@ -9,7 +9,9 @@
          }
       },
       "effect_list": {
-         "default": "stonehearth:effects:dry_stone_heat"
+         "effects": [
+            "stonehearth:effects:dry_stone_heat"
+         ]
       },
       "render_info": {
          "scale": 0.1

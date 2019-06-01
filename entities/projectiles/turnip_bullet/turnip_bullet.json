@@ -1,0 +1,30 @@
+{
+   "type": "entity",
+   "components": {
+      "model_variants": {
+         "default": {
+            "models": [
+               "file(turnip_bullet.qb)"
+            ]
+         }
+      },
+      "effect_list": {
+         "effects": [
+            "tower_defense:effects:poison:major"
+         ]
+      },
+      "render_info": {
+         "scale": 0.12
+      },
+      "mob": {
+         "model_origin": { "x": -0.05, "y": 0, "z": 0.05 }
+      },
+      "stonehearth:projectile": {}
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(stonehearth:entities.weapons.turnip_bullet.display_name)",
+         "description": "i18n(stonehearth:entities.weapons.turnip_bullet.description)"
+      }
+   }
+}

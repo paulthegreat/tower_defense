@@ -1,0 +1,25 @@
+{
+   "type": "entity",
+   "components": {
+      "model_variants": {
+         "default": {
+            "models": [
+               "file(artillery_shell.qb)"
+            ]
+         }
+      },
+      "render_info": {
+         "scale": 0.1
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 }
+      },
+      "stonehearth:projectile": {}
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.projectiles.artillery_shell.display_name)",
+         "description": "i18n(tower_defense:entities.projectiles.artillery_shell.description)"
+      }
+   }
+}
