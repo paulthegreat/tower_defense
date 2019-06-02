@@ -140,7 +140,7 @@ var tower_defense = {
                   !original || (secondary_damage == (original.tower_weapon_attack_info && ((original.tower_weapon_attack_info.aoe &&
                      original.tower_weapon_attack_info.aoe.base_damage) != null ? original.tower_weapon_attack_info.aoe.base_damage :
                      original.tower_weapon_attack_info.base_damage)))),
-               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', {base_damage: secondary_damage}));
+               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', {base_damage: secondary_damage, damage_type: aoe.damage_type}));
          }
       }
 

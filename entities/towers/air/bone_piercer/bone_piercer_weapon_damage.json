@@ -20,7 +20,7 @@
             "name": "bone_piercer",
             "effect": "tower_defense:effects:air_particles",
             "hit_effect": "/stonehearth/data/effects/hit_sparks/dust_poof.json",
-            "base_damage": 100,
+            "base_damage": 80,
             "damage_type": "pure",
             "attack_times": [
                200,

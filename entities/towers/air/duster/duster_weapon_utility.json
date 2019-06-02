@@ -9,12 +9,33 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 8,
+            "radius": 7,
             "attacks_ground": true,
             "attacks_air": true,
             "reveals_invis": true,
             "sees_invis": true
          }
-      }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "ministun": {
+               "uri": "tower_defense:buffs:monster:stun:ministun",
+               "chance": 1
+            }
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "duster",
+            "effect": "tower_defense:effects:air_particles",
+            "hit_effect": "tower_defense:effects:air_particles",
+            "num_targets": 2,
+            "attack_times": [
+               500
+            ],
+            "cooldown": 2000,
+            "priority": 0
+         }
+      ]
    }
 }

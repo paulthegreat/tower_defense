@@ -33,7 +33,7 @@
             "name": "arc_lightning",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 150,
+            "base_damage": 100,
             "damage_type": "magical",
             "beam": {
                "__particle_effect": "tower_defense:effects:fire_beam",
@@ -57,7 +57,7 @@
                "end_offset": { "x": 0, "y": 0.8, "z": 0 }
             },
             "secondary_attack": {
-               "range": 3,
+               "range": 5,
                "hits_ground_and_air": true,
                "num_attacks": 4,
                "damage_multiplier": 0.8

@@ -46,15 +46,15 @@
          },
          "minor_armor": {
             "display_name": "Minor Armor",
-            "description": "Reduces physical damage taken by 25%"
+            "description": "Reduces physical damage taken by 30%"
          },
          "normal_armor": {
             "display_name": "Armor",
-            "description": "Reduces physical damage taken by 50%"
+            "description": "Reduces physical damage taken by 60%"
          },
          "major_armor": {
             "display_name": "Major Armor",
-            "description": "Reduces physical damage taken by 75%"
+            "description": "Reduces physical damage taken by 90%"
          },
          "minor_armor_piercing": {
             "display_name": "Minor Armor Pierced",
@@ -94,15 +94,15 @@
          },
          "minor_magic_armor": {
             "display_name": "Minor Magic Armor",
-            "description": "Reduces magical damage taken by 25%"
+            "description": "Reduces magical damage taken by 30%"
          },
          "normal_magic_armor": {
             "display_name": "Magic Armor",
-            "description": "Reduces magical damage taken by 50%"
+            "description": "Reduces magical damage taken by 60%"
          },
          "major_magic_armor": {
             "display_name": "Major Magic Armor",
-            "description": "Reduces magical damage taken by 75%"
+            "description": "Reduces magical damage taken by 90%"
          },
          "minor_magic_armor_piercing": {
             "display_name": "Minor Magic Armor Pierced",
@@ -142,15 +142,15 @@
          },
          "minor_slow": {
             "display_name": "Minor Slow",
-            "description": "Slows movement by 20% for 6 seconds"
+            "description": "Slows movement by 15% for 6 seconds"
          },
          "normal_slow": {
             "display_name": "Slow",
-            "description": "Slows movement by 35% for 6 seconds"
+            "description": "Slows movement by 25% for 6 seconds"
          },
          "major_slow": {
             "display_name": "Major Slow",
-            "description": "Slows movement by 50% for 6 seconds"
+            "description": "Slows movement by 35% for 6 seconds"
          },
          "minor_wound": {
             "display_name": "Minor Wound",
@@ -662,11 +662,11 @@
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies minor armor piercing in passive aoe",
+               "description": "Also applies major armor piercing in passive aoe",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+3 range",
+               "description": "Also applies targeted ministuns",
                "display_name": "Utility Upgrade"
             }
          },
@@ -860,17 +860,17 @@
          },
          "fog_machine": {
             "display_name": "Fog Machine",
-            "description": "Low damage, inflicts minor armor piercing, passively reveals in full range",
+            "description": "Low damage, passively reveals, slows, and pierces armor in full range",
             "weapon": {
-               "description": "Low AOE damage that applies minor armor piercing, passively reveals in full range",
+               "description": "Low AOE damage that applies minor armor piercing, minor slow, and passively reveals in full range",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Applies normal armor piercing instead",
+               "description": "Also applies normal armor piercing and increases damage",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies minor slow",
+               "description": "Also applies normal slow",
                "display_name": "Utility Upgrade"
             }
          },
@@ -910,7 +910,7 @@
             "display_name": "Arc Lightning",
             "description": "Chain lightning, like Dota 2 Zeus ability, bounces reduced damage to successive targets",
             "weapon": {
-               "description": "Hits a target in a short range, then bounces to a new target in a short range 4 times, applying normal burning and dealing less damage each bounce",
+               "description": "Hits a target in a short range, then bounces to a new target 4 times, applying normal burning and dealing less damage each bounce",
                "display_name": "Base Tower"
             },
             "weapon_damage": {

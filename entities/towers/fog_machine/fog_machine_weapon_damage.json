@@ -11,7 +11,7 @@
             "type": "circle",
             "radius": 6,
             "attacks_ground": true,
-            "attacks_air": false,
+            "attacks_air": true,
             "reveals_invis": true,
             "sees_invis": true
          }
@@ -19,7 +19,15 @@
       "stonehearth:buffs": {
          "inflictable_debuffs": {
             "armor_piercing": {
+               "uri": "tower_defense:buffs:monster:armor_piercing:minor",
+               "chance": 1
+            },
+            "armor_piercing_2": {
                "uri": "tower_defense:buffs:monster:armor_piercing:normal",
+               "chance": 1
+            },
+            "slow": {
+               "uri": "tower_defense:buffs:monster:slow:minor",
                "chance": 1
             }
          }
@@ -29,13 +37,13 @@
             "name": "fog_machine",
             "effect": "tower_defense:effects:air_particles",
             "hit_effect": "tower_defense:effects:water_particles",
-            "base_damage": 1,
+            "base_damage": 10,
             "damage_type": "magical",
             "num_targets": 999,
             "attack_times": [
                500
             ],
-            "cooldown": 1000,
+            "cooldown": 1500,
             "priority": 0
          }
       ]

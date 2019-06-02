@@ -8,7 +8,7 @@
    "icon": "file(major_magic_armor.png)",
    "modifiers": {
       "multiplicative_magical_dmg_taken": {
-         "add": -0.75
+         "add": -0.9
       }
    }
 }

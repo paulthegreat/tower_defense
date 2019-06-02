@@ -11,7 +11,7 @@
    "effect": "tower_defense:effects:slow:normal",
    "modifiers": {
       "speed": {
-         "multiply": 0.65
+         "multiply": 0.75
       }
    }
 }

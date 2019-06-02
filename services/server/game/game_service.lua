@@ -276,6 +276,7 @@ end
 function GameService:_create_countdown_timer(second)
    if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave >= self._game_options.final_wave) then
       -- no more waves! you won!
+      self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
       return
    end
 

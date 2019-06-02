@@ -363,7 +363,7 @@ App.TowerDefenseMonsterContainerView = App.TowerDefenseMonsterRowContainerView.e
    constructRowViewArgs: function(monsterId, entry) {
       return {
          taskView: this.containerParentView,
-         uri: entry.__self,
+         uri: entry && entry.__self,
          monsterId: monsterId
       };
    },
