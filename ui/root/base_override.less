@@ -1,0 +1,29 @@
+.outlined (@color: #000, @offset: 2px, @blur: 0px) {
+	text-shadow: @offset*(-1)   @offset*(-1)   @blur @color,
+                @offset*(-0.5) @offset*(-1)   @blur @color,
+                0px            @offset*(-1)   @blur @color,
+                @offset*(0.5)  @offset*(-1)   @blur @color,
+                @offset        @offset*(-1)   @blur @color,
+                @offset        @offset*(-0.5) @blur @color,
+                @offset*(-1)   0px            @blur @color,
+                @offset*(-1)   @offset*(-0.5) @blur @color,
+                @offset        0px            @blur @color,
+                @offset        @offset*(0.5)  @blur @color,
+                @offset*(-1)   @offset        @blur @color,
+                @offset*(-1)   @offset*(0.5)  @blur @color,
+                0px            @offset        @blur @color,
+                @offset*(-0.5) @offset        @blur @color,
+                @offset        @offset        @blur @color,
+                @offset*(0.5)  @offset        @blur @color;
+}
+
+.outlinedThin (@color: #000) {
+   text-shadow: -1px -1px 0px @color,
+                0px  -1px 0px @color,
+                1px  -1px 0px @color,
+                -1px 0px  0px @color,
+                1px  0px  0px @color,
+                -1px 1px  0px @color,
+                0px  1px  0px @color,
+                1px  1px  0px @color;
+}
