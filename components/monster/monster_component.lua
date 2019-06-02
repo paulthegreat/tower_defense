@@ -100,7 +100,7 @@ end
 function MonsterComponent:_update_render_material()
    local material
    
-   if self._sv._invisible and self._sv._seen then
+   if self._sv._invisible and self:is_visible() then
       material = MAT_SOME_INVIS
    elseif self._sv._invisible then
       material = MAT_MOST_INVIS

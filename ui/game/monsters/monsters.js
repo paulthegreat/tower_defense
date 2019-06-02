@@ -114,6 +114,12 @@ App.TowerDefenseMonsterView = App.View.extend({
       var self = this;
       self._containerView = containerView;
       self._updateMonstersArray();
+   },
+
+   monsterHealthUpdated: function() {
+      if (monstersLastSortKey == 'health') {
+         this._containerView._sortMonstersDom();
+      }
    }
 });
 
@@ -155,13 +161,6 @@ App.TowerDefenseMonsterRowView = App.View.extend({
    didInsertElement: function() {
       this._super();
       var self = this;
-      self._jobDisplayName = null;
-
-      radiant.each(self.taskView.stats, function(i, stat) {
-         App.tooltipHelper.createDynamicTooltip(self.$('.' + stat), function () {
-            return $(App.tooltipHelper.getTooltip(stat));
-         });
-      });
 
       self.$()[0].setAttribute('data-monster-id', self.get('monsterId'));
 
@@ -284,21 +283,30 @@ App.TowerDefenseMonsterRowView = App.View.extend({
          else if (currentHealth > self._previousHealth) {
             fillEl.css('width', widthString);
             self.$('.healthbarDamageIndicator').css('width', widthString);
-            fillEl.animate({'backgroundColor': '#33BB33'}, 200).animate({'backgroundColor': '#DD9922'}, 200);
+            fillEl.stop(true, true).animate({'backgroundColor': '#33BB33'}, 100).animate({'backgroundColor': '#DD9922'}, 200);
          } else {
             // when dealing damage, shrink the purple part of the bar instantly, exposing the yellow bar behind it
             fillEl.css('width', widthString);
             // then, after a delay, shrink the yellow bar slowly to match the purple one
-            setTimeout(function() {
-               if (self.isDestroying || self.isDestroyed) {
-                  return;
-               }
-               self.$('.healthbarDamageIndicator').animate({'width': widthString}, 100, "linear");
-            }, 250);
+            self.$('.healthbarDamageIndicator').stop(true, true).animate({opacity: 1}, 100).animate({'width': widthString}, 200);
          }
+         
+         self.taskView.monsterHealthUpdated();
       }
       self._previousHealth = currentHealth;
-   }.observes('model.stonehearth:expendable_resources', 'model.stonehearth:attributes.attributes.max_health'),
+   },
+
+   _healthObserver: $.throttle(100, function() {
+      var self = this;
+      if (self.isDestroying || self.isDestroyed) {
+         return;
+      }
+      self._updateHealth();
+   }).observes('model.stonehearth:expendable_resources.resources.health'),
+
+   _maxHealthObserver: function() {
+      this._updateHealth();
+   }.observes('model.stonehearth:attributes.attributes.max_health'),
 
    _abbrevNumber: function(number, roundFn) {
       var self = this;
@@ -311,7 +319,7 @@ App.TowerDefenseMonsterRowView = App.View.extend({
       return roundFn(number);
    },
 
-   _updateBuffs: $.throttle(250, function() {
+   _updateBuffs: $.throttle(100, function() {
       var self = this;
       if (self.isDestroying || self.isDestroyed) {
          return;
@@ -468,7 +476,7 @@ App.TowerDefenseMonsterContainerView = App.TowerDefenseMonsterRowContainerView.e
          if (n == 0) {
             var aName = keyExtractors['name'](aModel);
             var bName = keyExtractors['name'](bModel);
-            n = aName ? aName.localeCompare(bName) : 0;
+            n = (aName < bName ? -1 : (aName > bName) ? 1 : 0);
          }
 
          return n * sortDirection;

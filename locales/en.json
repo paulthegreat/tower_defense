@@ -666,7 +666,7 @@
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+2 range",
+               "description": "+3 range",
                "display_name": "Utility Upgrade"
             }
          },

@@ -58,7 +58,7 @@ function GroundPresenceComponent:start()
 
    stonehearth.combat:set_timer('ground_presence duration', settings.duration, function()
       if self._entity and self._entity:is_valid() then
-         periodic_fn(false)
+         periodic_fn(true)
          radiant.events.trigger(self._entity, 'tower_defense:combat:ground_presence_terminated')
          radiant.entities.destroy_entity(self._entity)
       end
@@ -67,7 +67,7 @@ function GroundPresenceComponent:start()
    if settings.destroy_on_wave_end then
       self._wave_end_listener = radiant.events.listen_once(radiant, 'tower_defense:wave:ended', function()
          if self._entity and self._entity:is_valid() then
-            periodic_fn(true)
+            --periodic_fn(true)
             radiant.events.trigger(self._entity, 'tower_defense:combat:ground_presence_terminated')
             radiant.entities.destroy_entity(self._entity)
          end
@@ -94,6 +94,7 @@ function GroundPresenceComponent:_do_periodic_things(settings, entity, first_tim
    end
 
    if settings.every_time then
+      --log:debug('applying every_time effects to %s', entity)
       self:_do_things(entity, settings.every_time)
    end
 end

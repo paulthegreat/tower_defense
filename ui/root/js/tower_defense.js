@@ -82,7 +82,7 @@ var tower_defense = {
       var t = weaponData.tower_weapon_targeting;
       if (t) {
          s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.range_title'),
-               weaponData, original, ['tower_weapon_targeting.type', 'tower_weapon_targeting.range', 'tower_weapon_targeting.region',
+               weaponData, original, ['tower_weapon_targeting.type', 'tower_weapon_targeting.radius', 'tower_weapon_targeting.region',
                   'tower_weapon_targeting.attacks_ground', 'tower_weapon_targeting.attacks_air',
                   'tower_weapon_targeting.sees_invis', 'tower_weapon_targeting.reveals_invis']),
             (t.type == 'circle' ? i18n.t('tower_defense:ui.game.tooltips.tower_weapons.range_circle', t) :
