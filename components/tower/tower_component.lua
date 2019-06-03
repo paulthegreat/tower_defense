@@ -460,9 +460,11 @@ function TowerComponent:_get_filter_value(filter, target, attack_info, debuff_ca
          local diff = 0
          for uri, data in pairs(debuff_cache.debuffs) do
             local buff = buffs_comp:get_buff(uri)
+            -- returns -1 if the buff has no duration (lasts forever)
             local duration = buff and buff:get_duration() or 0
             
-            if duration >= 0 then
+            -- only consider the value of the buff being applied if it can actually be applied
+            if duration >= 0 and not buffs_comp:is_buff_diminishing_disabled(uri) then
                -- the target doesn't have this debuff or it has a duration/expiration
                diff = diff + data.duration - duration * data.priority
             end
@@ -479,7 +481,10 @@ function TowerComponent:_get_filter_value(filter, target, attack_info, debuff_ca
 
       local stacks = 0
       for uri, data in pairs(debuff_cache.debuffs) do
-         stacks = stacks + (buffs_comp:get_buff_stacks(uri) or 0) * data.priority
+         -- only consider the value of the buff being applied if it can actually be applied
+         if not buffs_comp:is_buff_diminishing_disabled(uri) then
+            stacks = stacks + (buffs_comp:get_buff_stacks(uri) or 0) * data.priority
+         end
       end
       return stacks
       

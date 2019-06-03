@@ -89,7 +89,7 @@ end
 
 function AceBuffsComponent:is_buff_diminishing_disabled(uri)
    local json = radiant.resources.load_json(uri, true)
-   local is_disabled = self:_is_buff_diminishing_disabled(json, now)
+   local is_disabled = self:_is_buff_diminishing_disabled(json)
    return is_disabled   -- only return the true/false value of whether it's disabled, not the additional values
 end
 

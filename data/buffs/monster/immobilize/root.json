@@ -7,14 +7,14 @@
    "description": "i18n(tower_defense:data.buffs.root.description)",
    "icon": "file(root.png)",
    "repeat_add_action": "extend_duration",
-   "duration": 2000,
+   "duration": 3000,
    "effect": "tower_defense:effects:root",
    "reapply_effect": true,
    "diminishing_returns": {
       "by_category": true,
       "times_until_disabled": 3,
       "duration_multiplier": 0.5,
-      "reset_time": 8000
+      "reset_time": 12000
    },
    "modifiers": {
       "speed": {
