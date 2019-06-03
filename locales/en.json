@@ -1086,7 +1086,7 @@
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "+2 range, roots last significantly longer",
+               "description": "Also immobilizes",
                "display_name": "Utility Upgrade"
             }
          }
@@ -1156,6 +1156,7 @@
                   "armor_piercing": "Armor Piercing",
                   "magic_armor_piercing": "Magic Armor Piercing",
                   "invisible": "Invisible",
+                  "immobilize": "Immobilize",
                   "reveal": "Reveal",
                   "purge": "Purge",
                   "healing": "Healing",

@@ -23,7 +23,7 @@
                "uri": "tower_defense:ground_presence:mangrove_roots",
                "facing": "random_cardinal",
                "range": 0.6,
-               "duration": 20000,
+               "duration": 8000,
                "period": 500,
                "destroy_on_wave_end": true,
                "do_on_duration_finished": false,
@@ -33,7 +33,8 @@
                      "damage_type": "physical"
                   },
                   "buffs": [
-                     "tower_defense:buffs:monster:slow:major"
+                     "tower_defense:buffs:monster:slow:major",
+                     "tower_defense:buffs:monster:immobilize:root"
                   ]
                },
                "every_time": {

@@ -1,6 +1,8 @@
 local BuffsComponent = radiant.mods.require('stonehearth.components.buffs.buffs_component')
 local AceBuffsComponent = class()
 
+local log = radiant.log.create_logger('buff')
+
 AceBuffsComponent._ace_old_create = BuffsComponent.create
 function AceBuffsComponent:create()
    self:_ace_old_create()
@@ -117,6 +119,7 @@ function AceBuffsComponent:_is_buff_diminishing_disabled(json, now)
       end
 
       duration = self:_parse_duration(json.duration)
+      log:debug('initial duration for %s %s: %s', self._entity, tostring(json.category), duration)
 
       if current_dr then
          if json.diminishing_returns.duration_multiplier then
@@ -128,16 +131,19 @@ function AceBuffsComponent:_is_buff_diminishing_disabled(json, now)
             duration = duration - duration_reduction * current_dr.times
          end
       end
+      log:debug('diminished duration: %s', duration)
 
       local expire_time = now + duration
       -- check existing buffs to see if one will already be lasting longer
-      local buffs_to_check
+      local buffs_to_check = {}
       if json.diminishing_returns.by_category and json.category then
-         buffs_to_check = self._sv.buffs_by_category[json.category] or {}
+         for buff_uri, _ in pairs(self._sv.buffs_by_category[json.category] or {}) do
+            table.insert(buffs_to_check, self._sv.buffs[buff_uri])
+         end
       else
-         buffs_to_check = {self._sv.buffs[uri]}
+         table.insert(buffs_to_check, self._sv.buffs[uri])
       end
-      for _, buff in pairs(buffs_to_check) do
+      for _, buff in ipairs(buffs_to_check) do
          local buff_expiration = buff:get_expire_time()
          if buff_expiration and buff_expiration >= expire_time then
             return true -- this buff would be expiring before an existing buff with the same diminishing returns
@@ -176,7 +182,7 @@ function AceBuffsComponent:add_buff(uri, options)
    end
 
    if duration then
-      options.duration = duration
+      options.parsed_duration = duration
    end
 
    if json.category then
@@ -205,8 +211,9 @@ function AceBuffsComponent:add_buff(uri, options)
    end
 
    if json.diminishing_returns then
+      local current_dr
       if json.category then
-         local current_dr = self._sv.diminishing_returns[json.category]
+         current_dr = self._sv.diminishing_returns[json.category]
          if not current_dr then
             current_dr = {
                times = 1

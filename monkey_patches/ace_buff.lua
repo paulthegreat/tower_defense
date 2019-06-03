@@ -21,8 +21,9 @@ function AceBuff:activate()
 
    local json = rawget(self, '_json')
    self._cooldown_buff = json.cooldown_buff
+   local parsed_duration = self._options and self._options.parsed_duration
    local duration = self._options and self._options.duration or json.duration
-   self._default_duration = duration and self:_parse_duration(duration)
+   self._default_duration = parsed_duration or (duration and self:_parse_duration(duration))
    self._extend_duration = json.extend_duration and self:_parse_duration(json.extend_duration)
 
    -- serialize to the client for display
@@ -214,8 +215,11 @@ function AceBuff:on_repeat_add(options)
    end
 
    -- if passed a duration override, make sure we set that
+   local parsed_duration = options and options.parsed_duration
    local duration = options and options.duration
-   if duration then
+   if parsed_duration then
+      self._default_duration = parsed_duration
+   elseif duration then
       self._default_duration = self:_parse_duration(duration)
    end
 

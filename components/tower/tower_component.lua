@@ -201,7 +201,8 @@ function TowerComponent:_initialize(equipment_changed)
          self:set_preferred_target_types({})
       end
 
-      self._attack_types = self._weapon_data and stonehearth.combat:get_combat_actions(self._entity, 'stonehearth:combat:ranged_attacks') or {}
+      self._combat_state:recompile_combat_actions('stonehearth:combat:ranged_attacks')
+      self._attack_types = self._weapon_data and self._combat_state:get_combat_actions('stonehearth:combat:ranged_attacks') or {}
       self:_register()
    end
 end

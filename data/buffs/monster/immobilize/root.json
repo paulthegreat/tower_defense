@@ -2,7 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "immobilize",
-   "ordinal": 1,
+   "ordinal": 2,
    "display_name": "i18n(tower_defense:data.buffs.root.display_name)",
    "description": "i18n(tower_defense:data.buffs.root.description)",
    "icon": "file(root.png)",
