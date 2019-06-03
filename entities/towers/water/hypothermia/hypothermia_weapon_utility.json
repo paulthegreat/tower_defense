@@ -3,8 +3,8 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.sunburst.weapon_damage.display_name)",
-         "description": "i18n(tower_defense:entities.towers.sunburst.weapon_damage.description)"
+         "display_name": "i18n(tower_defense:entities.towers.hypothermia.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.hypothermia.weapon_utility.description)"
       },
       "stonehearth:combat:weapon_data": {
          "targeting": {
@@ -12,34 +12,32 @@
             "radius": 6,
             "attacks_ground": true,
             "attacks_air": true,
-            "reveals_invis": true
+            "reveals_invis": false
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "reveal": {
-               "uri": "tower_defense:buffs:monster:reveal:normal",
+            "wound": {
+               "uri": "tower_defense:buffs:monster:wound:normal",
                "chance": 1
             },
-            "burning": {
-               "uri": "tower_defense:buffs:monster:burning:normal",
+            "slow": {
+               "uri": "tower_defense:buffs:monster:slow:major",
                "chance": 1
             }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "sunburst",
-            "effect": "tower_defense:effects:fire_particles",
-            "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 30,
+            "name": "hypothermia",
+            "effect": "tower_defense:effects:water_particles",
+            "hit_effect": "tower_defense:effects:water_particles",
+            "base_damage": 125,
             "damage_type": "magical",
             "attack_times": [
-               500,
-               1000,
-               1500
+               500
             ],
-            "cooldown": 2500,
+            "cooldown": 2000,
             "priority": 0
          }
       ]

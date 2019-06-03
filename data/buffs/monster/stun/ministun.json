@@ -6,8 +6,14 @@
    "display_name": "i18n(tower_defense:data.buffs.ministun.display_name)",
    "description": "i18n(tower_defense:data.buffs.ministun.description)",
    "icon": "file(ministun.png)",
-   "repeat_add_action": "renew_duration",
-   "duration": 400,
+   "repeat_add_action": "extend_duration",
+   "duration": 500,
+   "diminishing_returns": {
+      "by_category": true,
+      "times_until_disabled": 3,
+      "duration_reduction": 150,
+      "reset_time": 8000
+   },
    "modifiers": {
       "stunned": {
          "add": 1

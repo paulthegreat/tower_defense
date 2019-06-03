@@ -1,0 +1,53 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.12
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/decoration/bird_bath/bird_bath.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:hypothermia:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:hypothermia:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:hypothermia:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.hypothermia.display_name)",
+         "description": "i18n(tower_defense:entities.towers.hypothermia.description)",
+         "icon": "/stonehearth/entities/decoration/bird_bath/bird_bath.png",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["water"],
+         "level": 2,
+         "ordinal": 203,
+         "cost": {
+            "gold": 220
+         }
+      }
+   }
+}

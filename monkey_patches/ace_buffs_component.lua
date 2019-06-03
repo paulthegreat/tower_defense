@@ -21,6 +21,9 @@ function AceBuffsComponent:activate()
    if not self._sv.managed_properties then
       self._sv.managed_properties = {}
    end
+   if not self._sv.diminishing_returns then
+      self._sv.diminishing_returns = {}
+   end
 
    if self._ace_old_activate then
       self:_ace_old_activate()
@@ -82,6 +85,69 @@ function AceBuffsComponent:get_buff_duration(uri)
    return buff and buff:get_duration()
 end
 
+function AceBuffsComponent:is_buff_diminishing_disabled(uri)
+   local json = radiant.resources.load_json(uri, true)
+   local is_disabled = self:_is_buff_diminishing_disabled(json, now)
+   return is_disabled   -- only return the true/false value of whether it's disabled, not the additional values
+end
+
+function AceBuffsComponent:_is_buff_diminishing_disabled(json, now)
+   local reset_time
+   local duration
+   if json.diminishing_returns and json.duration then
+      -- if this buff has diminishing returns, check to see if it can no longer be applied
+      now = now or stonehearth.calendar:get_elapsed_time()
+
+      local current_dr
+      if json.diminishing_returns.by_category and json.category then
+         current_dr = self._sv.diminishing_returns[json.category]
+      else
+         current_dr = self._sv.diminishing_returns[uri]
+      end
+
+      reset_time = json.diminishing_returns.reset_time and self:_parse_duration(json.diminishing_returns.reset_time)
+      if reset_time and current_dr and current_dr.reset_time then
+         if reset_time + current_dr.reset_time < now then
+            current_dr = nil  -- reset time has passed, so ignore stored dr data (it will get overwritten if this buff is applied)
+         end
+      end
+
+      if current_dr and json.diminishing_returns.times_until_disabled and current_dr.times >= json.diminishing_returns.times_until_disabled then
+         return true -- this buff wouldn't be applied due to diminishing returns
+      end
+
+      duration = self:_parse_duration(json.duration)
+
+      if current_dr then
+         if json.diminishing_returns.duration_multiplier then
+            for i = 1, current_dr.times do
+               duration = duration * json.diminishing_returns.duration_multiplier
+            end
+         elseif json.diminishing_returns.duration_reduction then
+            local duration_reduction = self:_parse_duration(json.diminishing_returns.duration_reduction)
+            duration = duration - duration_reduction * current_dr.times
+         end
+      end
+
+      local expire_time = now + duration
+      -- check existing buffs to see if one will already be lasting longer
+      local buffs_to_check
+      if json.diminishing_returns.by_category and json.category then
+         buffs_to_check = self._sv.buffs_by_category[json.category] or {}
+      else
+         buffs_to_check = {self._sv.buffs[uri]}
+      end
+      for _, buff in pairs(buffs_to_check) do
+         local buff_expiration = buff:get_expire_time()
+         if buff_expiration and buff_expiration >= expire_time then
+            return true -- this buff would be expiring before an existing buff with the same diminishing returns
+         end
+      end
+   end
+
+   return false, reset_time, duration
+end
+
 function AceBuffsComponent:add_buff(uri, options)
    assert(not string.find(uri, '%.'), 'tried to add a buff with a uri containing "." Use an alias instead')
 
@@ -101,6 +167,17 @@ function AceBuffsComponent:add_buff(uri, options)
 
    options = options or {}
    options.stacks = options.stacks or 1
+
+   local now = stonehearth.calendar:get_elapsed_time()
+   -- if this buff has diminishing returns, check to see if it should currently be applied
+   local is_dr_disabled, reset_time, duration = self:_is_buff_diminishing_disabled(json, now)
+   if is_dr_disabled then
+      return -- don't add this buff if it's hit disabled status
+   end
+
+   if duration then
+      options.duration = duration
+   end
 
    if json.category then
       local buffs_by_category = self._sv.buffs_by_category[json.category]
@@ -125,6 +202,32 @@ function AceBuffsComponent:add_buff(uri, options)
       end
 
       buffs_by_category[uri] = true
+   end
+
+   if json.diminishing_returns then
+      if json.category then
+         local current_dr = self._sv.diminishing_returns[json.category]
+         if not current_dr then
+            current_dr = {
+               times = 1
+            }
+            self._sv.diminishing_returns[json.category] = current_dr
+         else
+            current_dr.times = current_dr.times + 1
+         end
+         current_dr.reset_time = reset_time and (reset_time + now)
+      end
+
+      current_dr = self._sv.diminishing_returns[uri]
+      if not current_dr then
+         current_dr = {
+            times = 1
+         }
+         self._sv.diminishing_returns[uri] = current_dr
+      else
+         current_dr.times = current_dr.times + 1
+      end
+      current_dr.reset_time = reset_time and (reset_time + now)
    end
 
    local buff
@@ -366,6 +469,14 @@ end
 
 function AceBuffsComponent:_category_is_disallowed(category)
    return self._sv.disallowed_categories[category] ~= nil
+end
+
+function AceBuffsComponent:_parse_duration(duration)
+   if type(duration) == 'number' then
+      return stonehearth.calendar:realtime_to_game_seconds(duration, true)
+   else
+      return stonehearth.calendar:parse_duration(duration)
+   end
 end
 
 return AceBuffsComponent

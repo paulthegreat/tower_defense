@@ -1,0 +1,48 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower_weapon",
+   "type": "entity",
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.spore_spreader.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.spore_spreader.weapon_damage.description)"
+      },
+      "stonehearth:combat:weapon_data": {
+         "targeting": {
+            "type": "circle",
+            "radius": 5,
+            "attacks_ground": true,
+            "attacks_air": true,
+            "reveals_invis": false
+         }
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "poison": {
+               "uri": "tower_defense:buffs:monster:poison:major",
+               "chance": 1
+            }
+         }
+      },
+      "stonehearth:combat:ranged_attacks": [
+         {
+            "name": "spore_spreader",
+            "effect": "tower_defense:effects:plant_particles",
+            "base_damage": 35,
+            "aoe": {
+               "range": 1
+            },
+            "projectile": {
+               "speed": 6,
+               "uri": "tower_defense:projectiles:turnip_bullet",
+               "start_offset": { "x": 0, "y": 0.6, "z": 0 },
+               "end_offset": { "x": 0, "y": 0.5, "z": 0 }
+            },
+            "attack_times": [
+               500
+            ],
+            "cooldown": 1500,
+            "priority": 0
+         }
+      ]
+   }
+}

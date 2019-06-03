@@ -1,14 +1,14 @@
 {
    "type": "buff",
    "axis": "debuff",
-   "category": "stun",
+   "category": "immobilize",
    "ordinal": 1,
-   "display_name": "i18n(tower_defense:data.buffs.freeze.display_name)",
-   "description": "i18n(tower_defense:data.buffs.freeze.description)",
-   "icon": "file(freeze.png)",
+   "display_name": "i18n(tower_defense:data.buffs.root.display_name)",
+   "description": "i18n(tower_defense:data.buffs.root.description)",
+   "icon": "file(root.png)",
    "repeat_add_action": "extend_duration",
    "duration": 2000,
-   "effect": "tower_defense:effects:ice_cube",
+   "effect": "tower_defense:effects:root",
    "reapply_effect": true,
    "diminishing_returns": {
       "by_category": true,
@@ -17,8 +17,8 @@
       "reset_time": 8000
    },
    "modifiers": {
-      "stunned": {
-         "add": 1
+      "speed": {
+         "multiply": 0
       }
    }
 }

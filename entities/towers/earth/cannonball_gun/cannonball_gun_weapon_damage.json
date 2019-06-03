@@ -22,7 +22,7 @@
          {
             "name": "cannonball_gun",
             "effect": "tower_defense:effects:earth_particles",
-            "base_damage": 100,
+            "base_damage": 180,
             "aoe": {
                "range": 1
             },

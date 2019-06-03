@@ -250,11 +250,19 @@
          },
          "freeze": {
             "display_name": "Frozen",
-            "description": "Stunned for 2 seconds"
+            "description": "Stunned for 2 seconds (diminishing returns)"
          },
          "ministun": {
             "display_name": "Ministun",
-            "description": "Very briefly stunned"
+            "description": "Very briefly stunned (diminishing returns)"
+         },
+         "root": {
+            "display_name": "Rooted",
+            "description": "Immobilized for 2 seconds (diminishing returns)"
+         },
+         "vortex": {
+            "display_name": "Vortex",
+            "description": "Immobilized for 2 seconds (diminishing returns)"
          },
          "mortal_wound": {
             "display_name": "Mortal Wound",
@@ -530,6 +538,22 @@
                "description": "Moderate damage, a quick attack, inflicts minor poison"
             }
          },
+         "spore_spreader": {
+            "display_name": "Spore Spreader",
+            "description": "Launches slow-traveling projectiles that explode with poison",
+            "weapon": {
+               "description": "Launches slow-traveling projectiles that explode with poison",
+               "display_name": "Base Tower"
+            },
+            "weapon_damage": {
+               "description": "Applies major poison instead",
+               "display_name": "Damage Upgrade"
+            },
+            "weapon_utility": {
+               "description": "Reduces damage, but increases splash range",
+               "display_name": "Utility Upgrade"
+            }
+         },
          "sunflower_plant": {
             "display_name": "Sunflower",
             "description": "Spits its seed at up to 5 targets at once, inflicting major poison",
@@ -614,19 +638,35 @@
                "display_name": "Utility Upgrade"
             }
          },
+         "hypothermia": {
+            "display_name": "Hypothermia",
+            "description": "Moderate damage and applies normal wound",
+            "weapon": {
+               "description": "Moderate damage and applies normal wound",
+               "display_name": "Base Tower"
+            },
+            "weapon_damage": {
+               "description": "Applies minor wound and major wound instead",
+               "display_name": "Damage Upgrade"
+            },
+            "weapon_utility": {
+               "description": "Also applies major slow",
+               "display_name": "Utility Upgrade"
+            }
+         },
          "heart_of_ice": {
             "display_name": "Heart of Ice",
             "description": "Fast attack that applies major slow and a chance of freezing",
             "weapon": {
-               "description": "Fast attack with moderate damage that applies major slow and has a 20% chance of freezing",
+               "description": "Fast attack with good damage that applies major slow and has a 50% chance of freezing",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies mortal wound, but only has a 10% chance of freezing",
+               "description": "Attacks 2 targets and has 100% chance of freezing",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Increases chance of freezing to 90%",
+               "description": "Also applies mortal wound",
                "display_name": "Utility Upgrade"
             }
          },
@@ -662,7 +702,7 @@
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies major armor piercing in passive aoe",
+               "description": "Also applies normal armor piercing in passive aoe",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
@@ -683,6 +723,22 @@
             },
             "weapon_utility": {
                "description": "Also applies major armor piercing",
+               "display_name": "Utility Upgrade"
+            }
+         },
+         "vortex": {
+            "display_name": "Vortex",
+            "description": "Moderate attack that immobilizes an air target",
+            "weapon": {
+               "description": "Moderate attack that immobilizes an air target",
+               "display_name": "Base Tower"
+            },
+            "weapon_damage": {
+               "description": "Significantly increases damage",
+               "display_name": "Damage Upgrade"
+            },
+            "weapon_utility": {
+               "description": "Immobilizes in small aoe",
                "display_name": "Utility Upgrade"
             }
          },
@@ -734,7 +790,7 @@
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies major burning",
+               "description": "Also applies normal burning and attacks 3 times",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
@@ -755,6 +811,22 @@
             },
             "weapon_utility": {
                "description": "Also applies normal armor piercing",
+               "display_name": "Utility Upgrade"
+            }
+         },
+         "burning_lash": {
+            "display_name": "Burning Lash",
+            "description": "Moderate damage and quickly applies normal burning",
+            "weapon": {
+               "description": "Moderate damage and quickly applies normal burning",
+               "display_name": "Base Tower"
+            },
+            "weapon_damage": {
+               "description": "Applies major burning instead and reduces cooldown",
+               "display_name": "Damage Upgrade"
+            },
+            "weapon_utility": {
+               "description": "Reduces initial damage, but attacks 2 targets and hits 3 times",
                "display_name": "Utility Upgrade"
             }
          },
@@ -823,6 +895,22 @@
             },
             "weapon_utility": {
                "description": "Also applies minor magic armor piercing and minor slow",
+               "display_name": "Utility Upgrade"
+            }
+         },
+         "boulder_hurler": {
+            "display_name": "Boulder Hurler",
+            "description": "Moderate multi-targeted AOE damage",
+            "weapon": {
+               "description": "Moderate multi-targeted AOE damage",
+               "display_name": "Base Tower"
+            },
+            "weapon_damage": {
+               "description": "Also applies major magic armor piercing",
+               "display_name": "Damage Upgrade"
+            },
+            "weapon_utility": {
+               "description": "Also immobilizes",
                "display_name": "Utility Upgrade"
             }
          },

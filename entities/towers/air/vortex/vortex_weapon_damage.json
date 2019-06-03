@@ -3,33 +3,32 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.duster.weapon_damage.display_name)",
-         "description": "i18n(tower_defense:entities.towers.duster.weapon_damage.description)"
+         "display_name": "i18n(tower_defense:entities.towers.vortex.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.vortex.weapon_damage.description)"
       },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 7,
-            "attacks_ground": true,
+            "radius": 4,
+            "attacks_ground": false,
             "attacks_air": true,
-            "reveals_invis": true,
-            "sees_invis": true
+            "reveals_invis": false
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "ministun": {
-               "uri": "tower_defense:buffs:monster:armor_piercing:normal",
+            "immobilize": {
+               "uri": "tower_defense:buffs:monster:immobilize:vortex",
                "chance": 1
             }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "duster",
+            "name": "vortex",
             "effect": "tower_defense:effects:air_particles",
-            "hit_effect": "tower_defense:effects:air_particles",
-            "num_targets": 999,
+            "hit_effect": "/stonehearth/data/effects/hit_sparks/dust_poof.json",
+            "base_damage": 200,
             "attack_times": [
                500
             ],

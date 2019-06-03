@@ -21,20 +21,9 @@ function AceBuff:activate()
 
    local json = rawget(self, '_json')
    self._cooldown_buff = json.cooldown_buff
-   if json.duration then
-      if type(json.duration) == 'number' then
-         self._default_duration = stonehearth.calendar:realtime_to_game_seconds(json.duration, true)
-      else
-         self._default_duration = stonehearth.calendar:parse_duration(json.duration)
-      end
-   end
-   if json.extend_duration then
-      if type(json.extend_duration) == 'number' then
-         self._extend_duration = stonehearth.calendar:realtime_to_game_seconds(json.extend_duration, true)
-      else
-         self._extend_duration = stonehearth.calendar:parse_duration(json.extend_duration)
-      end
-   end
+   local duration = self._options and self._options.duration or json.duration
+   self._default_duration = duration and self:_parse_duration(duration)
+   self._extend_duration = json.extend_duration and self:_parse_duration(json.extend_duration)
 
    -- serialize to the client for display
    local sv = rawget(self, '_sv')
@@ -140,6 +129,10 @@ function AceBuff:get_max_stacks()
    return self._sv.max_stacks
 end
 
+function AceBuff:get_expire_time()
+   return self._sv.expire_time
+end
+
 function AceBuff:get_duration()
    local expire_time = self._sv.expire_time
    return expire_time and (expire_time - stonehearth.calendar:get_elapsed_time()) or -1
@@ -220,6 +213,12 @@ function AceBuff:on_repeat_add(options)
       self:_create_effect(self._json.effect)
    end
 
+   -- if passed a duration override, make sure we set that
+   local duration = options and options.duration
+   if duration then
+      self._default_duration = self:_parse_duration(duration)
+   end
+
    if repeat_add_action == 'renew_duration' then
       self:_destroy_timer()
       self:_create_timer()
@@ -248,6 +247,14 @@ function AceBuff:on_repeat_add(options)
    end
 
    return success
+end
+
+function AceBuff:_parse_duration(duration)
+   if type(duration) == 'number' then
+      return stonehearth.calendar:realtime_to_game_seconds(duration, true)
+   else
+      return stonehearth.calendar:parse_duration(duration)
+   end
 end
 
 return AceBuff

@@ -3,24 +3,20 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.sunburst.weapon_damage.display_name)",
-         "description": "i18n(tower_defense:entities.towers.sunburst.weapon_damage.description)"
+         "display_name": "i18n(tower_defense:entities.towers.burning_lash.weapon_utility.display_name)",
+         "description": "i18n(tower_defense:entities.towers.burning_lash.weapon_utility.description)"
       },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 6,
+            "radius": 5,
             "attacks_ground": true,
             "attacks_air": true,
-            "reveals_invis": true
+            "reveals_invis": false
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "reveal": {
-               "uri": "tower_defense:buffs:monster:reveal:normal",
-               "chance": 1
-            },
             "burning": {
                "uri": "tower_defense:buffs:monster:burning:normal",
                "chance": 1
@@ -29,17 +25,16 @@
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "sunburst",
+            "name": "burning_lash",
             "effect": "tower_defense:effects:fire_particles",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 30,
+            "base_damage": 20,
             "damage_type": "magical",
+            "num_targets": 2,
             "attack_times": [
-               500,
-               1000,
-               1500
+               400, 800, 1200
             ],
-            "cooldown": 2500,
+            "cooldown": 1500,
             "priority": 0
          }
       ]

@@ -20,7 +20,7 @@
          "inflictable_debuffs": {
             "freeze": {
                "uri": "tower_defense:buffs:monster:stun:freeze",
-               "chance": 0.2
+               "chance": 0.5
             },
             "slow": {
                "uri": "tower_defense:buffs:monster:slow:major",
@@ -33,7 +33,7 @@
             "name": "heart_of_ice",
             "effect": "stonehearth:effects:wet_stone_weep",
             "hit_effect": "tower_defense:effects:water_particles",
-            "base_damage": 80,
+            "base_damage": 160,
             "damage_type": "magical",
             "attack_times": [
                400

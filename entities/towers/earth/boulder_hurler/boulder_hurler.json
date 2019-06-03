@@ -1,0 +1,53 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.1
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "/stonehearth/entities/resources/copper/copper_ore/copper_ore.qb"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:boulder_hurler:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:boulder_hurler:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:boulder_hurler:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.boulder_hurler.display_name)",
+         "description": "i18n(tower_defense:entities.towers.boulder_hurler.description)",
+         "icon": "/stonehearth/entities/resources/copper/copper_ore/copper_ore.png",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["earth"],
+         "level": 2,
+         "ordinal": 203,
+         "cost": {
+            "gold": 160
+         }
+      }
+   }
+}

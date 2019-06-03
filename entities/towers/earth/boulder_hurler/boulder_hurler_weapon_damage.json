@@ -3,40 +3,40 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.frost_blast.weapon_damage.display_name)",
-         "description": "i18n(tower_defense:entities.towers.frost_blast.weapon_damage.description)"
+         "display_name": "i18n(tower_defense:entities.towers.boulder_hurler.weapon_damage.display_name)",
+         "description": "i18n(tower_defense:entities.towers.boulder_hurler.weapon_damage.description)"
       },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 6,
+            "radius": 5,
             "attacks_ground": true,
-            "attacks_air": true,
+            "attacks_air": false,
             "reveals_invis": false
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "slow": {
-               "uri": "tower_defense:buffs:monster:slow:normal",
+            "magic_armor_piercing": {
+               "uri": "tower_defense:buffs:monster:magic_armor_piercing:major",
                "chance": 1
             }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "frost_blast",
-            "effect": "tower_defense:effects:water_particles",
-            "hit_effect": "tower_defense:effects:water_particles",
+            "name": "boulder_hurler",
+            "effect": "tower_defense:effects:earth_particles",
+            "hit_effect": "tower_defense:effects:earth_particles",
             "base_damage": 60,
-            "damage_type": "magical",
+            "num_targets": 4,
             "aoe": {
-               "range": 1.5
+               "range": 1
             },
             "attack_times": [
-               300
+               800
             ],
-            "cooldown": 1500,
+            "cooldown": 2500,
             "priority": 0
          }
       ]

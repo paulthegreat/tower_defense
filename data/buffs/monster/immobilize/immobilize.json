@@ -1,0 +1,22 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "category": "immobilize",
+   "ordinal": 1,
+   "display_name": "i18n(tower_defense:data.buffs.immobilize.display_name)",
+   "description": "i18n(tower_defense:data.buffs.immobilize.description)",
+   "icon": "file(immobilize.png)",
+   "repeat_add_action": "extend_duration",
+   "duration": 2000,
+   "diminishing_returns": {
+      "by_category": true,
+      "times_until_disabled": 3,
+      "duration_multiplier": 0.5,
+      "reset_time": 8000
+   },
+   "modifiers": {
+      "speed": {
+         "multiply": 0
+      }
+   }
+}

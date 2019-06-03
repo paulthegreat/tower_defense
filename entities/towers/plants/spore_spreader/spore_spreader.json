@@ -1,0 +1,58 @@
+{
+   "mixins": "tower_defense:mixins:towers:basic_tower",
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "scale": 0.06
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "file(winter_morel.qb)"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 },
+         "region_origin": { "x": 0.5, "y": 0, "z": 0.5 }
+      },
+      "stonehearth:buffs": {
+         "buffs": {
+            "tower_defense:buffs:tower:plant_grower": true
+         }
+      },
+      "tower_defense:tower": {
+         "default_weapon": "tower_defense:towers:spore_spreader:weapon",
+         "upgrades": {
+            "damage": {
+               "uri": "tower_defense:towers:spore_spreader:weapon_damage",
+               "cost": {
+                  "wood": 3
+               }
+            },
+            "utility": {
+               "uri": "tower_defense:towers:spore_spreader:weapon_utility",
+               "cost": {
+                  "wood": 3
+               }
+            }
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:catalog": {
+         "display_name": "i18n(tower_defense:entities.towers.spore_spreader.display_name)",
+         "description": "i18n(tower_defense:entities.towers.spore_spreader.description)",
+         "icon": "file(winter_morel.png)",
+         "material_tags": ["ground"]
+      },
+      "tower_defense:tower_data": {
+         "kingdoms": ["plant"],
+         "level": 2,
+         "ordinal": 203,
+         "cost": {
+            "gold": 175
+         }
+      }
+   }
+}

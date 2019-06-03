@@ -3,8 +3,8 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.frost_blast.weapon_utility.display_name)",
-         "description": "i18n(tower_defense:entities.towers.frost_blast.weapon_utility.description)"
+         "display_name": "i18n(tower_defense:entities.towers.hypothermia.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.hypothermia.weapon.description)"
       },
       "stonehearth:combat:weapon_data": {
          "targeting": {
@@ -12,33 +12,29 @@
             "radius": 6,
             "attacks_ground": true,
             "attacks_air": true,
-            "reveals_invis": false
+            "reveals_invis": false,
+            "defaults": "debuff_spread"
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "slow": {
-               "uri": "tower_defense:buffs:monster:slow:normal",
+            "wound": {
+               "uri": "tower_defense:buffs:monster:wound:normal",
                "chance": 1
             }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "frost_blast",
+            "name": "hypothermia",
             "effect": "tower_defense:effects:water_particles",
             "hit_effect": "tower_defense:effects:water_particles",
-            "base_damage": 60,
+            "base_damage": 125,
             "damage_type": "magical",
-            "aoe": {
-               "range": 2.5,
-               "base_damage": 0,
-               "hits_ground_and_air": true
-            },
             "attack_times": [
-               300
+               500
             ],
-            "cooldown": 1500,
+            "cooldown": 2000,
             "priority": 0
          }
       ]

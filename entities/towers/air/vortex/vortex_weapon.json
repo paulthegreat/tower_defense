@@ -3,38 +3,37 @@
    "type": "entity",
    "entity_data": {
       "stonehearth:catalog": {
-         "display_name": "i18n(tower_defense:entities.towers.sunburst.weapon.display_name)",
-         "description": "i18n(tower_defense:entities.towers.sunburst.weapon.description)"
+         "display_name": "i18n(tower_defense:entities.towers.vortex.weapon.display_name)",
+         "description": "i18n(tower_defense:entities.towers.vortex.weapon.description)"
       },
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 6,
-            "attacks_ground": true,
+            "radius": 4,
+            "attacks_ground": false,
             "attacks_air": true,
-            "reveals_invis": true,
+            "reveals_invis": false,
             "defaults": "debuff_spread"
          }
       },
       "stonehearth:buffs": {
          "inflictable_debuffs": {
-            "reveal": {
-               "uri": "tower_defense:buffs:monster:reveal:normal",
+            "immobilize": {
+               "uri": "tower_defense:buffs:monster:immobilize:vortex",
                "chance": 1
             }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
-            "name": "sunburst",
-            "effect": "tower_defense:effects:fire_particles",
-            "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 30,
-            "damage_type": "magical",
+            "name": "vortex",
+            "effect": "tower_defense:effects:air_particles",
+            "hit_effect": "/stonehearth/data/effects/hit_sparks/dust_poof.json",
+            "base_damage": 75,
             "attack_times": [
                500
             ],
-            "cooldown": 2500,
+            "cooldown": 2000,
             "priority": 0
          }
       ]
