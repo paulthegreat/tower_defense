@@ -1125,12 +1125,16 @@
                "give_gold_1000": "Give Gold (1000)",
                "10_description": "Give yourself 10 gold, you cheater.",
                "100_description": "Give yourself 100 gold, you big cheater.",
-               "1000_description": "Give yourself 1000 gold, you big, fat cheater."
+               "1000_description": "Give yourself 1000 gold, you big, gluttonous cheater."
             },
             "give_wood": {
                "display_name": "Give Wood",
                "give_gold_10": "Give Wood (10)",
                "10_description": "Give yourself 10 wood, you cheater."
+            },
+            "unlock_all_kingdom_levels": {
+               "display_name": "Unlock All",
+               "description": "Increase all kingdom levels to 3."
             },
             "reference_menu": {
                "display_name": "Show Reference Window",

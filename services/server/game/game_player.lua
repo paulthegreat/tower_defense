@@ -90,6 +90,12 @@ function GamePlayer:_add_kingdom_level(kingdom)
    self.__saved_variables:mark_changed()
 end
 
+-- this is just used as a cheat function
+function GamePlayer:set_kingdom_level(kingdom, level)
+   self._sv.kingdoms[kingdom] = level
+   self.__saved_variables:mark_changed()
+end
+
 function GamePlayer:get_resource(resource)
    return self._sv[resource]
 end

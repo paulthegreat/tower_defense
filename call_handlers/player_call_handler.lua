@@ -31,4 +31,18 @@ function PlayerCallHandler:unlock_kingdom_command(session, response, kingdom)
    end
 end
 
+function PlayerCallHandler:unlock_all_kingdoms_cheat_command(session, response)
+   local player_id = session.player_id
+   local player = tower_defense.game:get_player(player_id)
+   if player then
+      player:set_kingdom_level('water', 3)
+      player:set_kingdom_level('air', 3)
+      player:set_kingdom_level('fire', 3)
+      player:set_kingdom_level('earth', 3)
+      player:set_kingdom_level('plant', 3)
+   else
+      response:reject('invalid player')
+   end
+end
+
 return PlayerCallHandler

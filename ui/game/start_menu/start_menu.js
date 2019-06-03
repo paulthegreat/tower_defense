@@ -35,6 +35,10 @@ App.StonehearthStartMenuView = App.View.extend({
             radiant.call('tower_defense:give_wood_cheat_command', data.wood_amount);
          }
       },
+      td_unlock_all: function() {
+         // cheat unlock all kingdoms
+         radiant.call('tower_defense:unlock_all_kingdoms_cheat_command');
+      },
       reference_menu: function() {
          //return;  // TODO: actually make the reference view
          var referenceWindow = App.gameView.getView(App.TowerDefenseReferenceView);
