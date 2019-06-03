@@ -8,7 +8,7 @@
    "icon": "file(vortex.png)",
    "repeat_add_action": "extend_duration",
    "duration": 2000,
-   "effect": "tower_defense:effects:vortex",
+   "effect": "tower_defense:effects:air_swirl",
    "reapply_effect": true,
    "diminishing_returns": {
       "by_category": true,
