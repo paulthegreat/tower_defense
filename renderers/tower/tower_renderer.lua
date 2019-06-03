@@ -25,26 +25,18 @@ function TowerRenderer:initialize(render_entity, datastore)
                self:_update()
             end)
          :push_object_state()
-   end
-
-   local data
-   if self._datastore.get_data then
-      data = self._datastore:get_data()
-   else
-      data = self._datastore._sv
-   end
-
-   if data.is_client_entity then
+   elseif self._datastore._sv.is_client_entity then
       local location = radiant.entities.get_location_aligned(self._entity)
       self._location_trace = radiant.entities.trace_location(self._entity, 'tower placement location changed')
          :on_changed(function()
                local new_location = radiant.entities.get_location_aligned(self._entity)
                --log:debug('tower %s location changed from %s to %s', self._entity, tostring(location), tostring(new_location))
-               if location == Point3.zero and location ~= new_location then
+               if location ~= new_location and (location == Point3.zero or location == Point3(0, -100000, 0)) then
                   location = new_location
                   self:_update()
                end
             end)
+         :push_object_state()
    end
 end
 

@@ -784,9 +784,9 @@
          },
          "sunburst": {
             "display_name": "Sunburst",
-            "description": "Passively reveals in full range and permanently reveals attacked targets",
+            "description": "Passively reveals in full range and further reveals attacked targets",
             "weapon": {
-               "description": "Passively reveals in full range and permanently reveals attacked targets",
+               "description": "Passively reveals in full range and applies normal reveal to attacked targets",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -794,7 +794,7 @@
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Significantly reduces cooldown",
+               "description": "Reduces cooldown, attacks 2 targets, and permanently reveals attacked targets",
                "display_name": "Utility Upgrade"
             }
          },

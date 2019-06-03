@@ -134,13 +134,13 @@ var tower_defense = {
             this._getAttackTypes(t.attacks_ground || aoe.hits_ground_and_air, t.attacks_air || aoe.hits_ground_and_air));
          var secondary_damage = aoe.base_damage != null ? aoe.base_damage : a.base_damage;
          if (secondary_damage != null) {
-            aoe.damage_type = aoe.damage_type || 'physical';
+            aoe.damage_type = aoe.damage_type || a.damage_type || 'physical';
             s += this._getLine(this._getDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.aoe_damage_title'),
                   this._compareProperties(weaponData, original, ['tower_weapon_attack_info.aoe.damage_type']) &&
                   !original || (secondary_damage == (original.tower_weapon_attack_info && ((original.tower_weapon_attack_info.aoe &&
                      original.tower_weapon_attack_info.aoe.base_damage) != null ? original.tower_weapon_attack_info.aoe.base_damage :
                      original.tower_weapon_attack_info.base_damage)))),
-               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', {base_damage: secondary_damage, damage_type: aoe.damage_type}));
+               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', {base_damage: secondary_damage, damage_type: secondary_damage > 0 && aoe.damage_type}));
          }
       }
 
