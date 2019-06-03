@@ -1,0 +1,19 @@
+{
+   "type" : "effect",
+   "tracks": {
+      "glow": {
+         "type": "cubemitter",
+         "cubemitter": "/tower_defense/data/effects/air_swirl.cubemitter.json",
+         "start_time" : 0,
+         "end_time" : 2000,
+         "transforms": {
+            "x":0,
+            "y":0,
+            "z":0,
+            "rx":90,
+            "ry":0,
+            "rz":0
+         }
+      }
+   }
+} 
