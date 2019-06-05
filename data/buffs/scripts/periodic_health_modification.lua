@@ -78,7 +78,7 @@ function PeriodicHealthModificationBuff:_on_pulse(buff)
    end
 
    if self._tuning.damage and health_change < 0 and self._entity:get_component('tower_defense:monster') then
-      local inflicters = buff:get_inflicters()
+      local inflicters = buff:get_current_inflicters()
       if inflicters then
          local valid_inflicters = {}
          local total = 0

@@ -77,8 +77,47 @@ end
 
 function AceBuff:_update_inflicters(inflicter, stacks)
    if inflicter then
-      self._sv._inflicters[inflicter] = (self._sv._inflicters[inflicter] or 0) + (stacks or 1)
+      local repeat_add_action = self._json.repeat_add_action
+      -- if we're simply refreshing duration, replace existing inflicters with this one
+      if repeat_add_action == 'renew_duration' then
+         self._sv._inflicters = {[inflicter] = 1}
+
+      elseif repeat_add_action == 'extend_duration' then
+         -- if we're extending duration, set the expire time after which this inflicter is no longer inflicting
+         local now = stonehearth.calendar:get_elapsed_time()
+         table.insert(self._sv._inflicters, {
+            inflicter = inflicter,
+            start_time = self._sv.expire_time or now,
+            end_time = (self._sv.expire_time or now) + (self._extend_duration or self._default_duration)
+         })
+
+      elseif repeat_add_action == 'stack_and_refresh' then
+         -- if we're stacking and refreshing, increase number of stacks
+         self._sv._inflicters[inflicter] = (self._sv._inflicters[inflicter] or 0) + (stacks or 1)
+      end
+
       self.__saved_variables:mark_changed()
+   end
+end
+
+function AceBuff:get_current_inflicters()
+   -- interpret the inflicters based on repeat add action, returning a table of currently relevant inflicters and weights
+   local inflicters = {}
+
+   local repeat_add_action = self._json.repeat_add_action
+   if repeat_add_action == 'renew_duration' or repeat_add_action == 'stack_and_refresh' then
+      return self._sv._inflicters
+
+   elseif repeat_add_action == 'extend_duration' then
+      -- if we're extending duration, remove inflicters until the current time is within an inflicter's range and return that one
+      local now = stonehearth.calendar:get_elapsed_time()
+      for i, entry in ipairs(self._sv._inflicters) do
+         if entry.end_time < now then
+            table.remove(self._sv._inflicters, i)
+         elseif entry.start_time <= now then
+            return {[entry.inflicter] = 1}
+         end
+      end
    end
 end
 
@@ -207,8 +246,6 @@ function AceBuff:on_repeat_add(options)
    local success = false
    local repeat_add_action = self._json.repeat_add_action
 
-   self:_update_inflicters(options.inflicter, options.stacks)
-
    if self._json.effect and self._json.reapply_effect then
       self:_destroy_effect()
       self:_create_effect(self._json.effect)
@@ -222,6 +259,8 @@ function AceBuff:on_repeat_add(options)
    elseif duration then
       self._default_duration = self:_parse_duration(duration)
    end
+
+   self:_update_inflicters(options.inflicter, options.stacks)
 
    if repeat_add_action == 'renew_duration' then
       self:_destroy_timer()
