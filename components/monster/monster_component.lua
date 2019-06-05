@@ -26,6 +26,11 @@ function MonsterComponent:activate()
       return math.abs(p1.x - p2.x) + math.abs(p1.z - p2.z)
    end
 
+   -- could consider a stronger check; would need to if allowing non-orthogonal path segments (e.g., simply reversing direction)
+   local points_are_inline = function(p, p1, p2)
+      return p and p1 and p2 and ((p.x == p1.x and p.x == p2.x) or (p.z == p1.z and p.z == p2.z))
+   end
+
    local mob = self._entity:get_component('mob')
    self._location_trace = radiant.entities.trace_location(self._entity, 'monster moved')
       :on_changed(function()
@@ -46,7 +51,13 @@ function MonsterComponent:activate()
             if not next_path_point then
                next_path_point = self._sv._path_points and self._sv._path_points[1]
             end
-            if grid_location == next_path_point then
+            -- also consider if we skipped past the point due to speed
+            -- because paths are collections of line segments, skipping past a point means you're between that point and the next one
+            -- but since we're always removing the last point we crossed and never directly turning around but always turning orthogonally,
+            -- we can simplify to only checking if the current point, the "next" point, and the point following that are in a line
+            -- if so, we skipped over the "next" point and can safely remove it
+            local next_next_path_point = self._sv._path_points and self._sv._path_points[2]
+            if grid_location == next_path_point or points_are_inline(grid_location, next_path_point, next_next_path_point) then
                table.insert(self._sv._path_traveled_points, table.remove(self._sv._path_points, 1))
                next_path_point = self._sv._path_points[1]
                self.__saved_variables:mark_changed()
