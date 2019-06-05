@@ -88,7 +88,7 @@ function AceBuff:_update_inflicters(inflicter, stacks)
          table.insert(self._sv._inflicters, {
             inflicter = inflicter,
             start_time = self._sv.expire_time or now,
-            end_time = (self._sv.expire_time or now) + (self._extend_duration or self._default_duration)
+            end_time = (self._sv.expire_time or now) + (self._extend_duration or self._default_duration) * (stacks or 1)
          })
 
       elseif repeat_add_action == 'stack_and_refresh' then
@@ -271,7 +271,7 @@ function AceBuff:on_repeat_add(options)
    if not success and repeat_add_action == 'extend_duration' then
       -- assert(self._timer, string.format("Attempting to extend duration when buff %s doesn't have a duration", self._sv.uri))
       if self._sv.expire_time then
-         self._sv.expire_time = self._sv.expire_time + (self._extend_duration or self._default_duration)
+         self._sv.expire_time = self._sv.expire_time + (self._extend_duration or self._default_duration) * (options.stacks or 1)
       end
       self:_create_timer()
       success = true
