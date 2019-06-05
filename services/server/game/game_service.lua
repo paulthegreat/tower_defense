@@ -24,7 +24,7 @@ function GameService:initialize()
    end
 
    if self._sv.game_options then
-      self._game_options = radiant.resources.load_json(self._sv.game_options.game_mode)
+      self:_load_game_options()
    end
 
    if not self._sv.health then
@@ -120,7 +120,7 @@ function GameService:get_tower_gold_cost_multiplier_command(session, response)
 end
 
 function GameService:get_tower_gold_cost_multiplier()
-   return self._game_options and self._game_options.tower_gold_cost_multiplier or 1
+   return self._tower_gold_cost_multiplier
 end
 
 function GameService:get_game_options()
@@ -128,13 +128,18 @@ function GameService:get_game_options()
 end
 
 function GameService:set_game_options(options)
-   self._game_options = radiant.resources.load_json(options.game_mode)
    self._sv.game_options = options
+   self:_load_game_options()
    if self._game_options.starting_health then
       self._sv.health = self._game_options.starting_health
    end
    self.__saved_variables:mark_changed()
    stonehearth.weather:start(options.game_mode)
+end
+
+function GameService:_load_game_options()
+   self._game_options = radiant.resources.load_json(self._sv.game_options.game_mode)
+   self._tower_gold_cost_multiplier = self._game_options.multipliers and self._game_options.multipliers.tower_gold_cost or 1
 end
 
 function GameService:get_ground_spawn_location()
@@ -302,7 +307,7 @@ function GameService:_start_round()
    -- load the wave data, create the controller, and start it up
    local next_wave = self._waves[self._sv.wave]
    if next_wave then
-      local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data)
+      local wave_controller = radiant.create_controller('tower_defense:wave', next_wave, self._sv.map_data, self._game_options)
       self._sv.wave_controller = wave_controller
       self:_create_wave_listeners()
       self._waiting_for_target_cbs = {}

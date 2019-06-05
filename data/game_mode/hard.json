@@ -7,10 +7,15 @@
    "post_selection_text": "i18n(tower_defense:ui.shell.select_game_story.game_modes.hard.post_selection_text)",
    "image": "/stonehearth/data/game_mode/hard/hard.png",
    "starting_resources": {
-      "gold": 15
+      "gold": 25
    },
    "starting_health": 20,
-   "tower_gold_cost_multiplier": 1.25,
+   "multipliers": {
+      "attributes": {
+         "max_health": 1.1
+      },
+      "tower_gold_cost": 1.2
+   },
    "final_wave": 60,
    "weather": {
       "starting_weather": [

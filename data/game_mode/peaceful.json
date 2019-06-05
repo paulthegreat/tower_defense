@@ -11,7 +11,12 @@
       "wood": 2
    },
    "starting_health": 100,
-   "tower_gold_cost_multiplier": 0.75,
+   "multipliers": {
+      "attributes": {
+         "max_health": 0.9
+      },
+      "tower_gold_cost": 0.8
+   },
    "final_wave": 40,
    "weather": {
       "starting_weather": [

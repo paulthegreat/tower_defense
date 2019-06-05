@@ -19,9 +19,10 @@ function Wave:initialize()
    self._sv._queued_spawn_monsters = {}
 end
 
-function Wave:create(wave_data, map_data)
+function Wave:create(wave_data, map_data, game_options)
    self._sv._wave_data = wave_data
    self._sv._map_data = map_data
+   self._sv._game_options = game_options
 
    self._is_create = true
 end
@@ -29,8 +30,20 @@ end
 function Wave:activate()
    self._wave_data = radiant.resources.load_json(self._sv._wave_data.uri)
    self._multipliers = self._sv._wave_data.multipliers or {}
+   self._multipliers.attributes = self._multipliers.attributes or {}
+   self._multipliers.gold_bounty = self._multipliers.gold_bounty or 1
    self._buffs = self._sv._wave_data.buffs or {}
    self._role_overrides = self._sv._wave_data.role_overrides or {}
+
+   local game_multipliers = self._sv._game_options.multipliers
+   if game_multipliers and game_multipliers.attributes then
+      for attr, mult in pairs(game_multipliers.attributes) do
+         self._multipliers.attributes[attr] = (self._multipliers.attributes[attr] or 1) * mult
+      end
+   end
+   if game_multipliers and game_multipliers.gold_bounty then
+      self._multipliers.gold_bounty = self._multipliers.gold_bounty * mult
+   end
    
    if self._sv._next_spawn_timer then
       self._sv._next_spawn_timer:bind(function()
@@ -199,7 +212,7 @@ function Wave:_spawn_monsters(monsters, at_monster_id)
          end
 
          local bounty = radiant.shallow_copy(monster.bounty or {})
-         if bounty.gold and self._multipliers.gold_bounty then
+         if bounty.gold then
             bounty.gold = bounty.gold * self._multipliers.gold_bounty
          end
 
@@ -322,7 +335,7 @@ function Wave:_check_wave_end()
 
       log:debug('wave succeeded!')
       local bonus = radiant.shallow_copy(self._wave_data.completion_bonus or {})
-      if bonus.gold and self._multipliers.gold_bounty then
+      if bonus.gold then
          bonus.gold = bonus.gold * self._multipliers.gold_bounty
       end
       radiant.events.trigger(self, 'tower_defense:wave:succeeded', bonus)
