@@ -1,6 +1,10 @@
+local BatteryContext = require 'stonehearth.services.server.combat.battery_context'
+
 -- Health modification generic class
 --
 local PeriodicHealthModificationBuff = class()
+
+local log = radiant.log.create_logger('periodic_health_modification_buff')
 
 function PeriodicHealthModificationBuff:on_buff_added(entity, buff)
    local json = buff:get_json()
@@ -79,27 +83,43 @@ function PeriodicHealthModificationBuff:_on_pulse(buff)
 
    if self._tuning.damage and health_change < 0 and self._entity:get_component('tower_defense:monster') then
       local inflicters = buff:get_current_inflicters()
+      local valid_inflicters = {}
+      local attacker
       if inflicters then
-         local valid_inflicters = {}
          local total = 0
          for inflicter, count in pairs(inflicters) do
             local tower_comp = inflicter:is_valid() and inflicter:get_component('tower_defense:tower')
             if tower_comp then
                total = total + count
-               table.insert(valid_inflicters, tower_comp)
+               valid_inflicters[tower_comp] = count
+               if not attacker then
+                  attacker = inflicter
+               end
             end
          end
 
          if total > 0 then
-            local damage = math.floor(-health_change / total)
-            for _, tower_comp in ipairs(valid_inflicters) do
-               tower_comp:get_stats():increment_damage(damage, self._tuning.damage_type)
+            local total_damage = -health_change
+            local real_damage = math.min(total_damage, current_health)
+            local damage = math.floor(total_damage / total)
+            for tower_comp, count in pairs(valid_inflicters) do
+               local this_damage = math.min(real_damage, damage * count)
+               real_damage = real_damage - this_damage
+               tower_comp:get_stats():increment_damage(this_damage, self._tuning.damage_type)
             end
          end
       end
+
+      local context = BatteryContext(attacker or self._entity, self._entity, -health_change, self._tuning.damage_type)
+      context.is_periodic_damage = true
+      --log:debug('%s is dealing %s periodic %s damage to %s', context.attacker, -health_change, tostring(self._tuning.damage_type), self._entity)
+      stonehearth.combat:battery(context)
+      return
    end
 
-   radiant.entities.modify_health(self._entity, health_change)
+   if health_change ~= 0 then
+      radiant.entities.modify_health(self._entity, health_change)
+   end
 end
 
 function PeriodicHealthModificationBuff:on_buff_removed(entity, buff)

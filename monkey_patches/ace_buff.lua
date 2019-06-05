@@ -62,12 +62,29 @@ end
 
 AceBuff._ace_old__create_buff = Buff._create_buff
 function AceBuff:_create_buff()
-   self:_ace_old__create_buff()
+   local not_restore = not self._is_restore
+   if self._json.restore_effect or not_restore then
+      self:_create_effect(self._json.effect)
+   end
+
+   self:_update_inflicters(self._options and self._options.inflicter)
+
+   self:_create_timer()
+   self:_restore_modifiers()
+   if not_restore then
+      self:_create_injected_ai()
+      self:_add_properties() -- add new properties when buff is initially created
+   else
+      self:_update_properties_from_json() -- update properties if they've changed (only matters for persistent buffs)
+   end
+
+   self:_set_posture(self._json.set_posture)
+   self:_create_script_controller()
+   self:_add_injected_commands()
 
    -- now do any post-create options
    if self._options then
       local stacks = self._options.stacks and self._options.stacks or 1
-      self:_update_inflicters(self._options.inflicter)
       if stacks > 1 then
          self._options.stacks = stacks - 1
          self:on_repeat_add(self._options)

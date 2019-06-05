@@ -208,22 +208,13 @@ function TowerComponent:_initialize(equipment_changed)
 end
 
 function TowerComponent:_on_target_hit(context)
-   local attacker = context.attacker
-   local target = context.target
-
-   if not target or not target:is_valid() then
-      return nil
+   -- if it's periodic damage, the proper amount has already been added
+   if context.is_periodic_damage then
+      return
    end
 
-   local damage = context.damage
    -- just abusing the BatteryContext's last argument and using it as damage_type, rather than overriding/patching that file
-   self._sv.stats:increment_damage(damage, context.aggro_override)
-
-   --probably a better way to get kills but the 'stonehearth:kill_event' seems to be for when this thing is killed
-   local health = radiant.entities.get_health(target)
-   if health and health<=0 then
-      self._sv.stats:increment_kills(1)
-   end
+   self._sv.stats:increment_damage(context.damage - (context.overkill or 0), context.aggro_override)
 end
 
 function TowerComponent:try_upgrade_tower(upgrade)

@@ -3,11 +3,52 @@ local rng = _radiant.math.get_default_rng()
 local CombatService = require 'stonehearth.services.server.combat.combat_service'
 local TDCombatService = class()
 
+local log = radiant.log.create_logger('combat_service')
+
 local DMG_TYPES = {
    PHYSICAL = 'physical',
    MAGICAL = 'magical',
    PURE = 'pure'
 }
+
+function CombatService:battery(context)
+   local attacker = context.attacker
+   local target = context.target
+
+   if not target or not target:is_valid() then
+      return nil
+   end
+
+   local health = radiant.entities.get_health(target)
+   local damage = context.damage
+
+   if health ~= nil then
+      if health <= 0 then
+      -- if monster is already at/below 0 health, it should be considered dead so don't continue battery
+         return nil
+      end
+      health = health - damage
+      if health <= 0 then
+         context.overkill = -health
+         self:_on_target_killed(attacker, target)
+      end
+
+      -- Modify health after distributing xp and removing components,
+      -- so it does not kill the entity before we have a chance to do that
+      radiant.entities.modify_health(target, -damage)
+   end
+
+   radiant.events.trigger_async(attacker, 'stonehearth:combat:target_hit', context)
+   radiant.events.trigger_async(target, 'stonehearth:combat:battery', context)
+end
+
+function TDCombatService:_on_target_killed(attacker, target)
+   --log:debug('%s killed %s', tostring(attacker), tostring(target))
+   local tower_comp = attacker and attacker:is_valid() and attacker:get_component('tower_defense:tower')
+   if tower_comp then
+      tower_comp:get_stats():increment_kills(1)
+   end
+end
 
 function TDCombatService:try_inflict_debuffs(inflicter, target, debuff_list)
    for i, debuff_data in ipairs(debuff_list) do
