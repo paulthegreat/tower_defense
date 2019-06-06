@@ -87,6 +87,9 @@
          [33,0,62]
       ]
    },
+   "tower_placeable_region": [
+      [[8,0,8], [55,1,55]]
+   ],
    "landmarks": [
       "/tower_defense/data/models/landmarks/landmark_1.qb",
       "/tower_defense/data/models/landmarks/landmark_2.qb",

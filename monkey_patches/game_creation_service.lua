@@ -1,6 +1,7 @@
 local Point2 = _radiant.csg.Point2
 local Point3 = _radiant.csg.Point3
 local Cube3 = _radiant.csg.Cube3
+local Region2 = _radiant.csg.Region2
 local Region3 = _radiant.csg.Region3
 local rng = _radiant.math.get_default_rng()
 local csg_lib = require 'stonehearth.lib.csg.csg_lib'
@@ -61,14 +62,6 @@ function GameCreationService:_generate_world(session, response, map_info)
          height = height + layer.height
       end
 
-      -- subtract the path from the world terrain
-      local top = Point3(0, height - 1, 0)
-      local air_top = Point3(0, map.air_path.height, 0)
-      
-      local first_point, last_point, path_region, path_entity, path_neighbor_entity = 
-            self:_create_path(map.path.points, top, false, map.path.width or 3, terrain, map.path.block_type and block_types[map.path.block_type])
-      local air_first_point, air_last_point, air_path_region, air_path_entity = self:_create_path(map.air_path.points, top, true)
-      
       -- hacky edge shading fix (add a null terrain block super far below us)
       terrain:add_cube(Cube3(Point3(-1, -999999, -1), Point3(0, -999998, 0), block_types.null))
 
@@ -77,14 +70,25 @@ function GameCreationService:_generate_world(session, response, map_info)
       terrain = terrain:translated(center_point)
       radiant.terrain.get_terrain_component():add_tile(terrain)
 
+      -- add landmarks to edges of map
+      self:_create_landmarks(map.landmarks, size, Point3(0, height, 0))
+      
+      -- subtract the path from the world terrain
+      local top = center_point + Point3(0, height - 1, 0)
+      local air_top = Point3(0, map.air_path.height, 0)
+
+      local sub_terrain = Region3()
+      local first_point, last_point, path_region, path_entity, path_neighbor_entity, add_terrain = 
+            self:_create_path(map.path.points, top, false, map.path.width or 3, sub_terrain, map.path.block_type and block_types[map.path.block_type])
+      local air_first_point, air_last_point, air_path_region, air_path_entity =
+            self:_create_path(map.air_path.points, top + air_top, true, map.path.width or 3, sub_terrain)
+      radiant.terrain.add_region(add_terrain)
+      radiant.terrain.subtract_region(sub_terrain)
+      
       -- place path entities with movement modifiers
       --radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
       --radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top + center_point)
-      radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top + center_point)
-
-      -- add landmarks to edges of map
-      -- DISABLED TEMPORARILY UNTIL PATH CUTTING
-      --self:_create_landmarks(map.landmarks, size, Point3(0, height, 0))
+      radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top)
 
       -- finally, add any entities that should start out in the world
       local entities = map.entities
@@ -103,8 +107,19 @@ function GameCreationService:_generate_world(session, response, map_info)
 
       self:on_world_generation_complete()
 
-      map.spawn_location = first_point + top + center_point
-      map.air_spawn_location = air_first_point + top + air_top + center_point
+      if map.tower_placeable_region then
+         local reg = Region3()
+         for _, cube in ipairs(map.tower_placeable_region) do
+            reg:add_cube(Cube3(Point3(unpack(cube[1])), Point3(unpack(cube[2]))))
+         end
+         reg:translate(offset)
+         reg:optimize('tower placeable region')
+         map.tower_placeable_region = reg
+      else
+         map.tower_placeable_region = Region3(Cube3(Point3(-half_size, height, -half_size), Point3(half_size - 1, height + 1, half_size - 1)))
+      end
+      map.spawn_location = first_point + top
+      map.air_spawn_location = air_first_point + top + air_top
       map.end_point = last_point + offset - Point3(0, 1, 0)
       map.air_end_point = air_last_point + air_top + offset - Point3(0, 1, 0)
 
@@ -115,7 +130,7 @@ function GameCreationService:_generate_world(session, response, map_info)
 	end
 end
 
-function GameCreationService:_create_path(path_array, top, is_air, width, terrain, path_block_type)
+function GameCreationService:_create_path(path_array, top, is_air, width, sub_terrain, path_block_type)
    local path_region = Region3()
    local trans_path_region
    local path_neighbor = Region3()
@@ -130,10 +145,23 @@ function GameCreationService:_create_path(path_array, top, is_air, width, terrai
       if last_point then
          local cube = csg_lib.create_cube(last_point + top, this_point + top)
          path_region:add_cube(cube)
-         if width and width > 0 and terrain then
+         if width and width >= 0 and sub_terrain then
             local extruded_cube = cube:extruded('x', width, width):extruded('z', width, width)
             path_neighbor:add_cube(extruded_cube)
-            terrain:subtract_cube(extruded_cube)
+            extruded_cube = extruded_cube:extruded('y', 0, 4) -- TODO: maybe have this height be customizable
+            sub_terrain:add_cube(extruded_cube)
+            -- also remove any non-terrain entities in this area (plus 1 higher y)
+            for _, entity in pairs(radiant.terrain.get_entities_in_cube(extruded_cube:extruded('y', 0, 1))) do
+               if not entity:get_component('terrain') then
+                  local water_comp = entity:get_component('stonehearth:water')
+                  if water_comp then
+                     -- if it's water, just subtract the part that intersects the path
+                     water_comp:remove_from_region(sub_terrain)
+                  else
+                     radiant.entities.destroy_entity(entity)
+                  end
+               end
+            end
          end
       end
       last_point = this_point
@@ -160,6 +188,7 @@ function GameCreationService:_create_path(path_array, top, is_air, width, terrai
          mod_region:optimize_by_defragmentation('path movement modifier shape')
       end)
 
+   local add_terrain = Region3()
    if is_air then
       -- if it's air, we need to specify a collision region directly under the path
       path_entity_region = path_entity:add_component('region_collision_shape')
@@ -169,15 +198,15 @@ function GameCreationService:_create_path(path_array, top, is_air, width, terrai
             mod_region:copy_region(trans_path_region:inflated(Point3(0, -0.45, 0)):translated(Point3(0, -0.55, 0)))
             --mod_region:optimize_by_defragmentation('path region collision shape')
          end)
-   elseif terrain and path_block_type then
+   elseif path_block_type then
       -- if it's ground, modify the terrain directly under the path so it's a different shade
       path_region = path_region:duplicate()
       path_region:set_tag(path_block_type)
       path_region:translate(Point3(0, -1, 0))
-      terrain:add_region(path_region)
+      add_terrain:add_region(path_region)
    end
 
-   return first_point, last_point, trans_path_region, path_entity, path_neighbor_entity
+   return first_point, last_point, trans_path_region, path_entity, path_neighbor_entity, add_terrain
 end
 
 function GameCreationService:_create_landmarks(landmarks, world_size, center_point)

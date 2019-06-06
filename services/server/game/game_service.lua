@@ -123,6 +123,10 @@ function GameService:get_tower_gold_cost_multiplier()
    return self._tower_gold_cost_multiplier
 end
 
+function GameService:get_tower_placeable_region()
+   return self._sv.map_data.tower_placeable_region
+end
+
 function GameService:get_game_options()
    return self._sv.game_options
 end

@@ -7,6 +7,7 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
    local entity = radiant.entities.create_entity(uri)
    local tower_data = radiant.entities.get_entity_data(entity, 'tower_defense:tower_data')
    local placement = tower_data and tower_data.placement
+   local placeable_region = tower_defense.client_game:get_tower_placeable_region()
 
    stonehearth.selection:deactivate_all_tools()
    
@@ -25,6 +26,11 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
             end
 
             if normal.y ~= 1 then
+               return stonehearth.selection.FILTER_IGNORE
+            end
+
+            -- only allow building within tower placeable region if specified
+            if placeable_region and not placeable_region:contains(brick) then
                return stonehearth.selection.FILTER_IGNORE
             end
 
