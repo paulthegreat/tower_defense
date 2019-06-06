@@ -53,6 +53,11 @@
 			[33,0,31]
       ]
    },
+   "landmarks": [
+      "/tower_defense/data/models/landmarks/landmark_1.qb",
+      "/tower_defense/data/models/landmarks/landmark_2.qb",
+      "/tower_defense/data/models/landmarks/landmark_3.qb"
+   ],
    "entities": {
       "tower_defense:end_portal:firepit_titan": [
          {

@@ -4,6 +4,7 @@ local Cube3 = _radiant.csg.Cube3
 local Region3 = _radiant.csg.Region3
 local rng = _radiant.math.get_default_rng()
 local csg_lib = require 'stonehearth.lib.csg.csg_lib'
+local landmark_lib = require 'stonehearth.lib.landmark.landmark_lib'
 
 local validator = radiant.validator
 local log = radiant.log.create_logger('world_generation')
@@ -80,6 +81,10 @@ function GameCreationService:_generate_world(session, response, map_info)
       --radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
       --radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top + center_point)
       radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top + center_point)
+
+      -- add landmarks to edges of map
+      -- DISABLED TEMPORARILY UNTIL PATH CUTTING
+      --self:_create_landmarks(map.landmarks, size, Point3(0, height, 0))
 
       -- finally, add any entities that should start out in the world
       local entities = map.entities
@@ -173,6 +178,40 @@ function GameCreationService:_create_path(path_array, top, is_air, width, terrai
    end
 
    return first_point, last_point, trans_path_region, path_entity, path_neighbor_entity
+end
+
+function GameCreationService:_create_landmarks(landmarks, world_size, center_point)
+   if not landmarks or #landmarks < 1 then
+      return
+   end
+
+   -- prefer to use landmarks that haven't already been used
+   landmarks = radiant.shallow_copy(landmarks)
+   local directions = {
+      Point3( 1, 0, -1),
+      Point3(-1, 0, -1),
+      Point3( -1, 0, 1),
+      Point3( 1, 0, 1)
+   }
+   local used = {}
+
+   for i = 0, 3 do
+      local landmark = table.remove(landmarks, rng:get_int(1, #landmarks))
+      table.insert(used, landmark)
+
+      if #landmarks < 1 then
+         landmarks = used
+         used = {}
+      end
+
+      -- try to load the landmark at the appropriate location/rotation
+      landmark_lib.create_landmark(center_point, {
+         translation = directions[i + 1] * math.floor(world_size / 4),
+         rotation = i * 90,
+         landmark_block_types = 'stonehearth:landmark_blocks',
+         brush = landmark
+      })
+   end
 end
 
 function GameCreationService:start_game(session)
