@@ -11,12 +11,12 @@
       "stacks": {
          "1": {
             "model": "1_stacks",
-            "scale": 0.05,
+            "scale": 0.15,
             "wood": 0
          },
          "2": {
             "model": "2_stacks",
-            "scale": 0.12,
+            "scale": 0.1,
             "wood": 1
          },
          "3": {

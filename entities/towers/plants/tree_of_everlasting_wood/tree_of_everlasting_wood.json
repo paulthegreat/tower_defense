@@ -8,12 +8,19 @@
       "model_variants": {
          "default": {
             "models": [
-               "/stonehearth/entities/trees/oak_tree/sprout/tree_oak_sprout.qb"
+               "file(tree_yew_sprout.qb)"
             ]
          },
          "1_stacks": {
             "models": [
-               "/stonehearth/entities/trees/oak_tree/stem/tree_oak_stem.qb"
+               {
+                  "type": "one_of",
+                  "items": [
+                     "file(tree_yew_plant_stem.qb)",
+                     "file(tree_yew_plant_stem_summer.qb)",
+                     "file(tree_yew_plant_stem_autumn.qb)"
+                  ]
+               }
             ]
          },
          "2_stacks": {
@@ -21,9 +28,9 @@
                {
                   "type": "one_of",
                   "items": [
-                     "/stonehearth/entities/trees/oak_tree/small_oak_tree/small_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/small_oak_tree/small_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/small_oak_tree/small_oak_tree.qb"
+                     "file(tree_yew_plant_bud.qb)",
+                     "file(tree_yew_plant_bud_summer.qb)",
+                     "file(tree_yew_plant_bud_autumn.qb)"
                   ]
                }
             ]
@@ -33,9 +40,9 @@
                {
                   "type": "one_of",
                   "items": [
-                     "/stonehearth/entities/trees/oak_tree/medium_oak_tree/medium_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/medium_oak_tree/medium_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/medium_oak_tree/medium_oak_tree.qb"
+                     "file(sapling_yew_tree.qb)",
+                     "file(sapling_yew_tree_summer.qb)",
+                     "file(sapling_yew_tree_autumn.qb)"
                   ]
                }
             ]
@@ -45,9 +52,9 @@
                {
                   "type": "one_of",
                   "items": [
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb"
+                     "file(small_yew_tree.qb)",
+                     "file(small_yew_tree_summer.qb)",
+                     "file(small_yew_tree_autumn.qb)"
                   ]
                }
             ]
@@ -57,9 +64,9 @@
                {
                   "type": "one_of",
                   "items": [
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb",
-                     "/stonehearth/entities/trees/oak_tree/large_oak_tree/large_oak_tree.qb"
+                     "file(medium_yew_tree.qb)",
+                     "file(medium_yew_tree_summer.qb)",
+                     "file(medium_yew_tree_autumn.qb)"
                   ]
                }
             ]
