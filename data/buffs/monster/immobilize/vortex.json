@@ -7,7 +7,7 @@
    "description": "i18n(tower_defense:data.buffs.vortex.description)",
    "icon": "file(vortex.png)",
    "repeat_add_action": "extend_duration",
-   "duration": 3000,
+   "duration": 2000,
    "effect": "tower_defense:effects:air_swirl",
    "reapply_effect": true,
    "diminishing_returns": {

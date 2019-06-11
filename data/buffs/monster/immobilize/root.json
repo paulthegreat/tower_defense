@@ -7,7 +7,7 @@
    "description": "i18n(tower_defense:data.buffs.root.description)",
    "icon": "file(root.png)",
    "repeat_add_action": "extend_duration",
-   "duration": 3000,
+   "duration": 2000,
    "effect": "tower_defense:effects:root",
    "reapply_effect": true,
    "diminishing_returns": {

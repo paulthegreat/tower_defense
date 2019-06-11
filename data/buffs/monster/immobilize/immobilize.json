@@ -7,7 +7,7 @@
    "description": "i18n(tower_defense:data.buffs.immobilize.description)",
    "icon": "file(immobilize.png)",
    "repeat_add_action": "extend_duration",
-   "duration": 3000,
+   "duration": 2000,
    "diminishing_returns": {
       "by_category": true,
       "times_until_disabled": 3,

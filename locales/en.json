@@ -268,12 +268,6 @@
             "display_name": "Mortal Wound",
             "description": "Reduces healing by 100%"
          },
-         "spawn_on_death": {
-            "ants": {
-               "display_name": "Spawn Ants",
-               "description": "Spawns Ants when it dies"
-            }
-         },
          "spawn_ants_on_death": {
             "display_name": "Deathly Surprise",
             "description": "Spawns Ants when killed"
@@ -283,37 +277,37 @@
          "fire": {
             "display_name": "Fire",
             "quote": "Taste the flames of Sulfuron!",
-            "description": "Cheap towers that focus largely on doing direct, single target damage.",
+            "description": "Towers that reveal invisible enemies and do overwhelming magical damage primarily through stacking damage-over-time debuffs.",
             "post_selection_description": ", a fiery kingdom.",
-            "initial_town_name": "Expedition [str(town_number)]"
+            "initial_town_name": "Fire Kingdom [str(town_number)]"
          },
          "air": {
             "display_name": "Air",
             "quote": "Woosh!",
-            "description": "Towers that do excellent damage to flying enemies and strong single-target damage.",
+            "description": "Towers that excel at fighting flying and invisible enemies, have strong single-target physical and pure damage, and buff nearby towers.",
             "post_selection_description": ", an airy kingdom.",
-            "initial_town_name": "Expedition [str(town_number)]"
+            "initial_town_name": "Air Kingdom [str(town_number)]"
          },
          "earth": {
             "display_name": "Earth",
             "quote": "Thud!",
-            "description": "Towers that excel in damaging and disrupting large groups of enemies. Some towers have the ability to target tunneling enemies.",
+            "description": "Towers that excel in physical damage against multiple ground enemy targets, but are incapable of attacking flying enemies.",
             "post_selection_description": ", an earthy kingdom.",
-            "initial_town_name": "Expedition [str(town_number)]"
+            "initial_town_name": "Earth Kingdom [str(town_number)]"
          },
          "water": {
             "display_name": "Water",
             "quote": "Sploosh!",
-            "description": "Towers that do damage in a small area with a focus on slowing and disrupting enemies.",
+            "description": "Towers that do less (and exclusively magical) damage, but with powerful slowing debuffs that can greatly enable multi-targeting towers.",
             "post_selection_description": ", a watery kingdom.",
-            "initial_town_name": "Expedition [str(town_number)]"
+            "initial_town_name": "Water Kingdom [str(town_number)]"
          },
          "plant": {
             "display_name": "Plants",
             "quote": "We've got to have farming in the game. Obviously.",
-            "description": "Towers grow over time, becoming more powerful. Mining buildings contribute bonus gold to the shared pool at the end of waves.",
+            "description": "Towers that grow over time, becoming more powerful. A solid mix of physical direct damage and magical damage over time.",
             "post_selection_description": ", a farmy kingdom.",
-            "initial_town_name": "Expedition [str(town_number)]"
+            "initial_town_name": "Plant Kingdom [str(town_number)]"
          }
       },
       "commands": {
