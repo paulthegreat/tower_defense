@@ -1,7 +1,7 @@
 {
    "name": "fire",
    "duration": 3000,
-   "material": "materials/cubemitter_bloom.material.json",
+   "material": "materials/cubemitter.material.json",
    "loops": true,
    "mesh": {
       "file": "tower_defense/data/effects/root.qb",
@@ -92,8 +92,8 @@
          "start": {
             "kind": "RANDOM_BETWEEN",
             "values": [
-               [0.25, 0.2, 0.1, 1],
-               [0.3, 0.3, 0.1, 1]
+               [0.25, 0.3, 0.1, 1],
+               [0.3, 0.4, 0.1, 1]
             ]
          }
       }

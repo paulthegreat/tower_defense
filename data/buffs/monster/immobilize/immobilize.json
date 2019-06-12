@@ -8,6 +8,8 @@
    "icon": "file(immobilize.png)",
    "repeat_add_action": "extend_duration",
    "duration": 2000,
+   "effect": "tower_defense:effects:earth_clods",
+   "reapply_effect": true,
    "diminishing_returns": {
       "by_category": true,
       "times_until_disabled": 3,

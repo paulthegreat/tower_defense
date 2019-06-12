@@ -19,12 +19,12 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "magma_pools",
-            "effect": "stonehearth:effects:dry_stone_heat",
+            "effect": "tower_defense:effects:fire_particles",
             "ground_presence": {
                "uri": "tower_defense:ground_presence:magma_pool",
                "facing": "random_cardinal",
                "range": 1.5,
-               "duration": 4000,
+               "duration": 5000,
                "period": 1000,
                "destroy_on_wave_end": true,
                "do_on_duration_finished": true,
@@ -32,7 +32,9 @@
                   "attack_info": {
                      "base_damage": 50,
                      "damage_type": "magical"
-                  },
+                  }
+               },
+               "every_time": {
                   "buffs": [
                      "tower_defense:buffs:monster:burning:major"
                   ]

@@ -189,8 +189,8 @@ var tower_defense = {
          s += this._getLine(this._getDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.gp_duration_title'),
             this._compareProperties(weaponData, original,
                ['tower_weapon_attack_info.ground_presence.duration', 'tower_weapon_attack_info.ground_presence.period']) &&
-               !(gp.other_times || gp.every_time) ||
-               (original && original.tower_weapon_attack_info && original.tower_weapon_attack_info.ground_presence &&
+               !(gp.other_times || gp.every_time) || !original ||
+               (original.tower_weapon_attack_info && original.tower_weapon_attack_info.ground_presence &&
                   (original.tower_weapon_attack_info.ground_presence.other_times || original.tower_weapon_attack_info.ground_presence.every_time))),
             i18n.t(gp.other_times || gp.every_time ? 'tower_defense:ui.game.tooltips.tower_weapons.gp_duration_and_period' :
                'tower_defense:ui.game.tooltips.tower_weapons.gp_duration', i18n_data), true);

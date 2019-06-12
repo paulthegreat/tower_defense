@@ -10,7 +10,8 @@
       },
       "effect_list": {
          "effects": [
-            "stonehearth:effects:dry_stone_heat"
+            "stonehearth:effects:dry_stone_heat",
+            "stonehearth:effects:dry_stone_steam"
          ]
       },
       "render_info": {

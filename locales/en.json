@@ -1022,17 +1022,17 @@
          },
          "magma_pools": {
             "display_name": "Magma",
-            "description": "Creates a pool of magma that inflicts burning on any enemies entering it",
+            "description": "Creates a pool of magma that inflicts burning on any enemies walking through it",
             "weapon": {
-               "description": "Its attack creates a pool of magma on the ground that lasts for 4 seconds, causing major burning to any enemies that walk through it",
+               "description": "Its attack creates a pool of magma on the ground that inflicts major burning on any enemies that walk through it",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Magma pools apply effects every second instead of just when a monster first enters it",
+               "description": "Inflicts damage every tick and also applies major magic armor piercing to monsters when they first enter a magma pool",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Also applies major magic armor piercing",
+               "description": "Also immobilizes monsters when they first enter a magma pool",
                "display_name": "Utility Upgrade"
             }
          },

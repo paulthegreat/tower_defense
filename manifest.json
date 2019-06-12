@@ -151,6 +151,7 @@
       "effects:fire:normal": "file(data/effects/normal_fire_debuff_added.json)",
       "effects:fire:major": "file(data/effects/major_fire_debuff_added.json)",
       "effects:air_swirl": "file(data/effects/air_swirl.json)",
+      "effects:earth_clods": "file(data/effects/earth_clods_effect.json)",
       "effects:root": "file(data/effects/root_effect.json)",
       "end_portal:firepit_titan": "file(entities/end_portal/firepit_titan/firepit_titan.json)",
       "ground_presence:magma_pool": "file(entities/ground_presence/magma_pool/magma_pool.json)",
