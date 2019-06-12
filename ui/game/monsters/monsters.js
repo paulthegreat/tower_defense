@@ -25,6 +25,7 @@ App.TowerDefenseMonsterView = App.View.extend({
 
    dismiss: function () {
       this.hide();
+      this.set('uri', null);
    },
 
    willDestroyElement: function() {
@@ -319,7 +320,7 @@ App.TowerDefenseMonsterRowView = App.View.extend({
       return roundFn(number);
    },
 
-   _updateBuffs: $.throttle(100, function() {
+   _updateBuffs: function() {
       var self = this;
       if (self.isDestroying || self.isDestroyed) {
          return;
@@ -347,7 +348,17 @@ App.TowerDefenseMonsterRowView = App.View.extend({
       self._buffs.sort(tower_defense.buffSorter);
 
       self.set('buffs', self._buffs);
-   }).observes('model.stonehearth:buffs')
+   },
+
+   _buffObserver: $.throttle(100, function() {
+      this._updateBuffs();
+   }).observes('model.stonehearth:buffs'),
+
+   _initialBuffObserver: function() {
+      if (!this._buffs) {
+         this._updateBuffs();
+      }
+   }.observes('model.stonehearth:buffs')
 });
 
 // Manually manage child views using this container view for performance reasons
