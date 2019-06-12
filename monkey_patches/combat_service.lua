@@ -55,7 +55,7 @@ function TDCombatService:try_inflict_debuffs(inflicter, target, debuff_list)
       for name, debuff in pairs(debuff_data) do
          local infliction_chance = debuff.chance or 1
          if rng:get_real(0, 1) < infliction_chance then
-            target:add_component('stonehearth:buffs'):add_buff(debuff.uri, {inflicter = inflicter})
+            target:add_component('stonehearth:buffs'):add_buff(debuff.uri, {inflicter = inflicter, stacks = debuff.stacks})
          end
       end
    end

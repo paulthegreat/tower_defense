@@ -262,7 +262,7 @@ function catalog_lib._add_catalog_description(catalog, full_alias, json, base_da
    return result
 end
 
-function catalog_lib._update_buff(full_alias, json)
+function catalog_lib._update_buff(full_alias, json, stacks)
    local buff = _all_buffs[full_alias]
    if not buff then
       if not json then
@@ -280,7 +280,8 @@ function catalog_lib._update_buff(full_alias, json)
             display_name = json.display_name,
             description = json.description,
             icon = json.icon,
-            max_stacks = json.max_stacks or 1,
+            max_stacks = json.max_stacks,
+            stacks = stacks or 1,
             invisible_to_player = json.invisible_to_player,
             invisible_on_crafting = json.invisible_on_crafting,
             script_buffs = json.invisible_to_player and json.script_info and json.script_info.buffs
@@ -301,8 +302,9 @@ function catalog_lib.get_buffs(buff_data)
    if buff_data then
       for buff, data in pairs(buff_data) do
          local uri = type(data) == 'table' and data.uri or data
+         local stacks = type(data) == 'table' and data.stacks
          local jsons = {}
-         local json = catalog_lib._update_buff(uri)
+         local json = catalog_lib._update_buff(uri, nil, stacks)
          if json then
             -- check if this buff is just being used to apply other buffs
             if json.script_buffs then

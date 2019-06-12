@@ -290,7 +290,9 @@ var tower_defense = {
       buffs.sort(this.buffSorter);
       buffs.forEach(buff => {
          if (buff.icon) {
-            s += ` <img class='inlineImg buff' src="${buff.icon}">`;
+            for (var i = 0; i < (buff.stacks || 1); i++) {
+               s += ` <img class='inlineImg buff' src="${buff.icon}">`;
+            }
             wasText = false;
          }
          else {

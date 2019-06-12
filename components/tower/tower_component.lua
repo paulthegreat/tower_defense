@@ -1033,8 +1033,8 @@ function TowerComponent:_inflict_attack(targets, primary_target, attack_info, bu
    local secondary_damage = aoe_attack and aoe_attack.base_damage
 
    if attack_info.is_percentage then
-      local resources = primary_target and primary_target:get_component('stonehearth:expendable_resources')
-      damage_multiplier = damage_multiplier * (resources and (0.01 * (resources:get_value('health') or 100)) or 1)
+      local attributes = primary_target and primary_target:get_component('stonehearth:attributes')
+      damage_multiplier = damage_multiplier * (attributes and (0.01 * (attributes:get_value('max_health') or 100)) or 1)
    end
 
    for _, each_target in pairs(targets) do

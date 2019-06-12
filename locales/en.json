@@ -118,15 +118,15 @@
          },
          "minor_poison": {
             "display_name": "Minor Poison",
-            "description": "Slows by 5%, increases physical damage taken by 10%, and causes 4 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
+            "description": "Slows by 5%, increases physical damage taken by 10%, and causes 3 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "normal_poison": {
             "display_name": "Poison",
-            "description": "Slows by 10%, increases physical damage taken by 15%, and causes 20 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
+            "description": "Slows by 10%, increases physical damage taken by 15%, and causes 15 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "major_poison": {
             "display_name": "Major Poison",
-            "description": "Slows by 15%, increases physical damage taken by 20%, and causes 100 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
+            "description": "Slows by 15%, increases physical damage taken by 20%, and causes 75 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "minor_reveal": {
             "display_name": "Minor Reveal",
@@ -512,11 +512,11 @@
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Shorter cooldown, attacks 3 times",
+               "description": "Attacks 3 times",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Longer cooldown, lower damage, but attacks 3 targets",
+               "description": "Lower damage, but attacks 3 targets",
                "display_name": "Utility Upgrade"
             }
          },
@@ -608,7 +608,7 @@
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Damage increases by 50% per bounce",
+               "description": "Damage increases by 30% per bounce",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
@@ -1024,11 +1024,11 @@
             "display_name": "Magma",
             "description": "Creates a pool of magma that inflicts burning on any enemies walking through it",
             "weapon": {
-               "description": "Its attack creates a pool of magma on the ground that inflicts major burning on any enemies that walk through it",
+               "description": "Its attack creates a pool of magma on the ground that inflicts major burning",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Inflicts damage every tick and also applies major magic armor piercing to monsters when they first enter a magma pool",
+               "description": "Inflicts damage every tick and also applies major magic armor piercing",
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {

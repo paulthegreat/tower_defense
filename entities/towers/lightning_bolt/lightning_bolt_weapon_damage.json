@@ -25,11 +25,8 @@
             },
             "burning": {
                "uri": "tower_defense:buffs:monster:burning:minor",
-               "chance": 1
-            },
-            "burning2": {
-               "uri": "tower_defense:buffs:monster:burning:minor",
-               "chance": 1
+               "chance": 1,
+               "stacks": 2
             }
          }
       },
