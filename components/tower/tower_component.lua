@@ -229,7 +229,7 @@ function TowerComponent:try_upgrade_tower(upgrade)
    if not cost or not uri or not player then
       -- everything has a cost... if we can get it
       result.reject = true
-      result.message = 'i18n(tower_defense:alerts.upgrade_tower.unavailable)'
+      result.message = 'i18n(tower_defense:alerts.towers.upgrade.unavailable)'
    else
       for resource, amount in pairs(cost) do
          local missing = player:can_spend_resource(resource, amount)
@@ -241,7 +241,7 @@ function TowerComponent:try_upgrade_tower(upgrade)
 
    if not result.reject and next(result) then
       result.reject = true
-      result.message = 'i18n(tower_defense:alerts.upgrade_tower.missing_resources)'
+      result.message = 'i18n(tower_defense:alerts.towers.upgrade.missing_resources)'
    end
    
    if not result.reject then
@@ -255,7 +255,7 @@ function TowerComponent:try_upgrade_tower(upgrade)
       self:_reinitialize(self._sv.sm, true)
       
       result.resolve = true
-      result.message = 'i18n(tower_defense:alerts.upgrade_tower.success)'
+      result.message = 'i18n(tower_defense:alerts.towers.upgrade.success)'
    end
 
    return result

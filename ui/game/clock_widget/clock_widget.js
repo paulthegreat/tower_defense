@@ -303,6 +303,18 @@ App.StonehearthCalendarView = App.View.extend({
       return result;
    },
 
+   getRemainingRealTime: function(expireTimeInSeconds, decimalPlaces) {
+      var self = this;
+
+      var currentTime = self.getCurrentTime();
+      var secondsRemaining = expireTimeInSeconds - currentTime.elapsed_time;
+      var msRemaining = secondsRemaining * self._constants.ticks_per_second;
+      if (decimalPlaces == null) {
+         decimalPlaces = 0;
+      }
+      return Math.floor(msRemaining / Math.pow(10, 3 - decimalPlaces)) / Math.pow(10, decimalPlaces);
+   },
+
    _updateClock: function() {
       var self = this;
 

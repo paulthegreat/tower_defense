@@ -24,6 +24,7 @@
          }
       },
       "buffs": {
+         "buff_duration_seconds": "[str(seconds)] s",
          "plant_growth": {
             "display_name": "Growth",
             "description": "The tower grows by 20% in size and 10% in damage for each stack."
@@ -1250,7 +1251,7 @@
                "range_square": "[str(range)] <img class='inlineImg square'>",
                "cooldown": "[str(cooldown)]",
                "damage": "<span class='damageType-[str(damage_type)]'><img class='inlineImg [str(damage_type)]'>[str(base_damage)]</span>",
-               "percentage_damage": "<span class='damageType-[str(damage_type)]'><img class='inlineImg [str(damage_type)]'>[str(base_damage)]% of current HP</span>",
+               "percentage_damage": "<span class='damageType-[str(damage_type)]'><img class='inlineImg [str(damage_type)]'>[str(base_damage)]% of max HP</span>",
                "secondary_dmg_mult": "[str(damage_multiplier)] each attack",
                "attacks_ground": " <img class='inlineImg ground'>",
                "attacks_air": " <img class='inlineImg air'>",
@@ -1313,6 +1314,11 @@
             "unavailable": "Unavailable tower?",
             "missing_resources": "Missing resources to build this tower",
             "success": "Successfully built tower!"
+         },
+         "upgrade": {
+            "unavailable": "Unavailable tower upgrade",
+            "missing_resources": "Missing resources to upgrade this tower",
+            "success": "Successfully upgraded tower!"
          }
       },
       "game": {

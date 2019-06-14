@@ -10,17 +10,17 @@
                "tower_defense:monsters:ground:alligator"
             ],
             "given_names": [
-               "Bawky",
-               "Clucky",
-               "Chicken",
-               "Foghorn"
+               "Snappy",
+               "Chompy",
+               "Al",
+               "Lyle"
             ]
          },
          "surnames": [
-            "McBawkerson",
-            "Cluckington",
-            "Little",
-            "Leghorn"
+            "McSnapperson",
+            "Chompington",
+            "Gator",
+            "the Crocodile"
          ]
       },
       "beetle": {
@@ -48,17 +48,17 @@
                "tower_defense:monsters:ground:bitsy_ant"
             ],
             "given_names": [
-               "Bawky",
-               "Clucky",
-               "Chicken",
-               "Foghorn"
+               "Ant",
+               "Jiminy",
+               "Skitter",
+               "Legs"
             ]
          },
          "surnames": [
-            "McBawkerson",
-            "Cluckington",
-            "Little",
-            "Leghorn"
+            "Bitsy",
+            "Cricket",
+            "Scatter",
+            "Akimbo"
          ]
       },
       "boar": {
@@ -67,17 +67,17 @@
                "tower_defense:monsters:ground:boar"
             ],
             "given_names": [
-               "Bawky",
-               "Clucky",
-               "Chicken",
-               "Foghorn"
+               "Snorty",
+               "Boar",
+               "Pumbaa",
+               "Porky"
             ]
          },
          "surnames": [
-            "McBawkerson",
-            "Cluckington",
-            "Little",
-            "Leghorn"
+            "Snortington",
+            "Ing",
+            "Gruntsalot",
+            "Pig"
          ]
       },
       "entling": {
@@ -86,17 +86,17 @@
                "tower_defense:monsters:ground:entling"
             ],
             "given_names": [
-               "Bawky",
-               "Clucky",
-               "Chicken",
-               "Foghorn"
+               "Forest",
+               "Woody",
+               "Ent",
+               "Branch"
             ]
          },
          "surnames": [
-            "McBawkerson",
-            "Cluckington",
-            "Little",
-            "Leghorn"
+            "Woodington",
+            "Harrelson",
+            "Leafy",
+            "Manager"
          ]
       },
       "entling_mage": {
@@ -105,17 +105,17 @@
                "tower_defense:monsters:ground:entling_mage"
             ],
             "given_names": [
-               "Bawky",
-               "Clucky",
-               "Chicken",
-               "Foghorn"
+               "Ol'",
+               "Grizzly",
+               "Twiggy",
+               "Bud"
             ]
          },
          "surnames": [
-            "McBawkerson",
-            "Cluckington",
-            "Little",
-            "Leghorn"
+            "Barker",
+            "Roots",
+            "Undergrowth",
+            "Canopy"
          ]
       },
       "zilla": {
@@ -124,17 +124,17 @@
                "tower_defense:monsters:ground:zilla"
             ],
             "given_names": [
-               "Bawky",
-               "Clucky",
-               "Chicken",
-               "Foghorn"
+               "Big",
+               "Boss",
+               "Thunder",
+               "Firebreath"
             ]
          },
          "surnames": [
-            "McBawkerson",
-            "Cluckington",
-            "Little",
-            "Leghorn"
+            "Flamespitter",
+            "Lizard",
+            "Z",
+            "Dragon"
          ]
       }
    }

@@ -520,6 +520,7 @@
          "file(ui/game/reference_window/reference_window.html)"
       ],
       "js": [
+         "file(ui/common/tooltip_helper/tooltip_helper.js)",
          "file(ui/game/game.js)",
          "file(ui/game/resource_display/resource_display.js)",
          "file(ui/game/start_menu/stonehearth_menu.js)",
