@@ -26,6 +26,7 @@ App.TowerDefenseMonsterView = App.View.extend({
    dismiss: function () {
       this.hide();
       this.set('uri', null);
+      this._buffs = null;
    },
 
    willDestroyElement: function() {

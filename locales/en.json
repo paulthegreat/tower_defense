@@ -462,6 +462,52 @@
       }
    },
    "entities": {
+      "monsters": {
+         "alligator": {
+            "display_name": "Boss",
+            "description": "A ground monster with a lot more health than normal. Normally only four of these spawn in a wave."
+         },
+         "bitsy_ant": {
+            "display_name": "Ant",
+            "description": "A fast ground monster with very little health. There might be a lot of these!"
+         },
+         "beetle": {
+            "display_name": "Beetle",
+            "description": "A ground monster with a little more health than normal and spawns Ants when killed."
+         },
+         "boar": {
+            "display_name": "Boar",
+            "description": "The regular, quintessential monster to which all other monsters are compared. It has a little bit of base armor."
+         },
+         "entling": {
+            "display_name": "Summonling",
+            "description": "A ground monster with less health and slightly slower movement."
+         },
+         "entling_mage": {
+            "display_name": "Summoner",
+            "description": "A ground monster with more health and slower movement that periodically summons smaller monsters."
+         },
+         "goblin_wolf": {
+            "display_name": "Magic-Armored Wolf",
+            "description": "A ground monster with a little less health but a lot more base magical armor."
+         },
+         "little_stone_golem": {
+            "display_name": "Armored Golem",
+            "description": "A ground monster with a little less health but a lot more base physical armor."
+         },
+         "zilla": {
+            "display_name": "Big Boss",
+            "description": "A ground monster with a lot more health than Boss monsters. Good thing you only have to fight one of these at a time!"
+         },
+         "duckduck": {
+            "display_name": "Air Boss",
+            "description": "An air monster with more health than normal. Normally only four of these spawn in a wave."
+         },
+         "poyo": {
+            "display_name": "Poyo",
+            "description": "The basic air monster that has less health than a normal ground monster."
+         }
+      },
       "projectiles": {
          "artillery_shell": {
             "display_name": "Artillery Shell",
@@ -975,9 +1021,9 @@
          },
          "lightning_bolt": {
             "display_name": "Lightning Bolt",
-            "description": "Like Dota 2 Zeus ability, high single-target damage, reveals target and nearby enemies",
+            "description": "High single-target damage, reveals target and nearby enemies",
             "weapon": {
-               "description": "Like Dota 2 Zeus ability, high single-target damage; this tower can see invis, and its attack reveals the target and nearby enemies for a couple seconds",
+               "description": "High single-target damage; this tower can see invisible monsters, and its attack reveals the target and nearby enemies for a couple seconds",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
@@ -985,13 +1031,13 @@
                "display_name": "Damage Upgrade"
             },
             "weapon_utility": {
-               "description": "Applies normal reveal instead",
+               "description": "Applies normal reveal instead, and in a larger area",
                "display_name": "Utility Upgrade"
             }
          },
          "arc_lightning": {
             "display_name": "Arc Lightning",
-            "description": "Chain lightning, like Dota 2 Zeus ability, bounces reduced damage to successive targets",
+            "description": "Chain lightning bounces reduced damage to successive targets",
             "weapon": {
                "description": "Hits a target in a short range, then bounces to a new target 4 times, applying normal burning and dealing less damage each bounce",
                "display_name": "Base Tower"
@@ -1007,7 +1053,7 @@
          },
          "fire_grenade": {
             "display_name": "Fire Grenade",
-            "description": "Launches a burning projectile that causes a mass secondary attack with lower damage",
+            "description": "Launches a burning projectile that causes a mass secondary attack",
             "weapon": {
                "description": "Launches a projectile that causes a mass secondary projectile attack with lower damage, and all apply burning",
                "display_name": "Base Tower"
@@ -1023,7 +1069,7 @@
          },
          "magma_pools": {
             "display_name": "Magma",
-            "description": "Creates a pool of magma that inflicts burning on any enemies walking through it",
+            "description": "Creates a pool of magma that burns any enemies walking through it",
             "weapon": {
                "description": "Its attack creates a pool of magma on the ground that inflicts major burning",
                "display_name": "Base Tower"
@@ -1197,8 +1243,15 @@
          "gameStateWindow": {
             "title": "Game State",
             "remaining_monsters": "Enemies:",
+            "remaining_monsters_tooltip": "Click to show Spawned Monsters view",
             "wave_number": "Wave:",
-            "player_health": "Health:"
+            "wave_tooltip": "Click to show list of waves",
+            "player_health": "Health:",
+            "weather": "Weather: [str(weather)]"
+         },
+         "wavesWindow": {
+            "title": "Waves",
+            "wave_title": "<h3>Wave [str(wave)]:</h3>[str(title)]"
          },
          "towerTargetingWindow": {
             "title": "Tower Targeting",

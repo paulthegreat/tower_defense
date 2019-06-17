@@ -118,6 +118,44 @@
             "Canopy"
          ]
       },
+      "goblin_wolf": {
+         "male": {
+            "uri": [
+               "tower_defense:monsters:ground:goblin_wolf"
+            ],
+            "given_names": [
+               "Howly",
+               "Bob",
+               "Wolf",
+               "Hungry"
+            ]
+         },
+         "surnames": [
+            "Howlington",
+            "Barker",
+            "Blitzer",
+            "Sheep-eater"
+         ]
+      },
+      "little_stone_golem": {
+         "male": {
+            "uri": [
+               "tower_defense:monsters:ground:little_stone_golem"
+            ],
+            "given_names": [
+               "Rock",
+               "Rocky",
+               "Stoney",
+               "Crag"
+            ]
+         },
+         "surnames": [
+            "Hunkson",
+            "Balboulder",
+            "Pebbles",
+            "Gravelanche"
+         ]
+      },
       "zilla": {
          "male": {
             "uri": [

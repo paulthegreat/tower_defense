@@ -59,9 +59,8 @@
          }
       ],
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.monsters.forest.entling_mage.display_name)",
-         "description": "i18n(stonehearth:entities.monsters.forest.entling_mage.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.entling_mage.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.entling_mage.description)",
          "icon": "file(entling_mage.png)"
       }
    }

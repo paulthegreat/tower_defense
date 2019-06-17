@@ -26,10 +26,6 @@
    },
    "entity_data": {
       "stonehearth:entity_radius": 0.5,
-      "stonehearth:species": {
-         "id": "duckduck",
-         "display_name": "i18n(stonehearth:entities.monsters.avian.duckduck.species)"
-      },
       "stonehearth:portrait": {
          "portrait_types": {
             "headshot": {
@@ -50,9 +46,8 @@
          }
       },
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.monsters.avian.duckduck_young.display_name)",
-         "description": "i18n(stonehearth:entities.monsters.avian.duckduck_young.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.duckduck.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.duckduck.description)",
          "icon": "file(duckduck.png)"
       }
    }

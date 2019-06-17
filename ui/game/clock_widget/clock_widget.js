@@ -94,6 +94,7 @@ App.StonehearthCalendarView = App.View.extend({
    willDestroyElement: function() {
       this.$().find('.tooltipstered').tooltipster('destroy');
       this.$().off('click', '#clock');
+      this.$().off('click', '#currentWave');
       this.$().off('click', '#remainingMonsters');
       $(document).off('td_player_alert.clock_widget');
       this._super();
@@ -166,6 +167,21 @@ App.StonehearthCalendarView = App.View.extend({
          App.gameView.addView(App.StonehearthEscMenuView);
       });
 
+      $('#currentWave').click(function() {
+         var waveWindow = App.gameView.getView(App.TowerDefenseWaveView);
+         if (waveWindow) {
+            if (waveWindow.isVisible) {
+               waveWindow.dismiss();
+            }
+            else {
+               waveWindow.show();
+            }
+         }
+         else {
+            App.gameView.addView(App.TowerDefenseWaveView, {});
+         }
+      });
+
       $('#remainingMonsters').click(function() {
          var monsterWindow = App.gameView.getView(App.TowerDefenseMonsterView);
          if (monsterWindow) {
@@ -180,6 +196,15 @@ App.StonehearthCalendarView = App.View.extend({
          else {
             App.gameView.addView(App.TowerDefenseMonsterView, { uri: self._waveController });
          }
+      });
+
+      Ember.run.scheduleOnce('afterRender', this, function () {
+         $('#currentWave').tooltipster({
+            content: $(App.tooltipHelper.createTooltip(null, i18n.t('tower_defense:ui.game.gameStateWindow.wave_tooltip')))
+         });
+         $('#remainingMonsters').tooltipster({
+            content: $(App.tooltipHelper.createTooltip(null, i18n.t('tower_defense:ui.game.gameStateWindow.remaining_monsters_tooltip')))
+         });
       });
 
       radiant.call('stonehearth:get_service', 'weather')
@@ -241,23 +266,15 @@ App.StonehearthCalendarView = App.View.extend({
          name: dayData.weather.display_name,
          description: self._getFullDescription(dayData.weather, wave),
          icon: dayData.weather.icon,
-         category: 'weatherDay' + (wave && wave.category ? ' category ' + wave.category : '')
+         category: wave && wave.category ? ' category ' + wave.category : '',
+         hasCategory: 'weatherDay' + (wave && wave.category ? ' hasCategory' : '')
       }
    },
 
    _getFullDescription: function(weather, wave) {
       var self = this;
-      return `${self._getWaveDescription(wave)}<h3>${i18n.t(weather.display_name)}</h3><div class='weatherDescription'>${i18n.t(weather.description)}</div>`;
-   },
-
-   _getWaveDescription: function(waveData) {
-      var s = ''
-      if (waveData) {
-         if (waveData.buffs) {
-            s += `<div>${i18n.t('tower_defense:data.waves.monster_buffs') + tower_defense._getBuffs(waveData.buffs)}</div>`;
-         }
-      }
-      return s;
+      var weatherTitle = i18n.t('tower_defense:ui.game.gameStateWindow.weather', {weather: i18n.t(weather.display_name)});
+      return `${tower_defense.getWaveDescription(wave)}<h3>${weatherTitle}</h3><div class='weatherDescription'>${i18n.t(weather.description)}</div>`;
    },
 
    _updateWaveClass: function() {

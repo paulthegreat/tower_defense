@@ -22,6 +22,7 @@ App.TowerDefenseReferenceView = App.View.extend({
       this.tabs.off('click');
 
       this.buffGrid.togglegrid('destroy');
+      this.iconGrid.togglegrid('destroy');
       this.$().find('.tooltipstered').tooltipster('destroy');
       this._super();
    },
@@ -33,6 +34,7 @@ App.TowerDefenseReferenceView = App.View.extend({
       this.$('#referenceWindow').draggable({ handle: '.title' });
 
       this.buffGrid = this.$('#buffGrid');
+      this.iconGrid = this.$('#iconGrid');
 
       this.tabs = this.$('.tab');
 
@@ -41,6 +43,7 @@ App.TowerDefenseReferenceView = App.View.extend({
       });
 
       this.buffGrid.togglegrid();
+      this.iconGrid.togglegrid();
 
       // Resume on last selected tab
       self._resumeLastTab();

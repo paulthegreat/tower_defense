@@ -37,9 +37,8 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.monsters.forest.entling.display_name)",
-         "description": "i18n(stonehearth:entities.monsters.forest.entling.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.entling.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.entling.description)",
          "icon": "file(entling.png)"
       }
    }

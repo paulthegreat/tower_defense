@@ -64,6 +64,7 @@
       {
          "wavenumber": 6,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "armored",
          "multipliers": {
             "attributes": {
                "speed": 1,
@@ -71,13 +72,14 @@
             },
             "gold_bounty": 1
          },
-         "buffs": [
-            "tower_defense:buffs:monster:armor:minor"
-         ]
+         "role_overrides": {
+            "boar": "little_stone_golem"
+         }
       },
       {
          "wavenumber": 7,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "magic_armored",
          "multipliers": {
             "attributes": {
                "speed": 1,
@@ -85,9 +87,9 @@
             },
             "gold_bounty": 1
          },
-         "buffs": [
-            "tower_defense:buffs:monster:magic_armor:minor"
-         ]
+         "role_overrides": {
+            "boar": "goblin_wolf"
+         }
       },
       {
          "wavenumber": 8,
@@ -175,6 +177,7 @@
       {
          "wavenumber": 14,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "magic_armored",
          "multipliers": {
             "attributes": {
                "speed": 1.1,
@@ -183,12 +186,16 @@
             "gold_bounty": 2
          },
          "buffs": [
-            "tower_defense:buffs:monster:magic_armor:normal"
-         ]
+            "tower_defense:buffs:monster:magic_armor:minor"
+         ],
+         "role_overrides": {
+            "boar": "goblin_wolf"
+         }
       },
       {
          "wavenumber": 15,
          "uri": "tower_defense:data:waves:ground:10",
+         "category": "armored",
          "multipliers": {
             "attributes": {
                "speed": 1.1,
@@ -197,8 +204,11 @@
             "gold_bounty": 3
          },
          "buffs": [
-            "tower_defense:buffs:monster:armor:normal"
-         ]
+            "tower_defense:buffs:monster:armor:minor"
+         ],
+         "role_overrides": {
+            "boar": "little_stone_golem"
+         }
       },
       {
          "wavenumber": 16,
@@ -320,6 +330,7 @@
       {
          "wavenumber": 24,
          "uri": "tower_defense:data:waves:ground:10",
+         "category": "armored",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -328,8 +339,11 @@
             "gold_bounty": 8
          },
          "buffs": [
-            "tower_defense:buffs:monster:armor:major"
-         ]
+            "tower_defense:buffs:monster:armor:normal"
+         ],
+         "role_overrides": {
+            "boar": "little_stone_golem"
+         }
       },
       {
          "wavenumber": 25,
@@ -364,6 +378,7 @@
       {
          "wavenumber": 27,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "magic_armored",
          "multipliers": {
             "attributes": {
                "speed": 1.2,
@@ -372,8 +387,11 @@
             "gold_bounty": 9
          },
          "buffs": [
-            "tower_defense:buffs:monster:magic_armor:major"
-         ]
+            "tower_defense:buffs:monster:magic_armor:normal"
+         ],
+         "role_overrides": {
+            "boar": "goblin_wolf"
+         }
       },
       {
          "wavenumber": 28,
@@ -664,12 +682,14 @@
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major",
-            "tower_defense:buffs:monster:magic_armor:major"
+            "tower_defense:buffs:monster:magic_armor:major",
+            "tower_defense:buffs:monster:immunity:slow"
          ]
       },
       {
          "wavenumber": 46,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "magic_armored",
          "multipliers": {
             "attributes": {
                "speed": 1.4,
@@ -678,9 +698,13 @@
             "gold_bounty": 13
          },
          "buffs": [
-            "tower_defense:buffs:monster:immunity:slow",
-            "tower_defense:buffs:monster:healing:minor"
-         ]
+            "tower_defense:buffs:monster:magic_armor:minor",
+            "tower_defense:buffs:monster:magic_armor:normal",
+            "tower_defense:buffs:monster:magic_armor:major"
+         ],
+         "role_overrides": {
+            "boar": "goblin_wolf"
+         }
       },
       {
          "wavenumber": 47,
@@ -712,12 +736,13 @@
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:poison",
-            "tower_defense:buffs:monster:full_purge"
+            "tower_defense:buffs:monster:full_purge",
+            "tower_defense:buffs:monster:healing:minor"
          ]
       },
       {
          "wavenumber": 49,
-         "uri": "tower_defense:data:waves:ground:20",
+         "uri": "tower_defense:data:waves:ground:10",
          "category": "invisible",
          "multipliers": {
             "attributes": {
@@ -776,12 +801,14 @@
             "gold_bounty": 14
          },
          "buffs": [
-            "tower_defense:buffs:monster:random_purge"
+            "tower_defense:buffs:monster:random_purge",
+            "tower_defense:buffs:monster:healing:major"
          ]
       },
       {
          "wavenumber": 53,
-         "uri": "tower_defense:data:waves:ground:10",
+         "uri": "tower_defense:data:waves:ground:20",
+         "category": "armored",
          "multipliers": {
             "attributes": {
                "speed": 1.5,
@@ -793,7 +820,10 @@
             "tower_defense:buffs:monster:armor:minor",
             "tower_defense:buffs:monster:armor:normal",
             "tower_defense:buffs:monster:armor:major"
-         ]
+         ],
+         "role_overrides": {
+            "boar": "little_stone_golem"
+         }
       },
       {
          "wavenumber": 54,
@@ -807,9 +837,9 @@
             "gold_bounty": 15
          },
          "buffs": [
-            "tower_defense:buffs:monster:magic_armor:minor",
-            "tower_defense:buffs:monster:magic_armor:normal",
-            "tower_defense:buffs:monster:magic_armor:major"
+            "tower_defense:buffs:monster:armor:major",
+            "tower_defense:buffs:monster:magic_armor:major",
+            "tower_defense:buffs:monster:healing:normal"
          ]
       },
       {

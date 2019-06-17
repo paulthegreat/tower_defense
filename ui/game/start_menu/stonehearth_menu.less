@@ -50,6 +50,74 @@
    content: url(/tower_defense/ui/game/start_menu/images/wood.png);
 }
 
+#weather {
+   .weatherDay img {
+      box-sizing: border-box;
+      height: 32px;
+   }
+   .weatherDay.hasCategory {
+      opacity: 1.0;  
+   }
+}
+
+.category {
+   border: solid 3px rgb(0, 0, 0);
+}
+.category.air {
+   border-color: rgb(243, 234, 180);
+}
+.category.boss {
+   border-color: rgb(63, 60, 236);
+}
+.category.critters {
+   border-color: rgb(104, 67, 37);
+}
+.category.invisible {
+   border-color: rgb(117, 0, 98);
+}
+.category.healing {
+   border-color: rgb(21, 192, 72);
+}
+.category.summon {
+   border-color: rgb(21, 181, 192);
+}
+.category.purge {
+   border-color: rgb(224, 102, 32);
+}
+.category.armored {
+   border-color: rgb(214, 194, 14);
+}
+.category.magic_armored {
+   border-color: rgb(224, 32, 208);
+}
+
+.monster {
+
+   .monsterPortrait {
+      width: 100px;
+
+      img {
+         width: 100px;
+      }
+   }
+
+   .monsterContent {
+      display: inline-block;
+      padding: 0px 5px 5px 5px;
+
+      .monsterName {
+         padding-bottom: 5px;
+         font-size: 16px;
+         font-family: 'groboldregular';
+         color: @controlLightFontColor;
+      }
+
+      .monsterDescription {
+         padding-bottom: 5px;
+      }
+   }
+}
+
 .requiredLevel {
    font-family: 'groboldregular';
    color: whitesmoke;

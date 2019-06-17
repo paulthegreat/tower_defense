@@ -30,9 +30,8 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.monsters.forest.zilla.display_name)",
-         "description": "i18n(stonehearth:entities.monsters.forest.zilla.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.zilla.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.zilla.description)",
          "icon": "file(zilla.png)"
       }
    }

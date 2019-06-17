@@ -26,10 +26,6 @@
    },
    "entity_data": {
       "stonehearth:entity_radius": 0.3,
-      "stonehearth:species": {
-         "id": "bitsy_ant",
-         "display_name": "i18n(stonehearth:entities.critters.bitsy_ant.species)"
-      },
       "stonehearth:portrait": {
          "portrait_types": {
             "headshot": {
@@ -50,9 +46,8 @@
          }
       },
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.critters.bitsy_ant.display_name)",
-         "description": "i18n(stonehearth:entities.critters.bitsy_ant.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.bitsy_ant.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.bitsy_ant.description)",
          "icon": "file(bitsy_ant.png)"
       }
    }

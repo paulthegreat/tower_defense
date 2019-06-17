@@ -36,9 +36,8 @@
    },
    "entity_data": {
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.monsters.forest.alligator.display_name)",
-         "description": "i18n(stonehearth:entities.monsters.forest.alligator.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.alligator.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.alligator.description)",
          "icon": "file(alligator.png)"
       }
    }

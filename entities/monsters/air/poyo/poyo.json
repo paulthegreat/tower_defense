@@ -33,10 +33,6 @@
    },
    "entity_data": {
       "stonehearth:entity_radius": 0.5,
-      "stonehearth:species": {
-         "id": "poyo",
-         "display_name": "i18n(stonehearth:entities.critters.poyo.species)"
-      },
       "stonehearth:idle_effects": {
          "effects": [
             {
@@ -46,9 +42,8 @@
          ]
       },
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.critters.poyo.display_name)",
-         "description": "i18n(stonehearth:entities.critters.poyo.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.poyo.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.poyo.description)",
          "icon": "file(poyo.png)"
       }
    }

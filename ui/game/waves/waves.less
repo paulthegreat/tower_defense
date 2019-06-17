@@ -1,0 +1,58 @@
+#wavesWindow {
+   position: absolute;
+   left: 1000px;
+   top: 200px;
+   z-index: 5;
+
+   .window {
+      width: 600px;
+      height: 615px;
+   }
+
+   .downSection {
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 540px;
+   }
+
+   #waveGrid {
+      padding-top: 10px;
+      padding-bottom: 20px;
+      width: 100%;
+
+      .row {
+         td {
+            padding: 5px 5px 5px 10px;
+         }
+         td:last-child {
+            padding: 5px 10px 5px 5px;
+         }
+      }
+
+      .row:nth-child(odd) {
+         background: rgba(0,0,0,0.2);
+      }
+
+      .row.past {
+         transition: opacity 0.50s;
+         opacity: 0.5;
+      }
+      .row.present {
+         transition: filter 0.50s, background 0.50s;
+         filter: brightness(1.2);
+         background: rgba(255, 255, 255, 0.25);
+      }
+      .row.future {
+         filter: brightness(1);
+      }
+
+      .waveTitle {
+         text-align: left;
+         width: 100px;
+      }
+
+      .waveData {
+         text-align: left;
+      }
+   }
+}

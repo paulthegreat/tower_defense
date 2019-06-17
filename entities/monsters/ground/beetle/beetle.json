@@ -35,10 +35,6 @@
    },
    "entity_data": {
       "stonehearth:entity_radius": 0.3,
-      "stonehearth:species": {
-         "id": "beetle",
-         "display_name": "i18n(stonehearth:entities.critters.beetle.species)"
-      },
       "stonehearth:portrait": {
          "portrait_types": {
             "headshot": {
@@ -59,9 +55,8 @@
          }
       },
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.critters.beetle.display_name)",
-         "description": "i18n(stonehearth:entities.critters.beetle.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.beetle.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.beetle.description)",
          "icon": "file(beetle.png)"
       }
    }

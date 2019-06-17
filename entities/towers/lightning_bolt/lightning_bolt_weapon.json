@@ -30,7 +30,7 @@
             "name": "lightning_bolt",
             "effect": "tower_defense:effects:lightning_cast",
             "ground_effect": "tower_defense:effects:lightning_bolt",
-            "base_damage": 75,
+            "base_damage": 120,
             "damage_type": "magical",
             "aoe": {
                "range": 2,

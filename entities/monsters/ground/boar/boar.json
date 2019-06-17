@@ -30,10 +30,6 @@
    },
    "entity_data": {
       "stonehearth:entity_radius": 0.5,
-      "stonehearth:species": {
-         "id": "boar",
-         "display_name": "i18n(stonehearth:entities.critters.boar.species)"
-      },
       "stonehearth:portrait": {
          "portrait_types": {
             "headshot": {
@@ -54,9 +50,8 @@
          }
       },
       "stonehearth:catalog": {
-         "player_id": "animals",
-         "display_name": "i18n(stonehearth:entities.critters.boar.display_name)",
-         "description": "i18n(stonehearth:entities.critters.boar.description)",
+         "display_name": "i18n(tower_defense:entities.monsters.boar.display_name)",
+         "description": "i18n(tower_defense:entities.monsters.boar.description)",
          "icon": "file(boar.png)"
       }
    }

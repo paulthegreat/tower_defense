@@ -63,6 +63,26 @@ var tower_defense = {
       return cost;
    },
 
+   getWaveDescription: function(waveData) {
+      var s = ''
+      if (waveData) {
+         if (waveData.monsters) {
+            // for each monster, load up basic information about it (image, name, description)
+            radiant.each(waveData.monsters, function(uri, spawn) {
+               var monster = App.catalog.getCatalogData(uri);
+               if (monster) {
+                  s += tower_defense._getMonster(monster);
+               }
+            });
+         }
+
+         if (waveData.buffs) {
+            s += `<div>${i18n.t('tower_defense:data.waves.monster_buffs') + this._getBuffs(waveData.buffs)}</div>`;
+         }
+      }
+      return s;
+   },
+
    getTowerWeaponTooltipContent: function(weapon, original, upgradeCost) {
       var weaponData = App.catalog.getCatalogData(weapon);
       var passthroughAttack = false;
@@ -283,6 +303,23 @@ var tower_defense = {
       }
    },
 
+   _getMonster: function(monster) {
+      var s = '';
+
+      s += `<table class='monster'><tr><td class='monsterPortrait'><img src="${monster.icon}"></td><td class='monsterContent'>`
+
+      if (monster.display_name) {
+         s += `<div class='monsterName'>${i18n.t(monster.display_name)}</div>`;
+      }
+      if (monster.description) {
+         s += `<div class='monsterDescription'>${i18n.t(monster.description)}</div>`;
+      }
+
+      s += '</td></tr></table>';
+
+      return s;
+   },
+
    _getBuffs: function(buffs) {
       var s = '';
 
@@ -302,6 +339,10 @@ var tower_defense = {
       });
 
       return s;
+   },
+
+   getBuff: function(uri) {
+      return this._all_buffs && this._all_buffs[uri];
    },
 
    getAllBuffs: function(callbackFn) {

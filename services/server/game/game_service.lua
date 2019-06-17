@@ -98,7 +98,8 @@ function GameService:_on_wave_succeeded(bonus)
 end
 
 function GameService:get_wave_index_command(session, response)
-   -- go through all the waves and get "catalog" buff data for the buffs and "ground/air" indicators for the spawns
+   -- go through all the waves and get "catalog" buff data for the buffs and category indicators for the spawns
+   -- also list all monster types that will be spawned
    local waves = {}
    for _, wave in ipairs(self._waves) do
       local wave_detail = radiant.resources.load_json(wave.uri) or {}
@@ -109,6 +110,18 @@ function GameService:get_wave_index_command(session, response)
       if wave.buffs then
          wave_data.buffs = catalog_lib.get_buffs(wave.buffs)
       end
+      wave_data.monsters = {}
+      for _, monster in ipairs(wave_detail.monsters) do
+         for _, spawn in ipairs(monster.each_spawn) do
+            local pop = stonehearth.population:get_population(spawn.population)
+            local role = spawn.info.from_population.role
+            role = wave.role_overrides and wave.role_overrides[role] or role
+            for _, uri in ipairs(pop:get_role_entity_uris(role)) do
+               wave_data.monsters[uri] = true
+            end
+         end
+      end
+
       table.insert(waves, wave_data)
    end
    

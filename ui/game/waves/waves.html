@@ -1,0 +1,25 @@
+<script type="text/x-handlebars" data-template-name="wavesWindow">
+   <div id="wavesWindow" class="gui">
+      <div class="window">
+         <div class="title">
+            {{i18n tower_defense:ui.game.wavesWindow.title}}
+            <div class="closeButton"></div>
+         </div>
+         
+         <div class="downSection">
+            <table id="waveGrid" cellspacing="0" cellpadding="0">
+               {{#each wave in view.waves}}
+                  <tr {{bind-attr class=wave.classes data-wave-id=wave.index}}>
+                     <td class="waveTitle">
+                        {{{wave.title}}}
+                     </td>
+                     <td class="waveData" {{bind-attr data-wave-id=wave.index}}>
+                        {{{wave.content}}}
+                     </td>
+                  </tr>
+               {{/each}}
+            </table>
+         </div>
+      </div>
+   </div>
+</script>
