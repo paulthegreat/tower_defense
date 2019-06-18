@@ -125,6 +125,7 @@ var tower_defense = {
       if (a) {
          if (a.base_damage) {
             a.damage_type = a.damage_type || 'physical';
+            a.damage_value = Array.isArray(a.base_damage) ? a.base_damage[0] + '–' + a.base_damage[1] : a.base_damage.toString();
             s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage_title'),
                   weaponData, original, ['tower_weapon_attack_info.base_damage', 'tower_weapon_attack_info.damage_type',
                      'tower_weapon_attack_info.attack_times.length', 'tower_weapon_attack_info.num_targets']),
@@ -152,15 +153,18 @@ var tower_defense = {
                weaponData, original, ['tower_weapon_attack_info.aoe.range', 'tower_weapon_attack_info.aoe.hits_ground_and_air']),
             i18n.t('tower_defense:ui.game.tooltips.tower_weapons.range_square', aoe) +
             this._getAttackTypes(t.attacks_ground || aoe.hits_ground_and_air, t.attacks_air || aoe.hits_ground_and_air));
-         var secondary_damage = aoe.base_damage != null ? aoe.base_damage : a.base_damage;
+         var secondary_damage = aoe.base_damage != null ? aoe.base_damage : a.damage_value;
          if (secondary_damage != null) {
             aoe.damage_type = aoe.damage_type || a.damage_type || 'physical';
+            aoe.damage_value = Array.isArray(secondary_damage) ? secondary_damage[0] + '–' + secondary_damage[1] : secondary_damage.toString();
+            var original_damage = original && original.tower_weapon_attack_info && ((original.tower_weapon_attack_info.aoe && original.tower_weapon_attack_info.aoe.base_damage) != null ?
+                  original.tower_weapon_attack_info.aoe.base_damage : original.tower_weapon_attack_info.base_damage);
+            var original_damage_value = original_damage != null && (Array.isArray(original_damage) ? original_damage[0] + '–' + original_damage[1] : original_damage.toString());
+
             s += this._getLine(this._getDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.aoe_damage_title'),
                   this._compareProperties(weaponData, original, ['tower_weapon_attack_info.aoe.damage_type']) &&
-                  !original || (secondary_damage == (original.tower_weapon_attack_info && ((original.tower_weapon_attack_info.aoe &&
-                     original.tower_weapon_attack_info.aoe.base_damage) != null ? original.tower_weapon_attack_info.aoe.base_damage :
-                     original.tower_weapon_attack_info.base_damage)))),
-               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', {base_damage: secondary_damage, damage_type: secondary_damage > 0 && aoe.damage_type}));
+                  !original || (aoe.damage_value == original_damage_value)),
+               i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', {damage_value: aoe.damage_value, damage_type: aoe.damage_value != '0' && aoe.damage_type}));
          }
       }
 
@@ -277,6 +281,15 @@ var tower_defense = {
          return `<span class="weaponModified">${content}</span>`;
       }
       return content;
+   },
+
+   _isDamageEqual: function(d1, d2) {
+      if (Array.isArray(d1) && Array.isArray(d2)) {
+         return d1[0] == d2[0] && d1[1] == d2[1];
+      }
+      else {
+         return d1 == d2;
+      }
    },
 
    _getAttackTypes: function(attacks_ground, attacks_air) {

@@ -111,7 +111,7 @@ function TDCombatService:get_shortest_cooldown(entity, attack_types)
    return shortest_cd or 0
 end
 
-function TDCombatService:calculate_damage(attacker, target, attack_info, damage_multiplier, base_damage)
+function TDCombatService:calculate_damage(attacker, target, attack_info, base_damage, damage_multiplier)
    if damage_multiplier == 0 then
       return 0
    end
