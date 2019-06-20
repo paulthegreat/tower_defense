@@ -31,9 +31,9 @@ function TowerRenderer:initialize(render_entity, datastore)
          :on_changed(function()
                local new_location = radiant.entities.get_location_aligned(self._entity)
                --log:debug('tower %s location changed from %s to %s', self._entity, tostring(location), tostring(new_location))
-               if location ~= new_location and (location == Point3.zero or location == Point3(0, -100000, 0)) then
+               if location ~= new_location then -- and (location == Point3.zero or location == Point3(0, -100000, 0)) then
                   location = new_location
-                  self:_update()
+                  self:_update(location)
                end
             end)
          :push_object_state()
@@ -53,13 +53,17 @@ function TowerRenderer:destroy()
       self._ui_mode_listener:destroy()
       self._ui_mode_listener = nil
    end
-   self:_destroy_outline_node()
+   self:_destroy_outline_nodes()
 end
 
-function TowerRenderer:_destroy_outline_node()
+function TowerRenderer:_destroy_outline_nodes()
    if self._outline_node then
       self._outline_node:destroy()
       self._outline_node = nil
+   end
+   if self._path_node then
+      self._path_node:destroy()
+      self._path_node = nil
    end
 end
 
@@ -82,8 +86,8 @@ function TowerRenderer:_in_correct_mode()
    return self._ui_view_mode == 'hud'
 end
 
-function TowerRenderer:_update()
-   self:_destroy_outline_node()
+function TowerRenderer:_update(location)
+   self:_destroy_outline_nodes()
 
    if not (self._is_selected or self:_in_correct_mode()) then
       return
@@ -101,24 +105,31 @@ function TowerRenderer:_update()
       return
    end
 
-   local location = radiant.entities.get_world_grid_location(self._entity) or radiant.entities.get_location_aligned(self._entity)
+   location = location or radiant.entities.get_world_grid_location(self._entity) or radiant.entities.get_location_aligned(self._entity)
    if not location then
       return
    end
 
+   local path_intersection = tower_defense.client_game:get_path_intersection_region(region:translated(location), data.attacks_ground, data.attacks_air)
+
    local EDGE_COLOR_ALPHA = 128
    local FACE_COLOR_ALPHA = 0
+   local PATH_FACE_COLOR_ALPHA = 32
    local color = { x = 255, y = 192, z = 32 }
+   local path_color = { x = 255, y = 255, z = 255 }
    if stonehearth.presence_client:is_multiplayer() then
       color = stonehearth.presence_client:get_player_color(self._player_id)
+      path_color = color
    end
    local edge_color = color
+   local path_edge_color = path_color
 
    local height = 0.1
    if self._is_selected or data.is_client_entity then
       height = 0.2
       EDGE_COLOR_ALPHA = 192
-      FACE_COLOR_ALPHA = 64
+      FACE_COLOR_ALPHA = 32
+      PATH_FACE_COLOR_ALPHA = 96
    end
 
    if data.reveals_invis then
@@ -126,6 +137,7 @@ function TowerRenderer:_update()
       height = math.max(height, 0.15)
       edge_color = { x = 255, y = 0, z = 24}
       EDGE_COLOR_ALPHA = 255
+      path_edge_color = edge_color
    end
 
    -- have it float slightly above the ground to avoid z-fighting
@@ -142,10 +154,19 @@ function TowerRenderer:_update()
    end
 
    self._outline_node = _radiant.client.create_region_outline_node(render_node, region,
-         radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA), radiant.util.to_color4(color, FACE_COLOR_ALPHA),
+         radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA / 2), radiant.util.to_color4(color, FACE_COLOR_ALPHA),
          '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)
       :set_casts_shadows(false)
       :set_can_query(false)
+
+   if path_intersection and not path_intersection:empty() then
+      path_intersection = path_intersection:inflated(Point3(0, -0.01, 0))
+      self._path_node = _radiant.client.create_region_outline_node(RenderRootNode, path_intersection,
+            radiant.util.to_color4(path_edge_color, EDGE_COLOR_ALPHA), radiant.util.to_color4(path_color, PATH_FACE_COLOR_ALPHA),
+            '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)
+         :set_casts_shadows(false)
+         :set_can_query(false)
+   end
 end
 
 return TowerRenderer

@@ -8,6 +8,7 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
    local tower_data = radiant.entities.get_entity_data(entity, 'tower_defense:tower_data')
    local placement = tower_data and tower_data.placement
    local placeable_region = tower_defense.client_game:get_tower_placeable_region()
+   local placeable_terrain = tower_defense.client_game:get_tower_placeable_terrain()
 
    stonehearth.selection:deactivate_all_tools()
    
@@ -15,6 +16,12 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
    stonehearth.selection:select_location()
       :set_cursor_entity(entity)
       :set_filter_fn(function (result, selector)
+            -- the client_game service's request for map data should already be finished
+            -- but worst case scenario the player can just move the mouse and reconsider   
+            if not placeable_region then
+               return false
+            end
+
             local this_entity = result.entity   
             local normal = result.normal:to_int()
             local brick = result.brick
@@ -29,8 +36,10 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
                return stonehearth.selection.FILTER_IGNORE
             end
 
-            -- only allow building within tower placeable region if specified
-            if placeable_region and not placeable_region:contains(brick) then
+            -- only allow building within tower placeable region
+            -- if it's not specified in map generation, a default region will be used,
+            -- so as long as the client_game service has acquired the map data, this region will exist
+            if not placeable_region:contains(brick) then
                return stonehearth.selection.FILTER_IGNORE
             end
 
@@ -38,7 +47,7 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
                local kind = radiant.terrain.get_block_kind_at(brick - normal)
                if kind == nil then
                   return stonehearth.selection.FILTER_IGNORE
-               elseif kind == 'grass' then
+               elseif not placeable_terrain or kind == placeable_terrain then
                   local entities_at_point = radiant.terrain.get_entities_at_point(brick)
                   if placement then
                      if placement.type == 'replace_entity' then

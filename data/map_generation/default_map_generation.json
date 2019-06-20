@@ -37,6 +37,7 @@
 			[44,0,48]
       ]
    },
+   "tower_placeable_terrain": "grass",
    "entities": {
       "tower_defense:end_portal:firepit_titan": [
          {

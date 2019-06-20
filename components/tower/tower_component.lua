@@ -334,6 +334,7 @@ function TowerComponent:get_best_targets(from_target_id, attacked_targets, regio
    local best_targets = {}
    local region_targets = radiant.terrain.get_entities_in_region(region_override or self._sv.targetable_path_region,
          self._sv.sees_invis and _ignore_target_invis_filter_fn or _target_filter_fn)
+   region_targets = self:_filter_air_ground_attackable(region_targets, attack_info.hits_ground_and_air)
 
    if from_target_id then
       region_targets[from_target_id] = nil
@@ -655,7 +656,10 @@ end
 
 function TowerComponent:_get_aoe_targets(aoe_attack_info, location)
    local cube = self:_get_attack_cube(aoe_attack_info, location)
-   return cube and radiant.terrain.get_entities_in_cube(cube, _ignore_target_invis_filter_fn)
+   if cube then
+      local targets = radiant.terrain.get_entities_in_cube(cube, _ignore_target_invis_filter_fn)
+      return self:_filter_air_ground_attackable(targets, aoe_attack_info.hits_ground_and_air)
+   end
 end
 
 function TowerComponent:_get_attack_cube(info, location)
@@ -664,7 +668,7 @@ function TowerComponent:_get_attack_cube(info, location)
       return nil
    end
 
-   local cube = Cube3(Point3(-range, 0, -range), Point3(range, 1, range))
+   local cube = Cube3(Point3(-range, -range - 0.5, -range), Point3(range, range + 0.5, range))
    if info.hits_ground_and_air then
       -- note: not storing an air "height" anymore, only their paths, height could technically vary
       -- so just have some max variance that is always used
@@ -672,6 +676,18 @@ function TowerComponent:_get_attack_cube(info, location)
    end
 
    return cube:translated(location + Point3(0.5, 0, 0.5))
+end
+
+function TowerComponent:_filter_air_ground_attackable(targets, hits_ground_and_air)
+   if not hits_ground_and_air or not self._sv.attacks_ground or not self._sv.attacks_air then
+      for id, entity in pairs(targets) do
+         if (entity:get_player_id() == 'monster_ground' and not self._sv.attacks_ground) or
+               (entity:get_player_id() == 'monster_air' and not self._sv.attacks_air) then
+            targets[id] = nil
+         end
+      end
+   end
+   return targets
 end
 
 function TowerComponent:_stop_current_effect()

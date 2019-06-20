@@ -54,6 +54,7 @@
    "tower_placeable_region": [
       [[8,0,8], [56,1,56]]
    ],
+   "tower_placeable_terrain": "grass",
    "landmarks": [
       "/tower_defense/data/models/landmarks/landmark_1.qb",
       "/tower_defense/data/models/landmarks/landmark_2.qb",
