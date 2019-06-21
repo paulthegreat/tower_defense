@@ -427,6 +427,7 @@
       "beam": "file(components/beam/beam_component.lua)",
       "ground_presence": "file(components/ground_presence/ground_presence_component.lua)",
       "monster": "file(components/monster/monster_component.lua)",
+      "region_renderer": "file(components/region_renderer/region_renderer_component.lua)",
       "tower": "file(components/tower/tower_component.lua)"
    },
    "client_components": {
@@ -435,6 +436,7 @@
    "component_renderers": {
       "beam": "file(renderers/beam/beam_renderer.lua)",
       "monster": "file(renderers/monster/monster_renderer.lua)",
+      "region_renderer": "file(renderers/region_renderer/region_renderer_renderer.lua)",
       "tower": "file(renderers/tower/tower_renderer.lua)"
    },
    "controllers": {

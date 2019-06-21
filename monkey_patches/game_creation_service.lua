@@ -78,7 +78,8 @@ function GameCreationService:_generate_world(session, response, map_info)
       -- add landmarks to edges of map
       self:_create_landmarks(map.landmarks, size, Point3(0, height, 0))
       
-      local top = center_point + Point3(0, height - 1, 0)
+      -- if we're having the path cut into the terrain, subtract 1 from the height
+      local top = center_point + Point3(0, height - (map.path.width and 1 or 0), 0)
       local air_top = Point3(0, map.air_path.height, 0)
 
       local sub_terrain = Region3()
@@ -93,8 +94,10 @@ function GameCreationService:_generate_world(session, response, map_info)
       radiant.terrain.subtract_region(sub_terrain)
       
       -- place path entities with movement modifiers
-      --radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top + center_point)
-      --radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top + center_point)
+      path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {128, 51, 0, 128}})
+      radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top)
+      --radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top)
+      air_path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {224, 64, 224, 128}})
       radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top)
 
       -- finally, add any entities that should start out in the world
