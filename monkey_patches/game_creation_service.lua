@@ -78,7 +78,6 @@ function GameCreationService:_generate_world(session, response, map_info)
       -- add landmarks to edges of map
       self:_create_landmarks(map.landmarks, size, Point3(0, height, 0))
       
-      -- subtract the path from the world terrain
       local top = center_point + Point3(0, height - 1, 0)
       local air_top = Point3(0, map.air_path.height, 0)
 
@@ -87,7 +86,10 @@ function GameCreationService:_generate_world(session, response, map_info)
             self:_create_path(map.path.points, top, false, map.path.width or 3, sub_terrain, map.path.block_type and block_types[map.path.block_type])
       local air_first_point, air_last_point, air_path_region, air_path_entity =
             self:_create_path(map.air_path.points, top + air_top, true, map.path.width or 3, sub_terrain)
+      
+      -- apply path block type terrain
       radiant.terrain.add_region(add_terrain)
+      -- subtract the path from the world terrain
       radiant.terrain.subtract_region(sub_terrain)
       
       -- place path entities with movement modifiers
@@ -127,13 +129,10 @@ function GameCreationService:_generate_world(session, response, map_info)
       map.air_spawn_location = air_first_point + top + air_top
       map.end_point = last_point + offset - Point3(0, 1, 0)
       map.air_end_point = air_last_point + air_top + offset - Point3(0, 1, 0)
-      map.ground_path_region = path_region:translated(Point3(first_point.x, 0, first_point.z) + center_point)
-      map.air_path_region = air_path_region:translated(Point3(air_first_point.x, 0, air_first_point.z) + center_point)
+      map.ground_path_region = path_region:translated(map.spawn_location)
+      map.air_path_region = air_path_region:translated(map.air_spawn_location)
 
       tower_defense.game:set_map_data(map)
-
-      tower_defense.tower:set_ground_path(map.ground_path_region)
-      tower_defense.tower:set_air_path(map.air_path_region, map.air_path.height)
 	end
 end
 

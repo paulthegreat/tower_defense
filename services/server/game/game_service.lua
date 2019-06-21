@@ -117,7 +117,15 @@ function GameService:get_wave_index_command(session, response)
             local role = spawn.info.from_population.role
             role = wave.role_overrides and wave.role_overrides[role] or role
             for _, uri in ipairs(pop:get_role_entity_uris(role)) do
-               wave_data.monsters[uri] = true
+               local monster_data = wave_data.monsters[uri]
+               if not monster_data then
+                  monster_data = {
+                     damage = spawn.damage,
+                     count = 0
+                  }
+                  wave_data.monsters[uri] = monster_data
+               end
+               monster_data.count = monster_data.count + (monster.count or 1) * (spawn.info.from_population.max or 1)
             end
          end
       end
@@ -165,6 +173,18 @@ end
 
 function GameService:get_air_spawn_location()
    return self._sv.map_data.air_spawn_location
+end
+
+function GameService:get_air_path_height()
+   return self._sv.map_data.air_path.height
+end
+
+function GameService:get_ground_path()
+   return self._sv.map_data.ground_path_region
+end
+
+function GameService:get_air_path()
+   return self._sv.map_data.air_path_region
 end
 
 function GameService:get_path_end_point_for_monster(monster)

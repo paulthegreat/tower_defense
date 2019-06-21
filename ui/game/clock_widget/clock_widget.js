@@ -202,6 +202,9 @@ App.StonehearthCalendarView = App.View.extend({
          $('#currentWave').tooltipster({
             content: $(App.tooltipHelper.createTooltip(null, i18n.t('tower_defense:ui.game.gameStateWindow.wave_tooltip')))
          });
+         $('#playerHealth').tooltipster({
+            content: $(App.tooltipHelper.createTooltip(null, i18n.t('tower_defense:ui.game.gameStateWindow.player_health_tooltip')))
+         });
          $('#remainingMonsters').tooltipster({
             content: $(App.tooltipHelper.createTooltip(null, i18n.t('tower_defense:ui.game.gameStateWindow.remaining_monsters_tooltip')))
          });

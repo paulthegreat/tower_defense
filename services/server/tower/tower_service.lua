@@ -6,6 +6,8 @@ local Entity = _radiant.om.Entity
 local Point3 = _radiant.csg.Point3
 local Region3 = _radiant.csg.Region3
 
+local towers_lib = require 'tower_defense.lib.towers.towers_lib'
+
 TowerService = class()
 
 function TowerService:initialize()
@@ -13,17 +15,6 @@ function TowerService:initialize()
 
    self._towers = {}
    self._detection_towers_by_coord = {}
-end
-
-function TowerService:set_ground_path(path)
-   self._sv.ground_path = path
-   self.__saved_variables:mark_changed()
-end
-
-function TowerService:set_air_path(path, height)
-   self._sv.air_path = path
-   self._sv.air_height = height
-   self.__saved_variables:mark_changed()
 end
 
 function TowerService:get_registered_towers()
@@ -76,33 +67,8 @@ function TowerService:unregister_tower(tower_id)
 end
 
 function TowerService:_cache_tower_range(tower_comp, location)
-   local ground_spawn_y = tower_defense.game:get_ground_spawn_location().y
-   local air_spawn_y = tower_defense.game:get_air_spawn_location().y
-   local targetable_region = tower_comp:get_targetable_region():translated(Point3(location.x, 0, location.z)):extruded('y', 8, air_spawn_y - ground_spawn_y)
-   
-   local ground_intersection
-   if tower_comp:attacks_ground() then
-      ground_intersection = targetable_region:intersect_region(self._sv.ground_path)
-      if not ground_intersection:empty() then
-         ground_intersection:translate(Point3(0, ground_spawn_y, 0))
-      end
-      ground_intersection:optimize('targetable region')
-   else
-      ground_intersection = Region3()
-   end
-
-   local air_intersection
-   if tower_comp:attacks_air() then
-      air_intersection = targetable_region:intersect_region(self._sv.air_path)
-      if not air_intersection:empty() then
-         air_intersection:translate(Point3(0, air_spawn_y, 0))
-      end
-      air_intersection:optimize('targetable region')
-   else
-      air_intersection = Region3()
-   end
-
-   return ground_intersection, air_intersection
+   return towers_lib.get_path_intersection_regions(tower_comp:get_targetable_region():translated(location),
+      tower_defense.game:get_ground_path(), tower_defense.game:get_air_path(), tower_defense.game:get_air_path_height(), tower_comp:attacks_ground(), tower_comp:attacks_air())
 end
 
 function TowerService:_get_range_coords(region)

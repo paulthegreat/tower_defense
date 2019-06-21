@@ -17,7 +17,7 @@ local STATES = {
    FINDING_TARGET = 'finding_target',   -- finding a target to use ability on
 }
 
-local MAX_PATH_HEIGHT_DIFFERENTIAL = 5 -- used for creating target regions for aoe attacks that can hit both ground and air
+local MAX_PATH_HEIGHT_DIFFERENTIAL = 10 -- used for creating target regions for aoe attacks that can hit both ground and air
 local TARGET_DEFAULTS
 local TARGET_DEFAULTS_BY_KEY
 local FILTER_TYPES

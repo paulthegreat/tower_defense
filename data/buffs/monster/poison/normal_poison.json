@@ -14,7 +14,7 @@
          "multiply": 0.9
       },
       "multiplicative_physical_dmg_taken": {
-         "add": 0.15
+         "add": 0.1
       }
    },
    "script": "tower_defense:buff_scripts:periodic_health_modification",

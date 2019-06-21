@@ -68,10 +68,10 @@ var tower_defense = {
       if (waveData) {
          if (waveData.monsters) {
             // for each monster, load up basic information about it (image, name, description)
-            radiant.each(waveData.monsters, function(uri, spawn) {
+            radiant.each(waveData.monsters, function(uri, info) {
                var monster = App.catalog.getCatalogData(uri);
                if (monster) {
-                  s += tower_defense._getMonster(monster);
+                  s += tower_defense._getMonster(monster, info.count, info.damage);
                }
             });
          }
@@ -316,16 +316,17 @@ var tower_defense = {
       }
    },
 
-   _getMonster: function(monster) {
+   _getMonster: function(monster, count, damage) {
       var s = '';
 
       s += `<table class='monster'><tr><td class='monsterPortrait'><img src="${monster.icon}"></td><td class='monsterContent'>`
 
       if (monster.display_name) {
-         s += `<div class='monsterName'>${i18n.t(monster.display_name)}</div>`;
+         s += `<div class='monsterName'>${i18n.t(monster.display_name)} (x${count})</div>`;
       }
       if (monster.description) {
-         s += `<div class='monsterDescription'>${i18n.t(monster.description)}</div>`;
+         var sDmg = damage ? `<div class='monsterDamage'>${i18n.t('tower_defense:data.waves.monster_damage', {damage: damage})}</div>` : '';
+         s += `<div class='monsterDescription'>${i18n.t(monster.description)}${sDmg}</div>`;
       }
 
       s += '</td></tr></table>';

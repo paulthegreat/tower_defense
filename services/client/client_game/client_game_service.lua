@@ -1,5 +1,8 @@
 local Point3 = _radiant.csg.Point3
 local Region3 = _radiant.csg.Region3
+
+local towers_lib = require 'tower_defense.lib.towers.towers_lib'
+
 local ClientGameService = class()
 
 function ClientGameService:initialize()
@@ -35,27 +38,8 @@ function ClientGameService:get_path_intersection_region(tower_region, targets_gr
       return Region3()
    end
 
-   local ground_spawn_y = self._map_data.spawn_location.y
-   local air_spawn_y = self._map_data.air_spawn_location.y
-   local ground_path_region = self._map_data.ground_path_region:translated(Point3(0, ground_spawn_y, 0))
-   local air_path_region = self._map_data.air_path_region:translated(Point3(0, air_spawn_y, 0))
-   local targetable_region = tower_region:extruded('y', 8, air_spawn_y - ground_spawn_y)
-   
-   local ground_intersection
-   if targets_ground then
-      ground_intersection = targetable_region:intersect_region(ground_path_region)
-      ground_intersection:optimize('targetable region')
-   else
-      ground_intersection = Region3()
-   end
-
-   local air_intersection
-   if targets_air then
-      air_intersection = targetable_region:intersect_region(air_path_region)
-      air_intersection:optimize('targetable region')
-   else
-      air_intersection = Region3()
-   end
+   local ground_intersection, air_intersection = towers_lib.get_path_intersection_regions(tower_region,
+         self._map_data.ground_path_region, self._map_data.air_path_region, self._map_data.air_path.height, targets_ground, targets_air)
 
    return ground_intersection + air_intersection
 end
