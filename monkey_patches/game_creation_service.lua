@@ -94,10 +94,10 @@ function GameCreationService:_generate_world(session, response, map_info)
       radiant.terrain.subtract_region(sub_terrain)
       
       -- place path entities with movement modifiers
-      path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {128, 51, 0, 128}})
+      path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {128, 51, 0, 96}})
       radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top)
       --radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top)
-      air_path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {224, 64, 224, 128}})
+      air_path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {224, 64, 224, 96}})
       radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top)
 
       -- finally, add any entities that should start out in the world

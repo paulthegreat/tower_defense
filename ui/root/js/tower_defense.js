@@ -232,12 +232,14 @@ var tower_defense = {
 
          ['first_time', 'other_times', 'every_time'].forEach(instance => {
             if (gp[instance]) {
-               if (gp[instance].attack_info) {
+               var gpa = gp[instance].attack_info;
+               if (gpa) {
+                  gpa.damage_value = Array.isArray(gpa.base_damage) ? gpa.base_damage[0] + '–' + gpa.base_damage[1] : gpa.base_damage.toString();
                   s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t(`tower_defense:ui.game.tooltips.tower_weapons.gp_${instance}_damage_title`),
                         weaponData, original, [`tower_weapon_attack_info.ground_presence.${instance}.attack_info`]),
-                     i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', gp[instance].attack_info), true);
+                     i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', gpa), true);
 
-                  var accuracy = gp[instance].attack_info.accuracy == null ? 1 : gp[instance].attack_info.accuracy;
+                  var accuracy = gpa.accuracy == null ? 1 : gpa.accuracy;
                   var original_accuracy = interpretPropertyString(`tower_weapon_attack_info.ground_presence.${instance}.attack_info.accuracy`, original);
                   if (original_accuracy == null) {
                      original_accuracy = 1;

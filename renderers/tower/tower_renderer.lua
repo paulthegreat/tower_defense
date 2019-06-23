@@ -132,12 +132,14 @@ function TowerRenderer:_update(location)
       PATH_FACE_COLOR_ALPHA = 96
    end
 
+   local path_squish_amount = -0.3
    if data.reveals_invis then
       -- make revealing tower regions stick out a little more
       height = math.max(height, 0.15)
       edge_color = { x = 255, y = 0, z = 24}
       EDGE_COLOR_ALPHA = 255
       path_edge_color = edge_color
+      path_squish_amount = -0.2
    end
 
    -- have it float slightly above the ground to avoid z-fighting
@@ -147,6 +149,8 @@ function TowerRenderer:_update(location)
    local render_node
    if data.is_client_entity then
       render_node = self._entity_node
+      path_squish_amount = -0.01
+      PATH_FACE_COLOR_ALPHA = 192
    else
       -- we render it this way so that we don't have to undo the rotation of a tower turning to face an enemy it's attacking
       render_node = RenderRootNode
@@ -160,7 +164,7 @@ function TowerRenderer:_update(location)
       :set_can_query(false)
 
    if path_intersection and not path_intersection:empty() then
-      path_intersection = path_intersection:inflated(Point3(0, -0.01, 0))
+      path_intersection = path_intersection:inflated(Point3(0, path_squish_amount, 0))
       self._path_node = _radiant.client.create_region_outline_node(RenderRootNode, path_intersection,
             radiant.util.to_color4(path_edge_color, EDGE_COLOR_ALPHA), radiant.util.to_color4(path_color, PATH_FACE_COLOR_ALPHA),
             '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)

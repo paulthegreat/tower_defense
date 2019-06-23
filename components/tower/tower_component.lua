@@ -1044,19 +1044,19 @@ end
 
 function TowerComponent:_inflict_attack(targets, primary_target, attack_info, buffs, damage_multiplier)
    local attacker = self._entity
-   local accuracy = (attacker:get_component('stonehearth:attributes'):get_value('accuracy') or 1) + (attack_info.accuracy or 0)
+   local accuracy = attacker:get_component('stonehearth:attributes'):get_attribute('accuracy', 1) + (attack_info.accuracy or 0)
    local aoe_attack = attack_info.aoe
    local base_damage = attack_info.base_damage
    local secondary_damage = aoe_attack and aoe_attack.base_damage
 
    if attack_info.is_percentage then
       local attributes = primary_target and primary_target:get_component('stonehearth:attributes')
-      damage_multiplier = damage_multiplier * (attributes and (0.01 * (attributes:get_value('max_health') or 100)) or 1)
+      damage_multiplier = damage_multiplier * (attributes and (0.01 * attributes:get_attribute('max_health', 100)) or 1)
    end
 
    for _, each_target in pairs(targets) do
       if each_target:is_valid() then
-         local avoidance = each_target:get_component('stonehearth:attributes'):get_value('avoidance') or 0
+         local avoidance = each_target:get_component('stonehearth:attributes'):get_attribute('avoidance', 0)
          if rng:get_real(0, 1) < accuracy - avoidance then
             local is_secondary_target = each_target ~= primary_target
             local hit_effect = is_secondary_target and aoe_attack and aoe_attack.hit_effect or (not is_secondary_target and attack_info.hit_effect)
