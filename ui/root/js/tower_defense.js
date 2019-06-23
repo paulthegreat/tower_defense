@@ -132,6 +132,17 @@ var tower_defense = {
                i18n.t(a.is_percentage ? 'tower_defense:ui.game.tooltips.tower_weapons.percentage_damage' :
                   'tower_defense:ui.game.tooltips.tower_weapons.damage', a) +
                this._getAttacks(a.attack_times && a.attack_times.length || 1, a.num_targets || 1));
+            
+            a.accuracy = a.accuracy == null ? 1 : a.accuracy;
+            var original_accuracy = interpretPropertyString('tower_weapon_attack_info.accuracy', original);
+            if (original_accuracy == null) {
+               original_accuracy = 1;
+            }
+            if (a.accuracy != 1 || original_accuracy != 1) {
+               s += this._getLine(this._getDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.accuracy_title'),
+                     a.accuracy == original_accuracy),
+                  i18n.t('tower_defense:ui.game.tooltips.tower_weapons.accuracy', {accuracy: a.accuracy * 100}));
+            }
          }
          if (a.cooldown) {
             s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.cooldown_title'),
@@ -225,6 +236,17 @@ var tower_defense = {
                   s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t(`tower_defense:ui.game.tooltips.tower_weapons.gp_${instance}_damage_title`),
                         weaponData, original, [`tower_weapon_attack_info.ground_presence.${instance}.attack_info`]),
                      i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', gp[instance].attack_info), true);
+
+                  var accuracy = gp[instance].attack_info.accuracy == null ? 1 : gp[instance].attack_info.accuracy;
+                  var original_accuracy = interpretPropertyString(`tower_weapon_attack_info.ground_presence.${instance}.attack_info.accuracy`, original);
+                  if (original_accuracy == null) {
+                     original_accuracy = 1;
+                  }
+                  if (accuracy != 1 || original_accuracy != 1) {
+                     s += this._getLine(this._getDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.accuracy_title'),
+                           accuracy == original_accuracy),
+                        i18n.t('tower_defense:ui.game.tooltips.tower_weapons.accuracy', {accuracy: accuracy * 100}), true);
+                  }
                }
                if (gp[instance].expanded_buffs) {
                   s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t(`tower_defense:ui.game.tooltips.tower_weapons.gp_${instance}_debuffs_title`),

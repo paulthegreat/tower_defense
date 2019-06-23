@@ -10,7 +10,7 @@
    "duration": 6000,
    "modifiers": {
       "multiplicative_healing_modifier": {
-         "multiply": 0.25
+         "multiply": 0.4
       }
    }
 }

@@ -1044,6 +1044,7 @@ end
 
 function TowerComponent:_inflict_attack(targets, primary_target, attack_info, buffs, damage_multiplier)
    local attacker = self._entity
+   local accuracy = (attacker:get_component('stonehearth:attributes'):get_value('accuracy') or 1) + (attack_info.accuracy or 0)
    local aoe_attack = attack_info.aoe
    local base_damage = attack_info.base_damage
    local secondary_damage = aoe_attack and aoe_attack.base_damage
@@ -1055,21 +1056,24 @@ function TowerComponent:_inflict_attack(targets, primary_target, attack_info, bu
 
    for _, each_target in pairs(targets) do
       if each_target:is_valid() then
-         local is_secondary_target = each_target ~= primary_target
-         local hit_effect = is_secondary_target and aoe_attack and aoe_attack.hit_effect or (not is_secondary_target and attack_info.hit_effect)
-         if hit_effect then
-            radiant.effects.run_effect(each_target, hit_effect)
-         end
+         local avoidance = each_target:get_component('stonehearth:attributes'):get_value('avoidance') or 0
+         if rng:get_real(0, 1) < accuracy - avoidance then
+            local is_secondary_target = each_target ~= primary_target
+            local hit_effect = is_secondary_target and aoe_attack and aoe_attack.hit_effect or (not is_secondary_target and attack_info.hit_effect)
+            if hit_effect then
+               radiant.effects.run_effect(each_target, hit_effect)
+            end
 
-         local total_damage = stonehearth.combat:calculate_damage(attacker, each_target, attack_info,
-               is_secondary_target and secondary_damage or base_damage, damage_multiplier)
-         
-         if not is_secondary_target or not aoe_attack or not attack_info.apply_buffs_to_primary_target_only then
-            stonehearth.combat:try_inflict_debuffs(attacker, each_target, buffs)
-         end
-         if total_damage > 0 then
-            local battery_context = BatteryContext(attacker, each_target, total_damage, attack_info.damage_type or 'physical')
-            stonehearth.combat:battery(battery_context)
+            local total_damage = stonehearth.combat:calculate_damage(attacker, each_target, attack_info,
+                  is_secondary_target and secondary_damage or base_damage, damage_multiplier)
+            
+            if not is_secondary_target or not aoe_attack or not attack_info.apply_buffs_to_primary_target_only then
+               stonehearth.combat:try_inflict_debuffs(attacker, each_target, buffs)
+            end
+            if total_damage > 0 then
+               local battery_context = BatteryContext(attacker, each_target, total_damage, attack_info.damage_type or 'physical')
+               stonehearth.combat:battery(battery_context)
+            end
          end
       end
    end

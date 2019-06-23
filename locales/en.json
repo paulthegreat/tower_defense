@@ -155,24 +155,24 @@
          },
          "minor_wound": {
             "display_name": "Minor Wound",
-            "description": "Reduces healing by 25% for 6 seconds. Stacks multiplicatively with other healing modifiers."
+            "description": "Reduces healing by 40% for 6 seconds. Stacks multiplicatively with other healing modifiers."
          },
          "normal_wound": {
             "display_name": "Wound",
-            "description": "Reduces healing by 50% for 6 seconds. Stacks multiplicatively with other healing modifiers."
+            "description": "Reduces healing by 60% for 6 seconds. Stacks multiplicatively with other healing modifiers."
          },
          "major_wound": {
             "display_name": "Major Wound",
-            "description": "Reduces healing by 75% for 6 seconds. Stacks multiplicatively with other healing modifiers."
+            "description": "Reduces healing by 80% for 6 seconds. Stacks multiplicatively with other healing modifiers."
          },
          "tower": {
             "minor_avoidance_decrease": {
                "display_name": "Minor Avoidance Decrease",
-               "description": "[NYI] Reduces avoidance by 5%"
+               "description": "Reduces avoidance by 5%"
             },
             "minor_avoidance_increase": {
                "display_name": "Minor Avoidance",
-               "description": "[NYI] Increases avoidance by 5%"
+               "description": "Increases avoidance by 5%"
             },
             "minor_armor_decrease": {
                "display_name": "Minor Physical Damage",
@@ -220,11 +220,11 @@
             },
             "minor_accuracy_decrease": {
                "display_name": "Minor Accuracy Reduction",
-               "description": "[NYI] Reduces accuracy by 5%"
+               "description": "Reduces accuracy by 5%"
             },
             "minor_accuracy_increase": {
                "display_name": "Minor Accuracy",
-               "description": "[NYI] Increases accuracy by 5%"
+               "description": "Increases accuracy by 5%"
             }
          },
          "gold_mining": {
@@ -1192,6 +1192,7 @@
                "title": "Player"
             },
             "donate": "Donate [str(amount)] <img class='inlineImg gold'>",
+            "donate_tooltip": "Donating <img class='inlineImg gold'> removes it from your supply and adds it to the common pool so any player can use it. <img class='inlineImg wood'> cannot be donated.",
             "common": "Common"
          },
          "referenceWindow": {
@@ -1285,6 +1286,7 @@
                "range_title": "Range:",
                "damage_title": "Damage:",
                "cooldown_title": "Cooldown:",
+               "accuracy_title": "Accuracy:",
                "buffs_title": "Buffs:",
                "debuffs_title": "Debuffs:",
                "aoe_range_title": "AOE Range:",
@@ -1308,6 +1310,7 @@
                "range_rectangle": "[str(x)]x[str(z)] <img class='inlineImg rect'>",
                "range_square": "[str(range)] <img class='inlineImg square'>",
                "cooldown": "[str(cooldown)]",
+               "accuracy": "[str(accuracy)]%",
                "damage": "<span class='damageType-[str(damage_type)]'><img class='inlineImg [str(damage_type)]'>[str(damage_value)]</span>",
                "percentage_damage": "<span class='damageType-[str(damage_type)]'><img class='inlineImg [str(damage_type)]'>[str(damage_value)]% of max HP</span>",
                "secondary_dmg_mult": "[str(damage_multiplier)] each attack",
@@ -1358,6 +1361,9 @@
                }
             },
             "begin_button": "Begin"
+         },
+         "title": {
+            "incompatible": "<h2>SH:TD Incompatible Mods</h2>The following mods may be incompatible with SH:TD. Any that are not merely building templates or recipes may need to be disabled for SH:TD to function properly."
          }
       }
    },

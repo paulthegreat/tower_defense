@@ -83,7 +83,17 @@ App.TowerDefenseResourceDisplay = App.View.extend({
          }
       });
 
-		self.set('player_array', playerArr);
+      self.set('player_array', playerArr);
+      
+      Ember.run.scheduleOnce('afterRender', self, '_ensureDonateTooltip');
 	}.observes('players'),
 
+   _ensureDonateTooltip: function () {
+      var self = this;
+      var donateDiv = self.$('.donate');
+      
+      if (!donateDiv.hasClass('tooltipstered')) {
+         App.tooltipHelper.attachTooltipster(donateDiv, $(App.tooltipHelper.createTooltip(null, i18n.t('tower_defense:ui.game.resourceDisplay.donate_tooltip'))));
+      }
+   }
 });

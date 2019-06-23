@@ -11,9 +11,7 @@
       "stonehearth:attributes": {
          "avoidance": {
             "type": "basic",
-            "value": 0,
-            "min": 0,
-            "max": 1
+            "value": 0
          },
          "multiplicative_physical_dmg_taken": {
             "type": "basic",
