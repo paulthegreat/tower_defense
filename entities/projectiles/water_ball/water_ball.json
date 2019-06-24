@@ -16,6 +16,7 @@
          ]
       },
       "render_info": {
+         "material": "materials/transparent_add_bloom.material.json",
          "scale": 0.15
       },
       "mob": {
