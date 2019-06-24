@@ -28,6 +28,8 @@
       "buffs:monster:immunity:burning": "file(data/buffs/monster/immunity/burning.json)",
       "buffs:monster:immunity:poison": "file(data/buffs/monster/immunity/poison.json)",
       "buffs:monster:immunity:slow": "file(data/buffs/monster/immunity/slow.json)",
+      "buffs:monster:immunity:immobilize:air": "file(data/buffs/monster/immunity/air_immobilize.json)",
+      "buffs:monster:immunity:immobilize:ground": "file(data/buffs/monster/immunity/ground_immobilize.json)",
       "buffs:monster:random_purge": "file(data/buffs/monster/purge/random_self_purge.json)",
       "buffs:monster:full_purge": "file(data/buffs/monster/purge/full_self_purge.json)",
       "buffs:monster:aoe_purge": "file(data/buffs/monster/purge/aoe_purge.json)",

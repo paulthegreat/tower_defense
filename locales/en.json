@@ -128,15 +128,15 @@
          },
          "minor_poison": {
             "display_name": "Minor Poison",
-            "description": "Slows by 5%, increases physical damage taken by 5%, and causes 3 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
+            "description": "Reduces movement speed by 5%, increases physical damage taken by 5%, and causes 3 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "normal_poison": {
             "display_name": "Poison",
-            "description": "Slows by 10%, increases physical damage taken by 10%, and causes 15 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
+            "description": "Reduces movement speed by 10%, increases physical damage taken by 10%, and causes 15 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "major_poison": {
             "display_name": "Major Poison",
-            "description": "Slows by 15%, increases physical damage taken by 15%, and causes 75 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
+            "description": "Reduces movement speed by 15%, increases physical damage taken by 15%, and causes 75 non-lethal magical damage every 3 seconds for 3 seconds. Reapplication adds duration."
          },
          "minor_reveal": {
             "display_name": "Minor Reveal",
@@ -152,15 +152,15 @@
          },
          "minor_slow": {
             "display_name": "Minor Slow",
-            "description": "Slows movement by 15% for 6 seconds. Stacks multiplicatively with other movement speed modifiers."
+            "description": "Reduces movement speed by 15% for 6 seconds. Stacks multiplicatively with other movement speed modifiers."
          },
          "normal_slow": {
             "display_name": "Slow",
-            "description": "Slows movement by 25% for 6 seconds. Stacks multiplicatively with other movement speed modifiers."
+            "description": "Reduces movement speed by 25% for 6 seconds. Stacks multiplicatively with other movement speed modifiers."
          },
          "major_slow": {
             "display_name": "Major Slow",
-            "description": "Slows movement by 35% for 6 seconds. Stacks multiplicatively with other movement speed modifiers."
+            "description": "Reduces movement speed by 35% for 6 seconds. Stacks multiplicatively with other movement speed modifiers."
          },
          "minor_wound": {
             "display_name": "Minor Wound",
@@ -281,6 +281,10 @@
          "spawn_ants_on_death": {
             "display_name": "Deathly Surprise",
             "description": "Spawns Ants when killed"
+         },
+         "gust": {
+            "display_name": "Gusted",
+            "description": "Briefly slowed down by a gust of wind: movement speed reduced by 50% for 1 second. Stacks multiplicatively with other movement speed modifiers."
          }
       },
       "population": {

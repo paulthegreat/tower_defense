@@ -371,11 +371,17 @@ var tower_defense = {
          if (buff.icon) {
             for (var i = 0; i < (buff.stacks || 1); i++) {
                s += ` <img class='inlineImg buff' src="${buff.icon}">`;
+               if (buff.chance != null && buff.chance != 1) {
+                  s += `(${Math.floor(buff.chance * 100)}%) `;
+               }
             }
             wasText = false;
          }
          else {
             s += (wasText ? ', ' : ' ') + i18n.t(buff.display_name);
+            if (buff.chance != null && buff.chance != 1) {
+               s += `(${Math.floor(buff.chance * 100)}%) `;
+            }
             wasText = true;
          }
       });

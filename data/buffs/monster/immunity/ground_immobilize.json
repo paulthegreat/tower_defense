@@ -1,0 +1,11 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "category": "immunity",
+   "disallowed_buffs": [
+      "tower_defense:buffs:monster:immobilize:immobilize",
+      "tower_defense:buffs:monster:immobilize:root"
+   ],
+   "invisible_to_player": true,
+   "persistent": true
+}

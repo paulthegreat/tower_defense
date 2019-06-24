@@ -4,6 +4,12 @@
    "components": {
       "mob": {
          "ignore_gravity": true
+      },
+      "stonehearth:buffs": {
+         "buffs": {
+            "buffs:monster:immunity:immobilize:ground": false,
+            "buffs:monster:immunity:immobilize:air": true
+         }
       }
    },
    "entity_data": {

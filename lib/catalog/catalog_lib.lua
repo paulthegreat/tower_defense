@@ -243,7 +243,8 @@ function catalog_lib._add_catalog_description(catalog, full_alias, json, base_da
       catalog_data.tower_weapon_targeting = json.entity_data['stonehearth:combat:weapon_data'].targeting
       local attacks = json.entity_data['stonehearth:combat:ranged_attacks']
       if attacks then
-         -- we only care about the primary attack (if there even are any extra attacks)
+         -- it's too complicated right now to show multiple attacks; if multiple attacks exist, we'll just show the first one
+         -- ultimately indexing attacks by name for the UI could work to allow for distinguishing them and comparing upgrades
          catalog_data.tower_weapon_attack_info = attacks[1]
 
          local ground_presence = catalog_data.tower_weapon_attack_info.ground_presence
@@ -262,7 +263,7 @@ function catalog_lib._add_catalog_description(catalog, full_alias, json, base_da
    return result
 end
 
-function catalog_lib._update_buff(full_alias, json, stacks)
+function catalog_lib._update_buff(full_alias, json, stacks, chance)
    local buff = _all_buffs[full_alias]
    if not buff then
       if not json then
@@ -282,6 +283,7 @@ function catalog_lib._update_buff(full_alias, json, stacks)
             icon = json.icon,
             max_stacks = json.max_stacks,
             stacks = stacks or 1,
+            chance = chance or 1,
             invisible_to_player = json.invisible_to_player,
             invisible_on_crafting = json.invisible_on_crafting,
             script_buffs = json.invisible_to_player and json.script_info and json.script_info.buffs
@@ -301,10 +303,16 @@ function catalog_lib.get_buffs(buff_data)
    local buffs = {}
    if buff_data then
       for buff, data in pairs(buff_data) do
-         local uri = type(data) == 'table' and data.uri or data
-         local stacks = type(data) == 'table' and data.stacks
+         local uri = data
+         local stacks
+         local chance
+         if type(data) == 'table' then
+            uri = data.uri
+            stacks = data.stacks
+            chance = data.chance
+         end
          local jsons = {}
-         local json = catalog_lib._update_buff(uri, nil, stacks)
+         local json = catalog_lib._update_buff(uri, nil, stacks, chance)
          if json then
             -- check if this buff is just being used to apply other buffs
             if json.script_buffs then

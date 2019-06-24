@@ -1,0 +1,17 @@
+{
+   "type": "buff",
+   "axis": "debuff",
+   "category": "gust",
+   "ordinal": 1,
+   "display_name": "i18n(tower_defense:data.buffs.gust.display_name)",
+   "description": "i18n(tower_defense:data.buffs.gust.description)",
+   "icon": "file(gust.png)",
+   "repeat_add_action": "renew_duration",
+   "duration": 1000,
+   "effect": "tower_defense:effects:air_particles",
+   "modifiers": {
+      "speed": {
+         "multiply": 0.5
+      }
+   }
+}

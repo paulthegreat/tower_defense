@@ -36,7 +36,12 @@
             "min": 0
          }
       },
-      "tower_defense:monster": {}
+      "tower_defense:monster": {},
+      "stonehearth:buffs": {
+         "buffs": {
+            "buffs:monster:immunity:immobilize:ground": true
+         }
+      }
    },
    "entity_data": {
       "stonehearth:ai_packs": {
