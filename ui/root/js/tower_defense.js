@@ -125,7 +125,7 @@ var tower_defense = {
       if (a) {
          if (a.base_damage) {
             a.damage_type = a.damage_type || 'physical';
-            a.damage_value = Array.isArray(a.base_damage) ? a.base_damage[0] + '–' + a.base_damage[1] : a.base_damage.toString();
+            a.damage_value = this._getDamageString(a.base_damage);
             s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage_title'),
                   weaponData, original, ['tower_weapon_attack_info.base_damage', 'tower_weapon_attack_info.damage_type',
                      'tower_weapon_attack_info.attack_times.length', 'tower_weapon_attack_info.num_targets']),
@@ -167,10 +167,10 @@ var tower_defense = {
          var secondary_damage = aoe.base_damage != null ? aoe.base_damage : a.damage_value;
          if (secondary_damage != null) {
             aoe.damage_type = aoe.damage_type || a.damage_type || 'physical';
-            aoe.damage_value = Array.isArray(secondary_damage) ? secondary_damage[0] + '–' + secondary_damage[1] : secondary_damage.toString();
+            aoe.damage_value = this._getDamageString(secondary_damage);
             var original_damage = original && original.tower_weapon_attack_info && ((original.tower_weapon_attack_info.aoe && original.tower_weapon_attack_info.aoe.base_damage) != null ?
                   original.tower_weapon_attack_info.aoe.base_damage : original.tower_weapon_attack_info.base_damage);
-            var original_damage_value = original_damage != null && (Array.isArray(original_damage) ? original_damage[0] + '–' + original_damage[1] : original_damage.toString());
+            var original_damage_value = original_damage != null && this._getDamageString(original_damage);
 
             s += this._getLine(this._getDifferenceSpan(i18n.t('tower_defense:ui.game.tooltips.tower_weapons.aoe_damage_title'),
                   this._compareProperties(weaponData, original, ['tower_weapon_attack_info.aoe.damage_type']) &&
@@ -234,7 +234,7 @@ var tower_defense = {
             if (gp[instance]) {
                var gpa = gp[instance].attack_info;
                if (gpa) {
-                  gpa.damage_value = Array.isArray(gpa.base_damage) ? gpa.base_damage[0] + '–' + gpa.base_damage[1] : gpa.base_damage.toString();
+                  gpa.damage_value = this._getDamageString(gpa.base_damage);
                   s += this._getLine(this._compareAndGetDifferenceSpan(i18n.t(`tower_defense:ui.game.tooltips.tower_weapons.gp_${instance}_damage_title`),
                         weaponData, original, [`tower_weapon_attack_info.ground_presence.${instance}.attack_info`]),
                      i18n.t('tower_defense:ui.game.tooltips.tower_weapons.damage', gpa), true);
@@ -314,6 +314,10 @@ var tower_defense = {
       else {
          return d1 == d2;
       }
+   },
+
+   _getDamageString: function(damage) {
+      return Array.isArray(damage) ? damage[0] + '–' + damage[1] : damage.toString();
    },
 
    _getAttackTypes: function(attacks_ground, attacks_air) {

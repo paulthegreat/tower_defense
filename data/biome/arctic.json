@@ -2,5 +2,11 @@
    "tower_defense_generation_file": "tower_defense:data:map_generation:arctic",
    "display_name": "i18n(tower_defense:data.biome.arctic.display_name)",
    "description": "i18n(tower_defense:data.biome.arctic.description)",
-   "image": "file(images/arctic.png)"
+   "image": "file(images/arctic.png)",
+   "mixintypes": {
+      "random_location_names": "override"
+   },
+   "random_location_names": [
+      "i18n(tower_defense:data.biome.arctic.random_location_names.000)"
+   ]
 }

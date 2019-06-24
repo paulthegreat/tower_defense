@@ -35,15 +35,8 @@ function Wave:activate()
    self._buffs = self._sv._wave_data.buffs or {}
    self._role_overrides = self._sv._wave_data.role_overrides or {}
 
-   local game_multipliers = self._sv._game_options.multipliers
-   if game_multipliers and game_multipliers.attributes then
-      for attr, mult in pairs(game_multipliers.attributes) do
-         self._multipliers.attributes[attr] = (self._multipliers.attributes[attr] or 1) * mult
-      end
-   end
-   if game_multipliers and game_multipliers.gold_bounty then
-      self._multipliers.gold_bounty = self._multipliers.gold_bounty * mult
-   end
+   self:_apply_multipliers(self._sv._game_options.multipliers)
+   self:_apply_multipliers(self._sv._map_data.multipliers)
    
    if self._sv._next_spawn_timer then
       self._sv._next_spawn_timer:bind(function()
@@ -339,6 +332,19 @@ function Wave:_check_wave_end()
          bonus.gold = bonus.gold * self._multipliers.gold_bounty
       end
       radiant.events.trigger(self, 'tower_defense:wave:succeeded', bonus)
+   end
+end
+
+function Wave:_apply_multipliers(multipliers)
+   if multipliers then
+      if multipliers.attributes then
+         for attr, mult in pairs(multipliers.attributes) do
+            self._multipliers.attributes[attr] = (self._multipliers.attributes[attr] or 1) * mult
+         end
+      end
+      if multipliers.gold_bounty then
+         self._multipliers.gold_bounty = self._multipliers.gold_bounty * multipliers.gold_bounty
+      end
    end
 end
 

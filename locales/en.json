@@ -12,15 +12,24 @@
       "biome": {
          "arctic": {
             "display_name": "Squares",
-            "description": "Looping similar to Burbenog for Ground monsters, with larger loops (and thus a longer-than-normal path) for Air."
+            "description": "Looping similar to Burbenog for Ground monsters, with larger loops (and thus a longer-than-normal path) for Air.",
+            "random_location_names": {
+               "000": "The Squares of Doom"
+            }
          },
          "desert": {
             "display_name": "Burbenog",
-            "description": "The classic looping path style of Burbenog, with less looping for Air monsters."
+            "description": "The classic looping path style of Burbenog, with less looping for Air monsters.",
+            "random_location_names": {
+               "000": "Burbenogistan"
+            }
          },
          "temperate": {
             "display_name": "Paul's Weird One",
-            "description": "A long, semi-fractal path for Ground monsters, with a straight back-and-forth one for Air."
+            "description": "A long, semi-fractal path for Ground monsters, with a straight back-and-forth one for Air.",
+            "random_location_names": {
+               "000": "Paulville"
+            }
          }
       },
       "buffs": {
@@ -1363,7 +1372,15 @@
             "begin_button": "Begin"
          },
          "title": {
-            "incompatible": "<h2>SH:TD Incompatible Mods</h2>The following mods may be incompatible with SH:TD. Any that are not merely building templates or recipes may need to be disabled for SH:TD to function properly."
+            "incompatible": "<h2>SH:TD Incompatible Mods</h2>The following mods may be incompatible with SH:TD. Any that are not merely building templates or recipes may need to be disabled for SH:TD to function properly.",
+            "compatible_with_disabled": "<h2>SH:TD Incompatible Mods</h2>No incompatible mods detected. The following mods were previously disabled for attempted compatibility with SH:TD:",
+            "compatible": "<h2>SH:TD Incompatible Mods</h2>No incompatible mods detected.",
+            "disable_mods": "Disable These Mods",
+            "disable_mods_tooltip": "Disable all of the listed, potentially incompatible mods and reload the main menu.",
+            "disable_shtd_enable_mods": "Enable These Mods & Disable SH:TD",
+            "disable_shtd_enable_mods_tooltip": "Disable SH:TD and re-enable all previously disabled potentially incompatible mods.",
+            "disable_shtd": "Disable SH:TD",
+            "disable_shtd_tooltip": "Disable Stonehearth Tower Defense (so you can play a normal game)."
          }
       }
    },
