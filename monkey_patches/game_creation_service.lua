@@ -72,7 +72,7 @@ function GameCreationService:_generate_world(session, response, map_info)
 
       -- create primary terrain landmark if there is one
       if map.terrain_landmark then
-         self:_create_landmark(map.terrain_landmark.uri, center_point, map.terrain_landmark.offset, map.terrain_landmark.rotation)
+         self:_create_landmark(map.terrain_landmark, center_point)
       end
 
       -- add landmarks to edges of map
@@ -249,12 +249,15 @@ end
 
 function GameCreationService:_create_landmark(landmark, location, translation, rotation)
    -- try to load the landmark at the appropriate location/rotation
-   landmark_lib.create_landmark(location, {
-      translation = translation,
-      rotation = rotation,
-      landmark_block_types = 'stonehearth:landmark_blocks',
-      brush = landmark
-   })
+   local json = radiant.resources.load_json(landmark)
+   if json then
+      landmark_lib.create_landmark(location, {
+         translation = (translation or Point3.zero) + (radiant.util.to_point3(json.offset) or Point3.zero),
+         rotation = (rotation or 0) + (json.rotation or 0),
+         landmark_block_types = json.landmark_block_types or 'stonehearth:landmark_blocks',
+         brush = json.brush
+      })
+   end
 end
 
 function GameCreationService:start_game(session)

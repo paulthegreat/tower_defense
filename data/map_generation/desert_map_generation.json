@@ -58,9 +58,9 @@
    ],
    "tower_placeable_terrain": "grass",
    "landmarks": [
-      "/tower_defense/data/models/landmarks/landmark_1.qb",
-      "/tower_defense/data/models/landmarks/landmark_2.qb",
-      "/tower_defense/data/models/landmarks/landmark_3.qb"
+      "tower_defense:landmarks:edge:landmark_1",
+      "tower_defense:landmarks:edge:landmark_2",
+      "tower_defense:landmarks:edge:landmark_3"
    ],
    "entities": {
       "tower_defense:end_portal:firepit_titan": [
