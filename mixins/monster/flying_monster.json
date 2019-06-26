@@ -7,8 +7,8 @@
       },
       "stonehearth:buffs": {
          "buffs": {
-            "buffs:monster:immunity:immobilize:ground": false,
-            "buffs:monster:immunity:immobilize:air": true
+            "tower_defense:buffs:monster:immunity:immobilize:ground": false,
+            "tower_defense:buffs:monster:immunity:immobilize:air": true
          }
       }
    },

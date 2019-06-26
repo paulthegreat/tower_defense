@@ -39,7 +39,7 @@
       "tower_defense:monster": {},
       "stonehearth:buffs": {
          "buffs": {
-            "buffs:monster:immunity:immobilize:ground": true
+            "tower_defense:buffs:monster:immunity:immobilize:ground": true
          }
       }
    },

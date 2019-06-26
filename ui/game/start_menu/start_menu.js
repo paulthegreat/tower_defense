@@ -202,17 +202,24 @@ App.StonehearthStartMenuView = App.View.extend({
       var self = this;
       var catalogData = App.catalog.getAllCatalogData();
 
+      var towersByBuff = {};
       var newDataTbl = {};
       radiant.each(catalogData, function(uri, entityData) {
-         if (entityData.tower && Array.isArray(entityData.tower.kingdoms)) {
-            entityData.tower.gold_cost = (entityData.tower.cost && entityData.tower.cost.gold || 0) * self._towerGoldCostMultiplier;
-            entityData.tower.cost = tower_defense.getCostString(entityData.tower.cost, self._towerGoldCostMultiplier);
-            entityData.tower.detailed_description = entityData.tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)';
-            entityData.tower.description = entityData.description;
-            entityData.tower.required_kingdoms = self._getRequiredKingdoms(entityData.tower);
-            entityData.tower.requirement_text = entityData.tower.requirement_text || self._getRequirementText(entityData.tower);
+         var tower = entityData.tower;
+         if (tower && Array.isArray(tower.kingdoms)) {
+            tower.gold_cost = (tower.cost && tower.cost.gold || 0) * self._towerGoldCostMultiplier;
+            tower.cost = tower_defense.getCostString(tower.cost, self._towerGoldCostMultiplier);
+            tower.detailed_description = tower.description || 'i18n(tower_defense:entities.towers.generic.detailed_description)';
+            tower.description = entityData.description;
+            tower.required_kingdoms = self._getRequiredKingdoms(tower);
+            tower.requirement_text = tower.requirement_text || self._getRequirementText(tower);
 
-            entityData.tower.kingdoms.forEach(kingdom => {
+            // examine the tower's weapons and determine what buffs they apply
+            if (tower.weapons && tower.weapons.default_weapon) {
+               tower_defense.addTowersByBuffs(towersByBuff, uri, tower);
+            }
+
+            tower.kingdoms.forEach(kingdom => {
                var kingdomTowers = newDataTbl[kingdom];
                if (!kingdomTowers) {
                   kingdomTowers = {
@@ -237,6 +244,8 @@ App.StonehearthStartMenuView = App.View.extend({
             });
          }
       });
+
+      tower_defense.setTowersByBuff(towersByBuff);
 
       var newDataArr = [];
       radiant.each(newDataTbl, function(k, v) {
@@ -275,7 +284,7 @@ App.StonehearthStartMenuView = App.View.extend({
    _getRequiredKingdoms: function(towerData) {
       return towerData.kingdoms.map(kingdom => "<span class='requiredKingdom'>" +
             i18n.t(`i18n(tower_defense:data.population.${kingdom}.display_name)`) +
-            "</span>").join(', ');
+            "</span>").join(' & ');
    },
 
    _getRequirementText: function(towerData) {

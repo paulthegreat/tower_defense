@@ -192,6 +192,33 @@
    color: whitesmoke;
 }
 
+.appliedByTowers {
+   padding-top: 20px;
+
+   .towerList {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+
+      .titleRow {
+         font-size: 14px;
+         font-family: 'groboldregular';
+         color: @controlLightFontColor;
+      }
+
+      .towerRow {
+         font-size: 13px;
+      }
+      .towerRow:nth-child(even) {
+         background: rgba(96,96,96,0.2);
+      }
+
+      td {
+         padding: 5px 5px;
+      }
+   }
+}
+
 .damageType-physical {
    color: burlywood;
 }

@@ -130,10 +130,11 @@ App.TowerDefenseReferenceView = App.View.extend({
       if (buffs) {
          buffs.each(function() {
             var element = $( this );
-            var buff = self._allBuffs[element.attr('uri')];
+            var uri = element.attr('uri');
+            var buff = self._allBuffs[uri];
             if (buff) {
                App.tooltipHelper.attachTooltipster(element,
-                  $(App.tooltipHelper.createTooltip(i18n.t(buff.display_name), i18n.t(buff.description)))
+                  $(App.tooltipHelper.createTooltip(i18n.t(buff.display_name), i18n.t(buff.description) + tower_defense.getFormattedTowersByBuff(uri)))
                );
             }
          });

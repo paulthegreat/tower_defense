@@ -561,11 +561,11 @@
             },
             "weapon_damage": {
                "description": "Also applies normal poison",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also targets Air",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "foxlily_plant": {
@@ -577,11 +577,11 @@
             },
             "weapon_damage": {
                "description": "Attacks 3 times",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Lower damage, but attacks 3 targets",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "gold_mine": {
@@ -605,11 +605,11 @@
             },
             "weapon_damage": {
                "description": "Applies major poison instead",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Reduces damage, but increases splash range",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "sunflower_plant": {
@@ -621,11 +621,11 @@
             },
             "weapon_damage": {
                "description": "Triples damage and reduces cooldown by 25%",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also targets Air",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "small_turret": {
@@ -673,11 +673,11 @@
             },
             "weapon_damage": {
                "description": "Damage increases by 30% per bounce",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Shorter cooldown, faster travel time, longer bounce range, lower damage, slows in range 1 AOE",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "frost_blast": {
@@ -689,11 +689,11 @@
             },
             "weapon_damage": {
                "description": "Does full damage in AOE but with slightly smaller AOE range",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "AOE affects ground and air and slightly larger AOE range",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "hypothermia": {
@@ -705,11 +705,11 @@
             },
             "weapon_damage": {
                "description": "Applies minor wound and major wound instead",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies major slow",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "heart_of_ice": {
@@ -721,11 +721,11 @@
             },
             "weapon_damage": {
                "description": "Attacks 2 targets and has 100% chance of freezing",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies mortal wound",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "air_101": {
@@ -761,11 +761,11 @@
             },
             "weapon_damage": {
                "description": "Also applies normal armor piercing in passive aoe",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies targeted ministuns",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "bone_piercer": {
@@ -777,11 +777,11 @@
             },
             "weapon_damage": {
                "description": "Performs 2 attacks per cooldown",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies major armor piercing",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "vortex": {
@@ -793,11 +793,11 @@
             },
             "weapon_damage": {
                "description": "Significantly increases damage",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Immobilizes in small aoe",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "refreshing_wind": {
@@ -809,11 +809,11 @@
             },
             "weapon_damage": {
                "description": "Increases range and deals percentage-based damage to air targets",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also increases damage of nearby towers by 10%",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "flame": {
@@ -842,18 +842,18 @@
          },
          "sunburst": {
             "display_name": "Sunburst",
-            "description": "Passively reveals in full range and further reveals attacked targets",
+            "description": "Low damage, passively reveals and burns all targets within range",
             "weapon": {
-               "description": "Passively reveals in full range and applies normal reveal to attacked targets",
+               "description": "Applies normal reveal and minor burning to attacked targets",
                "display_name": "Base Tower"
             },
             "weapon_damage": {
-               "description": "Also applies normal burning and attacks 3 times",
-               "display_name": "Damage Upgrade"
+               "description": "Applies normal burning instead and deals more damage",
+               "display_name": "Damage"
             },
             "weapon_utility": {
-               "description": "Reduces cooldown, attacks 2 targets, and permanently reveals attacked targets",
-               "display_name": "Utility Upgrade"
+               "description": "Permanently reveals attacked targets",
+               "display_name": "Utility"
             }
          },
          "fire_plume": {
@@ -865,11 +865,11 @@
             },
             "weapon_damage": {
                "description": "+1 splash range",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies normal armor piercing",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "burning_lash": {
@@ -881,11 +881,11 @@
             },
             "weapon_damage": {
                "description": "Applies major burning instead and reduces cooldown",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Reduces initial damage, but attacks 2 targets and hits 3 times",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "laserbeam": {
@@ -897,11 +897,11 @@
             },
             "weapon_damage": {
                "description": "Also hits all targets in the beam's path",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also targets Air and attacks 2 targets",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "template_turret": {
@@ -933,11 +933,11 @@
             },
             "weapon_damage": {
                "description": "Hits in small aoe",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies normal magic armor piercing",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "cannonball_gun": {
@@ -949,11 +949,11 @@
             },
             "weapon_damage": {
                "description": "Improves attack and projectile speeds",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies minor magic armor piercing and minor slow",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "boulder_hurler": {
@@ -965,11 +965,11 @@
             },
             "weapon_damage": {
                "description": "Also applies major magic armor piercing",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also immobilizes",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "seismic_slammer": {
@@ -981,11 +981,11 @@
             },
             "weapon_damage": {
                "description": "Doubles splash range.",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also ministuns all targets",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "anaconda_vine": {
@@ -997,11 +997,11 @@
             },
             "weapon_damage": {
                "description": "More than doubles damage",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Only 2 attacks, but a shorter cooldown, and also applies normal poison",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "fog_machine": {
@@ -1013,11 +1013,11 @@
             },
             "weapon_damage": {
                "description": "Also applies normal armor piercing and increases damage",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies normal slow",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "blizzard": {
@@ -1029,11 +1029,11 @@
             },
             "weapon_damage": {
                "description": "Significantly increases damage",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Reduces damage, but increases splash range",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "lightning_bolt": {
@@ -1045,11 +1045,11 @@
             },
             "weapon_damage": {
                "description": "Also applies 2 stacks of minor burning in AOE",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Applies normal reveal instead, and in a larger area",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "arc_lightning": {
@@ -1061,11 +1061,11 @@
             },
             "weapon_damage": {
                "description": "Increases secondary targeting range and number of bounces, and reduces damage reduction for successive hits",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also applies major magic armor piercing",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "fire_grenade": {
@@ -1077,11 +1077,11 @@
             },
             "weapon_damage": {
                "description": "Increases base damage, blast range, number of secondary targets hit, and secondary damage multiplier",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also ministuns all targets",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "magma_pools": {
@@ -1093,11 +1093,11 @@
             },
             "weapon_damage": {
                "description": "Inflicts damage every tick and also applies major magic armor piercing",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also immobilizes monsters when they first enter a magma pool",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "stone_vine": {
@@ -1109,11 +1109,11 @@
             },
             "weapon_damage": {
                "description": "Significantly higher and pure damage",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Slightly lower damage, but +2 range and lower cooldown",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "boygrove": {
@@ -1125,11 +1125,11 @@
             },
             "weapon_damage": {
                "description": "Additionally applies normal poison and hits harder",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Additionally applies normal slow and attacks 2 targets",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          },
          "mangrove": {
@@ -1141,11 +1141,11 @@
             },
             "weapon_damage": {
                "description": "Roots also apply major poison",
-               "display_name": "Damage Upgrade"
+               "display_name": "Damage"
             },
             "weapon_utility": {
                "description": "Also immobilizes",
-               "display_name": "Utility Upgrade"
+               "display_name": "Utility"
             }
          }
       },
@@ -1296,6 +1296,7 @@
          },
          "tooltips": {
             "tower_weapons": {
+               "upgrade_name": "Upgrade: [str(display_name)]",
                "range_title": "Range:",
                "damage_title": "Damage:",
                "cooldown_title": "Cooldown:",
@@ -1335,6 +1336,16 @@
                "num_targets": " x [str(num_targets)] targets",
                "max_attacks_per_target": " ([str(max_per_target)] max per target)",
                "passive_aoe": " Passive AOE"
+            },
+            "buffs": {
+               "applied_by": "Can be applied by:",
+               "towers_table": {
+                  "name_title": "Tower",
+                  "upgrade_title": "Upgrade",
+                  "level_title": "Lvl",
+                  "required_kingdoms_title": "Kingdoms",
+                  "targets_title": "Targets"
+               }
             }
          }
       },

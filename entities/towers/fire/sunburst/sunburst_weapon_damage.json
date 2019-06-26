@@ -9,10 +9,10 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 6,
+            "radius": 4,
             "attacks_ground": true,
             "attacks_air": true,
-            "reveals_invis": true
+            "sees_invis": true
          }
       },
       "stonehearth:buffs": {
@@ -30,14 +30,13 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "sunburst",
-            "effect": "tower_defense:effects:fire_particles",
+            "effect": "tower_defense:effects:aoe_light_blast:orange",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 30,
+            "base_damage": 10,
+            "num_targets": 999,
             "damage_type": "magical",
             "attack_times": [
-               500,
-               1000,
-               1500
+               500
             ],
             "cooldown": 2500,
             "priority": 0

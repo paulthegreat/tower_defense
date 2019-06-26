@@ -93,7 +93,7 @@ var tower_defense = {
 
       var s = '';
       if (weaponData.display_name && upgradeCost) {
-         s += `<div class="weaponUpgrade"><h3>${i18n.t(weaponData.display_name)}</h3>` +
+         s += `<div class="weaponUpgrade"><h3>${i18n.t('tower_defense:ui.game.tooltips.tower_weapons.upgrade_name', weaponData)}</h3>` +
                `<div class="weaponUpgradeCost">${this.getCostString(upgradeCost)}</div></div>`;
       }
       s += (weaponData.description ? `<div class="weaponDescription">${i18n.t(weaponData.description)}</div>` : '') +
@@ -270,6 +270,132 @@ var tower_defense = {
       }
 
       return s;
+   },
+
+   addTowersByBuffs: function(towersByBuff, uri, tower) {
+      var self = this;
+      
+      var weaponData = App.catalog.getCatalogData(tower.weapons.default_weapon);
+      var t = weaponData.tower_weapon_targeting;
+      var defWpn = {
+         uri: uri,
+         weapon: tower.weapons.default_weapon,
+         is_default: true,
+         level: tower.level,
+         required_kingdoms: tower.required_kingdoms,
+         targets: t && self._getAttackTypes(t.attacks_ground, t.attacks_air)
+      }
+
+      var buffs = tower_defense._getWeaponBuffs(weaponData);
+      buffs.forEach(buff => {
+         var towers = towersByBuff[buff];
+         if (!towers) {
+            towers = [];
+            towersByBuff[buff] = towers;
+         }
+         towers.push(defWpn);
+      });
+
+      var upgrades = tower.weapons.upgrades;
+      if (upgrades) {
+         radiant.each(upgrades, function(k, v) {
+            var upgradeWeaponData = App.catalog.getCatalogData(v.uri);
+            var uT = upgradeWeaponData.tower_weapon_targeting;
+            var upWpn = {
+               uri: uri,
+               weapon: v.uri,
+               level: tower.level,
+               required_kingdoms: tower.required_kingdoms,
+               targets: uT && self._getAttackTypes(uT.attacks_ground, uT.attacks_air)
+            }
+
+            var upgradeBuffs = tower_defense._getWeaponBuffs(upgradeWeaponData);
+            upgradeBuffs.forEach(buff => {
+               // only add a reference if the base tower wasn't already giving this buff, or if it had different targeting
+               if (!buffs.includes(buff) || defWpn.targets != upWpn.targets) {
+                  var towers = towersByBuff[buff];
+                  if (!towers) {
+                     towers = [];
+                     towersByBuff[buff] = towers;
+                  }
+                  towers.push(upWpn);
+               }
+            });
+         });
+      }
+   },
+
+   _getWeaponBuffs: function(weaponData) {
+      var buffs = [];
+      
+      [weaponData.injected_buffs, weaponData.inflictable_debuffs].forEach(b => {
+         if (b && b.length > 0) {
+            buffs = buffs.concat(this._getBuffUris(b));
+         }   
+      });
+
+      var gp = weaponData.tower_weapon_attack_info && weaponData.tower_weapon_attack_info.ground_presence;
+      if (gp) {
+         ['first_time', 'other_times', 'every_time'].forEach(instance => {
+            if (gp[instance] && gp[instance].expanded_buffs) {
+               buffs = buffs.concat(this._getBuffUris(gp[instance].expanded_buffs));
+            }
+         });
+      }
+
+      return buffs;
+   },
+
+   setTowersByBuff: function(towersByBuff) {
+      radiant.each(towersByBuff, function(buff, towers) {
+         towers.sort((a, b) => {
+            var result = a.required_kingdoms.localeCompare(b.required_kingdoms);
+            if (result == 0) {
+               result = a.level - b.level;
+            }
+            if (result == 0) {
+               result = a.weapon.localeCompare(b.weapon);
+            }
+            return result;
+         })
+      });
+      this.towersByBuff = towersByBuff;
+   },
+
+   getTowersByBuff: function(buff) {
+      var towers = this.towersByBuff && this.towersByBuff[buff];
+      return towers;
+   },
+
+   getFormattedTowersByBuff: function(buff) {
+      var towers = this.getTowersByBuff(buff);
+      if (towers && towers.length > 0) {
+         var s = `<div class='appliedByTowers'>${i18n.t('tower_defense:ui.game.tooltips.buffs.applied_by')}<table class='towerList'>`;
+         // add title row
+         s += `<tr class='titleRow'><td>${i18n.t('tower_defense:ui.game.tooltips.buffs.towers_table.name_title')}</td>` +
+            `<td>${i18n.t('tower_defense:ui.game.tooltips.buffs.towers_table.upgrade_title')}</td>` +
+            `<td>${i18n.t('tower_defense:ui.game.tooltips.buffs.towers_table.level_title')}</td>` +
+            `<td>${i18n.t('tower_defense:ui.game.tooltips.buffs.towers_table.required_kingdoms_title')}</td>` +
+            `<td>${i18n.t('tower_defense:ui.game.tooltips.buffs.towers_table.targets_title')}</td></tr>`;
+
+         towers.forEach(tower => {
+            var name = i18n.t(App.catalog.getCatalogData(tower.uri).display_name);
+            var weaponName = tower.is_default ? '' : i18n.t(App.catalog.getCatalogData(tower.weapon).display_name);
+            s += `<tr class='towerRow'><td>${name}</td><td>${weaponName}</td><td>${tower.level}</td>` +
+               `<td>${tower.required_kingdoms}</td><td>${tower.targets}</td></tr>`;
+         });
+         s += '</table></div>';
+         return s;
+      }
+      return '';
+   },
+
+   _getBuffUris: function(buffs) {
+      var uris = [];
+      buffs.forEach(buff => {
+         uris.push(buff.uri);
+      });
+      return uris;
    },
 
    _getLine: function(title, content, indent) {

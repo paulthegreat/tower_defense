@@ -9,10 +9,10 @@
       "stonehearth:combat:weapon_data": {
          "targeting": {
             "type": "circle",
-            "radius": 6,
+            "radius": 4,
             "attacks_ground": true,
             "attacks_air": true,
-            "reveals_invis": true,
+            "sees_invis": true,
             "defaults": "debuff_spread"
          }
       },
@@ -21,15 +21,20 @@
             "reveal": {
                "uri": "tower_defense:buffs:monster:reveal:normal",
                "chance": 1
+            },
+            "burning": {
+               "uri": "tower_defense:buffs:monster:burning:minor",
+               "chance": 1
             }
          }
       },
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "sunburst",
-            "effect": "tower_defense:effects:fire_particles",
+            "effect": "tower_defense:effects:aoe_light_blast:yellow",
             "hit_effect": "tower_defense:effects:fire_particles",
-            "base_damage": 30,
+            "base_damage": 5,
+            "num_targets": 999,
             "damage_type": "magical",
             "attack_times": [
                500
