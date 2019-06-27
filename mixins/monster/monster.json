@@ -34,6 +34,11 @@
             "type": "basic",
             "value": 0,
             "min": 0
+         },
+         "silence": {
+            "type": "basic",
+            "value": 0,
+            "min": 0
          }
       },
       "tower_defense:monster": {},

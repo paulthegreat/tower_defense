@@ -4,6 +4,13 @@
    "kingdom_id": "monster_ground",
    "amenity_to_strangers": "hostile",
    "roles": {
+      "path_previewer": {
+         "male": {
+            "uri": [
+               "tower_defense:path_previewer:ground"
+            ]
+         }
+      },
       "alligator": {
          "male": {
             "uri": [

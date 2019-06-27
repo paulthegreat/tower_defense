@@ -23,7 +23,9 @@
       "actions:monster_special_ability": "file(ai/actions/monster_special_ability_action.lua)",
       "actions:monster_summon": "file(ai/actions/monster_summon_action.lua)",
       "actions:monster_stunned": "file(ai/actions/monster_stunned_action.lua)",
+      "actions:path_previewer_follow_path": "file(ai/actions/path_previewer_follow_path_action.lua)",
       "ai_pack:monster": "file(ai/packs/monster_ai_pack.json)",
+      "ai_pack:path_previewer": "file(ai/packs/path_previewer_ai_pack.json)",
       "buffs:monster:invisible": "file(data/buffs/monster/invisible/invisible_buff.json)",
       "buffs:monster:immunity:burning": "file(data/buffs/monster/immunity/burning.json)",
       "buffs:monster:immunity:poison": "file(data/buffs/monster/immunity/poison.json)",
@@ -190,6 +192,8 @@
       "obstacles:fertile_dirt": "file(entities/obstacles/dirt/fertile_dirt.json)",
       "path": "file(entities/path/path.json)",
       "path_neighbor": "file(entities/path/path_neighbor.json)",
+      "path_previewer:ground": "file(entities/path_previewer/ground_path_previewer.json)",
+      "path_previewer:air": "file(entities/path_previewer/air_path_previewer.json)",
       "projectiles:artillery_shell": "file(entities/projectiles/artillery_shell/artillery_shell.json)",
       "projectiles:turnip_bullet": "file(entities/projectiles/turnip_bullet/turnip_bullet.json)",
       "projectiles:water_ball": "file(entities/projectiles/water_ball/water_ball.json)",
@@ -198,6 +202,7 @@
       "sounds:chop_wood_02": "file(data/sounds/chop_wood_02.ogg)",
       "sounds:chop_wood_03": "file(data/sounds/chop_wood_03.ogg)",
       "task_groups:monster": "file(ai/task_groups/monster_task_group.lua)",
+      "task_groups:path_previewer": "file(ai/task_groups/path_previewer_task_group.lua)",
       "task_groups:tower_combat": "file(ai/task_groups/tower_combat_task_group.lua)",
       "towers:water_101": "file(entities/towers/water/water_101/water_101.json)",
       "towers:water_101:weapon": "file(entities/towers/water/water_101/water_101_weapon.json)",
@@ -523,7 +528,8 @@
       "game": [
          "get_current_player_command",
          "get_tower_gold_cost_multiplier_command",
-         "get_wave_index_command"
+         "get_wave_index_command",
+         "start_game_command"
       ]
    },
    "ui": {

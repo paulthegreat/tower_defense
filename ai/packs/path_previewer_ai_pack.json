@@ -1,0 +1,15 @@
+{
+   "type" : "ai_pack",
+   "actions" : [
+      "stonehearth:actions:dispatcher:compelled_behavior",
+      "tower_defense:actions:path_previewer_follow_path",
+      "tower_defense:actions:monster_get_path"
+   ],
+   "ai_packs" : [
+      "stonehearth:ai_pack:core",
+      "stonehearth:ai_pack:movement"
+   ],
+   "task_groups" : [
+      "tower_defense:task_groups:path_previewer"
+   ]
+}

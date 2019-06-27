@@ -14,15 +14,28 @@ local log = radiant.log.create_logger('monster_special_ability')
 function MonsterSpecialAbility:start_thinking(ai, entity, args)
    local abilities = radiant.entities.get_entity_data(entity, 'stonehearth:combat:ranged_attacks')
    if abilities then
+      self._ai = ai
+      self._entity = entity
       self._abilities = abilities
       local cd = math.max(0, stonehearth.combat:get_shortest_cooldown(entity, abilities))
       if cd == 0 then
-         ai:set_think_output()
+         self:_try_set_think_output()
       else
          self._cooldown_timer = stonehearth.combat:set_timer('wait for ability cooldown', cd, function()
-            ai:set_think_output()
+            self:_try_set_think_output()
          end)
       end
+   end
+end
+
+function MonsterSpecialAbility:_try_set_think_output()
+   if self:_is_silenced() then
+      -- we're silenced, try again in a second
+      self._cooldown_timer = stonehearth.combat:set_timer('wait for silence', 1000, function()
+         self:_try_set_think_output()
+      end)
+   else
+      self._ai:set_think_output()
    end
 end
 
@@ -49,6 +62,11 @@ function MonsterSpecialAbility:_destroy_cooldown_timer()
       self._cooldown_timer:destroy()
       self._cooldown_timer = nil
    end
+end
+
+function MonsterSpecialAbility:_is_silenced()
+   local attributes = self._entity:is_valid() and self._entity:get_component('stonehearth:attributes')
+   return (attributes and attributes:get_attribute('silence', 0) or 0) > 0
 end
 
 return MonsterSpecialAbility

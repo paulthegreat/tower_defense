@@ -46,6 +46,7 @@ App.StonehearthCalendarView = App.View.extend({
             self.set('lastWave', self._lastWave);
          });
 
+      var checkedStarted = false;
       radiant.call('tower_defense:get_service','game')
          .done(function (o) {
             self.game_trace = radiant.trace(o.result)
@@ -80,6 +81,18 @@ App.StonehearthCalendarView = App.View.extend({
                      if (self.gameAlert) {
                         self.showAlert(self.$('#gameAlert'), i18n.t(o2.game_alert, o2.game_alert_data), o2.game_alert_is_important);
                      }
+                  }
+
+                  if (!o2.started && !checkedStarted && App.stonehearthClient.isHostPlayer()) {
+                     self.$('#startGameButton').removeClass('hidden');
+                     self.$('#startGameButton').on('click', function() {
+                        radiant.call_obj('tower_defense.game', 'start_game_command')
+                           .done(function(o3) {
+                              self.$('#startGameButton').off('click');
+                              self.$('#startGameButton').addClass('hidden');
+                              radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:scenarios:redalert'} );
+                           });
+                     });
                   }
                });
          });

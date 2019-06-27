@@ -1,5 +1,6 @@
 local Point3 = _radiant.csg.Point3
 local catalog_lib = require 'stonehearth.lib.catalog.catalog_lib'
+local game_master_lib = require 'stonehearth.lib.game_master.game_master_lib'
 
 local log = radiant.log.create_logger('game_service')
 
@@ -33,8 +34,16 @@ function GameService:initialize()
 
    self._waves = radiant.resources.load_json('tower_defense:data:waves').waves
 
-   if not self._sv.wave_controller and self._sv.started then
-      self:_create_countdown_timer(true)
+   if self._sv.started then
+      if not self._sv.wave_controller then
+         self:_create_countdown_timer(true)
+      end
+   else
+      if self._sv.map_data then
+         radiant.events.listen_once(radiant, 'radiant:game_loaded', function(e)
+            self:_create_path_previewers()
+         end)
+      end
    end
 
    self._wave_listeners = {}
@@ -46,6 +55,7 @@ end
 function GameService:destroy()
    self:_destroy_countdown_timer()
    self:_destroy_wave_controller()
+   self:_destroy_path_previewers()
 end
 
 function GameService:_destroy_countdown_timer()
@@ -66,6 +76,26 @@ function GameService:_destroy_wave_controller()
       self._sv.wave_controller = nil
       return num_escaped
    end
+end
+
+function GameService:_destroy_path_previewers()
+   if self._sv._ground_path_previewer then
+      radiant.entities.destroy_entity(self._sv._ground_path_previewer)
+      self._sv._ground_path_previewer = nil
+   end
+   if self._ground_path_previewer_listener then
+      self._ground_path_previewer_listener:destroy()
+      self._ground_path_previewer_listener = nil
+   end
+   if self._sv._air_path_previewer then
+      radiant.entities.destroy_entity(self._sv._air_path_previewer)
+      self._sv._air_path_previewer = nil
+   end
+   if self._air_path_previewer_listener then
+      self._air_path_previewer_listener:destroy()
+      self._air_path_previewer_listener = nil
+   end
+   self.__saved_variables:mark_changed()
 end
 
 function GameService:_create_wave_listeners()
@@ -198,8 +228,8 @@ end
 
 function GameService:get_path_for_monster(monster)
    -- first check if the monster already has path points
-   local monster_comp = monster:add_component('tower_defense:monster')
-   local path_points = monster_comp:get_path_points()
+   local monster_comp = monster:get_component('tower_defense:monster')
+   local path_points = monster_comp and monster_comp:get_path_points()
 
    if not path_points then
       if monster:get_player_id() == 'monster_air' then
@@ -227,7 +257,9 @@ function GameService:get_path_for_monster(monster)
       end
 
       local full_path = _radiant.sim.combine_paths(pathsegments)
-      monster_comp:set_path(full_path)
+      if monster_comp then
+         monster_comp:set_path(full_path)
+      end
 
       return full_path
    end
@@ -261,11 +293,18 @@ end
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
    self.__saved_variables:mark_changed()
+   self:_create_path_previewers()
+end
+
+function GameService:start_game_command(session, response)
+   self:start()
+   response:resolve({})
 end
 
 function GameService:start()
    self._sv.started = true
    self.__saved_variables:mark_changed()
+   self:_destroy_path_previewers()
    self:_create_countdown_timer()
 end
 
@@ -289,6 +328,30 @@ end
 
 function GameService:has_active_wave()
    return self._sv.wave_controller ~= nil
+end
+
+function GameService:_create_path_previewers()
+   self:_destroy_path_previewers()  -- just in case
+   self._sv._ground_path_previewer, self._ground_path_previewer_listener = self:_create_path_previewer('monster_ground', self._sv.map_data.spawn_location)
+   self._sv._air_path_previewer, self._air_path_previewer_listener = self:_create_path_previewer('monster_air', self._sv.map_data.air_spawn_location)
+   self.__saved_variables:mark_changed()
+end
+
+function GameService:_create_path_previewer(population, location)
+   local pop = stonehearth.population:get_population(population)
+   local previewer = game_master_lib.create_citizens(pop, {
+      from_population = {
+         role = 'path_previewer',
+         min = 1,
+         max = 1
+      }}, location, {player_id = ''})[1]
+   radiant.terrain.place_entity_at_exact_location(previewer, location)
+   
+   local listener = radiant.events.listen(previewer, 'tower_defense:finished_path', function()
+      radiant.terrain.place_entity_at_exact_location(previewer, location)
+   end)
+
+   return previewer, listener
 end
 
 function GameService:_set_game_alert(message, data, is_important)

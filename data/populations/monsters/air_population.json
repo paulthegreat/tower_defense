@@ -4,6 +4,13 @@
    "kingdom_id": "monster_air",
    "amenity_to_strangers": "hostile",
    "roles": {
+      "path_previewer": {
+         "male": {
+            "uri": [
+               "tower_defense:path_previewer:air"
+            ]
+         }
+      },
       "poyo": {
          "male": {
             "uri": [
