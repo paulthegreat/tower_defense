@@ -1,5 +1,5 @@
 $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
-   _addItems: function(nodes, parentId, name, depth) {
+   _addItems: function(nodes, parentId, name, depth, kingdom) {
       if (!nodes) {
          return;
       }
@@ -15,11 +15,21 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
                          .addClass('depth' + depth)
                          .append('<div class=close></div>')
                          .appendTo(self.menu);
+      var tbl;
+      var singleCell;
+      var mixedCell;
 
       // add a special background div for the root group
       if (depth == 0) {
          el.append('<div class=background></div>');
       }
+      else if(kingdom) {
+         tbl = $('<table>')
+            .addClass('buildTowersTable')
+            .appendTo(el);
+      }
+
+      var prevTier;
 
       $.each(nodes, function(key, node) {
          self._dataToMenuItemMap[key] = node;
@@ -30,13 +40,22 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
             }
          }
 
+         if (tbl && prevTier != node.level) {
+            prevTier = node.level;
+            var row = $('<tr>').appendTo(tbl);
+            singleCell = $('<td>').appendTo(row);
+            mixedCell = $('<td>').appendTo(row);
+         }
+
+         var elToAppendTo = (node.is_mixed_tower ? mixedCell : singleCell) || el;
+
          var item = $('<div>')
                      .attr('id', key)
                      .attr('hotkey_action', node.hotkey_action || '')
                      .addClass('menuItem')
                      .addClass('button')
                      .addClass(node.class)
-                     .appendTo(el);
+                     .appendTo(elToAppendTo);
 
          var icon = $('<img>')
                      .attr('src', node.icon)
@@ -65,7 +84,7 @@ $.widget( "stonehearth.stonehearthMenu", $.stonehearth.stonehearthMenu, {
          self._buildTooltip(item);
 
          if (node.items) {
-            self._addItems(node.items, key, node.name, depth + 1);
+            self._addItems(node.items, key, node.name, depth + 1, node.kingdom);
          }
       });
 
