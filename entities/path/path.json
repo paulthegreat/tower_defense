@@ -3,24 +3,6 @@
    "components": {
       "movement_modifier_shape": {
          "nav_preference_modifier": 100
-      },
-      "tower_defense:region_renderer": {
-         "render_regions": {
-            "path": {
-               "component": "movement_modifier_shape",
-               "ui_modes": {
-                  "hud": true
-               },
-               "transformations": [
-                  {
-                     "name": "inflated",
-                     "params": {"x": 0, "y": -0.4, "z": 0}
-                  }
-               ],
-               "material": "/stonehearth/data/horde/materials/transparent_add_bloom.material.json",
-               "face_color": [224, 64, 224, 128]
-            }
-         }
       }
    },
    "entity_data": {

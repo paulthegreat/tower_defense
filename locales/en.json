@@ -1370,17 +1370,17 @@
             "game_modes": {
                "normal": {
                   "display_name": "Normal",
-                  "description": "Towers cost a normal amount of gold, and there are a mix of weather effects.",
-                  "post_selection_text": "normal difficulty."
+                  "description": "Normal cost towers, a mix of weather effects, half bounty for escaped monsters",
+                  "post_selection_text": "a pleasant challenge."
                },
                "peaceful": {
                   "display_name": "Easy",
-                  "description": "Towers cost less gold, there are fewer waves, and there are only neutral or positive weather effects.",
+                  "description": "Cheaper towers, fewer waves, only neutral/positive weather effects, full bounty for escaped monsters",
                   "post_selection_text": "fairly easy."
                },
                "hard": {
                   "display_name": "Hard",
-                  "description": "Towers cost more gold, there are extra advanced waves, and there are only neutral or negative weather effecs.",
+                  "description": "More expensive towers, extra advanced waves, only neutral or negative weather effecs, no bounty for escaped monsters",
                   "post_selection_text": "rather difficult."
                }
             },

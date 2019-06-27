@@ -14,7 +14,8 @@
       "attributes": {
          "max_health": 1.1
       },
-      "tower_gold_cost": 1.2
+      "tower_gold_cost": 1.2,
+      "escaped_monster_bounty": 0
    },
    "final_wave": 60,
    "weather": {

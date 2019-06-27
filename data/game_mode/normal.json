@@ -11,6 +11,9 @@
       "wood": 1
    },
    "starting_health": 50,
+   "multipliers": {
+      "escaped_monster_bounty": 0.5
+   },
    "final_wave": 50,
    "weather": {
       "starting_weather": [

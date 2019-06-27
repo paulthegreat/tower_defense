@@ -32,6 +32,7 @@ function Wave:activate()
    self._multipliers = self._sv._wave_data.multipliers or {}
    self._multipliers.attributes = self._multipliers.attributes or {}
    self._multipliers.gold_bounty = self._multipliers.gold_bounty or 1
+   self._multipliers.escaped_monster_bounty = self._multipliers.escaped_monster_bounty or 1
    self._buffs = self._sv._wave_data.buffs or {}
    self._role_overrides = self._sv._wave_data.role_overrides or {}
 
@@ -290,7 +291,7 @@ function Wave:_activate_monster(monster)
    monster.escape_listener = radiant.events.listen_once(monster.monster, 'tower_defense:escape_event', function()
          log:debug('monster %s escaped!', monster.monster)
          self._sv.num_escaped = (self._sv.num_escaped or 0) + 1
-         radiant.events.trigger(self, 'tower_defense:wave:monster_escaped', monster.damage or 1)
+         radiant.events.trigger(self, 'tower_defense:wave:monster_escaped', monster.damage or 1, self:_get_escaped_monster_bounty(monster.bounty))
 
          self:_remove_monster(id)
          radiant.entities.destroy_entity(monster.monster)
@@ -345,6 +346,19 @@ function Wave:_apply_multipliers(multipliers)
       if multipliers.gold_bounty then
          self._multipliers.gold_bounty = self._multipliers.gold_bounty * multipliers.gold_bounty
       end
+      if multipliers.escaped_monster_bounty then
+         self._multipliers.escaped_monster_bounty = self._multipliers.escaped_monster_bounty * multipliers.escaped_monster_bounty
+      end
+   end
+end
+
+function Wave:_get_escaped_monster_bounty(bounty)
+   local mult = self._multipliers.escaped_monster_bounty or 1
+   if mult > 0 then
+      for resource, amount in pairs(bounty) do
+         bounty[resource] = math.ceil(amount * mult)
+      end
+      return bounty
    end
 end
 

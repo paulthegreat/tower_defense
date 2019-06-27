@@ -6,6 +6,7 @@ local Region3 = _radiant.csg.Region3
 local rng = _radiant.math.get_default_rng()
 local csg_lib = require 'stonehearth.lib.csg.csg_lib'
 local landmark_lib = require 'stonehearth.lib.landmark.landmark_lib'
+local render_lib = require 'tower_defense.lib.render.render_lib'
 
 local validator = radiant.validator
 local log = radiant.log.create_logger('world_generation')
@@ -83,7 +84,7 @@ function GameCreationService:_generate_world(session, response, map_info)
       local air_top = Point3(0, map.air_path.height, 0)
 
       local sub_terrain = Region3()
-      local first_point, last_point, path_region, path_entity, path_neighbor_entity, add_terrain = 
+      local first_point, last_point, path_region, path_entity, add_terrain = 
             self:_create_path(map.path.points, top, false, map.path.width or 3, sub_terrain, map.path.block_type and block_types[map.path.block_type])
       local air_first_point, air_last_point, air_path_region, air_path_entity =
             self:_create_path(map.air_path.points, top + air_top, true, map.path.width or 3, sub_terrain)
@@ -146,13 +147,16 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
    local first_point
    local last_point
 
+   local path_cubes = {}
+
    for _, point in ipairs(path_array) do
       local this_point = Point3(unpack(point))
       if not first_point then
          first_point = this_point
       end
       if last_point then
-         local cube = csg_lib.create_cube(last_point + top, this_point + top)
+         local cube = render_lib.shy_cube(last_point + top, this_point + top)
+         table.insert(path_cubes, cube)
          path_region:add_cube(cube)
          if width and width >= 0 and sub_terrain then
             local extruded_cube = cube:extruded('x', width, width):extruded('z', width, width)
@@ -188,14 +192,50 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
          mod_region:optimize_by_defragmentation('path movement modifier shape')
       end)
 
-   local path_neighbor_entity = radiant.entities.create_entity('tower_defense:path_neighbor', { owner = '' })
-   local path_neighbor_entity_region = path_neighbor_entity:add_component('movement_modifier_shape')
-   path_neighbor_entity_region:set_region(_radiant.sim.alloc_region3())
-   path_neighbor_entity_region:get_region():modify(function(mod_region)
-         mod_region:copy_region(path_neighbor:translated(-(first_point + top)))
-         mod_region:set_tag(0)
-         mod_region:optimize_by_defragmentation('path movement modifier shape')
-      end)
+   local hues
+   local hue_range
+   if is_air then
+      hues = {0, 60}
+   else
+      hues = {120, 300}
+   end
+   hue_range = hues[2] - hues[1]
+   local cur_hue = hues[1]
+   if #path_cubes == 1 then
+      cur_hue = hue_range / 2 + cur_hue
+   end
+   local render_comp = path_entity:add_component('tower_defense:region_renderer')
+   for i, cube in ipairs(path_cubes) do
+      local color = render_lib.hsv_to_rgb(cur_hue, 0.9, 1)
+      render_comp:add_render_region('path'..i, {
+         ui_modes = {
+            hud = true
+         },
+         transformations = {
+            {
+               name = 'inflated',
+               params = {
+                  x = 0,
+                  y = -0.4,
+                  z = 0
+               }
+            }
+         },
+         material = '/stonehearth/data/horde/materials/transparent_box.material.json',
+         face_color = {color.x, color.y, color.z, 128},
+         region = Region3(cube:translated(-(first_point + top)))
+      })
+      cur_hue = (hue_range / (#path_cubes - 1)) * i + hues[1]
+   end
+
+   -- local path_neighbor_entity = radiant.entities.create_entity('tower_defense:path_neighbor', { owner = '' })
+   -- local path_neighbor_entity_region = path_neighbor_entity:add_component('movement_modifier_shape')
+   -- path_neighbor_entity_region:set_region(_radiant.sim.alloc_region3())
+   -- path_neighbor_entity_region:get_region():modify(function(mod_region)
+   --       mod_region:copy_region(path_neighbor:translated(-(first_point + top)))
+   --       mod_region:set_tag(0)
+   --       mod_region:optimize_by_defragmentation('path movement modifier shape')
+   --    end)
 
    local add_terrain = Region3()
    if is_air then
@@ -215,7 +255,7 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
       add_terrain:add_region(path_region)
    end
 
-   return first_point, last_point, trans_path_region, path_entity, path_neighbor_entity, add_terrain
+   return first_point, last_point, trans_path_region, path_entity, add_terrain
 end
 
 function GameCreationService:_create_landmarks(landmarks, world_size, center_point)
