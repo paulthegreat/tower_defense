@@ -10,7 +10,7 @@
       "stonehearth:ai": {},
       "effect_list": {
          "effects": [
-            "stonehearth:effects:firepit_effect:green"
+            "tower_defense:effects:path_previewer:air"
          ]
       },
       "stonehearth:attributes": {

@@ -160,6 +160,8 @@
       "effects:aoe_light_blast:orange": "file(data/effects/aoe_light_blast/aoe_light_blast_orange.json)",
       "effects:aoe_light_blast:yellow": "file(data/effects/aoe_light_blast/aoe_light_blast_yellow.json)",
       "effects:aoe_light_blast:white": "file(data/effects/aoe_light_blast/aoe_light_blast_white.json)",
+      "effects:path_previewer:ground": "file(data/effects/path_previewer/green_firepit_effect.json)",
+      "effects:path_previewer:air": "file(data/effects/path_previewer/firepit_effect.json)",
       "end_portal:firepit_titan": "file(entities/end_portal/firepit_titan/firepit_titan.json)",
       "ground_presence:magma_pool": "file(entities/ground_presence/magma_pool/magma_pool.json)",
       "ground_presence:mangrove_roots": "file(entities/ground_presence/mangrove_roots/mangrove_roots.json)",
