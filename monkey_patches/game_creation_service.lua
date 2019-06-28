@@ -149,15 +149,22 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
 
    local path_cubes = {}
 
-   for _, point in ipairs(path_array) do
+   for i, point in ipairs(path_array) do
       local this_point = Point3(unpack(point))
       if not first_point then
          first_point = this_point
       end
       if last_point then
-         local cube = render_lib.shy_cube(last_point + top, this_point + top)
+         local cube
+         -- if it's the final point, make sure it extends all the way (important for air path, otherwise they can't run the final segment)
+         if i == #path_array then
+            cube = csg_lib.create_cube(last_point + top, this_point + top)
+         else
+            cube = render_lib.shy_cube(last_point + top, this_point + top)
+         end
          table.insert(path_cubes, cube)
          path_region:add_cube(cube)
+
          if width and width >= 0 and sub_terrain then
             local extruded_cube = cube:extruded('x', width, width):extruded('z', width, width)
             path_neighbor:add_cube(extruded_cube)
@@ -222,7 +229,7 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
             }
          },
          material = '/stonehearth/data/horde/materials/transparent_box.material.json',
-         face_color = {color.x, color.y, color.z, 128},
+         face_color = {color.x, color.y, color.z, 40},
          region = Region3(cube:translated(-(first_point + top)))
       })
       cur_hue = (hue_range / (#path_cubes - 1)) * i + hues[1]
@@ -329,8 +336,9 @@ function GameCreationService:start_game(session)
 			stonehearth.game_speed:set_anarchy_enabled(game_options.game_speed_anarchy_enabled)
       end
       
-      stonehearth.game_speed:set_game_speed(0, true)
-      tower_defense.game:start()
+      -- switch to having the host manually tell the game to start
+      --stonehearth.game_speed:set_game_speed(0, true)
+      --tower_defense.game:start()
    end
    
    stonehearth.terrain:set_fow_enabled(player_id, false)

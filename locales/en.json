@@ -1266,7 +1266,9 @@
             "wave_tooltip": "Click to show list of waves",
             "player_health": "Lives:",
             "player_health_tooltip": "If this drops to 0, you lose. Every monster that escapes will reduce it by at least 1 (some monsters, like bosses, reduce it by more).",
-            "weather": "Weather: [str(weather)]"
+            "weather": "Weather: [str(weather)]",
+            "start_game": "Start the Game!",
+            "start_round": "Start Next Round!"
          },
          "wavesWindow": {
             "title": "Waves",

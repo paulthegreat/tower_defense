@@ -1,0 +1,31 @@
+{
+   "type": "entity",
+   "components": {
+      "render_info": {
+         "animation_table": "/stonehearth/data/rigs/entities/monster/avian/ostrich/ostrich.json"
+      },
+      "mob": {
+         "has_free_will": false
+      },
+      "stonehearth:ai": {},
+      "effect_list": {
+         "effects": [
+            "tower_defense:effects:path_previewer:ground"
+         ]
+      },
+      "stonehearth:attributes": {
+         "speed": {
+            "type": "basic",
+            "value": 120
+         }
+      }
+   },
+   "entity_data": {
+      "stonehearth:ai_packs": {
+         "packs": [
+            "stonehearth:ai_pack:idle",
+            "tower_defense:ai_pack:path_previewer"
+         ]
+      }
+   }
+}

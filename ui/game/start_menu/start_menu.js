@@ -249,13 +249,24 @@ App.StonehearthStartMenuView = App.View.extend({
 
       var newDataArr = [];
       radiant.each(newDataTbl, function(k, v) {
-         v.towers.sort((a, b) => a.tower.ordinal - b.tower.ordinal);
+         // sort by level descending, then by ordinal ascending
+         // this way we can divide vertically into tiers
+         v.towers.sort((a, b) => {
+            var result = b.tower.level - a.tower.level;
+            if (result == 0) {
+               result = a.tower.ordinal - b.tower.ordinal;
+            }
+            return result;
+         });
+
          radiant.each(v.towers, function(i, t) {
             var entry = {
                name: t.display_name,
                description: t.tower.detailed_description,
                icon: t.icon,
+               level: t.tower.level || 0,
                ordinal: (t.tower.ordinal || t.tower.level || 0) + (t.name || ''),
+               is_mixed_tower: t.tower.kingdoms.length > 1,
                class: 'button',
                sticky: 'true',
                menu_action: 'td_create_tower',
@@ -269,6 +280,7 @@ App.StonehearthStartMenuView = App.View.extend({
 
          newDataArr.push(v);
       });
+
       newDataArr.sort((a, b) => a.ordinal - b.ordinal);
       var newData = {};
       radiant.each(newDataArr, function(k, v) {

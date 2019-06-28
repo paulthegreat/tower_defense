@@ -23,6 +23,7 @@ function MonsterSummon:run(ai, entity, args)
    local ability = args.ability
    local entity_id = entity:get_id()
    self._ai = ai
+   self._entity = entity
 
    if ability.effect then
       local run_effect
@@ -39,6 +40,7 @@ function MonsterSummon:run(ai, entity, args)
 
    if ability.initial_delay then
       self:_suspend(ability.initial_delay)
+      self:_consider_abort()
    end
 
    local pre_delay = ability.pre_delay or 0
@@ -49,6 +51,7 @@ function MonsterSummon:run(ai, entity, args)
          local delay = spawn.pre_delay or pre_delay
          if delay > 0 then
             self:_suspend(delay)
+            self:_consider_abort()
          end
 
          tower_defense.game:queue_spawn_monsters(spawn.each_spawn, entity_id)
@@ -56,17 +59,22 @@ function MonsterSummon:run(ai, entity, args)
          delay = spawn.post_delay or post_delay
          if delay > 0 then
             self:_suspend(delay)
+            self:_consider_abort()
          end
       end
    end
 
    if ability.final_delay then
       self:_suspend(ability.final_delay)
+      self:_consider_abort()
    end
 end
 
 function MonsterSummon:_suspend(duration)
    self._suspend_timer = stonehearth.combat:set_timer('summon action suspend', duration, function()
+      if self:_is_silenced() then
+         self._should_abort = true
+      end
       self._ai:resume()
    end)
    self._ai:suspend()
@@ -83,6 +91,17 @@ function MonsterSummon:_stop_effect()
    if self._effect then
       self._effect:stop()
       self._effect = nil
+   end
+end
+
+function MonsterSummon:_is_silenced()
+   local attributes = self._entity:is_valid() and self._entity:get_component('stonehearth:attributes')
+   return (attributes and attributes:get_attribute('silence', 0) or 0) > 0
+end
+
+function MonsterSummon:_consider_abort()
+   if self._should_abort then
+      self._ai:abort()
    end
 end
 

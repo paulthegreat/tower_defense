@@ -1,5 +1,6 @@
 local Point3 = _radiant.csg.Point3
 local catalog_lib = require 'stonehearth.lib.catalog.catalog_lib'
+local game_master_lib = require 'stonehearth.lib.game_master.game_master_lib'
 
 local log = radiant.log.create_logger('game_service')
 
@@ -33,8 +34,16 @@ function GameService:initialize()
 
    self._waves = radiant.resources.load_json('tower_defense:data:waves').waves
 
-   if not self._sv.wave_controller and self._sv.started then
-      self:_create_countdown_timer(true)
+   if self._sv.started then
+      if not self._sv.wave_controller then
+         --self:_create_countdown_timer(true)
+      end
+   else
+      if self._sv.map_data then
+         radiant.events.listen_once(radiant, 'radiant:game_loaded', function(e)
+            self:_create_path_previewers()
+         end)
+      end
    end
 
    self._wave_listeners = {}
@@ -44,16 +53,17 @@ function GameService:initialize()
 end
 
 function GameService:destroy()
-   self:_destroy_countdown_timer()
+  --self:_destroy_countdown_timer()
    self:_destroy_wave_controller()
+   self:_destroy_path_previewers()
 end
 
-function GameService:_destroy_countdown_timer()
-   if self._countdown_timer then
-      self._countdown_timer:destroy()
-      self._countdown_timer = nil
-   end
-end
+-- function GameService:_destroy_countdown_timer()
+--    if self._countdown_timer then
+--       self._countdown_timer:destroy()
+--       self._countdown_timer = nil
+--    end
+-- end
 
 function GameService:_destroy_wave_controller()
    for _, listener in ipairs(self._wave_listeners) do
@@ -66,6 +76,26 @@ function GameService:_destroy_wave_controller()
       self._sv.wave_controller = nil
       return num_escaped
    end
+end
+
+function GameService:_destroy_path_previewers()
+   if self._sv._ground_path_previewer then
+      radiant.entities.destroy_entity(self._sv._ground_path_previewer)
+      self._sv._ground_path_previewer = nil
+   end
+   if self._ground_path_previewer_listener then
+      self._ground_path_previewer_listener:destroy()
+      self._ground_path_previewer_listener = nil
+   end
+   if self._sv._air_path_previewer then
+      radiant.entities.destroy_entity(self._sv._air_path_previewer)
+      self._sv._air_path_previewer = nil
+   end
+   if self._air_path_previewer_listener then
+      self._air_path_previewer_listener:destroy()
+      self._air_path_previewer_listener = nil
+   end
+   self.__saved_variables:mark_changed()
 end
 
 function GameService:_create_wave_listeners()
@@ -198,8 +228,8 @@ end
 
 function GameService:get_path_for_monster(monster)
    -- first check if the monster already has path points
-   local monster_comp = monster:add_component('tower_defense:monster')
-   local path_points = monster_comp:get_path_points()
+   local monster_comp = monster:get_component('tower_defense:monster')
+   local path_points = monster_comp and monster_comp:get_path_points()
 
    if not path_points then
       if monster:get_player_id() == 'monster_air' then
@@ -227,7 +257,9 @@ function GameService:get_path_for_monster(monster)
       end
 
       local full_path = _radiant.sim.combine_paths(pathsegments)
-      monster_comp:set_path(full_path)
+      if monster_comp then
+         monster_comp:set_path(full_path)
+      end
 
       return full_path
    end
@@ -261,12 +293,20 @@ end
 function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
    self.__saved_variables:mark_changed()
+   self:_create_path_previewers()
+end
+
+function GameService:start_game_command(session, response)
+   self:start()
+   response:resolve({})
 end
 
 function GameService:start()
    self._sv.started = true
    self.__saved_variables:mark_changed()
-   self:_create_countdown_timer()
+   self:_destroy_path_previewers()
+   --self:_create_countdown_timer()
+   self:_start_round()
 end
 
 function GameService:get_health()
@@ -291,6 +331,30 @@ function GameService:has_active_wave()
    return self._sv.wave_controller ~= nil
 end
 
+function GameService:_create_path_previewers()
+   self:_destroy_path_previewers()  -- just in case
+   self._sv._ground_path_previewer, self._ground_path_previewer_listener = self:_create_path_previewer('monster_ground', self._sv.map_data.spawn_location)
+   self._sv._air_path_previewer, self._air_path_previewer_listener = self:_create_path_previewer('monster_air', self._sv.map_data.air_spawn_location)
+   self.__saved_variables:mark_changed()
+end
+
+function GameService:_create_path_previewer(population, location)
+   local pop = stonehearth.population:get_population(population)
+   local previewer = game_master_lib.create_citizens(pop, {
+      from_population = {
+         role = 'path_previewer',
+         min = 1,
+         max = 1
+      }}, location, {player_id = ''})[1]
+   radiant.terrain.place_entity_at_exact_location(previewer, location)
+   
+   local listener = radiant.events.listen(previewer, 'tower_defense:finished_path', function()
+      radiant.terrain.place_entity_at_exact_location(previewer, location)
+   end)
+
+   return previewer, listener
+end
+
 function GameService:_set_game_alert(message, data, is_important)
    self._sv.game_alert = message
    self._sv.game_alert_data = data
@@ -300,44 +364,61 @@ end
 
 function GameService:_end_of_round()
    local num_escaped = self:_destroy_wave_controller()
-   self:_destroy_countdown_timer()
+   --self:_destroy_countdown_timer()
 
    self._waiting_for_target_cbs = {}
    radiant.events.trigger(radiant, 'tower_defense:wave:ended', self._sv.wave)
    
    if self._sv.health < 1 then
       -- no more health! you lost!
+      self._sv.finished = true
       self:_set_game_alert('i18n(tower_defense:alerts.game.game_lost)', nil, true)
       return
    end
 
    self:_set_game_alert('i18n(tower_defense:alerts.game.wave_ended)', {wave = self._sv.wave, num_escaped = num_escaped or 0})
 
-   self:_create_countdown_timer()
+   --self:_create_countdown_timer()
 end
 
-function GameService:_create_countdown_timer(second)
+-- function GameService:_create_countdown_timer(second)
+--    if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave >= self._game_options.final_wave) then
+--       -- no more waves! you won!
+--       self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
+--       return
+--    end
+
+--    local countdown = radiant.util.get_config('round_countdown', '5m')
+--    self._countdown_timer = stonehearth.calendar:set_timer('next wave countdown', countdown, function()
+--       if second then
+--          self:_start_round()
+--       else
+--          if self._sv.wave > 0 and radiant.util.get_config('pause_at_end_of_round', true) then
+--             stonehearth.game_speed:set_game_speed(0, true)
+--          end
+--          self:_create_countdown_timer(true)
+--       end
+--    end)
+-- end
+
+function GameService:start_round_command(session, response)
+   self:_start_round()
+   response:resolve({})
+end
+
+function GameService:_start_round()
    if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave >= self._game_options.final_wave) then
       -- no more waves! you won!
       self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
       return
    end
 
-   local countdown = radiant.util.get_config('round_countdown', '5m')
-   self._countdown_timer = stonehearth.calendar:set_timer('next wave countdown', countdown, function()
-      if second then
-         self:_start_round()
-      else
-         if self._sv.wave > 0 and radiant.util.get_config('pause_at_end_of_round', true) then
-            stonehearth.game_speed:set_game_speed(0, true)
-         end
-         self:_create_countdown_timer(true)
-      end
-   end)
-end
+   if self._sv.wave_controller then
+      -- this shouldn't happen, but you're not allowed to request a new round starting while the previous one is still happening
+      return
+   end
 
-function GameService:_start_round()
-   self:_destroy_countdown_timer()
+   --self:_destroy_countdown_timer()
 
    self._sv.wave = self._sv.wave + 1
    self:_set_game_alert('i18n(tower_defense:alerts.game.wave_starting)', {wave = self._sv.wave})
@@ -354,6 +435,7 @@ function GameService:_start_round()
       wave_controller:start()
    else
       -- no more waves! you won!
+      self._sv.finished = true
       self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
    end
 
