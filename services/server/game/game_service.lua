@@ -36,7 +36,7 @@ function GameService:initialize()
 
    if self._sv.started then
       if not self._sv.wave_controller then
-         self:_create_countdown_timer(true)
+         --self:_create_countdown_timer(true)
       end
    else
       if self._sv.map_data then
@@ -53,17 +53,17 @@ function GameService:initialize()
 end
 
 function GameService:destroy()
-   self:_destroy_countdown_timer()
+  --self:_destroy_countdown_timer()
    self:_destroy_wave_controller()
    self:_destroy_path_previewers()
 end
 
-function GameService:_destroy_countdown_timer()
-   if self._countdown_timer then
-      self._countdown_timer:destroy()
-      self._countdown_timer = nil
-   end
-end
+-- function GameService:_destroy_countdown_timer()
+--    if self._countdown_timer then
+--       self._countdown_timer:destroy()
+--       self._countdown_timer = nil
+--    end
+-- end
 
 function GameService:_destroy_wave_controller()
    for _, listener in ipairs(self._wave_listeners) do
@@ -305,7 +305,8 @@ function GameService:start()
    self._sv.started = true
    self.__saved_variables:mark_changed()
    self:_destroy_path_previewers()
-   self:_create_countdown_timer()
+   --self:_create_countdown_timer()
+   self:_start_round()
 end
 
 function GameService:get_health()
@@ -363,44 +364,61 @@ end
 
 function GameService:_end_of_round()
    local num_escaped = self:_destroy_wave_controller()
-   self:_destroy_countdown_timer()
+   --self:_destroy_countdown_timer()
 
    self._waiting_for_target_cbs = {}
    radiant.events.trigger(radiant, 'tower_defense:wave:ended', self._sv.wave)
    
    if self._sv.health < 1 then
       -- no more health! you lost!
+      self._sv.finished = true
       self:_set_game_alert('i18n(tower_defense:alerts.game.game_lost)', nil, true)
       return
    end
 
    self:_set_game_alert('i18n(tower_defense:alerts.game.wave_ended)', {wave = self._sv.wave, num_escaped = num_escaped or 0})
 
-   self:_create_countdown_timer()
+   --self:_create_countdown_timer()
 end
 
-function GameService:_create_countdown_timer(second)
+-- function GameService:_create_countdown_timer(second)
+--    if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave >= self._game_options.final_wave) then
+--       -- no more waves! you won!
+--       self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
+--       return
+--    end
+
+--    local countdown = radiant.util.get_config('round_countdown', '5m')
+--    self._countdown_timer = stonehearth.calendar:set_timer('next wave countdown', countdown, function()
+--       if second then
+--          self:_start_round()
+--       else
+--          if self._sv.wave > 0 and radiant.util.get_config('pause_at_end_of_round', true) then
+--             stonehearth.game_speed:set_game_speed(0, true)
+--          end
+--          self:_create_countdown_timer(true)
+--       end
+--    end)
+-- end
+
+function GameService:start_round_command(session, response)
+   self:_start_round()
+   response:resolve({})
+end
+
+function GameService:_start_round()
    if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave >= self._game_options.final_wave) then
       -- no more waves! you won!
       self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
       return
    end
 
-   local countdown = radiant.util.get_config('round_countdown', '5m')
-   self._countdown_timer = stonehearth.calendar:set_timer('next wave countdown', countdown, function()
-      if second then
-         self:_start_round()
-      else
-         if self._sv.wave > 0 and radiant.util.get_config('pause_at_end_of_round', true) then
-            stonehearth.game_speed:set_game_speed(0, true)
-         end
-         self:_create_countdown_timer(true)
-      end
-   end)
-end
+   if self._sv.wave_controller then
+      -- this shouldn't happen, but you're not allowed to request a new round starting while the previous one is still happening
+      return
+   end
 
-function GameService:_start_round()
-   self:_destroy_countdown_timer()
+   --self:_destroy_countdown_timer()
 
    self._sv.wave = self._sv.wave + 1
    self:_set_game_alert('i18n(tower_defense:alerts.game.wave_starting)', {wave = self._sv.wave})
@@ -417,6 +435,7 @@ function GameService:_start_round()
       wave_controller:start()
    else
       -- no more waves! you won!
+      self._sv.finished = true
       self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)
    end
 

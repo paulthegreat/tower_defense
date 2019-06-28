@@ -83,16 +83,29 @@ App.StonehearthCalendarView = App.View.extend({
                      }
                   }
 
-                  if (!o2.started && !checkedStarted && App.stonehearthClient.isHostPlayer()) {
-                     self.$('#startGameButton').removeClass('hidden');
-                     self.$('#startGameButton').on('click', function() {
-                        radiant.call_obj('tower_defense.game', 'start_game_command')
-                           .done(function(o3) {
-                              self.$('#startGameButton').off('click');
-                              self.$('#startGameButton').addClass('hidden');
-                              radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:scenarios:redalert'} );
-                           });
-                     });
+                  if (App.stonehearthClient.isHostPlayer()) {
+                     if (!o2.started && !checkedStarted) {
+                        self.$('#startGameButton').removeClass('hidden');
+                        self.$('#startGameButton').on('click', function() {
+                           radiant.call_obj('tower_defense.game', 'start_game_command')
+                              .done(function(o3) {
+                                 self.$('#startGameButton').off('click');
+                                 self.$('#startGameButton').addClass('hidden');
+                                 radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:scenarios:redalert'} );
+                              });
+                        });
+                     }
+                     else if (!o2.finished && !self._waveController) {
+                        self.$('#startRoundButton').removeClass('hidden');
+                        self.$('#startRoundButton').on('click', function() {
+                           radiant.call_obj('tower_defense.game', 'start_round_command')
+                              .done(function(o3) {
+                                 self.$('#startRoundButton').off('click');
+                                 self.$('#startRoundButton').addClass('hidden');
+                                 radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:scenarios:redalert'} );
+                              });
+                        });
+                     }
                   }
                });
          });

@@ -531,7 +531,8 @@
          "get_current_player_command",
          "get_tower_gold_cost_multiplier_command",
          "get_wave_index_command",
-         "start_game_command"
+         "start_game_command",
+         "start_round_command"
       ]
    },
    "ui": {

@@ -159,7 +159,7 @@ function TowerRenderer:_update(location)
 
    self._outline_node = _radiant.client.create_region_outline_node(render_node, region,
          radiant.util.to_color4(edge_color, EDGE_COLOR_ALPHA / 2), radiant.util.to_color4(color, FACE_COLOR_ALPHA),
-         '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)
+         '/stonehearth/data/horde/materials/transparent_box.material.json', 1)
       :set_casts_shadows(false)
       :set_can_query(false)
 
@@ -167,7 +167,7 @@ function TowerRenderer:_update(location)
       path_intersection = path_intersection:inflated(Point3(0, path_squish_amount, 0))
       self._path_node = _radiant.client.create_region_outline_node(RenderRootNode, path_intersection,
             radiant.util.to_color4(path_edge_color, EDGE_COLOR_ALPHA), radiant.util.to_color4(path_color, PATH_FACE_COLOR_ALPHA),
-            '/stonehearth/data/horde/materials/transparent_box_nodepth.material.json', 1)
+            '/stonehearth/data/horde/materials/transparent_box.material.json', 1)
          :set_casts_shadows(false)
          :set_can_query(false)
    end
