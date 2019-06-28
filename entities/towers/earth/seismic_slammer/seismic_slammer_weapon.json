@@ -19,8 +19,8 @@
       "stonehearth:combat:ranged_attacks": [
          {
             "name": "seismic_slammer",
-            "effect": "tower_defense:effects:earth_particles",
-            "hit_effect": "tower_defense:effects:earth_particles",
+            "effect": "tower_defense:effects:slam_particles",
+            "hit_effect": "tower_defense:effects:slam_particles",
             "base_damage": 2,
             "is_percentage": true,
             "minimum_damage": 50,

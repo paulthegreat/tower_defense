@@ -140,6 +140,7 @@
       "effects:fire_particles": "file(data/effects/fire_particles.json)",
       "effects:plant_particles": "file(data/effects/plant_particles.json)",
       "effects:water_particles": "file(data/effects/water_particles.json)",
+      "effects:slam_particles": "file(data/effects/slam_particles.json)",
       "effects:lightning_bolt": "file(data/effects/lightning_bolt.json)",
       "effects:lightning_cast": "file(data/effects/lightning_cast.json)",
       "effects:ice_cube": "file(data/effects/ice_cube_effect.json)",
