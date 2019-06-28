@@ -783,6 +783,11 @@ function TowerComponent:_engage_current_target(sm)
    for i, time in ipairs(attack_info.attack_times) do
       local shoot_timer
       shoot_timer = stonehearth.combat:set_timer('tower attack shoot', time, function()
+         -- if we have a shoot effect, start it up
+         if attack_info.shoot_effect then
+            radiant.effects.run_effect(self._entity, attack_info.shoot_effect)
+         end
+
          self._shoot_timers[shoot_timer] = nil
          local dmg_mult = this_damage_multiplier
          for _, target in ipairs(targets) do

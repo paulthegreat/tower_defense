@@ -1,8 +1,8 @@
 {
    "name": "dirt_poof",
-   "duration": 600,
+   "duration": 800,
    "material": "materials/cubemitter.material.json",
-   "loops": true,
+   "loops": false,
    "mesh": {
       "file": "",
       "matrix": "",
@@ -34,29 +34,21 @@
       "lifetime": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [300, 600]
+            "values": [300, 800]
          }
       },
       "speed": {
          "start": {
             "kind": "RANDOM_BETWEEN",
-            "values": [9, 10]
+            "values": [9.5, 10]
          },
          "over_lifetime": {
-            "kind": "RANDOM_BETWEEN_CURVES",
+            "kind": "CURVE",
             "values": [
-               [
-                  [0, 1],
-                  [0.3, 1],
-                  [0.4, 0.1],
-                  [1, 0]
-               ],
-               [
-                  [0, 1],
-                  [0.7, 1],
-                  [0.8, 0.1],
-                  [1, 0]
-               ]
+               [0, 1],
+               [0.5, 1],
+               [0.6, 0.5],
+               [1, 0]
             ]
          }
       },

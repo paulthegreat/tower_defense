@@ -3,8 +3,8 @@
    "tracks": {
       "dirt": {
          "type": "cubemitter",
-         "start_time": 50,
-         "end_time": 300,
+         "start_time": 0,
+         "end_time": 800,
          "cubemitter": "/tower_defense/data/effects/slam.cubemitter.json",
          "transforms": {
             "x": 0,
