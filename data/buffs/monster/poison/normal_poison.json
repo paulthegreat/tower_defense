@@ -25,5 +25,6 @@
       "cannot_kill": true,
       "pulse_immediately": false,
       "pulse_on_destroy": true
-   }
+   },
+   "color": {"x": 19, "y": 191, "z": 36}
 }

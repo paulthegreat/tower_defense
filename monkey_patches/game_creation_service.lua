@@ -47,7 +47,8 @@ function GameCreationService:_generate_world(session, response, map_info)
       
       -- generate the world!
       local biome = radiant.resources.load_json(map_info.biome_src)
-      local map = radiant.resources.load_json(biome.tower_defense_generation_file or 'tower_defense:data:map_generation')
+      -- default if not specified is the burbenog map
+      local map = radiant.resources.load_json(biome.tower_defense_generation_file or 'tower_defense:data:map_generation:desert')
 
       -- first generate the world terrain
       local block_types = radiant.terrain.get_block_types()
@@ -213,7 +214,7 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
    end
    local render_comp = path_entity:add_component('tower_defense:region_renderer')
    for i, cube in ipairs(path_cubes) do
-      local color = render_lib.hsv_to_rgb(cur_hue, 0.9, 1)
+      local color = render_lib.hsv_to_rgb(cur_hue, 0.75, 1)
       render_comp:add_render_region('path'..i, {
          ui_modes = {
             hud = true
@@ -223,13 +224,13 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
                name = 'inflated',
                params = {
                   x = 0,
-                  y = -0.4,
+                  y = -0.49,
                   z = 0
                }
             }
          },
          material = '/stonehearth/data/horde/materials/transparent_box.material.json',
-         face_color = {color.x, color.y, color.z, 40},
+         face_color = {color.x, color.y, color.z, 51},
          region = Region3(cube:translated(-(first_point + top)))
       })
       cur_hue = (hue_range / (#path_cubes - 1)) * i + hues[1]

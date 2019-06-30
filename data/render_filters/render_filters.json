@@ -1,0 +1,142 @@
+{
+   "default": [
+      "slow",
+      "immobilize",
+      "stun",
+      "burning",
+      "wound",
+      "armor_piercing",
+      "magic_armor_piercing",
+      "reveal",
+      "poison",
+      "cooldown_decrease",
+      "damage_increase"
+   ],
+   "render_filters": {
+      "wound": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.wound.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.wound.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:wound:normal",
+            "tower_defense:buffs:monster:wound:minor",
+            "tower_defense:buffs:monster:wound:major",
+            "tower_defense:buffs:monster:wound:mortal"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.46
+      },
+      "immobilize": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.immobilize.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.immobilize.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:immobilize:immobilize",
+            "tower_defense:buffs:monster:immobilize:root",
+            "tower_defense:buffs:monster:immobilize:vortex"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.45
+      },
+      "armor_piercing": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.armor_piercing.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.armor_piercing.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:armor_piercing:normal",
+            "tower_defense:buffs:monster:armor_piercing:minor",
+            "tower_defense:buffs:monster:armor_piercing:major"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.44
+      },
+      "burning": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.burning.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.burning.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:burning:normal",
+            "tower_defense:buffs:monster:burning:minor",
+            "tower_defense:buffs:monster:burning:major"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.43
+      },
+      "slow": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.slow.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.slow.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:slow:normal",
+            "tower_defense:buffs:monster:slow:minor",
+            "tower_defense:buffs:monster:slow:major"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.42
+      },
+      "reveal": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.reveal.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.reveal.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:reveal:normal",
+            "tower_defense:buffs:monster:reveal:minor",
+            "tower_defense:buffs:monster:reveal:major"
+         ],
+         "tower_properties": {
+            "reveals_invis": {
+               "color": {"x": 255, "y": 0, "z": 0}
+            }
+         },
+         "path_region": true,
+         "inflate_amount": -0.41
+      },
+      "magic_armor_piercing": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.magic_armor_piercing.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.magic_armor_piercing.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:magic_armor_piercing:normal",
+            "tower_defense:buffs:monster:magic_armor_piercing:minor",
+            "tower_defense:buffs:monster:magic_armor_piercing:major"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.40
+      },
+      "stun": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.stun.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.stun.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:stun:ministun",
+            "tower_defense:buffs:monster:stun:freeze"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.39
+      },
+      "poison": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.poison.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.poison.description)",
+         "buffs": [
+            "tower_defense:buffs:monster:poison:normal",
+            "tower_defense:buffs:monster:poison:minor",
+            "tower_defense:buffs:monster:poison:major"
+         ],
+         "path_region": true,
+         "inflate_amount": -0.38
+      },
+      "cooldown_decrease": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.cooldown_decrease.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.cooldown_decrease.description)",
+         "buffs": [
+            "tower_defense:buffs:tower:cooldown_decrease:normal_aura",
+            "tower_defense:buffs:tower:cooldown_decrease:major_aura"
+         ],
+         "icon": "/tower_defense/data/buffs/tower/cooldown_decrease/normal_cooldown_decrease.png",
+         "base_region": true,
+         "inflate_amount": -0.48
+      },
+      "damage_increase": {
+         "display_name": "i18n(tower_defense:data.render_filters.buffs.damage_increase.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.buffs.damage_increase.description)",
+         "buffs": [
+            "tower_defense:buffs:tower:damage_increase:normal_aura"
+         ],
+         "icon": "/tower_defense/data/buffs/tower/damage_increase/normal_damage_increase.png",
+         "base_region": true,
+         "inflate_amount": -0.47
+      }
+   }
+}

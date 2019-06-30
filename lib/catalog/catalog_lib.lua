@@ -286,7 +286,8 @@ function catalog_lib._update_buff(full_alias, json, stacks, chance)
             chance = chance or 1,
             invisible_to_player = json.invisible_to_player,
             invisible_on_crafting = json.invisible_on_crafting,
-            script_buffs = json.invisible_to_player and json.script_info and json.script_info.buffs
+            script_buffs = json.invisible_to_player and json.script_info and json.script_info.buffs,
+            color = json.color
          }
          _all_buffs[full_alias] = buff
       end
@@ -297,6 +298,10 @@ end
 
 function catalog_lib.get_all_buffs()
    return _all_buffs
+end
+
+function catalog_lib.get_buff(uri)
+   return _all_buffs[uri]
 end
 
 function catalog_lib.get_buffs(buff_data)

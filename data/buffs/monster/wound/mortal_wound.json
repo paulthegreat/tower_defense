@@ -2,7 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "wound",
-   "ordinal": 1,
+   "ordinal": 4,
    "display_name": "i18n(tower_defense:data.buffs.mortal_wound.display_name)",
    "description": "i18n(tower_defense:data.buffs.mortal_wound.description)",
    "icon": "file(mortal_wound.png)",
@@ -12,5 +12,6 @@
       "multiplicative_healing_modifier": {
          "multiply": 0
       }
-   }
+   },
+   "color": {"x": 71, "y": 0, "z": 204}
 }

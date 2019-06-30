@@ -17,5 +17,6 @@
       "pulse": 1000,
       "pulse_immediately": true,
       "pulse_on_destroy": true
-   }
+   },
+   "color": {"x": 255, "y": 171, "z": 76}
 }

@@ -1,0 +1,27 @@
+#renderFilters {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   width: 100%;
+   text-align: center;
+
+   #enableRenderFilters {
+      #enableRenderFiltersImg {
+         content: url('images/enable.png');
+      }
+   }
+
+   div {
+      display: inline-block;
+      padding: 5px;
+      height: 40px;
+   }
+
+   .inactive {
+      filter: grayscale(95%);
+   }
+
+   .inactive:hover {
+      filter: grayscale(0%);
+   }
+}

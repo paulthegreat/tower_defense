@@ -2,7 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "reveal",
-   "ordinal": 1,
+   "ordinal": 3,
    "display_name": "i18n(tower_defense:data.buffs.major_reveal.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_reveal.description)",
    "icon": "file(major_reveal.png)",
@@ -10,5 +10,6 @@
       "reveal": {
          "add": 1
       }
-   }
+   },
+   "color": {"x": 255, "y": 51, "z": 51}
 }

@@ -520,16 +520,16 @@ var tower_defense = {
    },
 
    getAllBuffs: function(callbackFn) {
-      if (this._all_buffs) {
-         callbackFn(this._all_buffs);
+      if (tower_defense._all_buffs) {
+         callbackFn(tower_defense._all_buffs);
       }
       else {
          radiant.call('tower_defense:get_all_buffs')
             .done(function(o) {
-               if (!this._all_buffs) {
-                  this._all_buffs = o.buffs;
+               if (!tower_defense._all_buffs) {
+                  tower_defense._all_buffs = o.buffs;
                }
-               callbackFn(this._all_buffs);
+               callbackFn(tower_defense._all_buffs);
             });
       }
    },

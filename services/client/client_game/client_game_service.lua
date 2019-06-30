@@ -8,21 +8,30 @@ local ClientGameService = class()
 function ClientGameService:initialize()
    _radiant.call('tower_defense:get_service', 'game'):done(function(response)
       self._game_service = response.result
-      self._game_service_trace = self._game_service:trace_data('weather render')
+      self._game_service_trace = self._game_service:trace_data('get map data')
          :on_changed(function()
                self._map_data = self._game_service:get_data().map_data
+               if self._map_data then
+                  -- map data doesn't change, we only care about getting it initially and then don't need to keep tracing
+                  radiant.events.trigger(self, 'tower_defense:client_game:map_data_acquired')
+                  self:_destroy_game_service_trace()
+               end
             end)
          :push_object_state()
    end)
 end
 
 function ClientGameService:destroy()
+   self:_destroy_game_service_trace()
    self._game_service = nil
+   self._map_data = nil
+end
+
+function ClientGameService:_destroy_game_service_trace()
    if self._game_service_trace then
       self._game_service_trace:destroy()
       self._game_service_trace = nil
    end
-   self._map_data = nil
 end
 
 function ClientGameService:get_tower_placeable_region()

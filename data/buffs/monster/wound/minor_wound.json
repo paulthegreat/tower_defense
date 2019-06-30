@@ -2,7 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "wound",
-   "ordinal": 4,
+   "ordinal": 1,
    "display_name": "i18n(tower_defense:data.buffs.minor_wound.display_name)",
    "description": "i18n(tower_defense:data.buffs.minor_wound.description)",
    "icon": "file(minor_wound.png)",
@@ -12,5 +12,6 @@
       "multiplicative_healing_modifier": {
          "multiply": 0.8
       }
-   }
+   },
+   "color": {"x": 195, "y": 165, "z": 255}
 }

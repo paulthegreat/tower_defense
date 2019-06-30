@@ -45,4 +45,22 @@ function PlayerCallHandler:unlock_all_kingdoms_cheat_command(session, response)
    end
 end
 
+function PlayerCallHandler:set_render_filters_command(session, response, filters)
+   tower_defense.render_filter:set_render_filters(filters)
+   return true
+end
+
+function PlayerCallHandler:get_render_filters_command(session, response)
+   response:resolve({filters = tower_defense.render_filter:get_render_filters()})
+end
+
+function PlayerCallHandler:set_render_filters_enabled_command(session, response, enabled)
+   tower_defense.render_filter:set_render_filters_enabled(enabled)
+   return true
+end
+
+function PlayerCallHandler:get_render_filters_enabled_command(session, response)
+   response:resolve({enabled = tower_defense.render_filter:get_render_filters_enabled()})
+end
+
 return PlayerCallHandler

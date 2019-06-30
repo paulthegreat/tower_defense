@@ -175,6 +175,7 @@ function TowerComponent:_initialize(equipment_changed)
    self._combat_state = self._entity:add_component('stonehearth:combat_state')
    self._weapon_data = self._weapon and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
    self:_load_targetable_region()
+   self:_load_all_buffs_filters()
 
    if radiant.is_server then
       -- these settings should be loaded the first time any weapon is equipped
@@ -303,6 +304,36 @@ end
 
 function TowerComponent:set_preferred_target_types(preferred_target_types)
    self._sv.preferred_target_types = preferred_target_types or {}
+   self.__saved_variables:mark_changed()
+end
+
+function TowerComponent:_load_all_buffs_filters()
+   local buffs = {}
+
+   local weapon = type(self._weapon) == 'string' and self._weapon or self._weapon:get_uri()
+   local catalog_data = stonehearth[radiant.is_server and 'catalog' or 'catalog_client']:get_catalog_data(weapon)
+   if catalog_data.injected_buffs then
+      for _, buff in ipairs(catalog_data.injected_buffs) do
+         buffs[buff.uri] = true
+      end
+   end
+   if catalog_data.inflictable_debuffs then
+      for _, buff in ipairs(catalog_data.inflictable_debuffs) do
+         buffs[buff.uri] = true
+      end
+   end
+   local gp = catalog_data.tower_weapon_attack_info.ground_presence
+   if gp then
+      for _, instance in ipairs({'first_time', 'other_times', 'every_time'}) do
+         if gp[instance] and gp[instance].expanded_buffs then
+            for _, buff in ipairs(gp[instance].expanded_buffs) do
+               buffs[buff.uri] = true
+            end
+         end
+      end
+   end
+
+   self._sv.buffs = buffs
    self.__saved_variables:mark_changed()
 end
 

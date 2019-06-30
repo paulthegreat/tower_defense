@@ -12,5 +12,6 @@
       "multiplicative_magical_dmg_taken": {
          "add": 0.5
       }
-   }
+   },
+   "color": {"x": 228, "y": 76, "z": 255}
 }

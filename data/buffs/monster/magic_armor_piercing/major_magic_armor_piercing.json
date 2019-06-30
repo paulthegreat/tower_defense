@@ -2,7 +2,7 @@
    "type": "buff",
    "axis": "buff",
    "category": "magic_armor_piercing",
-   "ordinal": 1,
+   "ordinal": 3,
    "display_name": "i18n(tower_defense:data.buffs.major_magic_armor_piercing.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_magic_armor_piercing.description)",
    "icon": "file(major_magic_armor_piercing.png)",
@@ -12,5 +12,6 @@
       "multiplicative_magical_dmg_taken": {
          "add": 0.75
       }
-   }
+   },
+   "color": {"x": 216, "y": 0, "z": 255}
 }

@@ -346,6 +346,54 @@
             "description": "[This tooltip will get replaced by a dynamic one.]"
          }
       },
+      "render_filters": {
+         "buffs": {
+            "slow": {
+               "display_name": "Slow",
+               "description": "Towers that inflict slow debuffs."
+            },
+            "poison": {
+               "display_name": "Poison",
+               "description": "Towers that inflict poison debuffs."
+            },
+            "burning": {
+               "display_name": "Burning",
+               "description": "Towers that inflict burning debuffs."
+            },
+            "immobilize": {
+               "display_name": "Immobilize",
+               "description": "Towers that inflict immobilize debuffs."
+            },
+            "stun": {
+               "display_name": "Stun",
+               "description": "Towers that inflict stun debuffs."
+            },
+            "wound": {
+               "display_name": "Wound",
+               "description": "Towers that inflict wound debuffs."
+            },
+            "armor_piercing": {
+               "display_name": "Physical Armor Piercing",
+               "description": "Towers that inflict physical armor piercing debuffs."
+            },
+            "magic_armor_piercing": {
+               "display_name": "Magical Armor Piercing",
+               "description": "Towers that inflict magical armor piercing debuffs."
+            },
+            "reveal": {
+               "display_name": "Reveal",
+               "description": "Towers that inflict reveal debuffs or passively reveal."
+            },
+            "cooldown_decrease": {
+               "display_name": "Cooldown Decrease",
+               "description": "Towers that reduce cooldowns of other towers."
+            },
+            "damage_increase": {
+               "display_name": "Damage Increase",
+               "description": "Towers that increase damage of other towers."
+            }
+         }
+      },
       "tower": {
          "target_filter": {
             "lowest_health": {
@@ -1256,6 +1304,16 @@
                   "sees": "This tower can see and attack invisible monsters.",
                   "reveals": "This tower reveals all invisible monsters while they are in its range."
                }
+            }
+         },
+         "renderFilters": {
+            "enable": {
+               "display_name": "Enable Render Filters",
+               "description": "Display regions on the ground and along monster paths indicating buffs and debuffs applied by towers."
+            },
+            "disable": {
+               "display_name": "Disable Render Filters",
+               "description": "Hide render regions. To hide only some types, click the corresponding buttons instead."
             }
          },
          "gameStateWindow": {

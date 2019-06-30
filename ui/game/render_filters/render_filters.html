@@ -1,0 +1,10 @@
+<script type="text/x-handlebars" data-template-name="renderFilters">
+   <div class="gui">
+      <div id="renderFilters">
+         <div id="enableRenderFilters" {{bind-attr class=view.enableFiltersClass}}><img id="enableRenderFiltersImg"/></div>
+         {{#each filter in view.renderFilters}}
+         <div {{bind-attr data-filter=filter.name class=filter.class}}><img {{bind-attr src=filter.icon}}/></div>
+         {{/each}}
+      </div>
+   </div>
+</script>

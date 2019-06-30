@@ -2,7 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "burning",
-   "ordinal": 1,
+   "ordinal": 3,
    "display_name": "i18n(tower_defense:data.buffs.major_burning.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_burning.description)",
    "duration": 3000,
@@ -17,5 +17,6 @@
       "pulse": 1000,
       "pulse_immediately": true,
       "pulse_on_destroy": true
-   }
+   },
+   "color": {"x": 255, "y": 136, "z": 0}
 }

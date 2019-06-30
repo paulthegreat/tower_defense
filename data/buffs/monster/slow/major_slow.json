@@ -2,7 +2,7 @@
    "type": "buff",
    "axis": "debuff",
    "category": "slow",
-   "ordinal": 1,
+   "ordinal": 3,
    "display_name": "i18n(tower_defense:data.buffs.major_slow.display_name)",
    "description": "i18n(tower_defense:data.buffs.major_slow.description)",
    "icon": "file(major_slow.png)",
@@ -13,5 +13,6 @@
       "speed": {
          "multiply": 0.65
       }
-   }
+   },
+   "color": {"x": 25, "y": 63, "z": 255}
 }
