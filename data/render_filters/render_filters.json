@@ -46,7 +46,7 @@
          ],
          "tower_properties": {
             "reveals_invis": {
-               "color": {"x": 255, "y": 0, "z": 0}
+               "color": {"x": 224, "y": 0, "z": 0}
             }
          },
          "path_region": true,

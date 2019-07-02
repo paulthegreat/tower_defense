@@ -40,6 +40,12 @@ function render_lib.hsv_to_rgb(h, s, v)
    return Point3(result.x * 255, result.y * 255, result.z * 255)
 end
 
+function render_lib.to_color4(pt, a)
+   -- if it already has a .a, we assume it's a Color4 and we don't want its alpha, we want to use our own or a default
+   -- can always call it like (pt, pt.a) if we want it specified that way
+   return Color4(pt[1] or pt.r or pt.x, pt[2] or pt.g or pt.y, pt[3] or pt.b or pt.z, pt[4] or a or 255)
+end
+
 -- returns a cube from p1 to the point just shy of p2
 function render_lib.shy_cube(p1, p2)
    return csg_lib.create_cube(p1, render_lib.shy_point(p1, p2))

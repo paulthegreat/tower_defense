@@ -157,7 +157,7 @@ function TowerRenderer:_update(location)
          base_ordinal = 0,
          path_ordinal = 0,
          path_color = Color4(255, 255, 255, 255),
-         base_color = Color4(255, 255, 255, 128),
+         base_color = Color4(255, 255, 255, 64),
          base_region = true,
          path_region = true
       })
@@ -191,7 +191,7 @@ function TowerRenderer:_update(location)
          base_ordinal = 0,
          path_ordinal = 0,
          path_color = Color4(255, 255, 255, 255),
-         base_color = Color4(255, 255, 255, 128),
+         base_color = Color4(255, 255, 255, 64),
          base_region = true
       })
    end
@@ -251,8 +251,8 @@ function TowerRenderer:_get_render_spec(name, filter, color, ordinal_adjustment)
       name = name,
       base_ordinal = (filter.base_ordinal and (filter.base_ordinal + ordinal_adjustment) or 0) * 0.05,
       path_ordinal = (filter.path_ordinal and (filter.path_ordinal + ordinal_adjustment) or 0) * 0.05,
-      path_color = radiant.util.to_color4(color, 255),
-      base_color = radiant.util.to_color4(color, 128),
+      path_color = render_lib.to_color4(color, 255),
+      base_color = render_lib.to_color4(color, 128),
       base_region = filter.base_region,
       path_region = filter.path_region
    }

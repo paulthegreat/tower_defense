@@ -26,11 +26,11 @@ function RenderFilter:initialize()
          local buffs = {}
          for _, uri in ipairs(filter.buffs) do
             local buff = catalog_lib.get_buff(uri)
-            local ordinal_adjustment = buff.ordinal and (buff.ordinal > 1 and (buff.ordinal - 1) * 3 + 0.5) or 0
+            local ordinal_adjustment = buff.ordinal and (buff.ordinal > 1 and (buff.ordinal - 1) * 3.2 + 0.5) or 0
             regions['buffs.' .. uri] = {
                ordinal_adjustment = ordinal_adjustment,
-               base_color = radiant.util.to_color4(buff.color, 128),
-               path_color = radiant.util.to_color4(buff.color, 255),
+               base_color = render_lib.to_color4(buff.color, 128),
+               path_color = render_lib.to_color4(buff.color, 255),
                base_region = Region3(),
                path_region = Region3()
             }
@@ -42,8 +42,8 @@ function RenderFilter:initialize()
          for property, struct in pairs(filter.tower_properties) do
             regions['tower_properties.' .. property] = {
                ordinal_adjustment = 0,
-               base_color = radiant.util.to_color4(struct.color, 128),
-               path_color = radiant.util.to_color4(struct.color, 255),
+               base_color = render_lib.to_color4(struct.color, 128),
+               path_color = render_lib.to_color4(struct.color, 255),
                base_region = Region3(),
                path_region = Region3()
             }
@@ -148,6 +148,7 @@ function RenderFilter:_enable_render_nodes()
       local visible = self._enabled and (self._active_filters[filter] ~= nil)
       for _, node in ipairs(nodes) do
          node:set_visible(visible)
+         node:set_can_query(false)
       end
    end
 end
@@ -176,7 +177,9 @@ function RenderFilter:_redraw_render_nodes()
                      region_data.base_region = region_data.base_region + tower.tower_region
                   end
                   if filter.path_region and tower.targetable_region then
-                     region_data.path_region = region_data.path_region + tower.targetable_region
+                     -- if we're rendering a path region for this tower, also render a layer on the tower itself
+                     -- so it's easy to see what towers are applying what debuffs
+                     region_data.path_region = region_data.path_region + tower.targetable_region + tower.tower_point
                   end
                end
             end
@@ -188,7 +191,7 @@ function RenderFilter:_redraw_render_nodes()
                      region_data.base_region = region_data.base_region + tower.tower_region
                   end
                   if filter.path_region and tower.targetable_region then
-                     region_data.path_region = region_data.path_region + tower.targetable_region
+                     region_data.path_region = region_data.path_region + tower.targetable_region + tower.tower_point
                   end
                end
             end
