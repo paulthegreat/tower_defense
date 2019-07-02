@@ -90,9 +90,12 @@ App.TowerDefenseRenderFilters = App.View.extend({
             name: name,
             class: 'renderFilter button' + (active ? '' : ' inactive'),
             icon: icon,
-            active: active
+            active: active,
+            ui_ordinal: filter.ui_ordinal || 0
          });
       });
+
+      filters.sort((a, b) => a.ui_ordinal < b.ui_ordinal ? -1 : (a.ui_ordinal > b.ui_ordinal ? 1 : 0));
 
       self.set('renderFilters', filters);
       Ember.run.scheduleOnce('afterRender', this, '_applyTooltips');

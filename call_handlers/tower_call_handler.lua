@@ -26,6 +26,10 @@ function TowerCallHandler:create_and_place_entity(session, response, uri)
             local normal = result.normal:to_int()
             local brick = result.brick
 
+            if not this_entity then
+               return stonehearth.selection.FILTER_IGNORE
+            end
+
             local rcs = this_entity:get_component('region_collision_shape')
             local region_collision_type = rcs and rcs:get_region_collision_type()
             if region_collision_type == _radiant.om.RegionCollisionShape.NONE then

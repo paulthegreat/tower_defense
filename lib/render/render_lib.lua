@@ -1,6 +1,8 @@
 local Point3 = _radiant.csg.Point3
 local Color4 = _radiant.csg.Color4
 
+local NO_COLOR = Color4(0,0,0,0)
+
 local csg_lib = require 'stonehearth.lib.csg.csg_lib'
 
 local render_lib = {}
@@ -49,6 +51,16 @@ function render_lib.shy_point(p1, p2)
    local y_dir = (p2.y > p1.y and 1) or (p2.y < p1.y and -1) or 0
    local z_dir = (p2.z > p1.z and 1) or (p2.z < p1.z and -1) or 0
    return p2 - Point3(x_dir, y_dir, z_dir)
+end
+
+function render_lib.draw_tower_region(render_node, region, y_adjustment, color, material)
+   local n = _radiant.client.create_region_outline_node(render_node,
+         region:inflated(Point3(0, -0.495, 0)):translated(Point3(0, y_adjustment - 0.495, 0)),
+         NO_COLOR, color, material, 1)
+   --n:set_position(Point3(0, cube.min.y + y_adjustment, 0))
+   n:set_casts_shadows(false)
+   n:set_can_query(false)
+   return n
 end
 
 return render_lib

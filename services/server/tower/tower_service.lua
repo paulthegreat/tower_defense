@@ -10,20 +10,22 @@ local towers_lib = require 'tower_defense.lib.towers.towers_lib'
 
 TowerService = class()
 
+-- store towers in _sv for tracing by render filter service
+-- but we don't care about actually reloading them since they'll get re-registered on load
 function TowerService:initialize()
    self._sv = self.__saved_variables:get_data()
 
-   self._towers = {}
+   self._sv.towers = {}
    self._detection_towers_by_coord = {}
 end
 
 function TowerService:get_registered_towers()
-   return self._towers
+   return self._sv.towers
 end
 
 function TowerService:register_tower(tower, location)
    local tower_comp = tower:get_component('tower_defense:tower')
-   local targetable_region_ground, targetable_region_air = self:_cache_tower_range(tower_comp, location)
+   local tower_region, targetable_region_ground, targetable_region_air = self:_cache_tower_range(tower_comp, location)
    local targetable_region = targetable_region_ground + targetable_region_air
    local detection_coords_in_range = {}
    if tower_comp:reveals_invis() and not targetable_region:empty() then
@@ -34,10 +36,15 @@ function TowerService:register_tower(tower, location)
    local tower_data = {
       id = id,
       tower = tower,
-      detection_coords_in_range = detection_coords_in_range
+      detection_coords_in_range = detection_coords_in_range,
+      tower_region = tower_region,
+      targetable_region = targetable_region,
+      buffs = tower_comp:get_filter_buffs(),
+      reveals_invis = tower_comp:reveals_invis()
    }
    self:_cache_detection_coords(tower_data)
-   self._towers[id] = tower_data
+   self._sv.towers[id] = tower_data
+   self.__saved_variables:mark_changed()
 
    radiant.events.trigger(radiant, 'tower_defense:tower_registered', tower)
 
@@ -49,9 +56,9 @@ function TowerService:unregister_tower(tower_id)
       tower_id = tower_id:get_id()
    end
 
-   local tower_data = self._towers[tower_id]
+   local tower_data = self._sv.towers[tower_id]
    if tower_data then
-      self._towers[tower_id] = nil
+      self._sv.towers[tower_id] = nil
       for coord, _ in pairs(tower_data.detection_coords_in_range) do
          local towers = self._detection_towers_by_coord[coord]
          if towers then
@@ -62,13 +69,18 @@ function TowerService:unregister_tower(tower_id)
          end
       end
 
+      self.__saved_variables:mark_changed()
+
       radiant.events.trigger(radiant, 'tower_defense:tower_unregistered', tower_id)
    end
 end
 
 function TowerService:_cache_tower_range(tower_comp, location)
-   return towers_lib.get_path_intersection_regions(tower_comp:get_targetable_region():translated(location),
-      tower_defense.game:get_ground_path(), tower_defense.game:get_air_path(), tower_defense.game:get_air_path_height(), tower_comp:attacks_ground(), tower_comp:attacks_air())
+   local tower_region = tower_comp:get_targetable_region():translated(location)
+   local ground_region, air_region = towers_lib.get_path_intersection_regions(tower_region, tower_defense.game:get_ground_path(),
+         tower_defense.game:get_air_path(), tower_defense.game:get_air_path_height(), tower_comp:attacks_ground(), tower_comp:attacks_air())
+
+   return tower_region, ground_region, air_region
 end
 
 function TowerService:_get_range_coords(region)

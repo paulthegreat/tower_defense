@@ -219,16 +219,16 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
          ui_modes = {
             hud = true
          },
-         transformations = {
-            {
-               name = 'inflated',
-               params = {
-                  x = 0,
-                  y = -0.49,
-                  z = 0
-               }
-            }
-         },
+         -- transformations = {
+         --    {
+         --       name = 'inflated',
+         --       params = {
+         --          x = 0,
+         --          y = -0.49,
+         --          z = 0
+         --       }
+         --    }
+         -- },
          material = '/stonehearth/data/horde/materials/transparent_box.material.json',
          face_color = {color.x, color.y, color.z, 51},
          region = Region3(cube:translated(-(first_point + top)))

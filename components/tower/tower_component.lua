@@ -282,6 +282,10 @@ function TowerComponent:attacks_air()
    return self._sv.attacks_air
 end
 
+function TowerComponent:get_filter_buffs()
+   return self._sv.buffs
+end
+
 function TowerComponent:placed(rotation)
    self._sv.original_facing = rotation
    self.__saved_variables:mark_changed()
@@ -322,7 +326,7 @@ function TowerComponent:_load_all_buffs_filters()
          buffs[buff.uri] = true
       end
    end
-   local gp = catalog_data.tower_weapon_attack_info.ground_presence
+   local gp = catalog_data.tower_weapon_attack_info and catalog_data.tower_weapon_attack_info.ground_presence
    if gp then
       for _, instance in ipairs({'first_time', 'other_times', 'every_time'}) do
          if gp[instance] and gp[instance].expanded_buffs then
@@ -589,7 +593,10 @@ function TowerComponent:_load_targetable_region()
    local targeting = self._weapon_data and self._weapon_data.targeting or {}
    local region
    if targeting.type == 'rectangle' then
-      region = Region3(radiant.util.to_cube3(targeting.region)):translated(Point3(-.5, 0, -.5)):rotated(radiant.entities.get_facing(self._entity)):translated(Point3(.5, 0, .5))
+      region = Region3(radiant.util.to_cube3(targeting.region))
+               :translated(Point3(-0.5, 0, -0.5))
+               :rotated(radiant.entities.get_facing(self._entity))
+               :translated(Point3(0.5, 0, 0.5))
    elseif targeting.type == 'circle' then
       -- create a blocky circle region
       region = Region3()
