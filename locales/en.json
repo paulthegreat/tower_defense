@@ -1314,6 +1314,14 @@
             "disable": {
                "display_name": "Disable Render Filters",
                "description": "Hide render regions. To hide only some types, click the corresponding buttons instead."
+            },
+            "select_all": {
+               "display_name": "Select All Filters",
+               "description": "Select every filter. Filters are only applied and visible if Enabled."
+            },
+            "select_none": {
+               "display_name": "Select No Filters",
+               "description": "Deselect every filter. Filters are only applied and visible if Enabled."
             }
          },
          "gameStateWindow": {

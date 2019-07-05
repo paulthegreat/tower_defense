@@ -8,7 +8,7 @@ App.TowerDefenseRenderFilters = App.View.extend({
 	templateName: 'renderFilters',
 	uriProperty: 'model',
    closeOnEsc: false,
-   
+
    init: function () {
       var self = this;
       self._super();
@@ -50,6 +50,13 @@ App.TowerDefenseRenderFilters = App.View.extend({
 		self.$('#enableRenderFilters').on('click', function(e) {
          self._setFiltersEnabled(!self._filtersEnabled);
          radiant.call('tower_defense:set_render_filters_enabled_command', self._filtersEnabled);
+      });
+
+      self.$('#selectAll').on('click', function(e) {
+         self._checkClearAllRenderFilters(true);
+      });
+      self.$('#selectNone').on('click', function(e) {
+         self._checkClearAllRenderFilters(false);
       });
       
       self.$().on('click', `.renderFilter`, function(e) {
@@ -124,6 +131,14 @@ App.TowerDefenseRenderFilters = App.View.extend({
          var localStr = 'tower_defense:ui.game.renderFilters.' + (self._filtersEnabled ? 'disable' : 'enable') + '.';
          return $(App.tooltipHelper.createTooltip(i18n.t(localStr + 'display_name'), i18n.t(localStr + 'description')));
       });
+      
+      var ttStr = `tower_defense:ui.game.renderFilters.select_all.`;
+      App.tooltipHelper.attachTooltipster(self.$('#selectAll'),
+         $(App.tooltipHelper.createTooltip(i18n.t(ttStr + 'display_name'), i18n.t(ttStr + 'description'))));
+      ttStr = `tower_defense:ui.game.renderFilters.select_none.`;
+      App.tooltipHelper.attachTooltipster(self.$('#selectNone'),
+         $(App.tooltipHelper.createTooltip(i18n.t(ttStr + 'display_name'), i18n.t(ttStr + 'description'))));
+
       radiant.each(self._allFilters, function(name, filter) {
          var btn = self.$(`.renderFilter[data-filter="${name}"]`);
          if (btn && btn.length > 0) {
@@ -144,24 +159,41 @@ App.TowerDefenseRenderFilters = App.View.extend({
       filters.forEach(filter => {
          if (filter.name == name) {
             var active = !filter.active;
-            var index = self._renderFilters.indexOf(name);
-            if (index >= 0) {
-               self._renderFilters.splice(index, 1);
-            }
-            else {
-               self._renderFilters.push(name);
-            }
-            Ember.set(filter, 'active', active);
-            Ember.set(filter, 'class', 'renderFilter button' + (active ? '' : ' inactive'));
-            Ember.run.scheduleOnce('afterRender', function() {
-               var btn = self.$(`.renderFilter[data-filter="${name}"]`);
-               if (btn && btn.length > 0) {
-                  btn.find('img').css({outlineColor: active ? filter.color : ''});
-               }
-            });
+            self._setFilterActive(filter, active);
          }
       });
 
       radiant.call('tower_defense:set_render_filters_command', self._renderFilters);
+   },
+
+   _checkClearAllRenderFilters: function(active) {
+      var self = this;
+
+      var filters = self.get('renderFilters');
+      filters.forEach(filter => {
+         self._setFilterActive(filter, active);
+      });
+
+      radiant.call('tower_defense:set_render_filters_command', self._renderFilters);
+   },
+
+   _setFilterActive: function(filter, active) {
+      var self = this;
+
+      var index = self._renderFilters.indexOf(filter.name);
+      if (!active && index >= 0) {
+         self._renderFilters.splice(index, 1);
+      }
+      else if (active) {
+         self._renderFilters.push(filter.name);
+      }
+      Ember.set(filter, 'active', active);
+      Ember.set(filter, 'class', 'renderFilter button' + (active ? '' : ' inactive'));
+      Ember.run.scheduleOnce('afterRender', function() {
+         var btn = self.$(`.renderFilter[data-filter="${filter.name}"]`);
+         if (btn && btn.length > 0) {
+            btn.find('img').css({outlineColor: active ? filter.color : ''});
+         }
+      });
    }
 });

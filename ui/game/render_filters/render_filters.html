@@ -2,6 +2,8 @@
    <div class="gui">
       <div id="renderFilters">
          <div id="enableRenderFilters" {{bind-attr class=view.enableFiltersClass}}><img id="enableRenderFiltersImg"/></div>
+         <div id="selectAll" class="button"><img id="selectAllImg"/></div>
+         <div id="selectNone" class="button"><img id="selectNoneImg"/></div>
          {{#each filter in view.renderFilters}}
          <div {{bind-attr data-filter=filter.name class=filter.class}}><img {{bind-attr src=filter.icon}}/></div>
          {{/each}}
