@@ -1,0 +1,50 @@
+{
+   "shaders" : {
+      "TRANSLUCENT" : {
+         "state" : "states/voxel/blend_withdepth.state",
+         "shader" : "shaders/world_space_ui.shader",
+         "inputs" : [
+            {
+               "name" : "billboardPivotAndScale",
+               "bind_to_material_input" : "billboardPivotAndScale"
+            },
+            {
+               "name" : "alpha",
+               "bind_to_material_input" : "alpha"
+            },
+            {
+               "name" : "minSizePx",
+               "bind_to_material_input" : "minSizePx"
+            },
+            {
+               "name" : "ambientLightColor",
+               "bind_to_material_input" : "ambientLightColor"
+            }
+         ]
+      }
+   },
+   "samplers" : [
+      {
+         "name" : "albedo",
+         "map" : "textures/common/transparent.png"
+      }
+   ],
+   "inputs" : [
+      {
+         "name" : "billboardPivotAndScale",
+         "default" : [0.5, 0.5, 1.0, 1.0]
+      },
+      {
+         "name" : "alpha",
+         "default" : [1.0]
+      },
+      {
+         "name" : "minSizePx",
+         "default" : [20.0]
+      },
+      {
+         "name" : "ambientLightColor",
+         "default" : [0.5, 0.5, 0.5, 1.0]
+      }
+   ]
+}

@@ -20,7 +20,6 @@
             "tower_defense:buffs:tower:cooldown_decrease:normal",
             "tower_defense:buffs:tower:cooldown_decrease:major"
          ],
-         "icon": "/tower_defense/data/buffs/tower/cooldown_decrease/normal_cooldown_decrease.png",
          "base_region": true,
          "ordinal": 10,
          "ui_ordinal": 1
@@ -31,7 +30,6 @@
          "buffs": [
             "tower_defense:buffs:tower:damage_increase:normal"
          ],
-         "icon": "/tower_defense/data/buffs/tower/damage_increase/normal_damage_increase.png",
          "base_region": true,
          "ordinal": 11,
          "ui_ordinal": 2
@@ -46,7 +44,8 @@
          ],
          "tower_properties": {
             "reveals_invis": {
-               "color": {"x": 224, "y": 0, "z": 0}
+               "color": {"x": 224, "y": 0, "z": 0},
+               "icon": "/tower_defense/data/buffs/monster/reveal/normal_reveal.png"
             }
          },
          "path_region": true,

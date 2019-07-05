@@ -1,0 +1,22 @@
+{
+   "type" : "effect",
+   "tracks": {
+      "unit_status_effect": {
+         "type" : "unit_status_effect",
+         "material" : {
+            "name": "materials/billboard.material.json",
+            "samplers" : [
+               {
+                  "name" : "foregroundMap",
+                  "map": "materials/thoughts/default_overlay.png"
+               },
+               {
+                  "name" : "albedoMap",
+                  "map": "materials/thoughts/default_overlay.png"
+               }
+            ]
+         },
+         "bone": "center"
+     }
+   }
+}

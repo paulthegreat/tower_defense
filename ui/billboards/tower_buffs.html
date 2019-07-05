@@ -1,0 +1,25 @@
+<html>
+   <head>
+      <link rel="stylesheet" href="tower_buffs.css">
+   </head>
+   <body>
+      <!--bb = _radiant.client.get_render_entity(e):get_node():add_ui_billboard_node('bb','stonehearth/tower_defense/ui/billboards/tower_buffs.html?bgColor=rgba(0,128,255,0.6)&icons=/tower_defense/data/buffs/monster/poison/major_poison.png,/tower_defense/data/buffs/monster/burning/normal_burning.png',2,1,120,59,-0.9,-0.5)-->
+      <div id="container">
+         
+      </div>
+      <script>
+         var params = new URLSearchParams(window.location.search);
+         var bgColor = params.get('bgColor');
+         var icons = params.get('icons').split(',');
+
+         var html = '';
+         icons.forEach(icon => {
+            html += `<img width="46px" height="51px" src="${icon}">`;
+         });
+
+         var container = document.getElementById('container');
+         container.style.borderColor = bgColor;
+         container.innerHTML = html;
+      </script>
+   </body>
+</html>

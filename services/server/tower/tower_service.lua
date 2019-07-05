@@ -38,7 +38,7 @@ function TowerService:register_tower(tower, location)
       id = id,
       tower = tower,
       detection_coords_in_range = detection_coords_in_range,
-      tower_point = Region3(Cube3(location)),
+      location = location,
       tower_region = tower_region,
       targetable_region = targetable_region,
       buffs = tower_comp:get_filter_buffs(),

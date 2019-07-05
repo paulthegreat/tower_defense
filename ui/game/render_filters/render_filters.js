@@ -78,10 +78,14 @@ App.TowerDefenseRenderFilters = App.View.extend({
       self._renderFilters = [];
       radiant.each(self._allFilters, function(name, filter) {
          var icon = filter.icon;
-         if (!icon && filter.buffs && filter.buffs.length > 0) {
+         var colorTbl = filter.color;
+         if (filter.buffs && filter.buffs.length > 0) {
             var buff = tower_defense.getBuff(filter.buffs[0]);
-            icon = buff.icon;
+            icon = icon || buff.icon;
+            colorTbl = buff.color;
          }
+         filter.color = self._getColorString(colorTbl);
+
          var active = activeFilters.includes(name);
          if (active) {
             self._renderFilters.push(name);
@@ -90,6 +94,7 @@ App.TowerDefenseRenderFilters = App.View.extend({
             name: name,
             class: 'renderFilter button' + (active ? '' : ' inactive'),
             icon: icon,
+            color: filter.color,
             active: active,
             ui_ordinal: filter.ui_ordinal || 0
          });
@@ -99,6 +104,17 @@ App.TowerDefenseRenderFilters = App.View.extend({
 
       self.set('renderFilters', filters);
       Ember.run.scheduleOnce('afterRender', this, '_applyTooltips');
+   },
+
+   _getColorString: function(colorTbl) {
+      if (colorTbl) {
+         var r = colorTbl.r || colorTbl.x || 0;
+         var g = colorTbl.g || colorTbl.y || 0;
+         var b = colorTbl.b || colorTbl.z || 0;
+         return `rgba(${r},${g},${b},1)`;
+      }
+
+      return 'rgba(0,0,0,1)';
    },
 
    _applyTooltips: function() {
@@ -111,6 +127,9 @@ App.TowerDefenseRenderFilters = App.View.extend({
       radiant.each(self._allFilters, function(name, filter) {
          var btn = self.$(`.renderFilter[data-filter="${name}"]`);
          if (btn && btn.length > 0) {
+            if (self._renderFilters.includes(name)) {
+               btn.find('img').css({outlineColor: filter.color});
+            }
             btn.tooltipster({
                content: $(App.tooltipHelper.createTooltip(i18n.t(filter.display_name), i18n.t(filter.description)))
             });
@@ -134,6 +153,12 @@ App.TowerDefenseRenderFilters = App.View.extend({
             }
             Ember.set(filter, 'active', active);
             Ember.set(filter, 'class', 'renderFilter button' + (active ? '' : ' inactive'));
+            Ember.run.scheduleOnce('afterRender', function() {
+               var btn = self.$(`.renderFilter[data-filter="${name}"]`);
+               if (btn && btn.length > 0) {
+                  btn.find('img').css({outlineColor: active ? filter.color : ''});
+               }
+            });
          }
       });
 
