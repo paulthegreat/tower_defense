@@ -159,7 +159,15 @@ App.TowerDefenseRenderFilters = App.View.extend({
       filters.forEach(filter => {
          if (filter.name == name) {
             var active = !filter.active;
-            self._setFilterActive(filter, active);
+            var index = self._renderFilters.indexOf(name);
+            if (index >= 0) {
+               self._renderFilters.splice(index, 1);
+            }
+            else {
+               self._renderFilters.push(name);
+            }
+            var f = self._setFilterActive(filter, active);
+            Ember.run.scheduleOnce('afterRender', () => f());
          }
       });
 
@@ -170,8 +178,17 @@ App.TowerDefenseRenderFilters = App.View.extend({
       var self = this;
 
       var filters = self.get('renderFilters');
+      self._renderFilters = [];
+      var f = [];
       filters.forEach(filter => {
-         self._setFilterActive(filter, active);
+         f.push(self._setFilterActive(filter, active));
+         if (active) {
+            self._renderFilters.push(filter.name);
+         }
+      });
+
+      Ember.run.scheduleOnce('afterRender', function() {
+         f.forEach(fn => fn());
       });
 
       radiant.call('tower_defense:set_render_filters_command', self._renderFilters);
@@ -180,20 +197,13 @@ App.TowerDefenseRenderFilters = App.View.extend({
    _setFilterActive: function(filter, active) {
       var self = this;
 
-      var index = self._renderFilters.indexOf(filter.name);
-      if (!active && index >= 0) {
-         self._renderFilters.splice(index, 1);
-      }
-      else if (active) {
-         self._renderFilters.push(filter.name);
-      }
       Ember.set(filter, 'active', active);
       Ember.set(filter, 'class', 'renderFilter button' + (active ? '' : ' inactive'));
-      Ember.run.scheduleOnce('afterRender', function() {
+      return function() {
          var btn = self.$(`.renderFilter[data-filter="${filter.name}"]`);
          if (btn && btn.length > 0) {
             btn.find('img').css({outlineColor: active ? filter.color : ''});
          }
-      });
+      };
    }
 });
