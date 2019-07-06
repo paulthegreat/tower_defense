@@ -291,19 +291,27 @@ function GameCreationService:_create_landmarks(landmarks, world_size, center_poi
       end
 
       -- try to load the landmark at the appropriate location/rotation
-      self:_create_landmark(landmark, center_point, directions[i + 1] * math.floor(world_size / 4), i * 90)
+      local json = radiant.resources.load_json(landmark)
+      if json then
+         local size = json.size or Point3(32, 0, 32)
+         local direction = directions[i + 1]
+         local translation = Point3(direction.x * math.floor((world_size - size.x) / 2), 0, direction.z * math.floor((world_size - size.z) / 2))
+         self:_create_landmark(json, center_point, translation, i * 90)
+      end
    end
 end
 
 function GameCreationService:_create_landmark(landmark, location, translation, rotation)
    -- try to load the landmark at the appropriate location/rotation
-   local json = radiant.resources.load_json(landmark)
-   if json then
+   if type(landmark) == 'string' then
+      landmark = radiant.resources.load_json(landmark)
+   end
+   if landmark then
       landmark_lib.create_landmark(location, {
-         translation = (translation or Point3.zero) + (radiant.util.to_point3(json.offset) or Point3.zero),
-         rotation = (rotation or 0) + (json.rotation or 0),
-         landmark_block_types = json.landmark_block_types or 'stonehearth:landmark_blocks',
-         brush = json.brush
+         translation = (translation or Point3.zero) + (radiant.util.to_point3(landmark.offset) or Point3.zero),
+         rotation = (rotation or 0) + (landmark.rotation or 0),
+         landmark_block_types = landmark.landmark_block_types or 'stonehearth:landmark_blocks',
+         brush = landmark.brush
       })
    end
 end

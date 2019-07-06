@@ -1,6 +1,7 @@
 {
    "brush": "file(landmark_3.qb)",
    "landmark_block_types": "stonehearth:landmark_blocks",
+   "size": {"x": 32, "y": 10, "z": 32},
    "offset": {"x": 0, "y": 0, "z": 0},
    "rotation": 0
 }

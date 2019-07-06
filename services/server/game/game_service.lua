@@ -32,18 +32,14 @@ function GameService:initialize()
       self._sv.health = self._game_options and self._game_options.starting_health or 100
    end
 
-   self._waves = radiant.resources.load_json('tower_defense:data:waves').waves
+   self:_load_waves()
 
-   if self._sv.started then
-      if not self._sv.wave_controller then
-         --self:_create_countdown_timer(true)
-      end
+   if not self._sv.map_data then
+      radiant.events.listen_once(radiant, 'radiant:game_loaded', function(e)
+         self:_create_path_previewers()
+      end)
    else
-      if self._sv.map_data then
-         radiant.events.listen_once(radiant, 'radiant:game_loaded', function(e)
-            self:_create_path_previewers()
-         end)
-      end
+      self:_create_path_previewers()
    end
 
    self._wave_listeners = {}
@@ -79,6 +75,10 @@ function GameService:_destroy_wave_controller()
 end
 
 function GameService:_destroy_path_previewers()
+   if self._create_path_previewers_timer then
+      self._create_path_previewers_timer:destroy()
+      self._create_path_previewers_timer = nil
+   end
    if self._sv._ground_path_previewer then
       radiant.entities.destroy_entity(self._sv._ground_path_previewer)
       self._sv._ground_path_previewer = nil
@@ -96,6 +96,15 @@ function GameService:_destroy_path_previewers()
       self._air_path_previewer_listener = nil
    end
    self.__saved_variables:mark_changed()
+end
+
+function GameService:_load_waves()
+   if self._sv.map_data then
+      local uri = self._sv.map_data.wave_index or 'tower_defense:data:waves'
+      self._waves = radiant.resources.load_json(uri).waves
+   else
+      self._waves = {}
+   end
 end
 
 function GameService:_create_wave_listeners()
@@ -164,7 +173,7 @@ function GameService:get_wave_index_command(session, response)
       table.insert(waves, wave_data)
    end
    
-   response:resolve({waves = waves, last_wave = self._game_options.final_wave})
+   response:resolve({waves = waves, last_wave = math.min(#waves, self._game_options.final_wave)})
 end
 
 function GameService:get_tower_gold_cost_multiplier_command(session, response)
@@ -294,6 +303,7 @@ function GameService:set_map_data(map_data)
    self._sv.map_data = map_data
    self.__saved_variables:mark_changed()
    self:_create_path_previewers()
+   self:_load_waves()
 end
 
 function GameService:start_game_command(session, response)
@@ -332,10 +342,15 @@ function GameService:has_active_wave()
 end
 
 function GameService:_create_path_previewers()
-   self:_destroy_path_previewers()  -- just in case
-   self._sv._ground_path_previewer, self._ground_path_previewer_listener = self:_create_path_previewer('monster_ground', self._sv.map_data.spawn_location)
-   self._sv._air_path_previewer, self._air_path_previewer_listener = self:_create_path_previewer('monster_air', self._sv.map_data.air_spawn_location)
-   self.__saved_variables:mark_changed()
+   if not self._sv.wave_controller then
+      -- delay this a tick; for some reason AI doesn't kick in if it's being created instantly
+      self._create_path_previewers_timer = radiant.on_game_loop_once('delayed create path previewers', function()
+         self:_destroy_path_previewers()  -- just in case
+         self._sv._ground_path_previewer, self._ground_path_previewer_listener = self:_create_path_previewer('monster_ground', self._sv.map_data.spawn_location)
+         self._sv._air_path_previewer, self._air_path_previewer_listener = self:_create_path_previewer('monster_air', self._sv.map_data.air_spawn_location)
+         self.__saved_variables:mark_changed()
+      end)
+   end
 end
 
 function GameService:_create_path_previewer(population, location)
@@ -377,6 +392,8 @@ function GameService:_end_of_round()
    end
 
    self:_set_game_alert('i18n(tower_defense:alerts.game.wave_ended)', {wave = self._sv.wave, num_escaped = num_escaped or 0})
+
+   self:_create_path_previewers()
 
    --self:_create_countdown_timer()
 end

@@ -1,0 +1,144 @@
+{
+	"world": {
+      "size" : 40,
+      "layers": [
+         {
+            "terrain": "bedrock",
+            "height": 1
+         },
+         {
+            "terrain": "soil_light",
+            "height": 1
+         },
+         {
+            "terrain": "grass",
+            "height": 1
+         }
+      ]
+   },
+	"path" : {
+      "block_type": "soil_dark",
+		"width" : 1,
+		"points" : [
+			[20,0,39],
+			[20,0,27],
+			[24,0,27],
+			[24,0,19],
+			[16,0,19],
+			[16,0,11],
+			[24,0,11],
+			[24,0,19],
+			[16,0,19],
+			[16,0,27],
+			[20,0,27],
+			[20,0,39]
+      ]
+   },
+	"air_path" : {
+      "height": 3,
+		"points" : [
+			[20,0,39],
+			[20,0,27],
+			[22,0,27],
+			[22,0,11],
+			[18,0,11],
+			[18,0,27],
+			[20,0,27],
+			[20,0,39]
+      ]
+   },
+   "tower_placeable_region": [
+      [[14,0,9], [27,1,30]]
+   ],
+   "tower_placeable_terrain": "grass",
+   "landmarks": [
+      "tower_defense:landmarks:edge:landmark_1",
+      "tower_defense:landmarks:edge:landmark_2",
+      "tower_defense:landmarks:edge:landmark_3"
+   ],
+   "entities": {
+      "tower_defense:end_portal:firepit_titan": [
+         {
+            "location": [20, -1, 39],
+            "facing": 0
+         }
+      ],
+      "tower_defense:obstacles:abundant_ore": [
+         {
+            "location": [14,0,9],
+            "facing": "random"
+         },
+         {
+            "location": [26,0,9],
+            "facing": "random"
+         },
+         {
+            "location": [26,0,15],
+            "facing": "random"
+         },
+         {
+            "location": [26,0,23],
+            "facing": "random"
+         },
+         {
+            "location": [26,0,29],
+            "facing": "random"
+         },
+         {
+            "location": [14,0,29],
+            "facing": "random"
+         },
+         {
+            "location": [14,0,23],
+            "facing": "random"
+         },
+         {
+            "location": [14,0,15],
+            "facing": "random"
+         }
+      ],
+      "tower_defense:obstacles:fertile_dirt": [
+         {
+            "location": [20,0,15],
+            "facing": "random"
+         },
+         {
+            "location": [20,0,23],
+            "facing": "random"
+         },
+         {
+            "location": [18,0,9],
+            "facing": "random"
+         },
+         {
+            "location": [22,0,9],
+            "facing": "random"
+         },
+         {
+            "location": [26,0,19],
+            "facing": "random"
+         },
+         {
+            "location": [22,0,29],
+            "facing": "random"
+         },
+         {
+            "location": [18,0,29],
+            "facing": "random"
+         },
+         {
+            "location": [14,0,19],
+            "facing": "random"
+         }
+      ]
+   },
+   "multipliers": {
+      "gold_bounty": 2,
+      "wood_bounty": 2,
+      "attributes": {
+         "speed": 1.5,
+         "max_health": 0.75
+      }
+   },
+   "wave_index": "tower_defense:data:waves:turbo"
+}

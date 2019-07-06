@@ -32,6 +32,7 @@ function Wave:activate()
    self._multipliers = self._sv._wave_data.multipliers or {}
    self._multipliers.attributes = self._multipliers.attributes or {}
    self._multipliers.gold_bounty = self._multipliers.gold_bounty or 1
+   self._multipliers.wood_bounty = self._multipliers.wood_bounty or 1
    self._multipliers.escaped_monster_bounty = self._multipliers.escaped_monster_bounty or 1
    self._buffs = self._sv._wave_data.buffs or {}
    self._role_overrides = self._sv._wave_data.role_overrides or {}
@@ -209,6 +210,9 @@ function Wave:_spawn_monsters(monsters, at_monster_id)
          if bounty.gold then
             bounty.gold = bounty.gold * self._multipliers.gold_bounty
          end
+         if bounty.wood then
+            bounty.wood = bounty.wood * self._multipliers.wood_bounty
+         end
 
          local new_monsters = game_master_lib.create_citizens(pop, monster.info, location, {player_id = ''})
          for _, new_monster in ipairs(new_monsters) do
@@ -332,6 +336,9 @@ function Wave:_check_wave_end()
       if bonus.gold then
          bonus.gold = bonus.gold * self._multipliers.gold_bounty
       end
+      if bonus.wood then
+         bonus.wood = bonus.wood * self._multipliers.wood_bounty
+      end
       radiant.events.trigger(self, 'tower_defense:wave:succeeded', bonus)
    end
 end
@@ -345,6 +352,9 @@ function Wave:_apply_multipliers(multipliers)
       end
       if multipliers.gold_bounty then
          self._multipliers.gold_bounty = self._multipliers.gold_bounty * multipliers.gold_bounty
+      end
+      if multipliers.wood_bounty then
+         self._multipliers.wood_bounty = self._multipliers.wood_bounty * multipliers.wood_bounty
       end
       if multipliers.escaped_monster_bounty then
          self._multipliers.escaped_monster_bounty = self._multipliers.escaped_monster_bounty * multipliers.escaped_monster_bounty

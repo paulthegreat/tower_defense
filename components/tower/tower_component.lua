@@ -314,24 +314,26 @@ end
 function TowerComponent:_load_all_buffs_filters()
    local buffs = {}
 
-   local weapon = type(self._weapon) == 'string' and self._weapon or self._weapon:get_uri()
-   local catalog_data = stonehearth[radiant.is_server and 'catalog' or 'catalog_client']:get_catalog_data(weapon)
-   if catalog_data.injected_buffs then
-      for _, buff in ipairs(catalog_data.injected_buffs) do
-         buffs[buff.uri] = true
+   if self._weapon then
+      local weapon = type(self._weapon) == 'string' and self._weapon or self._weapon:get_uri()
+      local catalog_data = stonehearth[radiant.is_server and 'catalog' or 'catalog_client']:get_catalog_data(weapon)
+      if catalog_data.injected_buffs then
+         for _, buff in ipairs(catalog_data.injected_buffs) do
+            buffs[buff.uri] = true
+         end
       end
-   end
-   if catalog_data.inflictable_debuffs then
-      for _, buff in ipairs(catalog_data.inflictable_debuffs) do
-         buffs[buff.uri] = true
+      if catalog_data.inflictable_debuffs then
+         for _, buff in ipairs(catalog_data.inflictable_debuffs) do
+            buffs[buff.uri] = true
+         end
       end
-   end
-   local gp = catalog_data.tower_weapon_attack_info and catalog_data.tower_weapon_attack_info.ground_presence
-   if gp then
-      for _, instance in ipairs({'first_time', 'other_times', 'every_time'}) do
-         if gp[instance] and gp[instance].expanded_buffs then
-            for _, buff in ipairs(gp[instance].expanded_buffs) do
-               buffs[buff.uri] = true
+      local gp = catalog_data.tower_weapon_attack_info and catalog_data.tower_weapon_attack_info.ground_presence
+      if gp then
+         for _, instance in ipairs({'first_time', 'other_times', 'every_time'}) do
+            if gp[instance] and gp[instance].expanded_buffs then
+               for _, buff in ipairs(gp[instance].expanded_buffs) do
+                  buffs[buff.uri] = true
+               end
             end
          end
       end
@@ -1087,6 +1089,11 @@ end
 
 function TowerComponent:_inflict_attack(targets, primary_target, attack_info, buffs, damage_multiplier)
    local attacker = self._entity
+   if not attacker or not attacker:is_valid() then
+      -- this could be a delayed attack that didn't get cleaned up, and we've sold the tower
+      return
+   end
+
    local accuracy = attacker:get_component('stonehearth:attributes'):get_attribute('accuracy', 1) + (attack_info.accuracy or 0)
    local aoe_attack = attack_info.aoe
    local base_damage = attack_info.base_damage

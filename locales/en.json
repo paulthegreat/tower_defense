@@ -30,6 +30,13 @@
             "random_location_names": {
                "000": "Paulville"
             }
+         },
+         "turbo": {
+            "display_name": "Turbo Mode!",
+            "description": "A much shorter path, fewer waves of faster moving monsters with less health.",
+            "random_location_names": {
+               "000": "Ridgemont High"
+            }
          }
       },
       "buffs": {

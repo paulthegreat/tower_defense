@@ -1,0 +1,224 @@
+{
+   "type": "biome_generation_data",
+   "season": "winter",
+   "terrain": {
+      "__comment": "minimum height for surface of terrain",
+      "noise_map_settings": {
+         "octaves": 3,
+         "persistence_ratio": 0.005,
+         "bandlimit": 4,
+         "__comment": "can stretch the terrain vertically to allow for long mountain ridges",
+         "aspect_ratio": 0.5
+      },
+      "plains_percentage": 82,
+      "height_base": 36,
+      "__comments": {
+         "valley_count": "offset of layers from base",
+         "step_count": "number of layers",
+         "step_size": "size of layer, for foothills and mountains this has to be multiple of 5"
+      },
+      "plains": {
+         "step_size": 2,
+         "valley_count": 2,
+         "step_count": 2
+      },
+      "foothills": {
+         "step_size": 20,
+         "step_count": 2
+      },
+      "mountains": {
+         "step_size": 10,
+         "step_count": 7
+      }
+   },
+   "terrain_detailer": {
+      "mountains": {
+         "__comment": "determines the height of the first layer",
+         "depth_function": {
+            "octaves": 4,
+            "persistence_ratio": 0.2,
+            "amplitude": 2.5,
+            "layer_thickness": 3,
+            "layer_count": 1,
+            "__comment": "determines how many adjacent blocks have the same depth",
+            "unit_length": 12
+         },
+         "height_function": {
+            "octaves": 4,
+            "persistence_ratio": 0.1,
+            "amplitude": 2.5,
+            "layer_thickness": 5,
+            "__comment": "determines how many adjacent blocks have the same depth",
+            "unit_length": 16
+         }
+      },
+      "foothills": {
+         "depth_function": {
+            "octaves": 4,
+            "persistence_ratio": 0.2,
+            "amplitude": 2.5,
+            "layer_thickness": 1,
+            "layer_count": 2,
+            "unit_length": 8
+         },
+         "height_function": {
+            "octaves": 4,
+            "persistence_ratio": 0.1,
+            "amplitude": 2.5,
+            "layer_thickness": 1,
+            "unit_length": 10
+         }
+      },
+      "plains": {
+         "depth_function": {
+            "layer_thickness": 1,
+            "layer_count": 1,
+            "unit_length": 8
+         },
+         "height_function": {
+            "layer_thickness": 1,
+            "unit_length": 8
+         }
+      }
+   },
+   "palettes": {
+      "spring": {
+         "null": "#FF00FF",
+         "unknown": "#25221A",
+         "bedrock": "#51514F",
+         "rock_layer_1": "#C1CFE8",
+         "rock_layer_2": "#D4DFF2",
+         "rock_layer_3": "#E6ECF8",
+         "rock_layer_4": "#F2F5FB",
+         "rock_layer_5": "#F4FDFF",
+         "rock_layer_6": "#F7FEFF",
+         "rock_layer_7": "#FAFAFA",
+         "rock_layer_8": "#FCFCFC",
+         "soil_light": "#757F8E",
+         "soil_dark": "#656F7E",
+         "dirt": "#DDDCD9",
+         "dirt_edge_1": "#CFCCC3",
+         "grass": "#6e9c7a",
+         "grass_edge_1": "#8fb889",
+         "grass_edge_2": "#80ac86",
+         "grass_hills": "#A6B3CB",
+         "grass_hills_edge_1": "#909DB6",
+         "grass_hills_edge_2": "#9BA8C2",
+         "copper_ore": "#C87533",
+         "tin_ore": "#B0A080",
+         "iron_ore": "#90B0D0",
+         "silver_ore": "#CCCCCC",
+         "gold_ore": "#FFD700",
+         "coal": "#021C24"
+      },
+      "summer": {
+         "null": "#FF00FF",
+         "unknown": "#25221A",
+         "bedrock": "#51514F",
+         "rock_layer_1": "#C1CFE8",
+         "rock_layer_2": "#D4DFF2",
+         "rock_layer_3": "#E6ECF8",
+         "rock_layer_4": "#F2F5FB",
+         "rock_layer_5": "#F4FDFF",
+         "rock_layer_6": "#F7FEFF",
+         "rock_layer_7": "#FAFAFA",
+         "rock_layer_8": "#FCFCFC",
+         "soil_light": "#757F8E",
+         "soil_dark": "#656F7E",
+         "dirt": "#DDDCD9",
+         "dirt_edge_1": "#CFCCC3",
+         "grass": "#7ba67a",
+         "grass_edge_1": "#95bc86",
+         "grass_edge_2": "#89b284",
+         "grass_hills": "#608a72",
+         "grass_hills_edge_1": "#6e9877",
+         "grass_hills_edge_2": "#6a9278",
+         "copper_ore": "#C87533",
+         "tin_ore": "#B0A080",
+         "iron_ore": "#90B0D0",
+         "silver_ore": "#CCCCCC",
+         "gold_ore": "#FFD700",
+         "coal": "#021C24"
+      },
+      "autumn": {
+         "null": "#FF00FF",
+         "unknown": "#25221A",
+         "bedrock": "#51514F",
+         "rock_layer_1": "#C1CFE8",
+         "rock_layer_2": "#D4DFF2",
+         "rock_layer_3": "#E6ECF8",
+         "rock_layer_4": "#F2F5FB",
+         "rock_layer_5": "#F4FDFF",
+         "rock_layer_6": "#F7FEFF",
+         "rock_layer_7": "#FAFAFA",
+         "rock_layer_8": "#FCFCFC",
+         "soil_light": "#757F8E",
+         "soil_dark": "#656F7E",
+         "dirt": "#DDDCD9",
+         "dirt_edge_1": "#CFCCC3",
+         "grass": "#958f5c",
+         "grass_edge_1": "#a6a06d",
+         "grass_edge_2": "#9f9966",
+         "grass_hills": "#7c704c",
+         "grass_hills_edge_1": "#8a7f5b",
+         "grass_hills_edge_2": "#847955",
+         "copper_ore": "#C87533",
+         "tin_ore": "#B0A080",
+         "iron_ore": "#90B0D0",
+         "silver_ore": "#CCCCCC",
+         "gold_ore": "#FFD700",
+         "coal": "#021C24"
+      },
+      "winter": {
+         "null": "#FF00FF",
+         "unknown": "#25221A",
+         "bedrock": "#51514F",
+         "rock_layer_1": "#C1CFE8",
+         "rock_layer_2": "#D4DFF2",
+         "rock_layer_3": "#E6ECF8",
+         "rock_layer_4": "#F2F5FB",
+         "rock_layer_5": "#F4FDFF",
+         "rock_layer_6": "#F7FEFF",
+         "rock_layer_7": "#FAFAFA",
+         "rock_layer_8": "#FCFCFC",
+         "soil_light": "#757F8E",
+         "soil_dark": "#656F7E",
+         "dirt": "#DDDCD9",
+         "dirt_edge_1": "#CFCCC3",
+         "grass": "#FEFEFE",
+         "grass_edge_1": "#E2E8ED",
+         "grass_edge_2": "#F0F3F5",
+         "grass_hills": "#A6B3CB",
+         "grass_hills_edge_1": "#909DB6",
+         "grass_hills_edge_2": "#9BA8C2",
+         "copper_ore": "#C87533",
+         "tin_ore": "#B0A080",
+         "iron_ore": "#90B0D0",
+         "silver_ore": "#CCCCCC",
+         "gold_ore": "#FFD700",
+         "coal": "#021C24"
+      }
+   },
+   "landscape": {
+      "water": {
+         "__comment": "placement of water bodies occur at positive samples, parameters are for a standard simplex noise generator",
+         "depth": {
+            "shallow": 5,
+            "deep": 10
+         },
+         "noise_map_settings": {
+            "__comment": "simplex noise function",
+            "persistence_ratio": 1,
+            "bandlimit": 64,
+            "octaves": 2,
+            "range": 100,
+            "aspect_ratio": 1,
+            "mean": {
+               "plains": 0,
+               "foothills": -100,
+               "mountains": -100
+            }
+         }
+      }
+   }
+}

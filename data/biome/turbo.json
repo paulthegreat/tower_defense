@@ -1,0 +1,36 @@
+{
+   "type": "biome",
+   "alias": "tower_defense:biome:turbo",
+   "display_name": "i18n(tower_defense:data.biome.turbo.display_name)",
+   "description": "i18n(tower_defense:data.biome.turbo.description)",
+   "random_location_names": [
+      "i18n(tower_defense:data.biome.turbo.random_location_names.000)"
+   ],
+   "image": "file(images/turbo.png)",
+   "story_board_image": "/stonehearth/data/biome/images/arctic_story_board.png",
+   "generation_file": "file(turbo_generation_data.json)",
+   "tower_defense_generation_file": "tower_defense:data:map_generation:turbo",
+   "default_starting_season": "winter",
+   "seasons": {
+      "spring": {
+         "display_name": "i18n(stonehearth:data.biome.arctic.seasons.spring.display_name)",
+         "description": "i18n(stonehearth:data.biome.arctic.seasons.spring.description)",
+         "start_day": 0
+      },
+      "summer": {
+         "display_name": "i18n(stonehearth:data.biome.arctic.seasons.summer.display_name)",
+         "description": "i18n(stonehearth:data.biome.arctic.seasons.summer.description)",
+         "start_day": 7
+      },
+      "autumn": {
+         "display_name": "i18n(stonehearth:data.biome.arctic.seasons.autumn.display_name)",
+         "description": "i18n(stonehearth:data.biome.arctic.seasons.autumn.description)",
+         "start_day": 28
+      },
+      "winter": {
+         "display_name": "i18n(stonehearth:data.biome.arctic.seasons.winter.display_name)",
+         "description": "i18n(stonehearth:data.biome.arctic.seasons.winter.description)",
+         "start_day": 35
+      }
+   }
+}

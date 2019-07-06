@@ -3,7 +3,6 @@
    "components": {
       "effect_list": {
          "effects": [
-            "stonehearth:effects:corrupt_camp_beacon",
             "stonehearth:effects:corruption:firepit"
          ]
       },
