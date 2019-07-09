@@ -55,33 +55,62 @@
                      "shortest_debuff_time",
                      "closest_to_end"
                   ]
+               },
+               "FOCUS_FARTHEST": {
+                  "key": "focus_farthest",
+                  "filters": [
+                     "farthest_from_tower"
+                  ]
                }
             },
             "target_filters": {
                "FILTER_HP_LOW": {
                   "key": "lowest_health",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.lowest_health.display_name)",
-                  "description": "i18n(tower_defense:data.tower.target_filter.lowest_health.description)"
+                  "description": "i18n(tower_defense:data.tower.target_filter.lowest_health.description)",
+                  "disables": [
+                     "highest_health"
+                  ]
                },
                "FILTER_HP_HIGH": {
                   "key": "highest_health",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.highest_health.display_name)",
-                  "description": "i18n(tower_defense:data.tower.target_filter.highest_health.description)"
+                  "description": "i18n(tower_defense:data.tower.target_filter.highest_health.description)",
+                  "disables": [
+                     "lowest_health"
+                  ]
                },
                "FILTER_CLOSEST_TO_TOWER": {
                   "key": "closest_to_tower",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_tower.display_name)",
-                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_tower.description)"
+                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_tower.description)",
+                  "disables": [
+                     "farthest_from_tower"
+                  ]
+               },
+               "FILTER_FARTHEST_FROM_TOWER": {
+                  "key": "farthest_from_tower",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.farthest_from_tower.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.farthest_from_tower.description)",
+                  "disables": [
+                     "closest_to_tower"
+                  ]
                },
                "FILTER_CLOSEST_TO_START": {
                   "key": "closest_to_start",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_start.display_name)",
-                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_start.description)"
+                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_start.description)",
+                  "disables": [
+                     "closest_to_end"
+                  ]
                },
                "FILTER_CLOSEST_TO_END": {
                   "key": "closest_to_end",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.closest_to_end.display_name)",
-                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_end.description)"
+                  "description": "i18n(tower_defense:data.tower.target_filter.closest_to_end.description)",
+                  "disables": [
+                     "closest_to_start"
+                  ]
                },
                "FILTER_SHORTEST_DEBUFF_TIME": {
                   "key": "shortest_debuff_time",

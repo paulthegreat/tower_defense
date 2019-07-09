@@ -153,6 +153,10 @@ function TowerRenderer:_update(location)
    self:_destroy_nodes()
 
    local data = self._datastore:get_data()
+   if not data then
+      return
+   end
+
    local region = data.targetable_region
    location = location or radiant.entities.get_world_grid_location(self._entity) or radiant.entities.get_location_aligned(self._entity)
 

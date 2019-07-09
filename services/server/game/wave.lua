@@ -250,6 +250,7 @@ function Wave:_spawn_monsters(monsters, at_monster_id)
             for attribute, multiplier in pairs(self._multipliers.attributes or {}) do
                attrib_component:set_attribute(attribute, attrib_component:get_attribute(attribute) * multiplier)
             end
+            attrib_component:set_attribute('max_health', math.ceil(attrib_component:get_attribute('max_health')))
             
             self:_apply_buffs(new_monster, self._buffs)
             if monster.buffs then

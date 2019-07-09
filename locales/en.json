@@ -415,6 +415,10 @@
                "display_name": "Closest to Tower",
                "description": "Prioritize attacking the target closest to this tower."
             },
+            "farthest_from_tower": {
+               "display_name": "Farthest from Tower",
+               "description": "Prioritize attacking the target farthest from this tower."
+            },
             "closest_to_start": {
                "display_name": "Closest to Start",
                "description": "Prioritize attacking the target closest to the start of the path."

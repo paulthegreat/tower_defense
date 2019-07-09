@@ -472,6 +472,9 @@ function TowerComponent:_get_filter_value(filter, target, attack_info, debuff_ca
    elseif filter == FILTER_TYPES.FILTER_CLOSEST_TO_TOWER.key then
       return -radiant.entities.distance_between_entities(self._entity, target)
 
+   elseif filter == FILTER_TYPES.FILTER_FARTHEST_FROM_TOWER.key then
+      return radiant.entities.distance_between_entities(self._entity, target)
+
    elseif filter == FILTER_TYPES.FILTER_CLOSEST_TO_START.key then
       return -target:get_component('tower_defense:monster'):get_path_traveled()
 

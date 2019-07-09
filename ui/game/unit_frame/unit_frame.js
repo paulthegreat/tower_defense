@@ -186,6 +186,11 @@ App.StonehearthUnitFrameView = App.View.extend({
       this._updateUnitFrameShown();
 
       self._targetFilters = App.constants.tower_defense.tower.target_filters;
+      var filterLookup = {};
+      radiant.each(self._targetFilters, function(_, filter) {
+         filterLookup[filter.key] = filter;
+      })
+      self._targetFiltersLookup = filterLookup;
 
       self.$('#stickyTargetingCheckbox').change(function() {
          radiant.call('tower_defense:set_tower_sticky_targeting', self.get('uri'), this.checked);
@@ -196,6 +201,9 @@ App.StonehearthUnitFrameView = App.View.extend({
          var checked = this.checked;
 
          var filters = self.get('model.tower_defense:tower.target_filters');
+         if (!Array.isArray(filters)) {
+            filters = [];
+         }
          if (checked) {
             filters.push(filterType);
          }
@@ -208,7 +216,7 @@ App.StonehearthUnitFrameView = App.View.extend({
             }
          }
 
-         radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), filters);
+         self._trimAndApplyFilters(filters);
       });
 
       // https://stackoverflow.com/questions/2072848/reorder-html-table-rows-using-drag-and-drop
@@ -263,7 +271,8 @@ App.StonehearthUnitFrameView = App.View.extend({
                   if (newIndex < curFilters.length) {
                      // we dragged an unchecked filter up into the checked filters, so check it and apply changes
                      curFilters.splice(newIndex, 0, thisFilter);
-                     radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), curFilters);
+
+                     self._trimAndApplyFilters(curFilters);
                   }
                   else {
                      // we dragged an unchecked filter, so just reset the table
@@ -275,7 +284,8 @@ App.StonehearthUnitFrameView = App.View.extend({
                   curFilters.splice(index, 1);
                   // then add the new one
                   curFilters.splice(newIndex, 0, thisFilter);
-                  radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), curFilters);
+
+                  self._trimAndApplyFilters(curFilters);
                }
             }
             $(document).unbind('mousemove', move).unbind('mouseup', up);
@@ -295,6 +305,25 @@ App.StonehearthUnitFrameView = App.View.extend({
          self._moodTrace.destroy();
          self._moodTrace = null;
       }
+   },
+
+   _trimAndApplyFilters: function(filters) {
+      // go through the filters and ignore any that are "disabled" by earlier filters
+      var self = this;
+
+      var curFilters = [];
+      var disabled = [];
+      filters.forEach(filter => {
+         var filterData = self._targetFiltersLookup[filter];
+         if (!disabled.includes(filter)) {
+            if (filterData.disables) {
+               disabled = disabled.concat(filterData.disables);
+            }
+            curFilters.push(filter);
+         }
+      });
+
+      radiant.call('tower_defense:set_tower_target_filters', self.get('uri'), curFilters);
    },
 
    commands: function() {
