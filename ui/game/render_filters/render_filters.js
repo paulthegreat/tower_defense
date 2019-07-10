@@ -81,6 +81,10 @@ App.TowerDefenseRenderFilters = App.View.extend({
    _setRenderFilters: function(activeFilters) {
       var self = this;
 
+      if (!Array.isArray(activeFilters)) {
+         activeFilters = [];
+      }
+
       var filters = [];
       self._renderFilters = [];
       radiant.each(self._allFilters, function(name, filter) {
