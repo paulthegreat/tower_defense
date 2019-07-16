@@ -448,6 +448,7 @@
       "waves": {
          "wave_title": "Wave [str(wave)]: [str(title)]",
          "no_wave_title": "Pre-Game",
+         "summoned_monster": "Summoned/Spawned",
          "monster_damage": "Escaping reduces Lives by [str(damage)].",
          "monster_buffs": "Monsters have the following buffs:",
          "air_4": {

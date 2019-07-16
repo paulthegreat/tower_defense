@@ -36,7 +36,7 @@ function AceBuffsComponent:activate()
       if json and json.buffs then
          for buff, options in pairs(json.buffs) do
             if options then
-               self:add_buff(buff, type(options) == 'table' and options)
+               self:add_buff(buff, type(options) == 'table' and radiant.shallow_copy(options))
             end
          end
       end

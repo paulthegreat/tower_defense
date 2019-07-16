@@ -20,7 +20,7 @@
                "speed": 1,
                "max_health": 3
             },
-            "gold_bounty": 1
+            "gold_bounty": 2
          },
          "role_overrides": {
             "boar": "little_stone_golem"
@@ -35,7 +35,7 @@
                "speed": 1,
                "max_health": 6
             },
-            "gold_bounty": 1
+            "gold_bounty": 3
          },
          "role_overrides": {
             "boar": "goblin_wolf"
@@ -44,16 +44,16 @@
       {
          "wavenumber": 4,
          "uri": "tower_defense:data:waves:ground:20",
+         "category": "healing",
          "multipliers": {
             "attributes": {
                "speed": 1,
                "max_health": 9
             },
-            "gold_bounty": 2
+            "gold_bounty": 3
          },
          "buffs": [
-            "tower_defense:buffs:monster:armor:normal",
-            "tower_defense:buffs:monster:magic_armor:normal"
+            "tower_defense:buffs:monster:healing:minor"
          ]
       },
       {
@@ -64,7 +64,7 @@
                "speed": 1,
                "max_health": 13
             },
-            "gold_bounty": 2
+            "gold_bounty": 4
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:poison"
@@ -73,16 +73,16 @@
       {
          "wavenumber": 6,
          "uri": "tower_defense:data:waves:ground:20",
-         "category": "healing",
          "multipliers": {
             "attributes": {
                "speed": 1,
                "max_health": 17
             },
-            "gold_bounty": 2
+            "gold_bounty": 4
          },
          "buffs": [
-            "tower_defense:buffs:monster:healing:minor"
+            "tower_defense:buffs:monster:armor:normal",
+            "tower_defense:buffs:monster:magic_armor:normal"
          ]
       },
       {
@@ -94,7 +94,7 @@
                "speed": 1,
                "max_health": 22
             },
-            "gold_bounty": 3
+            "gold_bounty": 5
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -110,7 +110,7 @@
                "speed": 1.1,
                "max_health": 27
             },
-            "gold_bounty": 3
+            "gold_bounty": 5
          }
       },
       {
@@ -122,7 +122,7 @@
                "speed": 1.1,
                "max_health": 33
             },
-            "gold_bounty": 3
+            "gold_bounty": 6
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -138,7 +138,7 @@
                "speed": 1.1,
                "max_health": 39
             },
-            "gold_bounty": 4
+            "gold_bounty": 7
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -154,7 +154,7 @@
                "speed": 1.1,
                "max_health": 46
             },
-            "gold_bounty": 4
+            "gold_bounty": 8
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:normal",
@@ -170,7 +170,7 @@
                "speed": 1.1,
                "max_health": 53
             },
-            "gold_bounty": 5
+            "gold_bounty": 9
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -186,7 +186,7 @@
                "speed": 1.2,
                "max_health": 61
             },
-            "gold_bounty": 6
+            "gold_bounty": 10
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:normal"
@@ -201,7 +201,7 @@
                "speed": 1.2,
                "max_health": 69
             },
-            "gold_bounty": 7
+            "gold_bounty": 11
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:normal"
@@ -219,7 +219,7 @@
                "speed": 1.2,
                "max_health": 78
             },
-            "gold_bounty": 8
+            "gold_bounty": 12
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -235,7 +235,7 @@
                "speed": 1.2,
                "max_health": 87
             },
-            "gold_bounty": 9
+            "gold_bounty": 13
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:normal"
@@ -253,7 +253,7 @@
                "speed": 1.2,
                "max_health": 97
             },
-            "gold_bounty": 9
+            "gold_bounty": 14
          },
          "buffs": [
             "tower_defense:buffs:monster:random_purge",
@@ -268,7 +268,7 @@
                "speed": 1.3,
                "max_health": 107
             },
-            "gold_bounty": 10
+            "gold_bounty": 15
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major",
@@ -284,7 +284,7 @@
                "speed": 1.3,
                "max_health": 120
             },
-            "gold_bounty": 10
+            "gold_bounty": 16
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:major"
@@ -302,7 +302,7 @@
                "speed": 1.3,
                "max_health": 135
             },
-            "gold_bounty": 11
+            "gold_bounty": 17
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -314,14 +314,14 @@
       },
       {
          "wavenumber": 21,
-         "uri": "tower_defense:data:waves:ground:20",
+         "uri": "tower_defense:data:waves:air:20",
          "category": "purge",
          "multipliers": {
             "attributes": {
                "speed": 1.4,
                "max_health": 155
             },
-            "gold_bounty": 12
+            "gold_bounty": 18
          },
          "buffs": [
             "tower_defense:buffs:monster:invisible",
@@ -338,7 +338,7 @@
                "speed": 1.4,
                "max_health": 175
             },
-            "gold_bounty": 13
+            "gold_bounty": 19
          },
          "buffs": [
             "tower_defense:buffs:monster:magic_armor:minor",
@@ -358,7 +358,7 @@
                "speed": 1.4,
                "max_health": 200
             },
-            "gold_bounty": 13
+            "gold_bounty": 20
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:normal",
@@ -375,7 +375,7 @@
                "speed": 1.4,
                "max_health": 225
             },
-            "gold_bounty": 14
+            "gold_bounty": 21
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:slow",
@@ -391,7 +391,7 @@
                "speed": 1.5,
                "max_health": 255
             },
-            "gold_bounty": 14
+            "gold_bounty": 22
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:minor",
@@ -411,7 +411,7 @@
                "speed": 1.5,
                "max_health": 285
             },
-            "gold_bounty": 15
+            "gold_bounty": 23
          },
          "buffs": [
             "tower_defense:buffs:monster:full_purge"
@@ -426,7 +426,7 @@
                "speed": 1.5,
                "max_health": 320
             },
-            "gold_bounty": 15
+            "gold_bounty": 24
          },
          "buffs": [
             "tower_defense:buffs:monster:armor:major",
@@ -446,7 +446,7 @@
                "speed": 1.5,
                "max_health": 360
             },
-            "gold_bounty": 16
+            "gold_bounty": 25
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:major",
@@ -461,7 +461,7 @@
                "speed": 1.5,
                "max_health": 400
             },
-            "gold_bounty": 18
+            "gold_bounty": 26
          },
          "buffs": [
             "tower_defense:buffs:monster:immunity:slow",
@@ -478,7 +478,7 @@
                "speed": 1.5,
                "max_health": 450
             },
-            "gold_bounty": 20
+            "gold_bounty": 30
          },
          "buffs": [
             "tower_defense:buffs:monster:healing:major",

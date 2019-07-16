@@ -161,11 +161,15 @@ function GameService:get_wave_index_command(session, response)
                if not monster_data then
                   monster_data = {
                      damage = spawn.damage,
-                     count = 0
+                     count = 0,
+                     summons = {}
                   }
                   wave_data.monsters[uri] = monster_data
                end
                monster_data.count = monster_data.count + (monster.count or 1) * (spawn.info.from_population.max or 1)
+
+               -- also check if this monster spawns additional monsters
+               self:_insert_monster_summons(monster_data.summons, uri)
             end
          end
       end
@@ -174,6 +178,18 @@ function GameService:get_wave_index_command(session, response)
    end
    
    response:resolve({waves = waves, last_wave = math.min(#waves, self._game_options.final_wave)})
+end
+
+function GameService:_insert_monster_summons(array, uri)
+   local monster_info = radiant.entities.get_entity_data(uri, 'tower_defense:monster_info')
+   if monster_info and monster_info.summons then
+      for _, summon_uri in ipairs(monster_info.summons) do
+         if not array[summon_uri] then
+            array[summon_uri] = true
+            self:_insert_monster_summons(array, summon_uri)
+         end
+      end
+   end
 end
 
 function GameService:get_tower_gold_cost_multiplier_command(session, response)
@@ -314,7 +330,6 @@ end
 function GameService:start()
    self._sv.started = true
    self.__saved_variables:mark_changed()
-   self:_destroy_path_previewers()
    --self:_create_countdown_timer()
    self:_start_round()
 end
@@ -424,6 +439,8 @@ function GameService:start_round_command(session, response)
 end
 
 function GameService:_start_round()
+   self:_destroy_path_previewers()
+   
    if not self._waves[self._sv.wave + 1] or (self._game_options.final_wave and self._sv.wave >= self._game_options.final_wave) then
       -- no more waves! you won!
       self:_set_game_alert('i18n(tower_defense:alerts.game.game_won)', nil, true)

@@ -96,10 +96,10 @@ function GameCreationService:_generate_world(session, response, map_info)
       radiant.terrain.subtract_region(sub_terrain)
       
       -- place path entities with movement modifiers
-      path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {128, 51, 0, 96}})
+      --path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {128, 51, 0, 96}})
       radiant.terrain.place_entity_at_exact_location(path_entity, first_point + top)
       --radiant.terrain.place_entity_at_exact_location(path_neighbor_entity, first_point + top)
-      air_path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {224, 64, 224, 96}})
+      --air_path_entity:add_component('tower_defense:region_renderer'):set_options('path', {face_color = {224, 64, 224, 96}})
       radiant.terrain.place_entity_at_exact_location(air_path_entity, air_first_point + top + air_top)
 
       -- finally, add any entities that should start out in the world
@@ -200,41 +200,41 @@ function GameCreationService:_create_path(path_array, top, is_air, width, sub_te
          mod_region:optimize_by_defragmentation('path movement modifier shape')
       end)
 
-   local hues
-   local hue_range
-   if is_air then
-      hues = {0, 60}
-   else
-      hues = {120, 300}
-   end
-   hue_range = hues[2] - hues[1]
-   local cur_hue = hues[1]
-   if #path_cubes == 1 then
-      cur_hue = hue_range / 2 + cur_hue
-   end
-   local render_comp = path_entity:add_component('tower_defense:region_renderer')
-   for i, cube in ipairs(path_cubes) do
-      local color = render_lib.hsv_to_rgb(cur_hue, 0.75, 1)
-      render_comp:add_render_region('path'..i, {
-         ui_modes = {
-            hud = true
-         },
-         -- transformations = {
-         --    {
-         --       name = 'inflated',
-         --       params = {
-         --          x = 0,
-         --          y = -0.49,
-         --          z = 0
-         --       }
-         --    }
-         -- },
-         material = '/stonehearth/data/horde/materials/transparent_box.material.json',
-         face_color = {color.x, color.y, color.z, 51},
-         region = Region3(cube:translated(-(first_point + top)))
-      })
-      cur_hue = (hue_range / (#path_cubes - 1)) * i + hues[1]
-   end
+   -- local hues
+   -- local hue_range
+   -- if is_air then
+   --    hues = {0, 60}
+   -- else
+   --    hues = {120, 300}
+   -- end
+   -- hue_range = hues[2] - hues[1]
+   -- local cur_hue = hues[1]
+   -- if #path_cubes == 1 then
+   --    cur_hue = hue_range / 2 + cur_hue
+   -- end
+   -- local render_comp = path_entity:add_component('tower_defense:region_renderer')
+   -- for i, cube in ipairs(path_cubes) do
+   --    local color = render_lib.hsv_to_rgb(cur_hue, 0.75, 1)
+   --    render_comp:add_render_region('path'..i, {
+   --       ui_modes = {
+   --          hud = true
+   --       },
+   --       -- transformations = {
+   --       --    {
+   --       --       name = 'inflated',
+   --       --       params = {
+   --       --          x = 0,
+   --       --          y = -0.49,
+   --       --          z = 0
+   --       --       }
+   --       --    }
+   --       -- },
+   --       material = '/stonehearth/data/horde/materials/transparent_box.material.json',
+   --       face_color = {color.x, color.y, color.z, 51},
+   --       region = Region3(cube:translated(-(first_point + top)))
+   --    })
+   --    cur_hue = (hue_range / (#path_cubes - 1)) * i + hues[1]
+   -- end
 
    -- local path_neighbor_entity = radiant.entities.create_entity('tower_defense:path_neighbor', { owner = '' })
    -- local path_neighbor_entity_region = path_neighbor_entity:add_component('movement_modifier_shape')

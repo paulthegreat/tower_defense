@@ -71,7 +71,11 @@ var tower_defense = {
             radiant.each(waveData.monsters, function(uri, info) {
                var monster = App.catalog.getCatalogData(uri);
                if (monster) {
-                  s += tower_defense._getMonster(monster, info.count, info.damage);
+                  s += tower_defense._getMonster(monster, info);
+                  radiant.each(info.summons, function(summon_uri, _) {
+                     var summon = App.catalog.getCatalogData(summon_uri);
+                     s += tower_defense._getMonster(summon, {damage: 1});
+                  });
                }
             });
          }
@@ -470,17 +474,21 @@ var tower_defense = {
       }
    },
 
-   _getMonster: function(monster, count, damage) {
+   _getMonster: function(monster, info) {
       var s = '';
 
       s += `<table class='monster'><tr><td class='monsterPortrait'><img src="${monster.icon}"></td><td class='monsterContent'>`
 
       if (monster.display_name) {
-         s += `<div class='monsterName'>${i18n.t(monster.display_name)} (x${count})</div>`;
+         s += `<div class='monsterName'>${i18n.t(monster.display_name)} (${info.count ? 'x' + info.count : i18n.t('tower_defense:data.waves.summoned_monster')})</div>`;
       }
       if (monster.description) {
-         var sDmg = damage ? `<div class='monsterDamage'>${i18n.t('tower_defense:data.waves.monster_damage', {damage: damage})}</div>` : '';
+         var sDmg = info.damage ? `<div class='monsterDamage'>${i18n.t('tower_defense:data.waves.monster_damage', {damage: info.damage})}</div>` : '';
          s += `<div class='monsterDescription'>${i18n.t(monster.description)}${sDmg}</div>`;
+      }
+      // currently this isn't used at all - buffs aren't added to catalog data for monsters, only tower weapons
+      if (monster.buffs) {
+         s += `<div>${this._getBuffs(monster.buffs)}</div>`;
       }
 
       s += '</td></tr></table>';

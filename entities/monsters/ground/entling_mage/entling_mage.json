@@ -62,6 +62,11 @@
          "display_name": "i18n(tower_defense:entities.monsters.entling_mage.display_name)",
          "description": "i18n(tower_defense:entities.monsters.entling_mage.description)",
          "icon": "file(entling_mage.png)"
+      },
+      "tower_defense:monster_info": {
+         "summons": [
+            "tower_defense:monsters:ground:entling"
+         ]
       }
    }
 }
