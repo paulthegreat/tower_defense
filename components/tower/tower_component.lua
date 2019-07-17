@@ -172,6 +172,11 @@ function TowerComponent:_initialize(equipment_changed)
       self._weapon = self._json.default_weapon
    end
 
+   if self._weapon then
+      local weapon_uri = type(self._weapon) == 'string' and self._weapon or self._weapon:get_uri()
+      self._sv.can_upgrade = (weapon_uri == self._json.default_weapon) and (self._json.upgrades ~= nil and radiant.size(self._json.upgrades) > 0)
+   end
+
    self._combat_state = self._entity:add_component('stonehearth:combat_state')
    self._weapon_data = self._weapon and radiant.entities.get_entity_data(self._weapon, 'stonehearth:combat:weapon_data')
    self:_load_targetable_region()
@@ -264,6 +269,10 @@ end
 
 function TowerComponent:reveals_invis()
    return self._sv.reveals_invis
+end
+
+function TowerComponent:can_upgrade()
+   return self._sv.can_upgrade
 end
 
 function TowerComponent:get_targetable_region()

@@ -1,5 +1,6 @@
 {
    "default": [
+      "upgrades",
       "slow",
       "immobilize",
       "stun",
@@ -13,6 +14,22 @@
       "damage_increase"
    ],
    "render_filters": {
+      "upgrades": {
+         "display_name": "i18n(tower_defense:data.render_filters.tower_properties.can_upgrade.display_name)",
+         "description": "i18n(tower_defense:data.render_filters.tower_properties.can_upgrade.description)",
+         "tower_properties": {
+            "can_upgrade": {
+               "color": {"x": 224, "y": 224, "z": 224},
+               "icon": "/tower_defense/ui/game/render_filters/images/can_upgrade.png"
+            }
+         },
+         "icon": "/tower_defense/ui/game/render_filters/images/can_upgrade.png",
+         "color": {"x": 224, "y": 224, "z": 224},
+         "tower_region": true,
+         "player_owned": true,
+         "ordinal": 0,
+         "ui_ordinal": 0
+      },
       "cooldown_decrease": {
          "display_name": "i18n(tower_defense:data.render_filters.buffs.cooldown_decrease.display_name)",
          "description": "i18n(tower_defense:data.render_filters.buffs.cooldown_decrease.description)",
@@ -44,8 +61,7 @@
          ],
          "tower_properties": {
             "reveals_invis": {
-               "color": {"x": 224, "y": 0, "z": 0},
-               "icon": "/tower_defense/data/buffs/monster/reveal/normal_reveal.png"
+               "color": {"x": 224, "y": 0, "z": 0}
             }
          },
          "path_region": true,

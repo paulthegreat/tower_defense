@@ -56,7 +56,7 @@ function RenderFilter:initialize()
          end
       end
 
-      if filter.base_region then
+      if filter.base_region or filter.tower_region then
          table.insert(base_filters, filter)
       end
       if filter.path_region then
@@ -248,10 +248,13 @@ function RenderFilter:_redraw_render_nodes()
                   local region_data = regions['buffs.' .. uri]
                   if filter.base_region and tower.tower_region then
                      --log:debug('added %s to base_region of %s', tower.tower_region:get_bounds(), tower.tower)
-                     region_data.base_region = region_data.base_region + tower.tower_region
+                     self:_add_region(tower.tower_region, region_data.base_region, tower.tower, filter)
                   end
                   if filter.path_region and tower.targetable_region then
-                     region_data.path_region = region_data.path_region + tower.targetable_region
+                     self:_add_region(tower.targetable_region, region_data.path_region, tower.tower, filter)
+                  end
+                  if filter.tower_region and tower.location then
+                     self:_add_region(Region3(Cube3(tower.location)), region_data.base_region, tower.tower, filter)
                   end
                   -- if region_data.icon then
                   --    self:_add_billboard_node_icon(tower.tower, name, region_data.icon)
@@ -263,10 +266,13 @@ function RenderFilter:_redraw_render_nodes()
                if tower[property] then
                   local region_data = regions['tower_properties.' .. property]
                   if filter.base_region and tower.tower_region then
-                     region_data.base_region = region_data.base_region + tower.tower_region
+                     self:_add_region(tower.tower_region, region_data.base_region, tower.tower, filter)
                   end
                   if filter.path_region and tower.targetable_region then
-                     region_data.path_region = region_data.path_region + tower.targetable_region
+                     self:_add_region(tower.targetable_region, region_data.path_region, tower.tower, filter)
+                  end
+                  if filter.tower_region and tower.location then
+                     self:_add_region(Region3(Cube3(tower.location):inflated(Point3(0.1, 0, 0.1))), region_data.base_region, tower.tower, filter)
                   end
                   -- if region_data.icon then
                   --    self:_add_billboard_node_icon(tower.tower, name, region_data.icon)
@@ -280,6 +286,16 @@ function RenderFilter:_redraw_render_nodes()
 
       self:_enable_render_nodes()
    end
+end
+
+function RenderFilter:_add_region(region, add_to, tower, filter)
+   if filter.player_owned and radiant.entities.get_player_id(tower) ~= _radiant.client.get_player_id() then
+      --log:debug('non-matching player_id for %s filter %s', tower, filter.name)
+      return
+   end
+
+   --log:debug('%s adding filter %s region %s', tower, filter.name, region:get_bounds())
+   add_to:add_region(region)
 end
 
 function RenderFilter:_draw_regions(regions, filter)

@@ -399,6 +399,12 @@
                "display_name": "Damage Increase",
                "description": "Towers that increase damage of other towers."
             }
+         },
+         "tower_properties": {
+            "can_upgrade": {
+               "display_name": "Upgradeable",
+               "description": "Towers that you can upgrade."
+            }
          }
       },
       "tower": {

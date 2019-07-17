@@ -42,7 +42,8 @@ function TowerService:register_tower(tower, location)
       tower_region = tower_region,
       targetable_region = targetable_region,
       buffs = tower_comp:get_filter_buffs(),
-      reveals_invis = tower_comp:reveals_invis()
+      reveals_invis = tower_comp:reveals_invis(),
+      can_upgrade = tower_comp:can_upgrade()
    }
    self:_cache_detection_coords(tower_data)
    self._sv.towers[id] = tower_data
