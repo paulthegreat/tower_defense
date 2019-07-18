@@ -437,6 +437,10 @@
                "display_name": "Shortest Debuff Time",
                "description": "Prioritize attacking the target with the shortest total weighted time remaining on debuffs this tower can inflict."
             },
+            "shortest_stackable_debuff_time": {
+               "display_name": "Shortest Stackable Debuff Time",
+               "description": "Prioritize attacking the target with the shortest total weighted time remaining on debuffs this tower can inflict before those debuffs fall off (not reliable with projectile attacks)."
+            },
             "highest_debuff_stack": {
                "display_name": "Highest Debuff Stack",
                "description": "Prioritize attacking the target with the highest number of stacks of debuffs this tower can inflict."

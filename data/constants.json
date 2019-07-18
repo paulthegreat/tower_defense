@@ -25,6 +25,13 @@
                      "closest_to_end"
                   ]
                },
+               "DEBUFF_MAINTAIN": {
+                  "key": "debuff_maintain",
+                  "filters": [
+                     "shortest_stackable_debuff_time",
+                     "closest_to_end"
+                  ]
+               },
                "FOCUS_END": {
                   "key": "focus_end",
                   "filters": [
@@ -115,7 +122,18 @@
                "FILTER_SHORTEST_DEBUFF_TIME": {
                   "key": "shortest_debuff_time",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.shortest_debuff_time.display_name)",
-                  "description": "i18n(tower_defense:data.tower.target_filter.shortest_debuff_time.description)"
+                  "description": "i18n(tower_defense:data.tower.target_filter.shortest_debuff_time.description)",
+                  "disables": [
+                     "shortest_stackable_debuff_time"
+                  ]
+               },
+               "FILTER_SHORTEST_STACKABLE_DEBUFF_TIME": {
+                  "key": "shortest_stackable_debuff_time",
+                  "display_name": "i18n(tower_defense:data.tower.target_filter.shortest_stackable_debuff_time.display_name)",
+                  "description": "i18n(tower_defense:data.tower.target_filter.shortest_stackable_debuff_time.description)",
+                  "disables": [
+                     "shortest_debuff_time"
+                  ]
                },
                "FILTER_HIGHEST_DEBUFF_STACK": {
                   "key": "highest_debuff_stack",

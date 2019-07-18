@@ -507,7 +507,34 @@ function TowerComponent:_get_filter_value(filter, target, attack_info, debuff_ca
             -- only consider the value of the buff being applied if it can actually be applied
             if duration >= 0 and not buffs_comp:is_buff_diminishing_disabled(uri) then
                -- the target doesn't have this debuff or it has a duration/expiration
-               diff = diff + data.duration - duration * data.priority
+               diff = diff + (data.duration - duration) * data.priority
+            end
+         end
+         return diff
+      end
+
+   elseif filter == FILTER_TYPES.FILTER_SHORTEST_STACKABLE_DEBUFF_TIME.key then
+      self:_verify_debuff_cache(debuff_cache, attack_info)
+      if debuff_cache.total_duration > 0 then
+         local buffs_comp = target:get_component('stonehearth:buffs')
+         if not buffs_comp then
+            return 0
+         end
+
+         local attack_time = 200 + (attack_info.attack_times and attack_info.attack_times[1] or 0)
+         attack_time = stonehearth.calendar:realtime_to_game_seconds(attack_time, true)
+
+         local diff = 0
+         for uri, data in pairs(debuff_cache.debuffs) do
+            local buff = buffs_comp:get_buff(uri)
+            -- returns -1 if the buff has no duration (lasts forever)
+            local duration = buff and buff:get_duration() or 0
+            
+            -- only consider the value of the buff being applied if it can actually be applied
+            -- and if the duration is greater than the attack time plus some wiggle room (200ms)
+            if duration >= attack_time and not buffs_comp:is_buff_diminishing_disabled(uri) then
+               -- the target doesn't have this debuff or it has a duration/expiration
+               diff = diff + (data.duration - duration) * data.priority
             end
          end
          return diff

@@ -13,7 +13,7 @@
             "attacks_ground": true,
             "attacks_air": true,
             "reveals_invis": false,
-            "defaults": "focus_end"
+            "defaults": "debuff_maintain"
          }
       },
       "stonehearth:buffs": {
