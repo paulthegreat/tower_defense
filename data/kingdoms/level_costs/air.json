@@ -6,18 +6,22 @@
    ],
    "earth": [
       {"wood": 10},
+      {"wood": 10},
       {"wood": 10}
    ],
    "fire": [
       {"wood": 5},
-      {"wood": 5}
+      {"wood": 5},
+      {"wood": 10}
    ],
    "plant": [
+      {"wood": 10},
       {"wood": 10},
       {"wood": 10}
    ],
    "water": [
       {"wood": 5},
-      {"wood": 5}
+      {"wood": 5},
+      {"wood": 10}
    ]
 }

@@ -1,11 +1,13 @@
 {
    "air": [
       {"wood": 5},
-      {"wood": 5}
+      {"wood": 5},
+      {"wood": 10}
    ],
    "earth": [
       {"wood": 5},
-      {"wood": 5}
+      {"wood": 5},
+      {"wood": 10}
    ],
    "fire": [
       {"wood": 5},
@@ -14,9 +16,11 @@
    ],
    "plant": [
       {"wood": 10},
+      {"wood": 10},
       {"wood": 10}
    ],
    "water": [
+      {"wood": 10},
       {"wood": 10},
       {"wood": 10}
    ]

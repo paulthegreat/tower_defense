@@ -148,7 +148,13 @@
                "FILTER_TARGET_TYPE": {
                   "key": "target_type",
                   "display_name": "i18n(tower_defense:data.tower.target_filter.target_type.display_name)",
-                  "description": "i18n(tower_defense:data.tower.target_filter.target_type.description)"
+                  "description": "i18n(tower_defense:data.tower.target_filter.target_type.description)",
+                  "types": {
+                     "air": {
+                        "display_name": "i18n(tower_defense:data.tower.target_filter.target_type.types.air)",
+                        "icon": "/tower_defense/ui/game/start_menu/images/air.png"
+                     }
+                  }
                }
             }
          }

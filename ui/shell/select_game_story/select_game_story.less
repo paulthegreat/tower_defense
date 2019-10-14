@@ -1,0 +1,229 @@
+.newGameFlowBackground {
+   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#344a49), color-stop(60%,#1b302f), color-stop(100%,#000000));
+}
+
+#selectGameStory {
+   position: relative;
+   margin: auto;
+   background: url('./images/background.png');
+   width: 1920px;
+   height: 1080px;
+   color: #fff;
+   padding: 0px;
+
+   #chooseAdventureTitle {
+      .controlFont;
+      width: 100%;
+      font-size: 36px;
+      margin-left: 20px;
+      margin-top: 20px;
+      display: block;
+   }
+
+   .quitButton {
+      z-index: 14;
+   }
+
+   .fadedInText{
+      visibility: hidden;
+   }
+
+   #kingdomPicker {
+      position: absolute;
+      top: 350px;
+      left: 330px;
+   }
+
+   #biomePicker {
+      position: absolute;
+      top: 615px;
+      left: 330px;
+   }
+
+   #gameModePicker {
+      position: absolute;
+      top: 650px;
+      left: 330px;
+      max-width: 729px;
+   }
+
+   #biomeWarning {
+      position: absolute;
+      top: 410px;
+      left: 798px;
+      width: 530px;
+      z-index: 5;
+   }
+
+   #biomeWarningText {
+      margin-top: 22px;
+      padding: 0px 5px 0px 5px;
+      margin-bottom: 13px;
+   }
+
+   .buttonsDiv {
+      text-align: center;
+   }
+
+   .storyPicker{
+      display: none;
+      z-index: 5;
+      max-width: 750px;
+      overflow-x: auto;
+      overflow-y: none;
+      font-size: 14px;
+      border-radius: 8px;
+
+      .pickerTitle {
+         .controlFont;
+         font-size: 30px;
+      }
+
+      td {
+         .handCursor;
+         vertical-align: top;
+         &:hover {
+            background-color: rgba(143, 120, 70, 0.3);
+         }
+      }
+
+      .pickerDiv {
+         vertical-align: top;
+         text-align: center;
+         display: inline-block;
+         padding: 5px;
+         width: 230px;
+         .pickerImage{
+            width: 230px;
+         }
+         .pickerInfo{
+            .name {
+               .controlFont;
+               font-size: 16px;
+            }
+            padding: 5px;
+            text-align: left;
+            text-overflow: ellipsis;
+         }
+      }
+   }
+
+   #beginStoryButton {
+      width: 100%;
+      display: none;
+      font-size: 40px;
+   }
+
+   #storyBody {
+      vertical-align: top;
+      height: 850px;
+      width: 100%;
+      margin-top: 65px;
+      z-index: 99;
+      .bodyElement{
+         display: inline-block;
+         height: 100%;
+      }
+
+      #sideImage {
+         background:url('./images/sideblock.png');
+         width: 193px;
+         margin-left: 94px;
+      }
+
+      #storyTextContainer {
+         vertical-align: top;
+         width: 740px;
+         color: #000000;
+         font-size: 32px;
+
+         #storyText {
+            padding-left: 40px;
+            padding-top: 70px;
+            padding-right: 40px;
+            line-height: 200%;
+
+            #storySentenceStart {
+               font-family: @controlFontFamily;
+               font-size: 50px;
+               color: #000000;
+               margin-bottom: 20px;
+            }
+
+            #selectBiomeContainer {
+               margin-top: 20px;
+            }
+
+            #beginButtonContainer {
+               margin-top: 50px;
+            }
+
+            b {
+               font-weight: normal;
+            }
+
+            a {
+               color: #7a0000;
+            }
+
+            a:hover {
+               color: #ee2727;
+            }
+
+            a.disabled {
+               .arrowCursor;
+               color: black;
+            }
+         }
+      }
+
+      #storyPictureContainer {
+         position: absolute;
+         background:url('./images/picture_boarder.png');
+         background-repeat: no-repeat;
+         width: 748px;
+         z-index: 4;
+         height: 900px;
+      }
+   }
+
+   .storyPicture {
+      position: absolute;
+      left: 1052px;
+      top: 188px;
+      width: 710px;
+      height: 730px;
+      display: none;
+   }
+
+   .reallyFaded {
+      opacity: 0.4;
+   }
+
+   .somewhatFaded {
+      opacity: 0.8;
+   }
+
+   .somewhatFadedTransition {
+      transition: all 2.5s ease;
+      opacity: 0.8;
+   }
+
+   .noFilter {
+      transition: all 2.5s ease;
+      opacity: 1.0;
+   }
+
+   #storyPictureBackground{
+      z-index: 1;
+   }
+
+   #storyPictureCitizens{
+      z-index: 3;
+   }
+
+   #storyPictureMonsters{
+      z-index: 2;
+   }
+
+}
